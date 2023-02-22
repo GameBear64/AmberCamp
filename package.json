@@ -1,0 +1,48 @@
+{
+  "name": "ambercamp",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prettier": "prettier --write \"src/**/*.{js,jsx}\"",
+    "eslint": "eslint --fix \"src/**/*.{js,jsx}\"",
+    "lint": "npm run prettier && npm run eslint"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.3",
+    "awesome-snackbar": "^2.0.7",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "coupon-code": "^0.4.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.9.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.2",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.8.1",
+    "react-twemoji": "^0.5.0",
+    "sharp": "^0.31.3",
+    "socket.io": "^4.6.1",
+    "styled-components": "^5.3.6"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@vitejs/plugin-react-swc": "^3.0.0",
+    "autoprefixer": "^10.4.13",
+    "concurrently": "^7.6.0",
+    "eslint": "^8.34.0",
+    "eslint-plugin-react": "^7.32.2",
+    "nodemon": "^2.0.20",
+    "postcss": "^8.4.21",
+    "prettier": "2.8.4",
+    "sass": "^1.58.3",
+    "tailwindcss": "^3.2.7",
+    "vite": "^4.1.0"
+  }
+}
