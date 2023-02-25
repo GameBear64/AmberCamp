@@ -41,6 +41,7 @@
     "nodemon": "^2.0.20",
     "postcss": "^8.4.21",
     "prettier": "2.8.4",
+    "rollup-plugin-react-scoped-css": "^0.8.2",
     "sass": "^1.58.3",
     "tailwindcss": "^3.2.7",
     "vite": "^4.1.0"
