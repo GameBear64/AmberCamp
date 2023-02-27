@@ -17,6 +17,7 @@ specifiers:
   express: ^4.18.2
   express-file-routing: ^2.1.2
   jsonwebtoken: ^9.0.0
+  max-validator: ^1.2.1
   mongoose: ^6.9.3
   morgan: ^1.10.0
   nodemon: ^2.0.20
@@ -28,6 +29,7 @@ specifiers:
   react-redux: ^8.0.5
   react-router-dom: ^6.8.1
   react-twemoji: ^0.5.0
+  request_trimmer: ^1.0.0
   rollup-plugin-react-scoped-css: ^0.8.2
   sass: ^1.58.3
   sharp: ^0.31.3
@@ -46,6 +48,7 @@ dependencies:
   express: 4.18.2
   express-file-routing: 2.1.2_express@4.18.2
   jsonwebtoken: 9.0.0
+  max-validator: 1.2.1
   mongoose: 6.9.3
   morgan: 1.10.0
   react: 18.2.0
@@ -54,6 +57,7 @@ dependencies:
   react-redux: 8.0.5_ctrls2ti7t7iutxbwkm5ipogyy
   react-router-dom: 6.8.1_biqbaboplfbrettd7655fr4n2y
   react-twemoji: 0.5.0_react@18.2.0
+  request_trimmer: 1.0.0
   sharp: 0.31.3
   socket.io: 4.6.1
   styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
@@ -3412,6 +3416,10 @@ packages:
       yallist: 4.0.0
     dev: false
 
+  /max-validator/1.2.1:
+    resolution: {integrity: sha512-oAE3jzAAJmDjQXi/lJxM/VYdsXQCTHf+K/Use4Co9FIbMUuMKmBeVYSWmGHvs4f+2WbIyVyOjjgSj0srXaBNHw==}
+    dev: false
+
   /media-typer/0.3.0:
     resolution: {integrity: sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==}
     engines: {node: '>= 0.6'}
@@ -4151,6 +4159,10 @@ packages:
     resolution: {integrity: sha512-pq2bWo9mVD43nbts2wGv17XLiNLya+GklZ8kaDLV2Z08gDCsGpnKn9BFMepvWuHCbyVvY7J5o5+BVvoQbmlJLg==}
     engines: {node: '>=8'}
     dev: true
+
+  /request_trimmer/1.0.0:
+    resolution: {integrity: sha512-6h0PYxtr9ULYEMe3ATelt5dSMsY6wgicNfI1o3n93YomJBd4M8q/6qLvBtvvCVjQtxeQXkBH1JrpyDbPwnhQQw==}
+    dev: false
 
   /require-directory/2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}

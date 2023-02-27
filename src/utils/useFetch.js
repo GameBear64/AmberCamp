@@ -7,7 +7,7 @@ export function useFetch({ url, requireAuth = true }) {
   if (requireAuth) {
     options = {
       ...options, headers: {
-        jwt: JSON.parse(window.localStorage.getItem('cf_data')).jwt,
+        jwt: JSON.parse(window.localStorage.getItem(import.meta.env.VITE_LOCAL_STORAGE_NAME)).jwt,
         'content-type': 'application/json',
       }
     }
