@@ -3,14 +3,13 @@ const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    handle: {
       type: String,
       required: true,
       trim: true,
     },
     name: {
       type: String,
-      // required: true,
       trim: true,
     },
     email: {
@@ -21,19 +20,37 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
       trim: true,
     },
-    // profilePicture: { // some time in the future
-    //   type: String,
-    //   default: null,
-    // },
+    biography: {
+      type: String,
+      default: '',
+    },
+    picture: {
+      type: String, // TODO: Make it a picture ref later
+      default: '',
+    },
+    background: {
+      type: String, // TODO: Make it a picture ref later
+      default: '',
+    },
+    contacts: {
+      type: String, // TODO: Make it a user array ref later
+      default: [],
+    },
+    sendRequests: {
+      type: String, // TODO: Make it a user array ref later
+      default: [],
+    }
   },
   { timestamps: true }
 );
 
-userSchema.pre("create", (next) => {
-  this.password = bcrypt.hashSync(this.password, 10);
+userSchema.pre("save", function (next) {
+  if (this.isModified("password") || this.isNew) {
+    this.password = bcrypt.hashSync(this.password, 10);
+  }
+
   next();
 });
 

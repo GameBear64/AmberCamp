@@ -15,10 +15,10 @@ const filterUserFelids = ({ _id, username }) => ({
 });
 
 const validationScheme = {
-  username: 'required|between:3,50|alpha',
+  handle: 'required|between:3,50|alpha_numeric',
   email: 'required|email',
   password: 'required|min:8|alpha_numeric',
-  confirmPassword: 'required'
+  confirmPassword: 'required',
 };
 
 module.exports.post = async (req, res) => {
