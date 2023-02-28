@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
+const { Theme } = require("../helpers/enums.js");
 
 const userSchema = new mongoose.Schema(
   {
@@ -35,13 +36,18 @@ const userSchema = new mongoose.Schema(
       default: '',
     },
     contacts: {
-      type: String, // TODO: Make it a user array ref later
+      type: Array, // TODO: Make it a user array ref later
       default: [],
     },
     sendRequests: {
-      type: String, // TODO: Make it a user array ref later
+      type: Array, // TODO: Make it a user array ref later
       default: [],
-    }
+    },
+    theme: {
+      type: String,
+      enum: Object.values(Theme),
+      default: Theme.Light
+    },
   },
   { timestamps: true }
 );
@@ -54,6 +60,8 @@ userSchema.pre("save", function (next) {
   next();
 });
 
-userSchema.methods.validatePassword = async (pass) => bcrypt.compare(pass, this.password);
+userSchema.methods.validatePassword = async function (pass) {
+  return await bcrypt.compare(pass, this.password);
+}
 
 exports.UserModel = mongoose.model('User', userSchema);
