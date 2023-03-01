@@ -18,10 +18,11 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
       unique: true,
+      select: false
     },
     password: {
       type: String,
-      trim: true,
+      select: false
     },
     biography: {
       type: String,
@@ -38,16 +39,29 @@ const userSchema = new mongoose.Schema(
     contacts: {
       type: Array, // TODO: Make it a user array ref later
       default: [],
+      select: false
     },
     sendRequests: {
       type: Array, // TODO: Make it a user array ref later
       default: [],
+      select: false
     },
-    theme: {
-      type: String,
-      enum: Object.values(Theme),
-      default: Theme.Light
-    },
+    settings: {
+      select: false,
+      theme: {
+        type: String,
+        enum: Object.values(Theme),
+        default: Theme.Light
+      },
+      accent: {
+        type: String,
+        default: '',
+      },
+      language: {
+        type: String,
+        default: '',
+      },
+    }
   },
   { timestamps: true }
 );

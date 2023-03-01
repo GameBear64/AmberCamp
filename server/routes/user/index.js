@@ -1,5 +1,8 @@
+const { UserModel } = require("../../models/User");
+
 module.exports.get = async (req, res) => {
-  res.status(200).send({ message: 'this is user' });
+  let user = await UserModel.findOne({ _id: req.apiUserId });
+  return res.status(200).send(user);
 };
 
 module.exports.delete = async (req, res) => {

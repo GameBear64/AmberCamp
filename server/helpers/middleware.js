@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+
 exports.trimBodyFields = (req, res, next) => {
   const trimString = (input) => {
     if (typeof input === 'string')
@@ -14,3 +16,21 @@ exports.trimBodyFields = (req, res, next) => {
 
   next();
 }
+
+let noAuthRoutes = [
+  { path: '/user/login', methods: ['POST'] },
+  { path: '/user/register', methods: ['POST'] }
+]
+
+exports.checkAuth = (req, res, next) => {
+  let isNoAuthRoute = noAuthRoutes.some(route => route.path == req.path && route.methods.includes(req.method))
+  if (isNoAuthRoute) return next();
+
+  try {
+    let decoded = jwt.verify(req.headers.jwt, process.env.SECRET);
+    req.apiUserId = decoded.id;
+    next();
+  } catch (err) {
+    return res.status(401).send('Not Authorized');
+  }
+};
