@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
-const { Theme } = require("../helpers/enums.js");
+const { PreferencesModel } = require('./Preferences');
 
 const userSchema = new mongoose.Schema(
   {
@@ -36,37 +36,34 @@ const userSchema = new mongoose.Schema(
       type: String, // TODO: Make it a picture ref later
       default: '',
     },
-    contacts: {
-      type: Array, // TODO: Make it a user array ref later
-      default: [],
+    contacts: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       select: false
-    },
-    sendRequests: {
-      type: Array, // TODO: Make it a user array ref later
-      default: [],
+    }],
+    sendRequests: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       select: false
-    },
+    }],
     settings: {
-      select: false,
-      theme: {
-        type: String,
-        enum: Object.values(Theme),
-        default: Theme.Light
-      },
-      accent: {
-        type: String,
-        default: '',
-      },
-      language: {
-        type: String,
-        default: '',
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Preferences",
+      select: false
     }
   },
   { timestamps: true }
 );
 
-userSchema.pre("save", function (next) {
+userSchema.methods.validatePassword = async function (pass) {
+  return await bcrypt.compare(pass, this.password);
+}
+
+userSchema.pre("save", async function (next) {
+  if (this.isNew) {
+    this.settings = await PreferencesModel.create({});
+  }
+
   if (this.isModified("password") || this.isNew) {
     this.password = bcrypt.hashSync(this.password, 10);
   }
@@ -74,8 +71,12 @@ userSchema.pre("save", function (next) {
   next();
 });
 
-userSchema.methods.validatePassword = async function (pass) {
-  return await bcrypt.compare(pass, this.password);
-}
+userSchema.pre(/^delete/, async function (next) {
+  const userDocument = await this.model.findOne(this.getQuery()).select('settings');
+
+  await PreferencesModel.deleteOne({ _id: userDocument.settings });
+
+  next();
+});
 
 exports.UserModel = mongoose.model('User', userSchema);

@@ -15,8 +15,11 @@ module.exports.post = async (req, res) => {
   if (!userAttempting) return res.status(404).send({ user: ['User does not exists'] });
 
   let validPassword = await userAttempting.validatePassword(req.body?.password)
-  if (!validPassword) return res.status(404).send({ password: ['Incorrect password.'] });
+  if (!validPassword) return res.status(404).send({ password: ['Incorrect password'] });
   // TODO: add timeouts for this route
+
+  // TODO: generate tag for the clients device 
+  // same on register 
 
   return res.status(200).send({
     jwt: createJWTCookie(userAttempting),

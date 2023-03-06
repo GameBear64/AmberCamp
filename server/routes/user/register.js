@@ -14,7 +14,7 @@ module.exports.post = async (req, res) => {
   if (validation.error) return res.status(400).send(validation.error.details[0].message)
 
   let userExists = await UserModel.findOne({ email: req.body.email });
-  if (userExists) return res.status(409).send({ user: ["User registered with this email already exists"] });
+  if (userExists) return res.status(409).send("User registered with this email already exists");
 
   let user = await UserModel.create(req.body);
   return res.status(201).send({
