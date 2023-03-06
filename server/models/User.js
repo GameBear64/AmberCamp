@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema(
       ref: "User",
       select: false
     }],
-    sendRequests: [{
+    pendingContacts: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       select: false
