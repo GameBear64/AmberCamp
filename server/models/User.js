@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
 const { PreferencesModel } = require('./Preferences');
+const { RelationshipModel } = require('./Relationship');
+
 
 const userSchema = new mongoose.Schema(
   {
@@ -59,6 +61,21 @@ userSchema.methods.validatePassword = async function (pass) {
   return await bcrypt.compare(pass, this.password);
 }
 
+userSchema.methods.getRelationship = async function (myId) {
+  const excludeSelect = '-_id -__v'
+
+  let relation = await RelationshipModel.findOneAndUpdate(
+    { from: myId, to: this._id },
+    { $setOnInsert: { from: myId, to: this._id } },
+    { upsert: true }
+  ).select(excludeSelect);
+
+  // on upsert it returns null so we need to fetch a second time after initial creation
+  if (relation == null) return await RelationshipModel.findOne({ from: myId, to: this._id }).select(excludeSelect);
+
+  return relation;
+}
+
 userSchema.pre("save", async function (next) {
   if (this.isNew) {
     this.settings = await PreferencesModel.create({});
@@ -72,8 +89,9 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.pre(/^delete/, async function (next) {
+  //TODO: try select like this
+  // this.select('settings')
   const userDocument = await this.model.findOne(this.getQuery()).select('settings');
-
   await PreferencesModel.deleteOne({ _id: userDocument.settings });
 
   next();

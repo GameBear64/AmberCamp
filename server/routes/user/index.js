@@ -1,7 +1,7 @@
 const { UserModel } = require("../../models/User");
 
 module.exports.get = async (req, res) => {
-  let user = await UserModel.findOne({ _id: req.apiUserId }); //todo other users too
+  let user = await UserModel.findOne({ _id: req.apiUserId });
   if (!user) return res.status(404).send("User not found");
   return res.status(200).send(user);
 };

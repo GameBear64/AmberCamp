@@ -11,7 +11,7 @@ module.exports.post = async (req, res) => {
   let validation = validationSchema.validate(req.body)
   if (validation.error) return res.status(400).send(validation.error.details[0].message)
 
-  let userAttempting = await UserModel.findOne({ email: req.body.email });
+  let userAttempting = await UserModel.findOne({ email: req.body.email }).select('+password');
   if (!userAttempting) return res.status(404).send({ user: ['User does not exists'] });
 
   let validPassword = await userAttempting.validatePassword(req.body?.password)
