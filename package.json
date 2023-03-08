@@ -8,8 +8,8 @@
     "FE": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "prettier": "prettier --write \"src/**/*.{js,jsx}\"",
-    "eslint": "eslint --fix \"src/**/*.{js,jsx}\"",
+    "prettier": "prettier --write \"src/**/*.{js,jsx}\" \"server/**/*.js\"",
+    "eslint": "eslint --fix \"src/**/*.{js,jsx}\" \"server/*.js\"",
     "lint": "npm run prettier && npm run eslint"
   },
   "dependencies": {

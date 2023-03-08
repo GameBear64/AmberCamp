@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 exports.createJWTCookie = (user) => {
@@ -6,10 +6,10 @@ exports.createJWTCookie = (user) => {
   return jwt.sign({ id: user._id }, process.env.SECRET, {
     expiresIn: expireAt,
   });
-}
+};
 
 exports.storedUserFields = ({ _id }) => ({ _id });
 
 exports.isObjectID = (value, helper) => {
-  return ObjectId.isValid(value) || helper.message("Invalid Id")
-}
+  return ObjectId.isValid(value) || helper.message('Invalid Id');
+};

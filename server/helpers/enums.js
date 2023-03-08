@@ -1,5 +1,5 @@
 exports.Theme = Object.freeze({
-  Light: "Light",
-  Dark: "Dark",
-  Black: "Black",
+  Light: 'Light',
+  Dark: 'Dark',
+  Black: 'Black',
 });

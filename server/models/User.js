@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcryptjs');
 const { PreferencesModel } = require('./Preferences');
 const { RelationshipModel } = require('./Relationship');
-
 
 const userSchema = new mongoose.Schema(
   {
@@ -20,11 +19,11 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
       unique: true,
-      select: false
+      select: false,
     },
     password: {
       type: String,
-      select: false
+      select: false,
     },
     biography: {
       type: String,
@@ -32,37 +31,44 @@ const userSchema = new mongoose.Schema(
     },
     picture: {
       type: String, // TODO: Make it a picture ref later
-      default: '',
     },
     background: {
       type: String, // TODO: Make it a picture ref later
-      default: '',
     },
-    contacts: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      select: false
-    }],
-    pendingContacts: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      select: false
-    }],
+    contacts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        select: false,
+      },
+    ],
+    pendingContacts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        select: false,
+      },
+    ],
     settings: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Preferences",
-      select: false
-    }
+      ref: 'Preferences',
+      select: false,
+    },
+    passwordChangedAt: {
+      type: Date,
+      select: false,
+    },
+    // passwordResetToken: String,
   },
   { timestamps: true }
 );
 
 userSchema.methods.validatePassword = async function (pass) {
   return await bcrypt.compare(pass, this.password);
-}
+};
 
 userSchema.methods.getRelationship = async function (myId) {
-  const excludeSelect = '-_id -__v'
+  const excludeSelect = '-__v';
 
   let relation = await RelationshipModel.findOneAndUpdate(
     { from: myId, to: this._id },
@@ -74,15 +80,17 @@ userSchema.methods.getRelationship = async function (myId) {
   if (relation == null) return await RelationshipModel.findOne({ from: myId, to: this._id }).select(excludeSelect);
 
   return relation;
-}
+};
 
-userSchema.pre("save", async function (next) {
+userSchema.pre('save', async function (next) {
   if (this.isNew) {
     this.settings = await PreferencesModel.create({});
   }
 
-  if (this.isModified("password") || this.isNew) {
+  if (this.isModified('password') || this.isNew) {
     this.password = bcrypt.hashSync(this.password, 10);
+
+    this.passwordChangedAt = Date.now() - 1000;
   }
 
   next();
