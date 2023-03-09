@@ -97,8 +97,6 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.pre(/^delete/, async function (next) {
-  //TODO: try select like this
-  // this.select('settings')
   const userDocument = await this.model.findOne(this.getQuery()).select('settings');
   await PreferencesModel.deleteOne({ _id: userDocument.settings });
 

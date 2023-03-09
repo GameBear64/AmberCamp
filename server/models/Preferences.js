@@ -15,7 +15,7 @@ const preferencesSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
-  // devices: [{
+  // devices: [{ // for the future
   //   tag: String,
   //   device: Object, // fingerprint object
   // }]
