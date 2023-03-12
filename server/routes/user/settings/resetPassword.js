@@ -10,18 +10,18 @@ const validationSchema = joi.object({
 
 module.exports.post = async (req, res) => {
   let validation = validationSchema.validate(req.body);
-  if (validation.error) return res.status(400).send(validation.error.details[0].message);
+  if (validation.error) return res.status(400).json(validation.error.details[0].message);
 
   let user = await UserModel.findOne({ _id: req.apiUserId }).select('password');
-  if (user.matchedCount == 0) return res.status(404).send('User not found');
+  if (user.matchedCount == 0) return res.status(404).json('User not found');
 
   let validPassword = await user.validatePassword(req.body.password);
-  if (!validPassword) return res.status(404).send({ password: ['Incorrect password.'] });
+  if (!validPassword) return res.status(404).json({ password: ['Incorrect password.'] });
 
   user.password = req.body.newPassword;
   await user.save();
 
-  return res.status(200).send({
+  return res.status(200).json({
     jwt: createJWTCookie(user),
     user: storedUserFields(user),
   });

@@ -9,8 +9,23 @@ export default function ChatList() {
   const [message, setMessage] = useState('Loading...');
 
   useEffect(() => {
-    useFetch({ url: '', requireAuth: false }).then((data) => setMessage(data.message));
+    useFetch({ url: '' }).then((data) => setMessage(data.message));
   }, []);
+
+  function readFile(file) {
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      let body = {
+        data: event.target.result,
+        mimetype: file.type,
+        name: file.name.split('.').slice(0, -1).join('-'),
+      };
+      useFetch({ method: 'POST', url: 'recourse/upload', body });
+    };
+  }
 
   return (
     <div className="App">
@@ -25,6 +40,7 @@ export default function ChatList() {
       <Link to={`chat`}>
         go to <span className="material-icons">chat_bubble</span>
       </Link>
+      <input type="file" onChange={(event) => readFile(event.target.files[0] || null)} />
     </div>
   );
 }

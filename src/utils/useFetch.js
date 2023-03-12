@@ -1,4 +1,4 @@
-export function useFetch({ url, requireAuth = true }) {
+export function useFetch({ url, requireAuth = true, method, body }) {
   const baseURL =
     import.meta.env.VITE_SERVER_URL == 'same'
       ? `${window.location.protocol}//${window.location.hostname}`
@@ -7,11 +7,13 @@ export function useFetch({ url, requireAuth = true }) {
   let options = {};
   if (requireAuth) {
     options = {
-      ...options,
+      method,
+      body: JSON.stringify(body),
       headers: {
-        jwt: JSON.parse(window.localStorage.getItem(import.meta.env.VITE_LOCAL_STORAGE_NAME)).jwt,
+        jwt: window.localStorage.getItem('jwt'),
         'content-type': 'application/json',
       },
+      ...options,
     };
   }
 

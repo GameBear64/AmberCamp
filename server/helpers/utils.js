@@ -13,3 +13,27 @@ exports.storedUserFields = ({ _id }) => ({ _id });
 exports.isObjectID = (value, helper) => {
   return ObjectId.isValid(value) || helper.message('Invalid Id');
 };
+
+// https://stackoverflow.com/a/57071072/7149508
+exports.chunkBuffer = function* (buf, maxBytes) {
+  while (buf.length) {
+    let i = buf.lastIndexOf(32, maxBytes + 1);
+    if (i < 0) i = buf.indexOf(32, maxBytes);
+    if (i < 0) i = buf.length;
+    yield buf.slice(0, i).toString();
+    buf = buf.slice(i + 1);
+  }
+};
+
+// https://stackoverflow.com/a/1054862/7149508
+// TODO: into middleware?
+exports.slugifyString = (text) =>
+  text
+    ?.toLowerCase()
+    ?.replace(/[^\w ]+/g, '')
+    ?.replace(/ +/g, '-')
+    ?.trim()
+    ?.replace(/[^\x00-\x7F]/g, '');
+
+// TODO: make this into a separate middleware and include confusables
+exports.sanitizeHTML = (string) => JSON.stringify(string?.replace(/\\/g, '')?.replace(/</g, '&lt;')?.replace(/>/g, '&gt;')); //.replace(/&/g, '&amp;').replace(///g, '&#x2F;');

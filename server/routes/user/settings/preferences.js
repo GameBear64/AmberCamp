@@ -6,9 +6,9 @@ const { Theme } = require('../../../helpers/enums');
 
 module.exports.get = async (req, res) => {
   let user = await UserModel.findOne({ _id: req.apiUserId }).select('settings').populate('settings');
-  if (!user) return res.status(404).send('User not found');
+  if (!user) return res.status(404).json('User not found');
 
-  return res.status(200).send(user.settings);
+  return res.status(200).json(user.settings);
 };
 
 const validationSchema = joi.object({
@@ -18,15 +18,15 @@ const validationSchema = joi.object({
 });
 
 module.exports.patch = async (req, res) => {
-  if (Object.keys(req.body).length === 0) return res.send(200);
+  if (Object.keys(req.body).length === 0) return res.json(200);
 
   let validation = validationSchema.validate(req.body);
-  if (validation.error) return res.status(400).send(validation.error.details[0].message);
+  if (validation.error) return res.status(400).json(validation.error.details[0].message);
 
   let user = await UserModel.findOne({ _id: req.apiUserId }).select('settings');
-  if (!user) return res.status(404).send('User not found');
+  if (!user) return res.status(404).json('User not found');
 
   await PreferencesModel.updateOne({ _id: user.settings }, { ...req.body });
 
-  return res.status(200).send('Updated');
+  return res.status(200).json('Updated');
 };
