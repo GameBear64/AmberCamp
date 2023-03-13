@@ -11,9 +11,22 @@ const mediaSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    thumbnail: Buffer,
-    smallThumbnail: Buffer,
-    data: Buffer,
+    md5: {
+      type: String,
+      required: true,
+    },
+    verifiedIntegrity: {
+      type: Boolean,
+      default: false,
+    },
+    thumbnail: {
+      type: Buffer,
+      select: false,
+    },
+    smallThumbnail: {
+      type: Buffer,
+      select: false,
+    },
     chunks: [
       {
         type: mongoose.Schema.Types.ObjectId,

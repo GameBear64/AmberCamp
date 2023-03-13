@@ -22,6 +22,7 @@ export default function ChatList() {
         data: event.target.result,
         mimetype: file.type,
         name: file.name.split('.').slice(0, -1).join('-'),
+        md5: '5',
       };
       useFetch({ method: 'POST', url: 'recourse/upload', body });
     };

@@ -14,6 +14,13 @@ exports.isObjectID = (value, helper) => {
   return ObjectId.isValid(value) || helper.message('Invalid Id');
 };
 
+exports.chunkUnderMeg = (value, helper) => {
+  return (
+    Buffer.byteLength(value) <= 1048576 ||
+    helper.message(`Chunk (${(Buffer.byteLength(value) / 1048576).toFixed(2)}MB) can not be over 1MB`)
+  );
+};
+
 // https://stackoverflow.com/a/57071072/7149508
 exports.chunkBuffer = function* (buf, maxBytes) {
   while (buf.length) {
