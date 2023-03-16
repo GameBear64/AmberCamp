@@ -7,7 +7,6 @@ const validationSchema = joi.object({
   mimetype: joi.required(),
   data: joi.required().custom((v, h) => chunkUnderMeg(v, h)),
   md5: joi.required(),
-  last: joi.boolean(),
 });
 
 module.exports.post = [

@@ -43,4 +43,4 @@ exports.slugifyString = (text) =>
     ?.replace(/[^\x00-\x7F]/g, '');
 
 // TODO: make this into a separate middleware and include confusables
-exports.sanitizeHTML = (string) => JSON.stringify(string?.replace(/\\/g, '')?.replace(/</g, '&lt;')?.replace(/>/g, '&gt;')); //.replace(/&/g, '&amp;').replace(///g, '&#x2F;');
+exports.sanitizeHTML = (string) => string?.replace(/\\/g, '')?.replace(/</g, '&lt;')?.replace(/>/g, '&gt;'); //.replace(/&/g, '&amp;').replace(///g, '&#x2F;');

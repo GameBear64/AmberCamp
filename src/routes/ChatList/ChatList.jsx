@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useFetch } from '../../utils/useFetch';
+import { useUpload } from '../../utils/useUpload';
 
 import './ChatList.style.scss';
 
@@ -18,13 +19,15 @@ export default function ChatList() {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (event) => {
-      let body = {
-        data: event.target.result,
-        mimetype: file.type,
-        name: file.name.split('.').slice(0, -1).join('-'),
-        md5: '5',
-      };
-      useFetch({ method: 'POST', url: 'recourse/upload', body });
+      // let body = {
+      //   data: event.target.result,
+      //   mimetype: file.type,
+      //   name: file.name.split('.').slice(0, -1).join('-'),
+      //   md5: '5',
+      // };
+
+      useUpload({ file: event.target.result, size: 5000, name: file.name });
+      // useFetch({ method: 'POST', url: 'recourse/upload', body });
     };
   }
 
