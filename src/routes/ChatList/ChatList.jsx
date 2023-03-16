@@ -8,6 +8,7 @@ import './ChatList.style.scss';
 export default function ChatList() {
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState('Loading...');
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     useFetch({ url: '' }).then((data) => setMessage(data.message));
@@ -26,7 +27,12 @@ export default function ChatList() {
       //   md5: '5',
       // };
 
-      useUpload({ file: event.target.result, size: 5000, name: file.name });
+      useUpload({
+        data: event.target.result.split(';base64,').pop(),
+        name: file.name.split('.').slice(0, -1).join('-'),
+        type: file.type,
+        setProgress,
+      });
       // useFetch({ method: 'POST', url: 'recourse/upload', body });
     };
   }
@@ -44,7 +50,13 @@ export default function ChatList() {
       <Link to={`chat`}>
         go to <span className="material-icons">chat_bubble</span>
       </Link>
+      <br />
+      <br />
       <input type="file" onChange={(event) => readFile(event.target.files[0] || null)} />
+      <br />
+      <progress id="file" value={progress} max="100">
+        {progress}%
+      </progress>
     </div>
   );
 }

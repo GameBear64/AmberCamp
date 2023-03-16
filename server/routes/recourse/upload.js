@@ -4,9 +4,10 @@ const { chunkUnderMeg } = require('../../helpers/utils');
 
 const validationSchema = joi.object({
   name: joi.required(),
-  mimetype: joi.required(),
+  mimetype: joi.string(),
   data: joi.required().custom((v, h) => chunkUnderMeg(v, h)),
   md5: joi.required(),
+  progress: joi.number(),
 });
 
 module.exports.post = [
@@ -19,12 +20,17 @@ module.exports.post = [
 
     // CHUNK SIZE 1MB
 
-    // upon receiving a chunk, create a master file if there is no matching md5 and store the chunk
+    // upon receiving a chunk, check if a md5 file exists
+    // if yes copy ignore the incoming chunks, create a master file and point to the same chunks (to save space)
+    // if no create a master file store the chunk
     // if there is a matching md5 just append another chunk
     // if req.body.last then perform the verify step and update verifiedIntegrity
 
     // later i upload to mongo where i use a hook to generate thumnails
 
-    return res.status(200).json('Updated');
+    setTimeout(() => {
+      console.log('Delayed for 1 second.');
+      return res.status(200).json('Updated');
+    }, 1000);
   },
 ];

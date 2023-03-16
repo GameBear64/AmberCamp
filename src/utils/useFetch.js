@@ -1,9 +1,9 @@
-export function useFetch({ url, requireAuth = true, method, body }) {
-  const baseURL =
-    import.meta.env.VITE_SERVER_URL == 'same'
-      ? `${window.location.protocol}//${window.location.hostname}`
-      : import.meta.env.VITE_SERVER_URL;
+const baseURL =
+  import.meta.env.VITE_SERVER_URL == 'same'
+    ? `${window.location.protocol}//${window.location.hostname}`
+    : import.meta.env.VITE_SERVER_URL;
 
+export function useFetch({ url, requireAuth = true, method, body }) {
   let options = {};
   if (requireAuth) {
     options = {
