@@ -15,7 +15,7 @@ export function useUpload({ data, name, type, size = 1000000 /* 1MB */, setProgr
 
     let { chunk, progress } = value;
     setProgress(progress);
-    // console.log('stuff', chunk.length, done, progress);
+
     return fetch(`${baseURL}:${import.meta.env.VITE_SERVER_PORT}/recourse/upload`, {
       headers: {
         jwt: window.localStorage.getItem('jwt'),

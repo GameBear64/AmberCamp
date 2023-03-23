@@ -2,6 +2,9 @@ const joi = require('joi');
 const { slugifyField, base64ToBuffer } = require('../../helpers/middleware');
 const { chunkUnderMeg } = require('../../helpers/utils');
 
+const { MediaModel } = require('../../models/Media');
+// const { MediaChunkModel } = require('../../models/MediaChunk');
+
 const validationSchema = joi.object({
   name: joi.string().required(),
   mimetype: joi.string().required(),
@@ -14,9 +17,17 @@ module.exports.post = [
   slugifyField('name'),
   base64ToBuffer('data'),
   async (req, res) => {
-    console.log(req.body.name);
     let validation = validationSchema.validate(req.body);
     if (validation.error) return res.status(400).json(validation.error.details[0].message);
+
+    let existingFile = await MediaModel.findOne({ md5: req.body.md5 });
+
+    if (existingFile) {
+      console.log('i have it ', existingFile);
+    } else {
+      let a = await MediaModel.create(req.body);
+      console.log(a);
+    }
 
     // CHUNK SIZE 1MB
 

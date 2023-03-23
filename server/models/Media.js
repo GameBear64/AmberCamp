@@ -3,6 +3,10 @@ const sharp = require('sharp');
 
 const mediaSchema = new mongoose.Schema(
   {
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
     name: {
       type: String,
       required: true,
@@ -37,29 +41,29 @@ const mediaSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-mediaSchema.pre('save', async function (next) {
-  if (this.isNew) {
-    // need a way to get video thumbnails
-    if (this.mimetype.includes('image')) {
-      sharp(this.data)
-        .resize(400, 400, { fit: 'inside' })
-        .toBuffer()
-        .then((tbn) => {
-          this.thumbnail = tbn;
-          return tbn;
-        })
-        .then((buff) => {
-          sharp(buff)
-            .resize(100, 100, { fit: 'inside' })
-            .toBuffer()
-            .then((sTbn) => {
-              this.smallThumbnail = sTbn;
-            });
-        });
-    }
-  }
+// mediaSchema.pre('save', async function (next) {
+//   if (this.isNew) {
+//     // need a way to get video thumbnails
+//     if (this.mimetype.includes('image')) {
+//       sharp(this.data)
+//         .resize(400, 400, { fit: 'inside' })
+//         .toBuffer()
+//         .then((tbn) => {
+//           this.thumbnail = tbn;
+//           return tbn;
+//         })
+//         .then((buff) => {
+//           sharp(buff)
+//             .resize(100, 100, { fit: 'inside' })
+//             .toBuffer()
+//             .then((sTbn) => {
+//               this.smallThumbnail = sTbn;
+//             });
+//         });
+//     }
+//   }
 
-  next();
-});
+//   next();
+// });
 
 exports.MediaModel = mongoose.model('Media', mediaSchema);
