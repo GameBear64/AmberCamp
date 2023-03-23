@@ -3,11 +3,11 @@ const { slugifyField, base64ToBuffer } = require('../../helpers/middleware');
 const { chunkUnderMeg } = require('../../helpers/utils');
 
 const validationSchema = joi.object({
-  name: joi.required(),
-  mimetype: joi.string(),
-  data: joi.required().custom((v, h) => chunkUnderMeg(v, h)),
-  md5: joi.required(),
-  progress: joi.number(),
+  name: joi.string().required(),
+  mimetype: joi.string().required(),
+  data: joi.custom(chunkUnderMeg).required(),
+  md5: joi.string().required(),
+  progress: joi.number().required(),
 });
 
 module.exports.post = [

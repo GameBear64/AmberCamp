@@ -52,7 +52,12 @@ exports.checkAuth = async (req, res, next) => {
 };
 
 exports.base64ToBuffer = (field) => (req, res, next) => {
-  req.body[field] = Buffer.from(req.body?.[field]?.split(';base64,')?.pop(), 'base64');
+  if (req.body[field].includes(';base64,')) {
+    req.body[field] = req.body?.[field]?.split(';base64,')?.pop();
+  }
+
+  req.body[field] = Buffer.from(req.body?.[field], 'base64');
+
   next();
 };
 
