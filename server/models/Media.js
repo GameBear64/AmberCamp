@@ -19,10 +19,6 @@ const mediaSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    verifiedIntegrity: {
-      type: Boolean,
-      default: false,
-    },
     thumbnail: {
       type: Buffer,
       select: false,
@@ -40,6 +36,8 @@ const mediaSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+mediaSchema.methods.generateThumb = async function () {};
 
 // mediaSchema.pre('save', async function (next) {
 //   if (this.isNew) {

@@ -33,6 +33,7 @@ specifiers:
   rollup-plugin-react-scoped-css: ^0.8.2
   sass: ^1.58.3
   sharp: ^0.31.3
+  simple-thumbnail: ^1.6.5
   socket.io: ^4.6.1
   spark-md5: ^3.0.2
   styled-components: ^5.3.6
@@ -60,6 +61,7 @@ dependencies:
   react-router-dom: 6.8.1_biqbaboplfbrettd7655fr4n2y
   react-twemoji: 0.5.0_react@18.2.0
   sharp: 0.31.3
+  simple-thumbnail: 1.6.5
   socket.io: 4.6.1
   spark-md5: 3.0.2
   styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
@@ -2415,6 +2417,15 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
+  /duplexify/4.1.2:
+    resolution: {integrity: sha512-fz3OjcNCHmRP12MJoZMPglx8m4rrFP8rovnk4vT8Fs+aonZoCwGg10dSsQsfP/E62eZcPTMSMP6686fu9Qlqtw==}
+    dependencies:
+      end-of-stream: 1.4.4
+      inherits: 2.0.4
+      readable-stream: 3.6.0
+      stream-shift: 1.0.1
+    dev: false
+
   /ecdsa-sig-formatter/1.0.11:
     resolution: {integrity: sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==}
     dependencies:
@@ -4500,6 +4511,12 @@ packages:
       is-arrayish: 0.3.2
     dev: false
 
+  /simple-thumbnail/1.6.5:
+    resolution: {integrity: sha512-HWN6oNyfvMWrwCW6CiVW5k1LUyl8neiim4Tx7v5FjvGEZM3rZpoKy3xEywrdEGvVlSzHQsaINp18eP7A7YYRiA==}
+    dependencies:
+      duplexify: 4.1.2
+    dev: false
+
   /simple-update-notifier/1.1.0:
     resolution: {integrity: sha512-VpsrsJSUcJEseSbMHkrsrAVSdvVS5I96Qo1QAQ4FxQ9wXFcB+pjj7FB7/us9+GcgfW4ziHtYMc1J0PLczb55mg==}
     engines: {node: '>=8.10.0'}
@@ -4583,6 +4600,10 @@ packages:
   /statuses/2.0.1:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
     engines: {node: '>= 0.8'}
+    dev: false
+
+  /stream-shift/1.0.1:
+    resolution: {integrity: sha512-AiisoFqQ0vbGcZgQPY1cdP2I76glaVA/RauYR4G4thNFgkTqr90yXTo4LYX60Jl+sIlPNHHdGSwo01AvbKUSVQ==}
     dev: false
 
   /string-width/4.2.3:
