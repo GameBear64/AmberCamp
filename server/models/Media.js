@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
-const sharp = require('sharp');
+const fs = require('fs');
+
+const ffmpeg = require('fluent-ffmpeg');
+const ffmpegPath = require('ffmpeg-static');
+ffmpeg.setFfmpegPath(ffmpegPath);
 
 const mediaSchema = new mongoose.Schema(
   {
@@ -11,57 +15,21 @@ const mediaSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    mimetype: {
-      type: String,
-      required: true,
-    },
     md5: {
       type: String,
       required: true,
     },
-    thumbnail: {
-      type: Buffer,
-      select: false,
+    path: String,
+    thumbnail: String,
+    smallThumbnail: String,
+    track: {
+      type: Boolean,
+      default: false,
     },
-    smallThumbnail: {
-      type: Buffer,
-      select: false,
-    },
-    chunks: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'MediaChunk',
-      },
-    ],
   },
   { timestamps: true }
 );
 
-mediaSchema.methods.generateThumb = async function () {};
-
-// mediaSchema.pre('save', async function (next) {
-//   if (this.isNew) {
-//     // need a way to get video thumbnails
-//     if (this.mimetype.includes('image')) {
-//       sharp(this.data)
-//         .resize(400, 400, { fit: 'inside' })
-//         .toBuffer()
-//         .then((tbn) => {
-//           this.thumbnail = tbn;
-//           return tbn;
-//         })
-//         .then((buff) => {
-//           sharp(buff)
-//             .resize(100, 100, { fit: 'inside' })
-//             .toBuffer()
-//             .then((sTbn) => {
-//               this.smallThumbnail = sTbn;
-//             });
-//         });
-//     }
-//   }
-
-//   next();
-// });
+mediaSchema.methods.generateThumbnail = async function ({ medium = true, small = true }) {};
 
 exports.MediaModel = mongoose.model('Media', mediaSchema);

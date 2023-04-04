@@ -14,7 +14,8 @@ export function useUpload({ data, name, type, size = 1000000 /* 1MB */, setProgr
     if (done) return 'Done';
 
     let { chunk, progress } = value;
-    setProgress(progress);
+    let [_currentChunk, progressPercentage] = progress.split('-');
+    setProgress(progressPercentage);
 
     return fetch(`${baseURL}:${import.meta.env.VITE_SERVER_PORT}/recourse/upload`, {
       headers: {
