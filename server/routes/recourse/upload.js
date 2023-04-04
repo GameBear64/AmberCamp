@@ -1,13 +1,13 @@
 const joi = require('joi');
 const fs = require('fs').promises;
 const { slugifyField, base64ToBuffer } = require('../../helpers/middleware');
-const { chunkUnderMeg, typeFromMime } = require('../../helpers/utils');
+const { chunkUnderMeg, typeFromMime, getCode } = require('../../helpers/utils');
 
 const { MediaModel } = require('../../models/Media');
 
 const validationSchema = joi.object({
-  name: joi.string().required(),
-  mimetype: joi.string().required(),
+  name: joi.string().max(240).required(),
+  type: joi.string().max(10).regex(/\w+/).required(),
   data: joi.custom(chunkUnderMeg).required(),
   md5: joi.string().required(),
   progress: joi
@@ -17,10 +17,11 @@ const validationSchema = joi.object({
 });
 
 async function createMasterFile(currentFile, req) {
-  if (!currentFile) {
+  if (!currentFile || !currentFile?.thumbnail) {
     return await MediaModel.create({
       ...req.body,
       author: req.apiUserId,
+      key: getCode(10),
     });
   }
 
@@ -30,6 +31,7 @@ async function createMasterFile(currentFile, req) {
     return await MediaModel.create({
       ...req.body,
       author: req.apiUserId,
+      key: getCode(10),
     });
   }
 }
@@ -41,9 +43,8 @@ module.exports.post = [
     let validation = validationSchema.validate(req.body);
     if (validation.error) return res.status(400).json(validation.error.details[0].message);
 
-    let { name, mimetype, data, md5, progress } = req.body;
+    let { name, type, data, md5, progress } = req.body;
     let [currentChunk, progressPercentage] = progress.split('-');
-    let filetype = typeFromMime(mimetype);
     let userPath = `uploads/${req.apiUserId}`;
 
     let currentFile = await MediaModel.findOne({ md5 });
@@ -51,9 +52,11 @@ module.exports.post = [
     if (currentChunk == 1) currentFile = await createMasterFile(currentFile, req);
     if (!currentFile) return res.status(412).json('Incorrect payload sequence');
 
-    let filePath = `${userPath}/${name}#${md5}.${filetype}`;
+    let filePath = `${userPath}/${name}.${type}`;
     await fs.stat(userPath).catch(async () => await fs.mkdir(userPath));
     fs.appendFile(filePath, data);
+
+    await currentFile.updateOne({ path: filePath });
 
     if (progressPercentage == 100) {
       // currentFile.verifyIntegrity();

@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
-const fs = require('fs');
-
-const ffmpeg = require('fluent-ffmpeg');
-const ffmpegPath = require('ffmpeg-static');
-ffmpeg.setFfmpegPath(ffmpegPath);
+// const fs = require('fs');
 
 const mediaSchema = new mongoose.Schema(
   {
@@ -20,6 +16,10 @@ const mediaSchema = new mongoose.Schema(
       required: true,
     },
     path: String,
+    key: {
+      type: String,
+      required: true,
+    },
     thumbnail: String,
     smallThumbnail: String,
     track: {

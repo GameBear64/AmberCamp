@@ -20,20 +20,11 @@ export default function ChatList() {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (event) => {
-      // let body = {
-      //   data: event.target.result,
-      //   mimetype: file.type,
-      //   name: file.name.split('.').slice(0, -1).join('-'),
-      //   md5: '5',
-      // };
-
       useUpload({
         data: event.target.result.split(';base64,').pop(),
-        name: file.name.split('.').slice(0, -1).join('-'),
-        type: file.type,
+        name: file.name,
         setProgress,
       });
-      // useFetch({ method: 'POST', url: 'recourse/upload', body });
     };
   }
 

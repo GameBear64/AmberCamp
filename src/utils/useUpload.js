@@ -6,7 +6,7 @@ const baseURL =
     ? `${window.location.protocol}//${window.location.hostname}`
     : import.meta.env.VITE_SERVER_URL;
 
-export function useUpload({ data, name, type, size = 1000000 /* 1MB */, setProgress = () => {} }) {
+export function useUpload({ data, name, size = 1000000 /* 1MB */, setProgress = () => {} }) {
   let md5 = getMD5.hash(data);
   let chunkGenerator = chunkBuffer(data, size);
 
@@ -24,9 +24,9 @@ export function useUpload({ data, name, type, size = 1000000 /* 1MB */, setProgr
       },
       method: 'POST',
       body: JSON.stringify({
-        name,
+        name: name.split('.').slice(0, -1).join('.'),
+        type: name.split('.').pop(),
         data: chunk,
-        mimetype: type,
         md5,
         progress,
       }),
