@@ -37,8 +37,12 @@ const mediaSchema = new mongoose.Schema(
       default: false,
     },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
+mediaSchema.virtual('type').get(function () {
+  return this.path.toString().split('.').pop();
+});
 
 mediaSchema.methods.verifyIntegrity = async function () {
   const internalMD5 = await fs
@@ -50,10 +54,9 @@ mediaSchema.methods.verifyIntegrity = async function () {
 };
 
 mediaSchema.methods.generateThumbnail = async function () {
-  const type = this.path.toString().split('.').pop(); // into virtual
   const thumbFilePath = `uploads/${this.author}/thumbs/${this.md5}-thumb.png`;
 
-  if (videoExtensions.includes(type)) {
+  if (videoExtensions.includes(this.type)) {
     const tempFilePath = `uploads/${this.author}/thumbs/${this.md5}-temp.png`;
 
     // genning a 300x? so sharp has less to process afterwards, sharp is like a safeguard for too high images
@@ -62,19 +65,23 @@ mediaSchema.methods.generateThumbnail = async function () {
     await fs.rm(tempFilePath);
   }
 
-  if (imageExtensions.includes(type)) {
+  if (imageExtensions.includes(this.type)) {
     await sharp(this.path).resize(300, 300, { fit: 'inside' }).toFile(thumbFilePath);
   }
 
-  // this.thumbnail = thumbFilePath;
+  this.thumbnail = thumbFilePath;
+  this.save();
 };
 
 mediaSchema.methods.generateIcon = async function () {
-  let type = this.path.toString().split('.').pop(); // into virtual
+  const thumbFilePath = `uploads/${this.author}/thumbs/${this.md5}-icon.png`;
 
-  if (imageExtensions.includes(type)) {
-    return sharp(this.path).resize(80, 80, { fit: 'inside' }).toFile(`uploads/${this.author}/thumbs/${this.md5}-icon.png`);
+  if (imageExtensions.includes(this.type)) {
+    return sharp(this.path).resize(80, 80, { fit: 'inside' }).toFile(thumbFilePath);
   }
+
+  this.thumbnail = thumbFilePath;
+  this.save();
 };
 
 exports.MediaModel = mongoose.model('Media', mediaSchema);

@@ -6,7 +6,12 @@ const { chunkUnderMeg, getCode } = require('../../helpers/utils');
 
 const { MediaModel } = require('../../models/Media');
 
-const validationSchema = joi.object({
+const getSchema = joi.object({
+  id: joi.string().required(),
+  key: joi.string().length(20).required(),
+});
+
+const postSchema = joi.object({
   name: joi.string().max(240).required(),
   type: joi.string().max(10).regex(/\w+/).required(), // TODO: max should be 255 of combined type + name
   data: joi.custom(chunkUnderMeg).required(),
@@ -26,7 +31,7 @@ async function createMasterFile(currentFile, userPath, filePath, req) {
   const newMedia = {
     ...req.body,
     author: req.apiUserId,
-    key: getCode(10),
+    key: getCode(20),
     path: filePath,
   };
 
@@ -63,11 +68,26 @@ async function verifyAndThumb(currentFile, filePath, res) {
   return res.status(200).json();
 }
 
+// module.exports.get = async (req, res) => {
+//   let validation = getSchema.validate(req.body);
+//   if (validation.error) return res.status(400).json(validation.error.details[0].message);
+
+//   let videoPath = await MediaModel.findOne({ md5 });
+
+//   const fileSize = fs.statSync(videoPath).size;
+//   const head = {
+//     'Content-Length': fileSize,
+//     'Content-Type': 'video/mp4',
+//   };
+//   res.writeHead(200, head);
+//   fs.createReadStream(videoPath).pipe(res);
+// };
+
 module.exports.post = [
   slugifyField('name'),
   base64ToBuffer('data'),
   async (req, res) => {
-    let validation = validationSchema.validate(req.body);
+    let validation = postSchema.validate(req.body);
     if (validation.error) return res.status(400).json(validation.error.details[0].message);
 
     let { name, type, data, md5, progress } = req.body;
@@ -84,8 +104,7 @@ module.exports.post = [
     try {
       await fs.appendFile(filePath, data);
     } catch (error) {
-      // if the file is code or executable it will be scanned by the OS's antivirus
-      // file is "busy" while it is being scanned
+      // if the file is code or executable it will be scanned by the OS's antivirus making it busy aka used by another
       if (error.code == 'EBUSY') return res.status(406).json('File not trusted');
       return await verifyAndThumb(currentFile, filePath, res);
     }
