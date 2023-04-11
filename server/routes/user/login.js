@@ -2,6 +2,7 @@ const joi = require('joi');
 const throttle = require('express-throttle');
 const { UserModel } = require('../../models/User');
 const { createJWTCookie, storedUserFields } = require('../../helpers/utils');
+const { joiValidate } = require('../../helpers/middleware');
 
 const validationSchema = joi.object({
   email: joi.string().min(10).max(255).required(),
@@ -10,10 +11,8 @@ const validationSchema = joi.object({
 
 module.exports.post = [
   throttle({ burst: 5, period: '10s' }),
+  joiValidate(validationSchema),
   async (req, res) => {
-    let validation = validationSchema.validate(req.body);
-    if (validation.error) return res.status(400).json(validation.error.details[0].message);
-
     let userAttempting = await UserModel.findOne({ email: req.body.email }).select('+password');
     if (!userAttempting) return res.status(404).json('User does not exists');
 

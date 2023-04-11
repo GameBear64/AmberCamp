@@ -9,6 +9,7 @@ export default function ChatList() {
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState('Loading...');
   const [progress, setProgress] = useState(0);
+  const [image, setImage] = useState({ id: null, key: null, mimetype: null });
 
   useEffect(() => {
     useFetch({ url: '' }).then((data) => setMessage(data.message));
@@ -23,8 +24,9 @@ export default function ChatList() {
       useUpload({
         data: event.target.result.split(';base64,').pop(),
         name: file.name,
+        mimetype: file.type,
         setProgress,
-      });
+      }).then((img) => setImage({ ...img, mimetype: file.type }));
     };
   }
 
@@ -48,6 +50,7 @@ export default function ChatList() {
       <progress id="file" value={progress} max="100">
         {progress}%
       </progress>
+      {image?.key && <img src={`http://localhost:3030/recourse/${image?.key}/${image?.id}?size=250`} alt="" />}
     </div>
   );
 }

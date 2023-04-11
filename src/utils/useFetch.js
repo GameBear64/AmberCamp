@@ -4,11 +4,12 @@ const baseURL =
     : import.meta.env.VITE_SERVER_URL;
 
 export function useFetch({ url, requireAuth = true, method, body }) {
-  let options = {};
+  let options = {
+    method,
+    body: JSON.stringify(body),
+  };
   if (requireAuth) {
     options = {
-      method,
-      body: JSON.stringify(body),
       headers: {
         jwt: window.localStorage.getItem('jwt'),
         'content-type': 'application/json',

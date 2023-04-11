@@ -29,7 +29,7 @@ exports.checkAuth = async (req, res, next) => {
   if (isNoAuthRoute) return next();
 
   try {
-    let decoded = jwt.verify(req.headers.jwt, process.env.SECRET);
+    let decoded = jwt.verify(req.headers?.jwt || req.cookies?.jwt, process.env.SECRET);
     let currentUser = await UserModel.exists({ _id: decoded.id }).select('+passwordChangedAt');
     // update activity status here whenever user passes trough - use on frontend for "last online" timestamp
 
@@ -37,8 +37,7 @@ exports.checkAuth = async (req, res, next) => {
 
     if (currentUser?.passwordChangedAt) {
       let lastChanged = currentUser.passwordChangedAt.getTime() / 1000;
-      if (decoded.iat < lastChanged)
-        return res.status(401).json({ error: 'User recently changed password! Please log in again.' });
+      if (decoded.iat < lastChanged) return res.status(401).json({ error: 'User recently changed password! Please log in again.' });
     }
 
     req.apiUserId = decoded.id;
@@ -49,7 +48,7 @@ exports.checkAuth = async (req, res, next) => {
 };
 
 exports.base64ToBuffer = (field) => (req, res, next) => {
-  if (req.body[field].includes(';base64,')) {
+  if (req.body[field]?.includes(';base64,')) {
     req.body[field] = req.body?.[field]?.split(';base64,')?.pop();
   }
 
@@ -60,5 +59,18 @@ exports.base64ToBuffer = (field) => (req, res, next) => {
 
 exports.slugifyField = (field) => (req, res, next) => {
   req.body[field] = slugifyString(req.body?.[field]);
+  next();
+};
+
+exports.noBodyChanges = () => (req, res, next) => {
+  if (Object.keys(req.body).length === 0) return res.json(200);
+  next();
+};
+
+// prettier-ignore
+exports.joiValidate = (schema, realm = 'body') => (req, res, next) => {
+  let validation = schema.validate(req[realm]);
+  if (validation.error) return res.status(400).json(validation.error.details[0].message);
+
   next();
 };

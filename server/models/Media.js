@@ -4,9 +4,8 @@ const fs = require('fs').promises;
 
 const ffmpeg = require('ffmpeg-static');
 const genThumbnail = require('simple-thumbnail');
-const sharp = require('sharp');
 
-const { videoExtensions, imageExtensions } = require('../helpers/utils');
+const { videoExtensions } = require('../helpers/utils');
 
 const mediaSchema = new mongoose.Schema(
   {
@@ -15,6 +14,10 @@ const mediaSchema = new mongoose.Schema(
       ref: 'User',
     },
     name: {
+      type: String,
+      required: true,
+    },
+    mimetype: {
       type: String,
       required: true,
     },
@@ -31,7 +34,10 @@ const mediaSchema = new mongoose.Schema(
       required: true,
     },
     thumbnail: String,
-    icon: String,
+    done: {
+      type: Boolean,
+      default: false,
+    },
     track: {
       type: Boolean,
       default: false,
@@ -53,35 +59,14 @@ mediaSchema.methods.verifyIntegrity = async function () {
   return internalMD5 == this.md5;
 };
 
-mediaSchema.methods.generateThumbnail = async function () {
-  const thumbFilePath = `uploads/${this.author}/thumbs/${this.md5}-thumb.png`;
+mediaSchema.pre('save', async function (next) {
+  if (this.done && videoExtensions.includes(this.type)) {
+    const thumbFilePath = `uploads/${this.author}/${this.md5}.png`;
+    await genThumbnail(this.path, thumbFilePath, '500x?', { path: ffmpeg });
 
-  if (videoExtensions.includes(this.type)) {
-    const tempFilePath = `uploads/${this.author}/thumbs/${this.md5}-temp.png`;
-
-    // genning a 300x? so sharp has less to process afterwards, sharp is like a safeguard for too high images
-    await genThumbnail(this.path, tempFilePath, '300x?', { path: ffmpeg });
-    await sharp(tempFilePath).resize(300, 300, { fit: 'inside' }).toFile(thumbFilePath);
-    await fs.rm(tempFilePath);
+    this.thumbnail = thumbFilePath;
   }
-
-  if (imageExtensions.includes(this.type)) {
-    await sharp(this.path).resize(300, 300, { fit: 'inside' }).toFile(thumbFilePath);
-  }
-
-  this.thumbnail = thumbFilePath;
-  this.save();
-};
-
-mediaSchema.methods.generateIcon = async function () {
-  const thumbFilePath = `uploads/${this.author}/thumbs/${this.md5}-icon.png`;
-
-  if (imageExtensions.includes(this.type)) {
-    return sharp(this.path).resize(80, 80, { fit: 'inside' }).toFile(thumbFilePath);
-  }
-
-  this.thumbnail = thumbFilePath;
-  this.save();
-};
+  next();
+});
 
 exports.MediaModel = mongoose.model('Media', mediaSchema);
