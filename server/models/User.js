@@ -96,11 +96,14 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-userSchema.pre(/^delete/, async function (next) {
-  const userDocument = await this.model.findOne(this.getQuery()).select('settings');
-  await PreferencesModel.deleteOne({ _id: userDocument.settings });
+userSchema.pre(
+  /^delete/,
+  /*{ document: true, query: false },*/ async function (next) {
+    const userDocument = await this.model.findOne(this.getQuery()).select('settings');
+    await PreferencesModel.deleteOne({ _id: userDocument.settings });
 
-  next();
-});
+    next();
+  }
+);
 
 exports.UserModel = mongoose.model('User', userSchema);

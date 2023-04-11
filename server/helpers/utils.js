@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const ObjectId = require('mongoose').Types.ObjectId;
 const codes = require('referral-codes');
+const ffmpegPath = require('ffmpeg-static');
+const { spawn } = require('child_process');
 
 exports.createJWTCookie = (user) => {
   let expireAt = 3 * 30 * 24 * 60 * 60; /*3 months*/
@@ -51,3 +53,10 @@ exports.getCode = (length) => codes.generate({ length, charset: '0123456789abcde
 
 exports.videoExtensions = ['mp4', 'avi', 'mov', 'wmv', 'flv', 'mpeg', 'mkv', 'webm'];
 exports.imageExtensions = ['jpg', 'jpeg', 'webp', 'png', 'gif', 'avif', 'tiff', 'svg'];
+
+// https://stackoverflow.com/a/32402438/7149508
+exports.wildcardMatch = (wildcard, str) => {
+  let w = wildcard.replace(/[.+^${}()|[\]\\]/g, '\\$&'); // regexp escape
+  const re = new RegExp(`^${w.replace(/\*/g, '.*').replace(/\?/g, '.')}$`, 'i');
+  return re.test(str); // remove last 'i' above to have case sensitive
+};

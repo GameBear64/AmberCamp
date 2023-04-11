@@ -15,11 +15,13 @@ const sizeQuerySchema = joi.object({
   size: joi.number().max(500),
 });
 
+const turnSizeIntoNumberBeforeValidation = () => (req, res, next) => {
+  if (req.query?.size) req.query.size = Number(req.query.size);
+  next();
+};
+
 module.exports.get = [
-  (req, res, next) => {
-    if (req.query?.size) req.query.size = Number(req.query.size);
-    next();
-  },
+  turnSizeIntoNumberBeforeValidation(),
   joiValidate(getSchema, 'params'),
   joiValidate(sizeQuerySchema, 'query'),
   async (req, res) => {

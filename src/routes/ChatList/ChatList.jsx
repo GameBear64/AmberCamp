@@ -50,7 +50,7 @@ export default function ChatList() {
       <progress id="file" value={progress} max="100">
         {progress}%
       </progress>
-      {image?.key && <img src={`http://localhost:3030/recourse/${image?.key}/${image?.id}?size=250`} alt="" />}
+      {image?.key && <img src={`http://localhost:3030/recourse/${image?.id}/${image?.key}?size=250`} alt="" />}
     </div>
   );
 }

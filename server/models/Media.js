@@ -69,4 +69,12 @@ mediaSchema.pre('save', async function (next) {
   next();
 });
 
+mediaSchema.pre(/^delete/, { document: true, query: false }, async function (next) {
+  // TODO: determine if file should be deleted
+  await fs.rm(this.path);
+  if (this?.thumbnail) await fs.rm(this.thumbnail);
+
+  next();
+});
+
 exports.MediaModel = mongoose.model('Media', mediaSchema);

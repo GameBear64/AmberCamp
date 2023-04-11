@@ -19,10 +19,7 @@ const postSchema = joi.object({
 });
 
 async function createMasterFile(currentFile, userPath, filePath, req) {
-  await fs.stat(userPath).catch(async () => {
-    await fs.mkdir(userPath);
-    await fs.mkdir(`${userPath}/thumbs`);
-  });
+  await fs.stat(userPath).catch(async () => await fs.mkdir(userPath));
 
   const newMedia = {
     ...req.body,

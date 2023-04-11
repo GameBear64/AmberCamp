@@ -17,11 +17,9 @@ mongoose
 //============= Setup ==============
 const { router } = require('express-file-routing');
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
 const { trimBodyFields, checkAuth } = require('./helpers/middleware');
 
 app.use(cors());
-app.use(cookieParser());
 app.use(express.json({ limit: '100mb' }));
 app.use(trimBodyFields);
 app.use(checkAuth);

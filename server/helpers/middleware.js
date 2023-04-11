@@ -1,6 +1,6 @@
 const { UserModel } = require('../models/User');
 const jwt = require('jsonwebtoken');
-const { sanitizeHTML, slugifyString } = require('./utils');
+const { sanitizeHTML, slugifyString, wildcardMatch } = require('./utils');
 
 exports.trimBodyFields = (req, res, next) => {
   // https://www.npmjs.com/package/request_trimmer
@@ -22,14 +22,15 @@ exports.trimBodyFields = (req, res, next) => {
 let noAuthRoutes = [
   { path: '/user/login', methods: ['POST'] },
   { path: '/user/register', methods: ['POST'] },
+  { path: '/recourse/*/*', methods: ['GET'] },
 ];
 
 exports.checkAuth = async (req, res, next) => {
-  let isNoAuthRoute = noAuthRoutes.some((route) => route.path == req.path && route.methods.includes(req.method));
+  let isNoAuthRoute = noAuthRoutes.some((route) => wildcardMatch(route.path, req.path) && route.methods.includes(req.method));
   if (isNoAuthRoute) return next();
 
   try {
-    let decoded = jwt.verify(req.headers?.jwt || req.cookies?.jwt, process.env.SECRET);
+    let decoded = jwt.verify(req.headers?.jwt, process.env.SECRET);
     let currentUser = await UserModel.exists({ _id: decoded.id }).select('+passwordChangedAt');
     // update activity status here whenever user passes trough - use on frontend for "last online" timestamp
 
@@ -37,7 +38,8 @@ exports.checkAuth = async (req, res, next) => {
 
     if (currentUser?.passwordChangedAt) {
       let lastChanged = currentUser.passwordChangedAt.getTime() / 1000;
-      if (decoded.iat < lastChanged) return res.status(401).json({ error: 'User recently changed password! Please log in again.' });
+      if (decoded.iat < lastChanged)
+        return res.status(401).json({ error: 'User recently changed password! Please log in again.' });
     }
 
     req.apiUserId = decoded.id;
