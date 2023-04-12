@@ -23,7 +23,6 @@
     "express-file-routing": "^2.1.2",
     "express-throttle": "^2.0.0",
     "ffmpeg-static": "^5.1.0",
-    "fluent-ffmpeg": "^2.1.2",
     "joi": "^17.8.3",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.3",
