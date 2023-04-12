@@ -11,7 +11,7 @@ export async function useUpload({ data, name, mimetype, size = 1000000 /* 1MB */
   let chunkGenerator = chunkBuffer(data, size);
 
   function postChunk({ done, value }, rez) {
-    if (rez?.key && rez?.id) return rez;
+    if (rez?.key) return rez;
 
     let { chunk, progress } = value;
     let [_currentChunk, progressPercentage] = progress.split('-');

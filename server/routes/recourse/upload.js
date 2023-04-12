@@ -21,23 +21,14 @@ const postSchema = joi.object({
 async function createMasterFile(currentFile, userPath, filePath, req) {
   await fs.stat(userPath).catch(async () => await fs.mkdir(userPath));
 
-  const newMedia = {
-    ...req.body,
-    author: req.apiUserId,
-    key: getCode(20),
-    path: filePath,
-  };
-
   // file not found - create file
-  if (!currentFile) return await MediaModel.create(newMedia);
-
-  // it already exists and we should copy it over to save cpu power
-  if (currentFile?.done) {
+  if (!currentFile)
     return await MediaModel.create({
-      ...newMedia,
-      path: currentFile.toObject().path,
+      ...req.body,
+      author: req.apiUserId,
+      key: getCode(20),
+      path: filePath,
     });
-  }
 }
 
 // remember that you cannot use status returns after this
@@ -51,15 +42,26 @@ async function verifyAndThumb(currentFile, filePath, res) {
   currentFile.done = true;
   await currentFile.save();
 
-  return res.status(200).json({ id: currentFile._id, key: currentFile.key });
+  return res.status(200).json({ id: currentFile._id, key: currentFile.key, mimetype: currentFile.mimetype });
 }
 
 // remember that you cannot use status returns after this
-async function handleCopied(req, res, progressPercentage, md5) {
+async function handleCopy(req, res, currentFile, progressPercentage, currentChunk) {
+  if (currentChunk == 1) {
+    return await MediaModel.create({
+      ...req.body,
+      author: req.apiUserId,
+      key: getCode(20),
+      path: currentFile.toObject().path,
+      done: true,
+    });
+  }
+
   if (progressPercentage == 100) {
-    let latestFile = await MediaModel.findOne({ md5, author: req.apiUserId }, {}, { sort: { created_at: -1 } });
+    let latestFile = await MediaModel.findOne({ md5: currentFile.md5, author: req.apiUserId }, {}, { sort: { created_at: -1 } });
     return await verifyAndThumb(latestFile, latestFile.path, res);
   }
+
   return res.status(200).json();
 }
 
@@ -75,11 +77,11 @@ module.exports.post = [
 
     let currentFile = await MediaModel.findOne({ md5 });
 
+    // if the file is found, it is done and it should only be copied over
+    // when file is copied, don't let the user know it is copied by sending a response at the first chunk
+    if (currentFile?.done) return handleCopy(req, res, currentFile, progressPercentage, currentChunk);
     if (currentChunk == 1) currentFile = await createMasterFile(currentFile, userPath, filePath, req);
     if (!currentFile) return res.status(412).json('Incorrect payload sequence');
-
-    // when file is copied, dont let the user know it is copied by sending a response at the first chunk
-    if (currentChunk > 1 && currentFile.done) return handleCopied(req, res, progressPercentage, md5);
 
     try {
       await fs.appendFile(filePath, data);

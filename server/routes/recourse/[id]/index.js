@@ -1,5 +1,3 @@
-const fs = require('fs').promises;
-
 const { MediaModel } = require('../../../models/Media');
 
 module.exports.delete = async (req, res) => {

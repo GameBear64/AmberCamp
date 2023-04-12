@@ -70,9 +70,12 @@ mediaSchema.pre('save', async function (next) {
 });
 
 mediaSchema.pre(/^delete/, { document: true, query: false }, async function (next) {
-  // TODO: determine if file should be deleted
-  await fs.rm(this.path);
-  if (this?.thumbnail) await fs.rm(this.thumbnail);
+  const usageCount = await this.constructor.countDocuments({ md5: this.md5 });
+
+  if (usageCount === 1) {
+    await fs.rm(this.path);
+    if (this?.thumbnail) await fs.rm(this.thumbnail);
+  }
 
   next();
 });

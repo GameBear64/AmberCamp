@@ -96,14 +96,11 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-userSchema.pre(
-  /^delete/,
-  /*{ document: true, query: false },*/ async function (next) {
-    const userDocument = await this.model.findOne(this.getQuery()).select('settings');
-    await PreferencesModel.deleteOne({ _id: userDocument.settings });
+// https://github.com/Automattic/mongoose/issues/8971#issuecomment-638282153
+userSchema.pre(/^delete/, { document: true, query: false }, async function (next) {
+  await PreferencesModel.deleteOne({ _id: this.settings });
 
-    next();
-  }
-);
+  next();
+});
 
 exports.UserModel = mongoose.model('User', userSchema);
