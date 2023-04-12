@@ -1,13 +1,15 @@
 const joi = require('joi');
 const { UserModel } = require('../../models/User');
 
+const { joiValidate } = require('../../helpers/middleware');
+
 module.exports.get = async (req, res) => {
   let user = await UserModel.findOne({ _id: req.params.id });
-  if (!user) return res.status(404).send('User not found');
+  if (!user) return res.status(404).json('User not found');
 
   let relationship = await user.getRelationship(req.apiUserId);
 
-  return res.status(200).send({ ...user.toObject(), relationship });
+  return res.status(200).json({ ...user.toObject(), relationship });
 };
 
 const validationSchema = joi.object({
@@ -15,17 +17,17 @@ const validationSchema = joi.object({
   password: joi.string().min(8).max(255).required(),
 });
 
-module.exports.post = async (req, res) => {
-  let validation = validationSchema.validate(req.body);
-  if (validation.error) return res.status(400).send(validation.error.details[0].message);
+module.exports.post = [
+  joiValidate(validationSchema),
+  async (req, res) => {
+    let user = await UserModel.findOne({ _id: req.params.id });
+    if (!user) return res.status(404).json('User not found');
 
-  let user = await UserModel.findOne({ _id: req.params.id });
-  if (!user) return res.status(404).send('User not found');
+    let relationship = await user.getRelationship(req.apiUserId);
 
-  let relationship = await user.getRelationship(req.apiUserId);
+    let relStats = await relationship.updateOne({ ...req.body });
+    if (relStats.acknowledged == 0) return res.status(404).json('Could not update');
 
-  let relStats = await relationship.updateOne({ ...req.body });
-  if (relStats.acknowledged == 0) return res.status(404).send('Could not update');
-
-  return res.status(200).send('Updated');
-};
+    return res.status(200).json('Updated');
+  },
+];

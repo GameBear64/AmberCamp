@@ -1,14 +1,28 @@
+const joi = require('joi');
 const { UserModel } = require('../../models/User');
+const { joiValidate } = require('../../helpers/middleware');
+
+const validationSchema = joi.object({
+  password: joi.string().min(8).max(255).required(),
+});
 
 module.exports.get = async (req, res) => {
   let user = await UserModel.findOne({ _id: req.apiUserId });
-  if (!user) return res.status(404).send('User not found');
-  return res.status(200).send(user);
+  if (!user) return res.status(404).json('User not found');
+  return res.status(200).json(user);
 };
 
-module.exports.delete = async (req, res) => {
-  let rez = await UserModel.deleteOne({ _id: req.apiUserId });
-  if (rez.deletedCount == 0) return res.status(404).send('User not found');
+module.exports.delete = [
+  joiValidate(validationSchema),
+  async (req, res) => {
+    let user = await UserModel.findOne({ _id: req.apiUserId }).select('+password +settings');
+    if (!user) return res.status(404).json('User not found');
 
-  res.status(200).send('User deleted');
-};
+    let validPassword = await user.validatePassword(req.body?.password);
+    if (!validPassword) return res.status(404).json('Incorrect password');
+
+    await user.deleteOne();
+
+    res.status(200).json('User deleted');
+  },
+];

@@ -1,21 +1,22 @@
 const joi = require('joi');
 const { UserModel } = require('../../../models/User');
 
+const { noBodyChanges, joiValidate } = require('../../../helpers/middleware');
+
 const validationSchema = joi.object({
   name: joi.string().min(3).max(30),
   biography: joi.string().max(256),
-  picture: joi.string().base64({ paddingRequired: false }),
-  background: joi.string().base64({ paddingRequired: false }),
+  picture: joi.string(),
+  background: joi.string(),
 });
 
-module.exports.patch = async (req, res) => {
-  if (Object.keys(req.body).length === 0) return res.send(200);
+module.exports.patch = [
+  noBodyChanges(),
+  joiValidate(validationSchema),
+  async (req, res) => {
+    let user = await UserModel.updateOne({ _id: req.apiUserId }, { ...req.body });
+    if (user.matchedCount == 0) return res.status(404).json('User not found');
 
-  let validation = validationSchema.validate(req.body);
-  if (validation.error) return res.status(400).send(validation.error.details[0].message);
-
-  let user = await UserModel.updateOne({ _id: req.apiUserId }, { ...req.body });
-  if (user.matchedCount == 0) return res.status(404).send('User not found');
-
-  return res.status(200).send('Updated');
-};
+    return res.status(200).json('Updated');
+  },
+];

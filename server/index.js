@@ -2,6 +2,11 @@
 const express = require('express');
 const app = express();
 
+// process.on('uncaughtException', function (err) {
+//   console.error(err.stack);
+//   return res.status(500).send('Something broke!');
+// });
+
 require('dotenv').config({ path: '../.env' });
 
 //============= Logger ==============
@@ -21,7 +26,6 @@ const { trimBodyFields, checkAuth } = require('./helpers/middleware');
 
 app.use(cors());
 app.use(express.json({ limit: '100mb' }));
-app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 app.use(trimBodyFields);
 app.use(checkAuth);
 

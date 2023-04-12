@@ -1,16 +1,34 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useFetch } from '../../utils/useFetch';
+import { useUpload } from '../../utils/useUpload';
 
 import './ChatList.style.scss';
 
 export default function ChatList() {
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState('Loading...');
+  const [progress, setProgress] = useState(0);
+  const [image, setImage] = useState({ id: null, key: null, mimetype: null });
 
   useEffect(() => {
-    useFetch({ url: '', requireAuth: false }).then((data) => setMessage(data.message));
+    useFetch({ url: '' }).then((data) => setMessage(data.message));
   }, []);
+
+  function readFile(file) {
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      useUpload({
+        data: event.target.result.split(';base64,').pop(),
+        name: file.name,
+        mimetype: file.type,
+        setProgress,
+      }).then((data) => setImage(data));
+    };
+  }
 
   return (
     <div className="App">
@@ -25,6 +43,17 @@ export default function ChatList() {
       <Link to={`chat`}>
         go to <span className="material-icons">chat_bubble</span>
       </Link>
+      <br />
+      <br />
+      <input type="file" onChange={(event) => readFile(event.target.files[0] || null)} />
+      <br />
+      <progress id="file" value={progress} max="100">
+        {progress}%
+      </progress>
+      {image?.mimetype?.includes('image') ||
+        (image?.mimetype?.includes('video') && image?.key && (
+          <img src={`http://localhost:3030/recourse/${image?.id}/${image?.key}?size=250`} alt="" />
+        ))}
     </div>
   );
 }

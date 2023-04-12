@@ -1,17 +1,20 @@
-export function useFetch({ url, requireAuth = true }) {
-  const baseURL =
-    import.meta.env.VITE_SERVER_URL == 'same'
-      ? `${window.location.protocol}//${window.location.hostname}`
-      : import.meta.env.VITE_SERVER_URL;
+const baseURL =
+  import.meta.env.VITE_SERVER_URL == 'same'
+    ? `${window.location.protocol}//${window.location.hostname}`
+    : import.meta.env.VITE_SERVER_URL;
 
-  let options = {};
+export function useFetch({ url, requireAuth = true, method, body }) {
+  let options = {
+    method,
+    body: JSON.stringify(body),
+  };
   if (requireAuth) {
     options = {
-      ...options,
       headers: {
-        jwt: JSON.parse(window.localStorage.getItem(import.meta.env.VITE_LOCAL_STORAGE_NAME)).jwt,
+        jwt: window.localStorage.getItem('jwt'),
         'content-type': 'application/json',
       },
+      ...options,
     };
   }
 

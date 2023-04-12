@@ -2,13 +2,13 @@ const ObjectId = require('mongoose').Types.ObjectId;
 const { UserModel } = require('../../../../models/User');
 
 module.exports.post = async (req, res) => {
-  if (!ObjectId.isValid(req.params.id)) return res.status(400).send('Invalid Id');
-  if (req.params.id == req.apiUserId) return res.status(418).send("That's just sad...");
+  if (!ObjectId.isValid(req.params.id)) return res.status(400).json('Invalid Id');
+  if (req.params.id == req.apiUserId) return res.status(418).json("That's just sad...");
 
   let user = await UserModel.findOne({ _id: req.apiUserId }).select('contacts pendingContacts');
   let friend = await UserModel.findOne({ _id: req.params.id }).select('contacts pendingContacts');
 
-  if (user.contacts.includes(req.params.id)) return res.status(409).send('Already friends');
+  if (user.contacts.includes(req.params.id)) return res.status(409).json('Already friends');
 
   if (user.pendingContacts.includes(req.params.id)) {
     //current user
@@ -21,7 +21,7 @@ module.exports.post = async (req, res) => {
   } else {
     let updatedUser = await friend.updateOne({ $push: { pendingContacts: req.apiUserId } }, { timestamps: false });
 
-    if (!updatedUser.acknowledged) return res.status(404).send('User not found');
+    if (!updatedUser.acknowledged) return res.status(404).json('User not found');
   }
-  return res.status(200).send();
+  return res.status(200).json();
 };
