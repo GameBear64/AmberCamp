@@ -16,7 +16,7 @@ const relationshipSchema = new mongoose.Schema({
     default: '',
   },
   notes: [], //could be more than one?
-  accent: {
+  accentColor: {
     type: String,
     default: '',
   },

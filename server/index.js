@@ -31,6 +31,13 @@ app.use(checkAuth);
 
 app.use('/', router());
 
+//=============== Docs ===============
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swagOptions = require('./swagger.json');
+const swaggerSpec = swaggerJsdoc(swagOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 //===== Listen on port #### =====
 app.listen(process.env.VITE_SERVER_PORT, () => {
   console.log(`Listening on http://localhost:${process.env.VITE_SERVER_PORT}/`);

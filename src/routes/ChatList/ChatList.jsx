@@ -45,6 +45,14 @@ export default function ChatList() {
       </Link>
       <br />
       <br />
+      <br />
+      <a href="http://localhost:3030/api-docs/#/" target="_blank" rel="noreferrer">
+        API Documentation
+      </a>
+      <br />
+      <br />
+      <br />
+      <br />
       <input type="file" onChange={(event) => readFile(event.target.files[0] || null)} />
       <br />
       <progress id="file" value={progress} max="100">
@@ -52,7 +60,7 @@ export default function ChatList() {
       </progress>
       {image?.mimetype?.includes('image') ||
         (image?.mimetype?.includes('video') && image?.key && (
-          <img src={`http://localhost:3030/recourse/${image?.id}/${image?.key}?size=250`} alt="" />
+          <img src={`http://localhost:3030/recourse/${image?.key}?size=250`} alt="" />
         ))}
     </div>
   );

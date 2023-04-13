@@ -13,7 +13,6 @@
     "lint": "npm run prettier && npm run eslint"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.9.3",
     "awesome-snackbar": "^2.0.7",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -23,14 +22,15 @@
     "express-file-routing": "^2.1.2",
     "express-throttle": "^2.0.0",
     "ffmpeg-static": "^5.1.0",
+    "i": "^0.3.7",
     "joi": "^17.8.3",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.3",
     "morgan": "^1.10.0",
+    "npm": "^9.6.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.2",
-    "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",
     "react-twemoji": "^0.5.0",
     "referral-codes": "^2.0.3",
@@ -38,7 +38,9 @@
     "simple-thumbnail": "^1.6.5",
     "socket.io": "^4.6.1",
     "spark-md5": "^3.0.2",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.6",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",

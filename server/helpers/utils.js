@@ -49,7 +49,7 @@ exports.slugifyString = (text) =>
 // TODO: make this into a separate middleware and include confusables
 exports.sanitizeHTML = (string) => string?.replace(/\\/g, '')?.replace(/</g, '&lt;')?.replace(/>/g, '&gt;'); //.replace(/&/g, '&amp;').replace(///g, '&#x2F;');
 
-exports.getCode = (length) => codes.generate({ length, charset: '0123456789abcdefghijklmnopqrstuvwxyz' })[0];
+exports.getCode = (length) => codes.generate({ length })[0];
 
 exports.videoExtensions = ['mp4', 'avi', 'mov', 'wmv', 'flv', 'mpeg', 'mkv', 'webm'];
 exports.imageExtensions = ['jpg', 'jpeg', 'webp', 'png', 'gif', 'avif', 'tiff', 'svg'];

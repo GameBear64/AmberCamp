@@ -1,23 +1,79 @@
-const ObjectId = require('mongoose').Types.ObjectId;
+/**
+ * @openapi
+ * /user/friend/remove/{id}:
+ *   post:
+ *     summary: Remove a friend from user's contacts
+ *     description: Removes the user with the specified ID as a friend.
+ *     tags:
+ *       - friends
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the user to remove from contacts.
+ *     responses:
+ *       '200':
+ *         description: Returns an empty response if the friend was removed successfully.
+ *       '400':
+ *         description: Returns an error message if the ID is invalid.
+ *         content:
+ *           application/json:
+ *             type: string
+ *             example: Invalid Id
+ *       '404':
+ *         description: Returns an error message if the user is not found.
+ *         content:
+ *           application/json:
+ *             type: string
+ *             example: User not found
+ *       '409':
+ *         description: Returns an error message if the users are already friends.
+ *         content:
+ *           application/json:
+ *             type: string
+ *             example: Can not remove someone not in your contacts
+ *       '418':
+ *         description: Returns an error message if the user tries to add themselves as a friend.
+ *         content:
+ *           application/json:
+ *             type: string
+ *             example: That's just sad...
+ */
+
+const joi = require('joi');
 const { UserModel } = require('../../../../models/User');
 
-module.exports.post = async (req, res) => {
-  if (!ObjectId.isValid(req.params.id)) return res.status(400).json('Invalid Id');
-  if (req.params.id == req.apiUserId) return res.status(418).json("That's just sad...");
+const { joiValidate } = require('../../../../helpers/middleware');
+const { isObjectID } = require('../../../../helpers/utils');
 
-  let user = await UserModel.findOne({ _id: req.apiUserId }).select('contacts pendingContacts');
-  let friend = await UserModel.findOne({ _id: req.params.id }).select('contacts pendingContacts');
+const validationSchema = joi.object({
+  id: joi.custom(isObjectID),
+});
 
-  if (!user.contacts.includes(req.params.id)) return res.status(409).json('Can not remove someone not in your contacts');
+module.exports.post = [
+  joiValidate(validationSchema, 'params'),
+  async (req, res) => {
+    if (req.params.id == req.apiUserId) return res.status(418).json("That's just sad...");
 
-  if (user.pendingContacts.includes(req.userInSession)) {
-    await friend.updateOne({ $pull: { pendingContacts: req.apiUserId } }, { timestamps: false });
-  } else {
-    //current user
-    await user.updateOne({ $pull: { contacts: req.params.id } }, { timestamps: false });
-    //user's friend
-    await friend.updateOne({ $pull: { contacts: req.apiUserId } }, { timestamps: false });
-  }
+    let user = await UserModel.findOne({ _id: req.apiUserId }).select('contacts pendingContacts');
+    let friend = await UserModel.findOne({ _id: req.params.id }).select('contacts pendingContacts');
+    if (!friend) return res.status(404).json('User not found');
 
-  return res.status(200).json();
-};
+    if (!user.contacts.includes(req.params.id)) return res.status(409).json('Can not remove someone not in your contacts');
+
+    if (user.pendingContacts.includes(req.userInSession)) {
+      await friend.updateOne({ $pull: { pendingContacts: req.apiUserId } }, { timestamps: false });
+    } else {
+      //current user
+      await user.updateOne({ $pull: { contacts: req.params.id } }, { timestamps: false });
+      //user's friend
+      await friend.updateOne({ $pull: { contacts: req.apiUserId } }, { timestamps: false });
+    }
+
+    return res.status(200).json();
+  },
+];

@@ -22,7 +22,8 @@ exports.trimBodyFields = (req, res, next) => {
 let noAuthRoutes = [
   { path: '/user/login', methods: ['POST'] },
   { path: '/user/register', methods: ['POST'] },
-  { path: '/recourse/*/*', methods: ['GET'] },
+  { path: '/recourse/*', methods: ['GET'] },
+  { path: '/api-docs/*', methods: ['GET'] },
 ];
 
 exports.checkAuth = async (req, res, next) => {
@@ -64,7 +65,7 @@ exports.slugifyField = (field) => (req, res, next) => {
   next();
 };
 
-exports.noBodyChanges = () => (req, res, next) => {
+exports.allowNoBodyChanges = () => (req, res, next) => {
   if (Object.keys(req.body).length === 0) return res.json(200);
   next();
 };

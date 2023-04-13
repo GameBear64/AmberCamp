@@ -1,3 +1,73 @@
+/**
+ * @swagger
+ * /recourse/upload:
+ *   post:
+ *     summary: Upload a file
+ *     description: Uploads a file and creates a MediaModel instance if it does not already exist.
+ *     tags:
+ *       - media
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 maxLength: 240
+ *               type:
+ *                 type: string
+ *                 maxLength: 10
+ *               mimetype:
+ *                 type: string
+ *               data:
+ *                 type: string
+ *                 format: binary
+ *               md5:
+ *                 type: string
+ *               progress:
+ *                 type: string
+ *                 pattern: '^\\d+-\\d+-\\d+$'
+ *           example:
+ *             name: example_file
+ *             type: txt
+ *             mimetype: text/plain
+ *             data: "VGhpcyBpcyBhIHRlc3QgZmlsZQ=="
+ *             md5: "05ac0e92b6c70e6ff4af4ea4f3c3d6d4"
+ *             progress: "1-50-1"
+ *     responses:
+ *       '200':
+ *         description: Returns an empty response if the file was uploaded successfully.
+ *       '201':
+ *         description: Returns the key and mimetype of the uploaded resource.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 key:
+ *                   type: string
+ *                   example: hg4ygkt38g2y84g237g7g3igifgjhsdgfilwyh
+ *                 mimetype:
+ *                   type: string
+ *                   example: image/png
+ *       '406':
+ *         description: Returns an error message if the file is not trusted.
+ *         content:
+ *           application/json:
+ *             type: string
+ *             example: File not trusted
+ *       '412':
+ *         description: Returns an error message if the payload sequence is incorrect.
+ *         content:
+ *           application/json:
+ *             type: string
+ *             example: Incorrect payload sequence
+ */
+
 const joi = require('joi');
 const fs = require('fs').promises;
 
@@ -26,7 +96,7 @@ async function createMasterFile(currentFile, userPath, filePath, req) {
     return await MediaModel.create({
       ...req.body,
       author: req.apiUserId,
-      key: getCode(20),
+      key: getCode(process.env.MEDIA_KEY_LEN),
       path: filePath,
     });
 }
@@ -42,7 +112,7 @@ async function verifyAndThumb(currentFile, filePath, res) {
   currentFile.done = true;
   await currentFile.save();
 
-  return res.status(200).json({ id: currentFile._id, key: currentFile.key, mimetype: currentFile.mimetype });
+  return res.status(201).json({ key: currentFile.key, mimetype: currentFile.mimetype });
 }
 
 // remember that you cannot use status returns after this
@@ -51,7 +121,7 @@ async function handleCopy(req, res, currentFile, progressPercentage, currentChun
     return await MediaModel.create({
       ...req.body,
       author: req.apiUserId,
-      key: getCode(20),
+      key: getCode(process.env.MEDIA_KEY_LEN),
       path: currentFile.toObject().path,
       done: true,
     });

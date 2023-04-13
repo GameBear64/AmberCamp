@@ -30,6 +30,7 @@ const mediaSchema = new mongoose.Schema(
       required: true,
     },
     key: {
+      // make this into _id and make it like 50 characters long to simplify population
       type: String,
       required: true,
     },
