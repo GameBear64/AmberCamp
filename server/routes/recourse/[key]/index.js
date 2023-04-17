@@ -1,5 +1,5 @@
 /**
- * @openapi
+ * @swagger
  * /resource/{key}:
  *   get:
  *     summary: Get a media file by key
