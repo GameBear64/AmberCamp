@@ -31,6 +31,10 @@ app.use(checkAuth);
 
 app.use('/', router());
 
+//=============== Docs ===============
+const { swagger } = require('./docs/swagger.js');
+swagger(app);
+
 //===== Listen on port #### =====
 app.listen(process.env.VITE_SERVER_PORT, () => {
   console.log(`Listening on http://localhost:${process.env.VITE_SERVER_PORT}/`);

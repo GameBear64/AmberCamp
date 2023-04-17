@@ -1,7 +1,40 @@
+/**
+ * @openapi
+ * /user/settings:
+ *   patch:
+ *     summary: Update user profile
+ *     description: Updates the profile information of a user.
+ *     tags:
+ *       - settings
+ *     security:
+ *       - ApiKeyAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 minLength: 3
+ *                 maxLength: 30
+ *               biography:
+ *                 type: string
+ *                 maxLength: 256
+ *               picture:
+ *                 type: string
+ *               background:
+ *                 type: string
+ *     responses:
+ *       '200':
+ *         description: Returns an empty response if the friend request was sent successfully.
+ */
+
 const joi = require('joi');
 const { UserModel } = require('../../../models/User');
 
-const { noBodyChanges, joiValidate } = require('../../../helpers/middleware');
+const { allowNoBodyChanges, joiValidate } = require('../../../helpers/middleware');
 
 const validationSchema = joi.object({
   name: joi.string().min(3).max(30),
@@ -11,12 +44,11 @@ const validationSchema = joi.object({
 });
 
 module.exports.patch = [
-  noBodyChanges(),
+  allowNoBodyChanges(),
   joiValidate(validationSchema),
   async (req, res) => {
-    let user = await UserModel.updateOne({ _id: req.apiUserId }, { ...req.body });
-    if (user.matchedCount == 0) return res.status(404).json('User not found');
+    await UserModel.updateOne({ _id: req.apiUserId }, { ...req.body });
 
-    return res.status(200).json('Updated');
+    return res.status(200).json();
   },
 ];

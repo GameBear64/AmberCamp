@@ -9,6 +9,10 @@ const { videoExtensions } = require('../helpers/utils');
 
 const mediaSchema = new mongoose.Schema(
   {
+    key: {
+      type: String,
+      required: true,
+    },
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
@@ -26,10 +30,6 @@ const mediaSchema = new mongoose.Schema(
       required: true,
     },
     path: {
-      type: String,
-      required: true,
-    },
-    key: {
       type: String,
       required: true,
     },

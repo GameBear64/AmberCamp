@@ -30,10 +30,14 @@ const userSchema = new mongoose.Schema(
       default: '',
     },
     picture: {
-      type: String, // TODO: Make it a picture ref later
+      type: String,
+      ref: 'Media',
+      localField: 'picture',
+      foreignField: 'key',
     },
     background: {
-      type: String, // TODO: Make it a picture ref later
+      type: String,
+      ref: 'Media',
     },
     contacts: [
       {
