@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken');
 const ObjectId = require('mongoose').Types.ObjectId;
 const codes = require('referral-codes');
-const ffmpegPath = require('ffmpeg-static');
-const { spawn } = require('child_process');
 
 exports.createJWTCookie = (user) => {
   let expireAt = 3 * 30 * 24 * 60 * 60; /*3 months*/
