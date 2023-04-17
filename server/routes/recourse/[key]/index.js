@@ -38,7 +38,7 @@
  *     tags:
  *       - media
  *     security:
- *       - bearerAuth: []
+ *       - ApiKeyAuth: []
  *     responses:
  *       '200':
  *         description: Returns an empty response if the file was deleted successfully.

@@ -7,7 +7,7 @@
  *     tags:
  *       - settings
  *     security:
- *       - bearerAuth: []
+ *       - ApiKeyAuth: []
  *     responses:
  *       '200':
  *         description: Returns the user's settings.
@@ -37,7 +37,7 @@
  *     tags:
  *       - settings
  *     security:
- *       - bearerAuth: []
+ *       - ApiKeyAuth: []
  *     requestBody:
  *       required: true
  *       content:

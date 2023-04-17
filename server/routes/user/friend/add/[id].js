@@ -7,7 +7,7 @@
  *     tags:
  *       - friends
  *     security:
- *       - bearerAuth: []
+ *       - ApiKeyAuth: []
  *     parameters:
  *       - in: path
  *         name: id

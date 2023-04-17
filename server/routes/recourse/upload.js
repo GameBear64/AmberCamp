@@ -7,7 +7,7 @@
  *     tags:
  *       - media
  *     security:
- *       - bearerAuth: []
+ *       - ApiKeyAuth: []
  *     requestBody:
  *       required: true
  *       content:
