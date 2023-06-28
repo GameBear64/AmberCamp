@@ -40,7 +40,7 @@ export default function Login() {
         <input
           onChange={(e) => setPassword(e.target.value)}
           placeholder="passsword"
-          className="border-solid border-4  border-slate-600 p-2"
+          className="border-solid border-4 border-slate-600 p-2"
           type="password"
         />
         <button onClick={() => loginUser()} className="border-solid border-4 p-2 rounded-3xl  border-slate-600">
