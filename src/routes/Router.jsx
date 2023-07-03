@@ -1,12 +1,12 @@
 import { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Register from '../Register/Register';
-import Login from '../Login/Login';
-import ErrorPage from '../ErrorPage/ErrorPage';
-import resizeScreen from '../../utils/resizeScreen';
+import Register from './Register/Register';
+import Login from './Login/Login';
+import ErrorPage from './ErrorPage/ErrorPage';
+import resizeScreen from '../utils/resizeScreen';
 
-const ChatList = lazy(() => import('../ChatList/ChatList'));
-const Chat = lazy(() => import('../Chat/Chat'));
+const ChatList = lazy(() => import('./ChatList/ChatList'));
+const Chat = lazy(() => import('./Chat/Chat'));
 
 export default function Router() {
   const screenSize = resizeScreen();
