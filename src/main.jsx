@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import Layout from './routes/Layout/Layout';
-
-const Main = () => <Layout />;
+import Router from './routes/Router/Router';
+const Main = () => <Router />;
 
 ReactDOM.createRoot(document.getElementById('root')).render(<Main />);

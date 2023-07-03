@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     extend: {},
     screens: {
+      //https://tailwindcss.com/docs/responsive-design
       '2xl': { max: '1535px' },
       // => @media (max-width: 1535px) { ... }
 

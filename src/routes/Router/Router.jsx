@@ -8,7 +8,7 @@ import resizeScreen from '../../utils/resizeScreen';
 const ChatList = lazy(() => import('../ChatList/ChatList'));
 const Chat = lazy(() => import('../Chat/Chat'));
 
-export default function Layout() {
+export default function Router() {
   const screenSize = resizeScreen();
   const router = createBrowserRouter([
     {
