@@ -46,6 +46,14 @@ export default function Layout() {
         },
       ],
     },
+    screenSize < 800 && {
+      path: `/chat/:id`,
+      element: (
+        <Suspense fallback={<>...</>}>
+          <Chat className="chat-component" />
+        </Suspense>
+      ),
+    },
     {
       path: '/user/register',
       element: (

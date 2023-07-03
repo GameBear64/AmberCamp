@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+
 import { Link } from 'react-router-dom';
 import { useFetch } from '../../utils/useFetch';
 import { useUpload } from '../../utils/useUpload';
-
-import './ChatList.style.scss';
+import resizeScreen from './../../utils/resizeScreen';
 
 export default function ChatList() {
+  const screenSize = resizeScreen();
+  const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState('Loading...');
   const [progress, setProgress] = useState(0);
@@ -31,36 +34,55 @@ export default function ChatList() {
   }
 
   return (
-    <div className="App">
-      <h1>index</h1>
-      <p>{message}</p>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p className="font-bold underline mt-10">
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+    <div className="grid h-screen w-screen grid-cols-3 sm:grid-cols-1">
+      <div className="App chat-list border-solid border-2 border-sky-500 col-span-1">
+        <h1>index</h1>
+        <p>{message.message}</p>
+        <h1>ChatList</h1>
+        <div className="card">
+          <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
+        </div>
+
+        <div className="chats flex flex-col">
+          <Link className="chat" to={`/chat`}>
+            no chat
+          </Link>
+          <Link className="chat" to={`/chat/1`}>
+            go to <span className="material-icons">chat_bubble</span>
+          </Link>
+          <Link className="chat" to={`/chat/2`}>
+            go to <span className="material-icons">chat_bubble</span>
+          </Link>
+          <Link className="chat" to={`/chat/3`}>
+            go to <span className="material-icons">chat_bubble</span>
+          </Link>
+          <Link className="chat" to={`/chat/4`}>
+            go to <span className="material-icons">chat_bubble</span>
+          </Link>
+          <Link className="chat" to={`/chat/5`}>
+            go to <span className="material-icons">chat_bubble</span>
+          </Link>
+          <br />
+          <br />
+          <br />
+          <a href="http://localhost:3030/api-docs/#/" target="_blank" rel="noreferrer">
+            API Documentation
+          </a>
+          <br />
+          <br />
+          <br />
+          <br />
+          <input type="file" onChange={(event) => readFile(event.target.files[0] || null)} />
+          <br />
+          <progress id="file" value={progress} max="100">
+            {progress}%
+          </progress>
+          {(image?.mimetype?.includes('image') || image?.mimetype?.includes('video')) && image?.key && (
+            <img src={`http://localhost:3030/recourse/${image?.key}?size=250`} alt="" />
+          )}
+        </div>
       </div>
-      <Link to={`chat`}>
-        go to <span className="material-icons">chat_bubble</span>
-      </Link>
-      <br />
-      <br />
-      <br />
-      <a href="http://localhost:3030/api-docs/#/" target="_blank" rel="noreferrer">
-        API Documentation
-      </a>
-      <br />
-      <br />
-      <br />
-      <br />
-      <input type="file" onChange={(event) => readFile(event.target.files[0] || null)} />
-      <br />
-      <progress id="file" value={progress} max="100">
-        {progress}%
-      </progress>
-      {(image?.mimetype?.includes('image') || image?.mimetype?.includes('video')) && image?.key && (
-        <img src={`http://localhost:3030/recourse/${image?.key}?size=250`} alt="" />
-      )}
+      {screenSize >= 800 && <Outlet />}
     </div>
   );
 }
