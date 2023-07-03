@@ -1,14 +1,14 @@
 import { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Register from '../Register/Register';
-import Login from '../Login/Login';
-import ErrorPage from '../ErrorPage/ErrorPage';
-import resizeScreen from '../../utils/resizeScreen';
+import Register from './Register/Register';
+import Login from './Login/Login';
+import ErrorPage from './ErrorPage/ErrorPage';
+import resizeScreen from '../utils/resizeScreen';
 
-const ChatList = lazy(() => import('../ChatList/ChatList'));
-const Chat = lazy(() => import('../Chat/Chat'));
+const ChatList = lazy(() => import('./ChatList/ChatList'));
+const Chat = lazy(() => import('./Chat/Chat'));
 
-export default function Layout() {
+export default function Router() {
   const screenSize = resizeScreen();
   const router = createBrowserRouter([
     {
@@ -45,6 +45,14 @@ export default function Layout() {
           ),
         },
       ],
+    },
+    screenSize < 800 && {
+      path: `/chat/:id`,
+      element: (
+        <Suspense fallback={<>...</>}>
+          <Chat className="chat-component" />
+        </Suspense>
+      ),
     },
     {
       path: '/user/register',
