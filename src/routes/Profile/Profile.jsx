@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ReactQuill from 'react-quill';
 
-import Notes from '../../components/Notes/Notes';
+import Notes from '../../components/Note/Note';
 import Layout from '../../components/Layout/Layout';
 
 import { useFetch } from '../../utils/useFetch';
@@ -43,6 +43,7 @@ export default function Profile() {
         setUserInfo({
           handler: res.message.handle,
           biography: res.message.biography,
+          created: res.message.createdAt,
         });
       } else {
         // For the devs to debug
@@ -53,6 +54,9 @@ export default function Profile() {
   };
 
   getUser();
+
+  let memberDate = userInfo?.created;
+  memberDate = memberDate?.split('T')[0];
 
   return (
     <Layout
@@ -146,22 +150,18 @@ export default function Profile() {
                 <h3 className="font-semibold">Biography</h3>
                 <p className="text-lg py-4 ">{userInfo?.biography}</p>
                 <hr className="m-4" />
-                <h2 className=" text-slate-600 font-semibold uppercase ">Member since: 02/08/2023</h2>
+                <h2 className=" text-slate-600 font-semibold uppercase ">Member since: {memberDate}</h2>
                 <p className="uppercase text-slate-600 font-semibold text-xs mb-3">
                   time zone: {new Date().getHours()}:{new Date().getMinutes()}
                 </p>
                 <hr className="m-4" />
                 <h3 className="font-semibold">Interests</h3>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {tags.map((tag) => {
-                    return (
-                      <>
-                        <div className="border shadow-md border-slate-300 rounded-xl m-1 ">
-                          <p className="p-2.5 font-semibold text-center">{tag}</p>
-                        </div>
-                      </>
-                    );
-                  })}
+                  {tags.map((tag) => (
+                    <div key={tag} className="border shadow-md border-slate-300 rounded-xl m-1">
+                      <p className="p-2.5 font-semibold text-center">{tag}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </section>

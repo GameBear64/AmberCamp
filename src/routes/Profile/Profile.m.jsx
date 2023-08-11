@@ -1,12 +1,8 @@
-import ImageResize from 'quill-image-resize-module-react';
 import ReactQuill from 'react-quill';
-import Quill from 'quill';
 import { useState } from 'react';
 import { useFetch } from '../../utils/useFetch';
-import Notes from '../../components/Notes/Notes';
+import Notes from '../../components/Note/Note';
 import 'react-quill/dist/quill.snow.css';
-
-Quill.register('modules/imageResize', ImageResize);
 
 export default function ProfileMobile() {
   const [userInfo, setUserInfo] = useState();
@@ -34,6 +30,7 @@ export default function ProfileMobile() {
         setUserInfo({
           handler: res.message.handle,
           biography: res.message.biography,
+          created: res.message.createdAt,
         });
       } else {
         console.log(res.message);
@@ -42,6 +39,10 @@ export default function ProfileMobile() {
   };
 
   registerUser();
+
+  let memberDate = userInfo?.created;
+  memberDate = memberDate.split('T')[0];
+
   return (
     <div>
       <div className="m-auto">
@@ -114,22 +115,18 @@ export default function ProfileMobile() {
               <h3 className="font-semibold">Biography</h3>
               <p className="text-lg py-4 w-auto">{userInfo?.biography}</p>
               <hr className="m-4" />
-              <h2 className=" text-slate-600 font-semibold uppercase ">Member since: 02/08/2023</h2>
+              <h2 className=" text-slate-600 font-semibold uppercase ">Member since: {memberDate}</h2>
               <p className="uppercase text-slate-600 font-semibold text-xs mb-3">
                 time zone: {new Date().getHours()}:{new Date().getMinutes()}
               </p>
               <hr className="m-4" />
               <h3 className="font-semibold">Interests</h3>
               <div className="mt-3 flex flex-wrap gap-2">
-                {tags.map((tag) => {
-                  return (
-                    <>
-                      <div className="border shadow-md border-slate-300 rounded-xl m-1 ">
-                        <p className="p-2.5 font-semibold text-center">{tag}</p>
-                      </div>
-                    </>
-                  );
-                })}
+                {tags.map((tag) => (
+                  <div key={tag} className="border shadow-md border-slate-300 rounded-xl m-1 ">
+                    <p className="p-2.5 font-semibold text-center">{tag}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </section>

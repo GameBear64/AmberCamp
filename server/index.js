@@ -29,7 +29,7 @@ app.use(express.json({ limit: '100mb' }));
 app.use(trimBodyFields);
 app.use(checkAuth);
 
-app.use('/', router());
+app.use("/", router());
 
 //=============== Docs ===============
 const { swagger } = require('./docs/swagger.js');

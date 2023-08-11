@@ -5,10 +5,11 @@ import Login from './Login/Login';
 import Profile from './Profile/Profile';
 import ProfileMobile from './Profile/Profile.m';
 import RegisterMobile from './Register/Register.m';
-import ChatListMobile from './ChatList/ChatList m';
+import ChatListMobile from './ChatList/ChatList.m';
 import ErrorPage from './ErrorPage/ErrorPage';
 import resizeScreen from '../utils/resizeScreen';
 import LoginMobile from './Login/Login.m';
+import Settings from './Settings/Settings';
 
 const ChatList = lazy(() => import('./ChatList/ChatList'));
 const Chat = lazy(() => import('./Chat/Chat'));
@@ -79,7 +80,11 @@ export default function Router() {
     },
     {
       path: '/user/settings',
-      element: <Suspense fallback={<>...</>}>settings page</Suspense>,
+      element: (
+        <Suspense fallback={<>...</>}>
+          <Settings />
+        </Suspense>
+      ),
     },
   ];
 
