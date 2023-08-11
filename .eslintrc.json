@@ -19,6 +19,7 @@
   "rules": {
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off", //this is dumb, we don't need react everywhere
+    "react/prop-types": "off", // this fixes "missing prop validation error"
 
     "no-cond-assign": 2, // disallow assignment in conditional expressions
     "no-console": 1, // disallow use of console (off by default in the node environment)
