@@ -140,13 +140,9 @@ export default function ProfileMobile() {
           </div>
 
           <div>
-            {context.map((el) => {
-              return (
-                <>
-                  <Notes el={el} />
-                </>
-              );
-            })}
+            {context.map((text) => (
+              <Notes key={text} text={text} />
+            ))}
           </div>
         </div>
       </div>

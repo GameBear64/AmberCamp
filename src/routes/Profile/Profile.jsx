@@ -69,13 +69,9 @@ export default function Profile() {
               <button className="font-semibold rounded-r shadow-inner bg-gray-100 p-1 text-md hover:shadow-inner">Add+</button>
             </div>
             <>
-              {context.map((el) => {
-                return (
-                  <>
-                    <Notes el={el} />
-                  </>
-                );
-              })}
+              {context.map((text) => (
+                <Notes key={text} text={text} />
+              ))}
             </>
           </div>
         </div>

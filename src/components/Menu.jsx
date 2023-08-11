@@ -13,9 +13,9 @@ export default function Menu({ values }) {
       {showOptions && (
         <div className="dropdown relative shadow-md text-base">
           <ul className="absolute" onClick={() => setShowOptions(false)}>
-            {values.map((el, i) => (
-              <li className={`p-2 rounded bg-white hover:bg-slate-200`} key={i}>
-                {el.option}
+            {values.map((option, i) => (
+              <li key={i} className={`p-2 rounded bg-white hover:bg-slate-200`} onClick={() => option.action}>
+                {option.option}
               </li>
             ))}
           </ul>
