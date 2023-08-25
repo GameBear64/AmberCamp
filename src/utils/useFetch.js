@@ -21,6 +21,6 @@ export function useFetch({ url, requireAuth = true, method, body }) {
 
   return fetch(`${baseURL}:${import.meta.env.VITE_SERVER_PORT}/${url}`, options).then(async (res) => ({
     status: res.status,
-    message: await res.json(),
+    message: await res.text().then((text) => (text ? JSON.parse(text) : 'OK')),
   }));
 }

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useFetch } from './../../utils/useFetch';
 import { errorSnackBar, successSnackBar } from '../../utils/snackbars';
 import { Link } from 'react-router-dom';
-import resizeScreen from '../../utils/resizeScreen';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -11,7 +10,6 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatRassword, setRepeatPassword] = useState('');
-  const screenSize = resizeScreen();
 
   const registerUser = () => {
     useFetch({

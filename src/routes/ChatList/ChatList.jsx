@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import Layout from '../../components/Layout/Layout';
 
 import { Link } from 'react-router-dom';
@@ -7,7 +7,6 @@ import { useFetch } from '../../utils/useFetch';
 import { useUpload } from '../../utils/useUpload';
 
 export default function ChatList() {
-  const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState('Loading...');
   const [progress, setProgress] = useState(0);
@@ -77,7 +76,7 @@ export default function ChatList() {
               {progress}%
             </progress>
             {(image?.mimetype?.includes('image') || image?.mimetype?.includes('video')) && image?.key && (
-              <img src={`http//:localhost:3030/recourse/${image?.key}?size=250`} alt="" />
+              <img src={`http://localhost:3030/recourse/${image?.key}?size=250`} alt="" />
             )}
           </div>
         </>

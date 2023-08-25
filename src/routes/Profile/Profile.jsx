@@ -3,9 +3,11 @@ import ReactQuill from 'react-quill';
 
 import Notes from '../../components/Notes/Notes';
 import Layout from '../../components/Layout/Layout';
+import ButtonInput from '../../components/Inputs/ButtonInput';
 
 import { useFetch } from '../../utils/useFetch';
 import 'react-quill/dist/quill.snow.css';
+import { useEffect } from 'react';
 
 export default function Profile() {
   const [userInfo, setUserInfo] = useState();
@@ -43,16 +45,22 @@ export default function Profile() {
         setUserInfo({
           handler: res.message.handle,
           biography: res.message.biography,
+          created: res.message.createdAt,
+          _id: res.message._id,
         });
       } else {
         // For the devs to debug
-        // eslint-disable-next-line no-console
         console.log(res.message);
       }
     });
   };
 
-  getUser();
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  let memberDate = userInfo?.created;
+  memberDate = memberDate?.split('T')[0];
 
   return (
     <Layout
@@ -60,18 +68,11 @@ export default function Profile() {
         <div className="my-10">
           <div className="mx-8">
             <h1 className="font-semibold text-2xl">Notes</h1>
-            <div className="flex flex-row text-center mb-6 mt-2">
-              <input type="text" className=" shadow-slate-200 rounded-l shadow-inner border h-10 w-60 border-slate-200 " />
-              <button className="font-semibold rounded-r shadow-inner bg-gray-100 p-1 text-md hover:shadow-inner">Add+</button>
-            </div>
+            <ButtonInput buttonLabel={'+Add'} color="bg-gray-100" />
             <>
-              {context.map((el) => {
-                return (
-                  <>
-                    <Notes el={el} />
-                  </>
-                );
-              })}
+              {context.map((el) => (
+                <Notes key={Math.round(Math.random() * 10000000)} el={el} />
+              ))}
             </>
           </div>
         </div>
@@ -129,39 +130,35 @@ export default function Profile() {
                 <div className="text-right">
                   <span
                     onClick={() => setDisable(!disable)}
-                    className="material-symbols-outlined rounded p-1.5 mt-2 shadow-md bg-orange-300">
+                    className="material-symbols-outlined cursor-pointer rounded p-1.5 mt-2 shadow-md bg-orange-300">
                     edit
                   </span>
                 </div>
               </div>
             </div>
-            <section className="overflow-y-auto col-span-1">
+            <section className="overflow-y-auto overflow-x-hidden col-span-1">
               <div className="shadow-md p-10">
-                <div className="mb-4 flex font-semibold gap-2 float-left ">
+                <div className="mb-4 flex flex-wrap font-semibold gap-2 float-left ">
                   <button className="border shadow-md bg-slate-50 py-1 px-2 rounded-lg">Message</button>
                   <button className="border shadow-md bg-sky-700 text-white py-1 px-2 rounded-lg">Add friend</button>
                   <button className="border shadow-md bg-red-700 text-white py-1 px-2 rounded-lg">Block</button>
                 </div>
 
                 <h3 className="font-semibold">Biography</h3>
-                <p className="text-lg py-4 ">{userInfo?.biography}</p>
+                <p className="text-lg py-4 w-fit">{userInfo?.biography}</p>
                 <hr className="m-4" />
-                <h2 className=" text-slate-600 font-semibold uppercase ">Member since: 02/08/2023</h2>
+                <h2 className="text-slate-600 font-semibold uppercase ">Member since: {memberDate}</h2>
                 <p className="uppercase text-slate-600 font-semibold text-xs mb-3">
                   time zone: {new Date().getHours()}:{new Date().getMinutes()}
                 </p>
                 <hr className="m-4" />
                 <h3 className="font-semibold">Interests</h3>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {tags.map((tag) => {
-                    return (
-                      <>
-                        <div className="border shadow-md border-slate-300 rounded-xl m-1 ">
-                          <p className="p-2.5 font-semibold text-center">{tag}</p>
-                        </div>
-                      </>
-                    );
-                  })}
+                  {tags.map((tag, i) => (
+                    <div key={i} className="border shadow-md border-slate-300 rounded-xl m-1 ">
+                      <p className="p-2.5 font-semibold text-center">{tag}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </section>

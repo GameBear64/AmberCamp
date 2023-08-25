@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import { Link } from 'react-router-dom';
 import { useFetch } from '../../utils/useFetch';
 import { useUpload } from '../../utils/useUpload';
+import NavBar from '../../components/NavBar/NavBar';
 
 export default function ChatListMobile() {
-  const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState('Loading...');
   const [progress, setProgress] = useState(0);
@@ -32,8 +30,8 @@ export default function ChatListMobile() {
   }
 
   return (
-    <div className="grid h-screen w-screen grid-cols-1">
-      <div className="App chat-list border-solid border-2 border-sky-500 col-span-1">
+    <div className="grid h-screen w-screen grid-cols-1 grid-rows-[1fr_3em]">
+      <div className="App chat-list col-span-1">
         <h1>index</h1>
         <p>{message.message}</p>
         <h1>ChatList</h1>
@@ -80,6 +78,7 @@ export default function ChatListMobile() {
           )}
         </div>
       </div>
+      <NavBar />
     </div>
   );
 }
