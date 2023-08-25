@@ -63,9 +63,7 @@ export default function SecurityMobile() {
                 <IconInput width="w-full" label="Change Email" icon="mail" action={(e) => setNewEmail(e.target.value)} />
               </div>
               <button
-                onClick={() => {
-                  changeEmail();
-                }}
+                onClick={() => changeEmail()}
                 type="email"
                 className="mt-2 max-w-md font-semibold text-white shadow-md rounded bg-orange-700 py-1 px-2 text-[17px]">
                 Change Email
