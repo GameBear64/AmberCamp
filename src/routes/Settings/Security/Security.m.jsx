@@ -91,9 +91,7 @@ export default function SecurityMobile() {
                 />
               </div>
               <button
-                onClick={() => {
-                  changePassword();
-                }}
+                onClick={() => changePassword()}
                 type="email"
                 className="mt-2 max-w-md font-semibold text-white shadow-md rounded bg-orange-700 py-1 px-2 text-[17px]">
                 Change Password

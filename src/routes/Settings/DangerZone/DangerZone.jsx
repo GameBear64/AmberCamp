@@ -32,31 +32,25 @@ export default function DangerZone() {
         <span className="material-symbols-outlined mr-1.5 text-[27px] align-bottom">move_item</span>Log out
       </button>
       {active ? (
-        <>
-          <div className="flex mb-5 flex-col">
-            <label className="mb-1">Please, enter your password to proceed.</label>
-            <div className="flex">
-              <ButtonInput
-                textColor={'text-white'}
-                actionInput={(e) => {
-                  setPassword(e.target.value);
-                }}
-                buttonLabel="Delete Account"
-                color="bg-red-600"
-                actionButton={() => deleteUser()}
-                invalid={errorBorder}
-              />
-            </div>
+        <div className="flex mb-5 flex-col">
+          <label className="mb-1">Please, enter your password to proceed.</label>
+          <div className="flex">
+            <ButtonInput
+              textColor={'text-white'}
+              actionInput={(e) => {
+                setPassword(e.target.value);
+              }}
+              buttonLabel="Delete Account"
+              color="bg-red-600"
+              actionButton={() => deleteUser()}
+              invalid={errorBorder}
+            />
           </div>
-        </>
+        </div>
       ) : (
-        <>
-          <button
-            onClick={() => setActive(!active)}
-            className="text-lg rounded py-1 px-2.5 hover:bg-red-700 bg-red-600 text-white">
-            Delete Account
-          </button>
-        </>
+        <button onClick={() => setActive(!active)} className="text-lg rounded py-1 px-2.5 hover:bg-red-700 bg-red-600 text-white">
+          Delete Account
+        </button>
       )}
     </div>
   );

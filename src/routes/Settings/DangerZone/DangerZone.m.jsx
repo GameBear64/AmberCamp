@@ -63,13 +63,11 @@ export default function DangerZoneMobile() {
             </div>
           </>
         ) : (
-          <>
-            <button
-              onClick={() => setActive(!active)}
-              className="text-lg mt-4 rounded py-1 px-2.5 hover:bg-red-700 bg-red-600 text-white">
-              Delete Account
-            </button>
-          </>
+          <button
+            onClick={() => setActive(!active)}
+            className="text-lg mt-4 rounded py-1 px-2.5 hover:bg-red-700 bg-red-600 text-white">
+            Delete Account
+          </button>
         )}
       </div>
     </div>

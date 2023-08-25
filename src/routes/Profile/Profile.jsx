@@ -46,7 +46,6 @@ export default function Profile() {
           handler: res.message.handle,
           biography: res.message.biography,
           created: res.message.createdAt,
-          _id: res.message._id,
         });
       } else {
         // For the devs to debug

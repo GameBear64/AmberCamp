@@ -57,9 +57,7 @@ export default function Security() {
             </div>
           </div>
           <button
-            onClick={() => {
-              changeEmail();
-            }}
+            onClick={() => changeEmail()}
             type="email"
             className="mt-2 mb-4 max-w-[290px] font-semibold text-white shadow-md rounded bg-orange-700 py-1 px-2 text-[17px]">
             Change Email
@@ -92,9 +90,7 @@ export default function Security() {
             </div>
           </div>
           <button
-            onClick={() => {
-              changePassword();
-            }}
+            onClick={() => changePassword()}
             type="email"
             className="max-w-[290px] font-semibold text-white shadow-md rounded bg-orange-700 py-1 px-2 text-[17px]">
             Change Password

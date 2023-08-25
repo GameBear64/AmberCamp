@@ -34,7 +34,6 @@ export default function ProfileMobile() {
           handler: res.message.handle,
           biography: res.message.biography,
           created: res.message.createdAt,
-          _id: res.message._id,
         });
       } else {
         console.log(res.message);
