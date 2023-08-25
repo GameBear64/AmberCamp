@@ -42,6 +42,10 @@ export default function ProfileMobile() {
   };
 
   registerUser();
+
+  let memberDate = userInfo?.created;
+  memberDate = memberDate.split('T')[0];
+
   return (
     <div>
       <div className="m-auto">
