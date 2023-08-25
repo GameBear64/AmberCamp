@@ -3,7 +3,7 @@ import Snackbar from 'awesome-snackbar';
 const snackMessageTemplate = (message, icon) =>
   `
     <div style="display: flex; justify-content: space-between; gap: 1em; margin: 0.2em 0; align-items: center;">
-      <span class="material-symbols-rounded">${icon}</span>
+      <span class="material-symbols-outlined">${icon}</span>
       <p>${message}</p>
     </div>
   `;

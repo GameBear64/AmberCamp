@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFetch } from './../../utils/useFetch';
 import { errorSnackBar, successSnackBar } from '../../utils/snackbars';
+import resizeScreen from '../../utils/resizeScreen';
 import { Link } from 'react-router-dom';
 
-export default function Login() {
+export default function LoginMobile() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const screenSize = resizeScreen();
 
   const loginUser = () => {
     useFetch({
@@ -61,13 +63,6 @@ export default function Login() {
           <Link to={'/user/register'} className="text-right mt-2 font-medium underline text-blue-700">
             No account? Make one!
           </Link>
-        </div>
-      </div>
-
-      <div className="flex bg-gray-200 items-center justify-center text-center h-screen ">
-        <div>
-          <img className="object-contain" src="../bam.png" />
-          <h2 className="font-medium text-4xl pb-8">Amber Camp</h2>
         </div>
       </div>
     </div>

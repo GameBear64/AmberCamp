@@ -37,10 +37,11 @@ const { UserModel } = require('../../../models/User');
 const { allowNoBodyChanges, joiValidate } = require('../../../helpers/middleware');
 
 const validationSchema = joi.object({
-  name: joi.string().min(3).max(30),
-  biography: joi.string().max(256),
-  picture: joi.string(),
-  background: joi.string(),
+  name: joi.string().min(3).max(30).optional(),
+  email: joi.string().min(10).max(255).required().email().optional(),
+  biography: joi.string().max(256).optional(),
+  picture: joi.string().optional(),
+  background: joi.string().optional(),
 });
 
 module.exports.patch = [

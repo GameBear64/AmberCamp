@@ -54,6 +54,8 @@
  *                 maxLength: 30
  *               notes:
  *                 type: array
+ *                 items:
+ *                   type: string
  *               accentColor:
  *                 type: string
  *     responses:
