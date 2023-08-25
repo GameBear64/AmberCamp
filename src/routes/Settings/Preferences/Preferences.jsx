@@ -10,6 +10,7 @@ export default function Preferences() {
   let languages = ['English UK', 'English US', 'Italiano', 'Български', 'Français'];
   let [userPreferences, setUserPreferences] = useState('');
 
+  // TODO: fix when BE is ready
   const getPreferences = () => {
     useFetch({
       url: 'user/settings/preferences',

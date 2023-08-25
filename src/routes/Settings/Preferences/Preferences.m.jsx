@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+// TODO: fix when BE is ready
 export default function PreferencesMobile() {
   const navigate = useNavigate();
   return (

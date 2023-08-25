@@ -14,7 +14,6 @@ export function useFetch({ url, requireAuth = true, method, body }) {
         jwt: window.localStorage.getItem(`${import.meta.env.VITE_LOCAL_STORAGE_NAME}`),
         'content-type': 'application/json',
       },
-
       ...options,
     };
   }
