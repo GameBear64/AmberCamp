@@ -20,24 +20,24 @@
  *                 type: string
  *                 minLength: 8
  *                 maxLength: 255
- *               confirmPassword:
- *                 type: string
- *                 const:
- *                   {
- *                     "$data": "password"
- *                   }
  *               newPassword:
  *                 type: string
  *                 minLength: 8
  *                 maxLength: 255
+ *               confirmPassword:
+ *                 type: string
+ *                 const:
+ *                   {
+ *                     "$data": "newPassword"
+ *                   }
  *             required:
  *               - password
- *               - confirmPassword
  *               - newPassword
+ *               - confirmPassword
  *           example:
  *             password: currentPassword123
- *             confirmPassword: currentPassword123
  *             newPassword: newPassword123
+ *             confirmPassword: newPassword123
  *     responses:
  *       200:
  *         description: Success. Returns a new JWT.
@@ -65,8 +65,8 @@ const { joiValidate } = require('../../../helpers/middleware');
 
 const validationSchema = joi.object({
   password: joi.string().min(8).max(255).required(),
-  confirmPassword: joi.string().valid(joi.ref('password')).required(),
   newPassword: joi.string().min(8).max(255).required(),
+  confirmPassword: joi.string().valid(joi.ref('newPassword')).required(),
 });
 
 module.exports.post = [
