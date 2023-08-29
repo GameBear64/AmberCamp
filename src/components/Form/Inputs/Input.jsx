@@ -1,7 +1,7 @@
 export default function Input({ label, action, invalid = false, width = 'w-60', defauldValue, type = 'password', input }) {
   return (
-    <>
-      <label>{label}</label>
+    <div className="flex flex-col">
+      <label className="text-left">{label}</label>
       <div className="mt-1.5">
         <input
           defaultValue={defauldValue}
@@ -13,6 +13,6 @@ export default function Input({ label, action, invalid = false, width = 'w-60', 
           {...input}
         />
       </div>
-    </>
+    </div>
   );
 }
