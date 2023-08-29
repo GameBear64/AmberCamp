@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useFetch } from '../../utils/useFetch';
 import Notes from '../../components/Notes/Notes';
 import { useNavigate } from 'react-router-dom';
-import ButtonInput from '../../components/Inputs/ButtonInput';
+import ButtonInput from '../../components/Form/Inputs/ButtonInput';
 
 export default function ProfileMobile() {
   const navigate = useNavigate();

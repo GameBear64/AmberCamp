@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill';
 
 import Notes from '../../components/Notes/Notes';
 import Layout from '../../components/Layout/Layout';
-import ButtonInput from '../../components/Inputs/ButtonInput';
+import ButtonInput from '../../components/Form/Inputs/ButtonInput';
 
 import { useFetch } from '../../utils/useFetch';
 import 'react-quill/dist/quill.snow.css';

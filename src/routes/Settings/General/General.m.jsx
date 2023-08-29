@@ -4,7 +4,7 @@ import { useFetch } from '../../../utils/useFetch';
 import { useUpload } from '../../../utils/useUpload';
 import { useState } from 'react';
 import { errorSnackBar, successSnackBar } from '../../../utils/snackbars';
-import Input from './../../../components/Inputs/Input';
+import Input from '../../../components/Form/Inputs/Input';
 
 export default function GeneralMobile() {
   const navigate = useNavigate();

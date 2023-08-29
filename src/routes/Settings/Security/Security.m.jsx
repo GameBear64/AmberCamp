@@ -1,31 +1,25 @@
 import { useFetch } from '../../../utils/useFetch';
 import { errorSnackBar, successSnackBar } from '../../../utils/snackbars';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import IconInput from '../../../components/Inputs/IconInput';
-import Input from '../../../components/Inputs/Input';
+import IconInput from '../../../components/Form/Inputs/IconInput';
+import FormInputs from '../../../components/Form/Form';
+import IconInputField from '../../../components/Form/FormInputs/IconInput';
+import InputField from '../../../components/Form/FormInputs/Input';
 
 export default function SecurityMobile() {
-  let [newPassword, setNewPassword] = useState('');
-  let [currentPassword, setCurrentPassword] = useState('');
-  let [repeatPassword, setRepeatPassword] = useState('');
   let [newEmail, setNewEmail] = useState('');
-  const navigate = useNavigate();
 
-  const changePassword = () => {
+  const changePassword = (fields) => {
     useFetch({
       url: 'user/settings/resetPassword',
       method: 'POST',
-      body: {
-        password: currentPassword,
-        confirmPassword: repeatPassword,
-        newPassword: newPassword,
-      },
+      body: fields,
     }).then((res) => {
       if (res.status === 200) {
+        localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.message.jwt);
         successSnackBar('Your password was changed successfully!');
       } else {
-        errorSnackBar(`${res.message.error}!`);
+        errorSnackBar(`${res.message}`);
       }
     });
   };
@@ -73,28 +67,38 @@ export default function SecurityMobile() {
           <hr />
           <div className="flex flex-col my-5">
             <h3 className="text-xl mb-3">Change Password</h3>
-            <div className="flex max-w-md flex-col">
+
+            <FormInputs
+              onSubmit={(e) => {
+                changePassword(e);
+              }}>
               <div className="flex flex-col mb-2">
-                <Input width="w-full" label={'Current Password'} action={(e) => setCurrentPassword(e.target.value)} />
-              </div>
-              <div className="flex max-w-md flex-col mb-3">
-                <IconInput width="w-full" label={'New Password'} icon={'lock'} action={(e) => setNewPassword(e.target.value)} />
-              </div>
-              <div className="flex max-w-md flex-col mb-2">
-                <IconInput
+                <InputField width="w-full" name="password" type="password" label={'Current Password'} />
+
+                <IconInputField
+                  styles="flex max-w-md flex-col mb-3"
+                  name="newPassword"
+                  type="password"
+                  width="w-full"
+                  label="New Password"
+                  icon="lock"
+                />
+
+                <IconInputField
+                  styles="flex max-w-md flex-col mb-2"
+                  name="confirmPassword"
+                  type="password"
                   width="w-full"
                   label="Repeat New Password"
                   icon="sync_lock"
-                  action={(e) => setRepeatPassword(e.target.value)}
                 />
               </div>
               <button
-                onClick={() => changePassword()}
-                type="email"
-                className="mt-2 max-w-md font-semibold text-white shadow-md rounded bg-orange-700 py-1 px-2 text-[17px]">
+                type="submit"
+                className="mt-2 max-w-md w-full font-semibold text-white shadow-md rounded bg-orange-700 py-1 px-2 text-[17px]">
                 Change Password
               </button>
-            </div>
+            </FormInputs>
           </div>
         </div>
       </div>

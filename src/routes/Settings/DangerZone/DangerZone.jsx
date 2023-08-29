@@ -2,7 +2,7 @@ import { useFetch } from '../../../utils/useFetch';
 import { useState } from 'react';
 import { errorSnackBar } from '../../../utils/snackbars';
 import { useNavigate } from 'react-router-dom';
-import ButtonInput from '../../../components/Inputs/ButtonInput';
+import ButtonInput from '../../../components/Form/Inputs/ButtonInput';
 
 export default function DangerZone() {
   let [password, setPassword] = useState('');

@@ -4,7 +4,7 @@ import { useFetch } from '../../../utils/useFetch';
 import { useUpload } from '../../../utils/useUpload';
 import { useState } from 'react';
 import { errorSnackBar, successSnackBar } from '../../../utils/snackbars';
-import Input from '../../../components/Inputs/Input';
+import Input from '../../../components/Form/Inputs/Input';
 export default function General() {
   const [userInfo, setUserInfo] = useState('');
   const [username, setUsername] = useState('');
@@ -87,7 +87,7 @@ export default function General() {
         {image?.mimetype?.includes('image') && image?.key && (
           <img src={`http//:localhost:3030/recourse/${image?.key}?size=250`} alt="" />
         )}
-        <p className="text-base mb-1">Username</p>
+
         <div className="flex flex-row text-center">
           <Input
             type="text"
