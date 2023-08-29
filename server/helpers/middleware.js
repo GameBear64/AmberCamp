@@ -39,8 +39,7 @@ exports.checkAuth = async (req, res, next) => {
 
     if (currentUser?.passwordChangedAt) {
       let lastChanged = currentUser.passwordChangedAt.getTime() / 1000;
-      if (decoded.iat < lastChanged)
-        return res.status(401).json({ error: 'User recently changed password! Please log in again.' });
+      if (decoded.iat < lastChanged) return res.status(401).json('User recently changed password! Please log in again.');
     }
 
     req.apiUserId = decoded.id;
