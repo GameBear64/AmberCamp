@@ -1,7 +1,6 @@
 import { useFetch } from '../../../utils/useFetch';
 import { errorSnackBar, successSnackBar } from '../../../utils/snackbars';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import IconInput from '../../../components/Form/Inputs/IconInput';
 import FormInputs from '../../../components/Form/Form';
 import IconInputField from '../../../components/Form/FormInputs/IconInput';
@@ -9,7 +8,6 @@ import InputField from '../../../components/Form/FormInputs/Input';
 
 export default function SecurityMobile() {
   let [newEmail, setNewEmail] = useState('');
-  const navigate = useNavigate();
 
   const changePassword = (fields) => {
     useFetch({
@@ -20,7 +18,6 @@ export default function SecurityMobile() {
       if (res.status === 200) {
         localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.message.jwt);
         successSnackBar('Your password was changed successfully!');
-        navigate('/user/login');
       } else {
         errorSnackBar(`${res.message}`);
       }

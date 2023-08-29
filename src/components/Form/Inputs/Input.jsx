@@ -1,4 +1,4 @@
-export default function Input({ label, action, invalid = false, width = 'w-60', defauldValue, type = 'password', input }) {
+export default function Input({ label, action, invalid = false, width = 'w-60', defauldValue, type = 'text', input }) {
   return (
     <div className="flex flex-col">
       <label className="text-left">{label}</label>

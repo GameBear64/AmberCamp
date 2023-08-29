@@ -3,7 +3,7 @@ import { Field } from 'react-final-form';
 
 export default function ButtonInputField({
   label,
-  type,
+  type = 'text',
   width = 'w-60',
   invalid,
   name,
@@ -18,7 +18,7 @@ export default function ButtonInputField({
       render={({ input }) => (
         <div className={styles}>
           <ButtonInput
-            type={`${type ? type : ''}`}
+            type={type}
             width={width}
             buttonLabel={label}
             input={input}

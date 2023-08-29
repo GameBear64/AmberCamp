@@ -5,11 +5,9 @@ import FormInputs from '../../../components/Form/Form';
 import IconInput from '../../../components/Form/Inputs/IconInput';
 import IconInputField from '../../../components/Form/FormInputs/IconInput';
 import InputField from '../../../components/Form/FormInputs/Input';
-import { useNavigate } from 'react-router-dom';
 
 export default function Security() {
   let [newEmail, setNewEmail] = useState('');
-  const navigate = useNavigate();
 
   const changePassword = (fields) => {
     useFetch({
@@ -20,7 +18,6 @@ export default function Security() {
       if (res.status === 200) {
         localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.message.jwt);
         successSnackBar('Your password was changed successfully!');
-        navigate('/user/login');
       } else {
         errorSnackBar(`${res.message}`);
       }
