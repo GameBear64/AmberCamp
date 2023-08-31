@@ -66,7 +66,9 @@ const { joiValidate } = require('../../../helpers/middleware');
 const validationSchema = joi.object({
   password: joi.string().min(8).max(255).required(),
   newPassword: joi.string().min(8).max(255).required(),
-  confirmPassword: joi.string().valid(joi.ref('newPassword')).required(),
+  confirmPassword: joi.string().valid(joi.ref('newPassword')).required().messages({
+    'any.only': 'Confirmation password did not match.',
+  }),
 });
 
 module.exports.post = [

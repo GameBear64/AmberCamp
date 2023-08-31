@@ -11,6 +11,7 @@ export default function ButtonInputField({
   styles,
   actionButton,
   textColor,
+  color,
 }) {
   return (
     <Field
@@ -26,6 +27,7 @@ export default function ButtonInputField({
             actionButton={actionButton}
             actionInput={actionInput}
             textColor={textColor}
+            color={color}
           />
         </div>
       )}

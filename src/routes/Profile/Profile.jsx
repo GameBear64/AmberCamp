@@ -42,10 +42,12 @@ export default function Profile() {
       method: 'GET',
     }).then((res) => {
       if (res.status === 200) {
+        console.log(res.message);
         setUserInfo({
           handler: res.message.handle,
           biography: res.message.biography,
           created: res.message.createdAt,
+          tags: res.message.tags,
         });
       } else {
         // For the devs to debug
@@ -153,7 +155,7 @@ export default function Profile() {
                 <hr className="m-4" />
                 <h3 className="font-semibold">Interests</h3>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {tags.map((tag, i) => (
+                  {userInfo?.tags?.map((tag, i) => (
                     <div key={i} className="border shadow-md border-slate-300 rounded-xl m-1 ">
                       <p className="p-2.5 font-semibold text-center">{tag}</p>
                     </div>

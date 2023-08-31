@@ -17,17 +17,19 @@ export default function Preferences() {
       method: 'GET',
     }).then((res) => {
       if (res.status === 200) {
+        console.log(res.message);
         setUserPreferences({
           theme: res.message.theme,
           accent: res.message.accent,
           language: res.message.language,
+          timezone: res.message.timezone,
         });
       } else {
         console.log(res.message);
       }
     });
   };
-
+  // getPreferences();
   const changeUserTheme = () => {
     useFetch({
       url: 'user/settings/preferences',

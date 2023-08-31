@@ -35,7 +35,7 @@ export default function Security() {
       if (res.status === 200) {
         successSnackBar('Your email was changed successfully!');
       } else {
-        errorSnackBar(`${res.message.error}!`);
+        errorSnackBar(`${res.message}`);
       }
     });
   };

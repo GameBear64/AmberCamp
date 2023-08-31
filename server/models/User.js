@@ -39,6 +39,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       ref: 'Media',
     },
+    tags: [String],
     contacts: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -64,7 +65,7 @@ const userSchema = new mongoose.Schema(
     },
     // passwordResetToken: String,
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 userSchema.methods.validatePassword = async function (pass) {
@@ -77,7 +78,7 @@ userSchema.methods.getRelationship = async function (myId) {
   let relation = await RelationshipModel.findOneAndUpdate(
     { from: myId, to: this._id },
     { $setOnInsert: { from: myId, to: this._id } },
-    { upsert: true },
+    { upsert: true }
   ).select(excludeSelect);
 
   // on upsert it returns null so we need to fetch a second time after initial creation

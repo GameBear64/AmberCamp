@@ -41,6 +41,9 @@ const validationSchema = joi.object({
   email: joi.string().min(10).max(255).required().email().optional(),
   biography: joi.string().max(256).optional(),
   picture: joi.string().optional(),
+  tags: joi.array().max(6).optional().messages({
+    'array.max': 'Only 6 tags allowed!',
+  }),
   background: joi.string().optional(),
 });
 
@@ -49,7 +52,6 @@ module.exports.patch = [
   joiValidate(validationSchema),
   async (req, res) => {
     await UserModel.updateOne({ _id: req.apiUserId }, { ...req.body });
-
     return res.status(200).json();
   },
 ];
