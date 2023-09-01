@@ -11,7 +11,9 @@ import { useEffect } from 'react';
 
 export default function Profile() {
   const [userInfo, setUserInfo] = useState();
-  const [value, setValue] = useState(`👋🏻Hi there, my name is ${userInfo?.handler}`);
+  const [value, setValue] = useState(
+    `<p>👋🏻Hi there, my name is undefined</p><p>I need <strong>BIG</strong> cock for madam</p><p><br></p><p><br></p><blockquote>Also im like the coolest guy ever</blockquote><h1 class=\"ql-align-center\">HEo world</h1><p class=\"ql-align-center\">Its actually hello but whatever</p><pre class=\"ql-syntax\" spellcheck=\"false\">E = MC2\n</pre>`
+  );
   const [disable, setDisable] = useState(true);
 
   let context = [
@@ -34,7 +36,7 @@ export default function Profile() {
   `,
   ];
 
-  let tags = ['programming', 'coffee', 'sleep', 'fancy stuff', 'wotkout'];
+  // let tags = ['programming', 'coffee', 'sleep', 'fancy stuff', 'wotkout'];
 
   const getUser = () => {
     useFetch({
@@ -43,12 +45,7 @@ export default function Profile() {
     }).then((res) => {
       if (res.status === 200) {
         console.log(res.message);
-        setUserInfo({
-          handler: res.message.handle,
-          biography: res.message.biography,
-          created: res.message.createdAt,
-          tags: res.message.tags,
-        });
+        setUserInfo(res.message);
       } else {
         // For the devs to debug
         console.log(res.message);
@@ -80,18 +77,20 @@ export default function Profile() {
       }
       right={
         <>
-          <section className="h-60 shadow-md rounded-b bg-gray-700">
+          <section
+            className="h-60 shadow-md rounded-b bg-gray-700 bg-center bg-cover"
+            style={{ backgroundImage: `url('http://localhost:3030/recourse/${userInfo?.background}')` }}>
             <section
               className="relative flex flex-row pt-36
             mx-4 ">
               <img
-                src="../profilePic.jpeg"
+                src={userInfo?.picture ? `http://localhost:3030/recourse/${userInfo?.picture}` : '../profilePic.jpeg'}
                 alt="center image"
                 className="h-48 border-solid shadow-md border-4 border-white  mx-2.5 rounded-full"
               />
               <div className="mt-24">
-                <h3 className="font-semibold text-2xl">John Diller</h3>
-                <h3 className="text-lg">@{userInfo?.handler}</h3>
+                <h3 className="font-semibold text-2xl">{userInfo?.name || userInfo?.handle}</h3>
+                <h3 className="text-lg">@{userInfo?.handle}</h3>
               </div>
             </section>
           </section>

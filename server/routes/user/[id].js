@@ -110,3 +110,17 @@ module.exports.post = [
     return res.status(200).json();
   },
 ];
+
+module.exports.delete = [
+  joiValidate(validationSchema),
+  async (req, res) => {
+    let user = await UserModel.findOne({ _id: req.apiUserId }).select('+password +settings').populate('picture');
+
+    let validPassword = await user.validatePassword(req.body?.password);
+    if (!validPassword) return res.status(404).json('Incorrect password');
+
+    await user.deleteOne();
+
+    res.status(200).json();
+  },
+];

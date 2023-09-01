@@ -1,41 +1,41 @@
 import { useState } from 'react';
 
 export default function ButtonInput({
-  buttonLabel,
-  color = 'bg-gray-100',
+  btnText,
+  btnBG = 'bg-gray-100',
+  btnColor,
+  innerRef,
   actionInput = () => {},
-  actionButton,
+  actionButton = () => {},
   shouldClear,
-  defaultValue = '',
-  textColor,
+  value = '',
   width = 'w-60',
   invalid,
-  type = 'text',
-  input,
+  ...rest
 }) {
-  const [state, setstate] = useState(defaultValue);
+  const [state, setState] = useState(value);
   return (
     <div className="flex flex-row text-center mb-6 mt-2">
       <input
+        {...rest}
+        ref={innerRef}
         onChange={(e) => {
           actionInput(e);
-          setstate(e.target.value);
+          setState(e.target.value);
         }}
         value={state}
-        type={type}
         className={`shadow-slate-200 rounded-l pl-1 shadow-inner border h-10 ${width} ${
           invalid ? 'border-2 border-red-600' : 'border-slate-200'
         }  `}
-        {...input}
       />
       <button
         onClick={() => {
           actionButton(state);
-          if (shouldClear) setstate('');
+          if (shouldClear) setState('');
         }}
         type="button"
-        className={`font-semibold ${textColor} rounded-r shadow-inner ${color} p-1 text-md hover:shadow-inner`}>
-        {buttonLabel}
+        className={`font-semibold ${btnColor} rounded-r shadow-inner ${btnBG} p-1 text-md hover:shadow-inner`}>
+        {btnText}
       </button>
     </div>
   );
