@@ -85,7 +85,9 @@ module.exports.get = [
 
     if (req.query?.size) {
       let path = currentFile.thumbnail || currentFile.path;
-      return sharp(path).resize(req.query.size, req.query.size, { fit: 'inside' }).pipe(res);
+      return sharp(path, { animated: currentFile.mimetype?.includes('gif') })
+        .resize(req.query.size, req.query.size, { fit: 'inside' })
+        .pipe(res);
     }
 
     fs.createReadStream(currentFile?.path).pipe(res);

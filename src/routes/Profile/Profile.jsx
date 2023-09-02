@@ -36,8 +36,6 @@ export default function Profile() {
   `,
   ];
 
-  // let tags = ['programming', 'coffee', 'sleep', 'fancy stuff', 'wotkout'];
-
   const getUser = () => {
     useFetch({
       url: 'user',
@@ -79,12 +77,12 @@ export default function Profile() {
         <>
           <section
             className="h-60 shadow-md rounded-b bg-gray-700 bg-center bg-cover"
-            style={{ backgroundImage: `url('http://localhost:3030/recourse/${userInfo?.background}')` }}>
-            <section
-              className="relative flex flex-row pt-36
-            mx-4 ">
+            style={{
+              backgroundImage: userInfo?.background ? `url('http://localhost:3030/recourse/${userInfo?.background}')` : '',
+            }}>
+            <section className="relative flex flex-row pt-36 mx-4 ">
               <img
-                src={userInfo?.picture ? `http://localhost:3030/recourse/${userInfo?.picture}` : '../profilePic.jpeg'}
+                src={userInfo?.picture ? `http://localhost:3030/recourse/${userInfo?.picture}?size=250` : '../profilePic.jpeg'}
                 alt="center image"
                 className="h-48 border-solid shadow-md border-4 border-white  mx-2.5 rounded-full"
               />
@@ -144,7 +142,7 @@ export default function Profile() {
                   <button className="border shadow-md bg-red-700 text-white py-1 px-2 rounded-lg">Block</button>
                 </div>
 
-                <h3 className="font-semibold">Biography</h3>
+                <h3 className="font-semibold block">Biography</h3>
                 <p className="text-lg py-4 w-fit">{userInfo?.biography}</p>
                 <hr className="m-4" />
                 <h2 className="text-slate-600 font-semibold uppercase ">Member since: {memberDate}</h2>
