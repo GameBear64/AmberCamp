@@ -1,72 +1,46 @@
 import { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Register from './Register/Register';
-import Login from './Login/Login';
-import Profile from './Profile/Profile';
-import ProfileMobile from './Profile/Profile.m';
-import RegisterMobile from './Register/Register.m';
-import ChatListMobile from './ChatList/ChatList.m';
-import ErrorPage from './ErrorPage/ErrorPage';
 import resizeScreen from '../utils/resizeScreen';
-import LoginMobile from './Login/Login.m';
-import Settings from './Settings/Settings/Settings';
-import General from './Settings/General/General';
-import Security from './Settings/Security/Security';
-import DangerZone from './Settings/DangerZone/DangerZone';
-import Preferences from './Settings/Preferences/Preferences';
-import SettingsMobile from './Settings/Settings/Settings.m';
-import DangerZoneMobile from './Settings/DangerZone/DangerZone.m';
-import GeneralMobile from './Settings/General/General.m';
-import SecurityMobile from './Settings/Security/Security.m';
-import PreferencesMobile from './Settings/Preferences/Preferences.m';
 
+// Auth
+import Guard from './UtilPages/RouterGuard';
+const Register = lazy(() => import('./Register/Register'));
+const RegisterMobile = lazy(() => import('./Register/Register.m'));
+const Login = lazy(() => import('./Login/Login'));
+const LoginMobile = lazy(() => import('./Login/Login.m'));
+
+// Routes
 const ChatList = lazy(() => import('./ChatList/ChatList'));
 const Chat = lazy(() => import('./Chat/Chat'));
+const Profile = lazy(() => import('./Profile/Profile'));
+const Settings = lazy(() => import('./Settings/Settings/Settings'));
+const General = lazy(() => import('./Settings/General/General'));
+const Security = lazy(() => import('./Settings/Security/Security'));
+const DangerZone = lazy(() => import('./Settings/DangerZone/DangerZone'));
+const Preferences = lazy(() => import('./Settings/Preferences/Preferences'));
+
+// Mobile Routes
+const ChatListMobile = lazy(() => import('./ChatList/ChatList.m'));
+const ProfileMobile = lazy(() => import('./Profile/Profile.m'));
+const SettingsMobile = lazy(() => import('./Settings/Settings/Settings.m'));
+const DangerZoneMobile = lazy(() => import('./Settings/DangerZone/DangerZone.m'));
+const GeneralMobile = lazy(() => import('./Settings/General/General.m'));
+const SecurityMobile = lazy(() => import('./Settings/Security/Security.m'));
+const PreferencesMobile = lazy(() => import('./Settings/Preferences/Preferences.m'));
+
+// Other
+const ErrorPage = lazy(() => import('./UtilPages/ErrorPage'));
+const Loader = lazy(() => import('./UtilPages/Loader'));
+const NotFound = lazy(() => import('./UtilPages/NotFound'));
 
 export default function Router() {
   const screenSize = resizeScreen();
 
-  let routes = [
-    {
-      path: '/',
-      element: (
-        <Suspense fallback={<>...</>}>
-          <h1> the index </h1>
-        </Suspense>
-      ),
-    },
-    {
-      path: '/chat',
-      element: (
-        <Suspense fallback={<>...</>}>
-          <ChatList className="classList-component " />
-        </Suspense>
-      ),
-
-      children: [
-        {
-          path: '',
-          element: (
-            <Suspense fallback={<>...</>}>
-              <h1> no chat </h1>
-            </Suspense>
-          ),
-        },
-        {
-          path: ':id',
-          element: (
-            <Suspense fallback={<>...</>}>
-              <Chat className="chat-component" />
-            </Suspense>
-          ),
-        },
-      ],
-    },
-
+  const authRoutes = [
     {
       path: '/user/register',
       element: (
-        <Suspense fallback={<>...</>}>
+        <Suspense fallback={<Loader />}>
           <Register />
         </Suspense>
       ),
@@ -74,15 +48,49 @@ export default function Router() {
     {
       path: '/user/login',
       element: (
-        <Suspense fallback={<>...</>}>
+        <Suspense fallback={<Loader />}>
           <Login />
         </Suspense>
       ),
     },
+  ];
+
+  const routes = [
+    {
+      path: '',
+      element: <p>the index</p>,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: '/chat',
+      element: (
+        <Suspense fallback={<Loader />}>
+          <ChatList className="classList-component " />
+        </Suspense>
+      ),
+      children: [
+        {
+          path: '',
+          element: (
+            <Suspense fallback={<Loader />}>
+              <h1> no chat </h1>
+            </Suspense>
+          ),
+        },
+        {
+          path: ':id',
+          element: (
+            <Suspense fallback={<Loader />}>
+              <Chat className="chat-component" />
+            </Suspense>
+          ),
+        },
+      ],
+    },
     {
       path: '/user',
       element: (
-        <Suspense fallback={<>...</>}>
+        <Suspense fallback={<Loader />}>
           <Profile />
         </Suspense>
       ),
@@ -90,7 +98,7 @@ export default function Router() {
     {
       path: '/user/settings',
       element: (
-        <Suspense fallback={<>...</>}>
+        <Suspense fallback={<Loader />}>
           <Settings />
         </Suspense>
       ),
@@ -98,7 +106,7 @@ export default function Router() {
         {
           path: 'general',
           element: (
-            <Suspense fallback={<>...</>}>
+            <Suspense fallback={<Loader />}>
               <General />
             </Suspense>
           ),
@@ -106,7 +114,7 @@ export default function Router() {
         {
           path: 'dangerzone',
           element: (
-            <Suspense fallback={<>...</>}>
+            <Suspense fallback={<Loader />}>
               <DangerZone />
             </Suspense>
           ),
@@ -114,7 +122,7 @@ export default function Router() {
         {
           path: 'preferences',
           element: (
-            <Suspense fallback={<>...</>}>
+            <Suspense fallback={<Loader />}>
               <Preferences />
             </Suspense>
           ),
@@ -122,7 +130,7 @@ export default function Router() {
         {
           path: 'security',
           element: (
-            <Suspense fallback={<>...</>}>
+            <Suspense fallback={<Loader />}>
               <Security />
             </Suspense>
           ),
@@ -133,35 +141,11 @@ export default function Router() {
 
   //////////////////////////////////////////////////////////////////////////////
 
-  let mobileRoutres = [
-    {
-      path: '/',
-      element: (
-        <Suspense fallback={<>...</>}>
-          <h1> the index mobile </h1>
-        </Suspense>
-      ),
-    },
-    {
-      path: '/chat',
-      element: (
-        <Suspense fallback={<>...</>}>
-          <ChatListMobile />
-        </Suspense>
-      ),
-    },
-    {
-      path: `/chat/:id`,
-      element: (
-        <Suspense fallback={<>...</>}>
-          <Chat className="chat-component" />
-        </Suspense>
-      ),
-    },
+  const mobileAuthRoutes = [
     {
       path: '/user/register',
       element: (
-        <Suspense fallback={<>...</>}>
+        <Suspense fallback={<Loader />}>
           <RegisterMobile />
         </Suspense>
       ),
@@ -169,15 +153,42 @@ export default function Router() {
     {
       path: '/user/login',
       element: (
-        <Suspense fallback={<>...</>}>
+        <Suspense fallback={<Loader />}>
           <LoginMobile />
+        </Suspense>
+      ),
+    },
+  ];
+
+  const mobileRoutes = [
+    {
+      path: '',
+      element: (
+        <Suspense fallback={<Loader />}>
+          <h1> the index mobile </h1>
+        </Suspense>
+      ),
+    },
+    {
+      path: '/chat',
+      element: (
+        <Suspense fallback={<Loader />}>
+          <ChatListMobile />
+        </Suspense>
+      ),
+    },
+    {
+      path: `/chat/:id`,
+      element: (
+        <Suspense fallback={<Loader />}>
+          <Chat className="chat-component" />
         </Suspense>
       ),
     },
     {
       path: '/user',
       element: (
-        <Suspense fallback={<>...</>}>
+        <Suspense fallback={<Loader />}>
           <ProfileMobile />
         </Suspense>
       ),
@@ -185,16 +196,15 @@ export default function Router() {
     {
       path: '/user/settings',
       element: (
-        <Suspense fallback={<>...</>}>
+        <Suspense fallback={<Loader />}>
           <SettingsMobile />
         </Suspense>
       ),
     },
-
     {
       path: '/user/settings/dangerzone',
       element: (
-        <Suspense fallback={<>...</>}>
+        <Suspense fallback={<Loader />}>
           <DangerZoneMobile />
         </Suspense>
       ),
@@ -202,7 +212,7 @@ export default function Router() {
     {
       path: 'user/settings/general',
       element: (
-        <Suspense fallback={<>...</>}>
+        <Suspense fallback={<Loader />}>
           <GeneralMobile />
         </Suspense>
       ),
@@ -210,7 +220,7 @@ export default function Router() {
     {
       path: 'user/settings/security',
       element: (
-        <Suspense fallback={<>...</>}>
+        <Suspense fallback={<Loader />}>
           <SecurityMobile />
         </Suspense>
       ),
@@ -218,14 +228,23 @@ export default function Router() {
     {
       path: 'user/settings/preferences',
       element: (
-        <Suspense fallback={<>...</>}>
+        <Suspense fallback={<Loader />}>
           <PreferencesMobile />
         </Suspense>
       ),
     },
   ];
 
-  const router = createBrowserRouter(screenSize > 1023 ? routes : mobileRoutres);
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Guard />,
+      errorElement: <ErrorPage />,
+      children: [...(screenSize > 1023 ? routes : mobileRoutes)],
+    },
+    ...(screenSize > 1023 ? authRoutes : mobileAuthRoutes),
+    { path: '*', element: <NotFound /> },
+  ]);
 
   return <RouterProvider router={router} />;
 }

@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 export default function Profile() {
   const [userInfo, setUserInfo] = useState();
   const [value, setValue] = useState(
-    `<p>👋🏻Hi there, my name is undefined</p><p>I need <strong>BIG</strong> cock for madam</p><p><br></p><p><br></p><blockquote>Also im like the coolest guy ever</blockquote><h1 class="ql-align-center">HEo world</h1><p class="ql-align-center">Its actually hello but whatever</p><pre class="ql-syntax" spellcheck="false">E = MC2\n</pre>`
+    `<p>👋🏻Hi there, my name is undefined</p><p>I need <strong>BIG</strong> cock for madam</p><p><br></p><p><br></p><blockquote>Also im like the coolest guy ever</blockquote><h1 class="ql-align-center">HEo world</h1><p class="ql-align-center">Its actually hello but whatever</p><pre class="ql-syntax" spellcheck="false">E = MC^2\n</pre>`
   );
   const [disable, setDisable] = useState(true);
 
