@@ -1,16 +1,17 @@
-// import IconInput from '../Inputs/IconInput';
-// import { Field } from 'react-final-form';
+import IconInput from '../Inputs/IconInput';
+import ConnectForm from '../ConnectForm';
 
-export default function IconInputField({ label, type = 'text', icon, width = 'w-60', invalid, name, styles }) {
+export default function IconInputField({ name, rules = {}, styles, ...rest }) {
   return (
-    <h1>fix me</h1>
-    // <Field
-    //   name={name}
-    //   render={({ input }) => (
-    //     <div className={styles}>
-    //       <IconInput type={type} width={width} label={label} icon={icon} input={input} invalid={invalid} />
-    //     </div>
-    //   )}
-    // />
+    <ConnectForm>
+      {({ register }) => {
+        const { ref, ...registerRest } = register(name, rules);
+        return (
+          <div className={styles}>
+            <IconInput innerRef={ref} {...registerRest} {...rest} />
+          </div>
+        );
+      }}
+    </ConnectForm>
   );
 }

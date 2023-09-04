@@ -40,8 +40,9 @@ export default function DangerZone() {
               actionInput={(e) => {
                 setPassword(e.target.value);
               }}
-              buttonLabel="Delete Account"
-              color="bg-red-600"
+              btnText="Delete Account"
+              btnBG="bg-red-600"
+              btnColor="text-white"
               actionButton={() => deleteUser()}
               invalid={errorBorder}
             />

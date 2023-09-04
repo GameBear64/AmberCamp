@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function ButtonInput({
   btnText,
@@ -8,12 +8,17 @@ export default function ButtonInput({
   actionInput = () => {},
   actionButton = () => {},
   shouldClear,
-  value = '',
+  value,
   width = 'w-60',
   invalid,
   ...rest
 }) {
-  const [state, setState] = useState(value);
+  const [state, setState] = useState('');
+
+  useEffect(() => {
+    setState(value);
+  }, [value]);
+
   return (
     <div className="flex flex-row text-center mb-6 mt-2">
       <input
@@ -26,7 +31,7 @@ export default function ButtonInput({
         value={state}
         className={`shadow-slate-200 rounded-l pl-1 shadow-inner border h-10 ${width} ${
           invalid ? 'border-2 border-red-600' : 'border-slate-200'
-        }  `}
+        }`}
       />
       <button
         onClick={() => {

@@ -67,9 +67,26 @@ export default function General() {
   return (
     <div className="p-10 my-3">
       <Form defaultValues={userInfo} onSubmit={(data) => updateUserInfo(removeEmptyProperties(data))} onlyDirty>
-        <MediaSelect styles="mb-5" width="w-80" label="Profile Picture" name="background" />
+        <MediaSelect styles="mb-5" width="w-80" label="Background Picture" name="background" />
         <MediaSelect styles="mb-5" width="w-80" label="Profile Picture" name="picture" />
-        <Input styles="mb-5" width="w-80" type="text" label="Username" name="name" />
+        <Input
+          rules={{
+            required: 'This field is required.',
+            minLength: {
+              value: 3,
+              message: 'Username must be at least 3 characters!',
+            },
+            maxLength: {
+              value: 30,
+              message: "Username can't be longer than 3 characters!",
+            },
+          }}
+          styles="mb-5"
+          width="w-80"
+          type="text"
+          label="Username"
+          name="name"
+        />
         <Textarea styles="mb-5" rows="6" cols="30" label="Biography" name="biography" />
         <TagSelector styles="mb-5" width="w-72" type="text" btnText="+ Add" name="tags" shouldClear />
         <button className="font-semibold text-white shadow-md rounded bg-orange-700 py-1 px-2 mt-5 text-[17px]">Submit</button>

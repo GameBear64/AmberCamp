@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useFetch } from './../../utils/useFetch';
 import { errorSnackBar, successSnackBar } from '../../utils/snackbars';
 import { Link } from 'react-router-dom';
+import Input from '../../components/Form/Inputs/Input';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -41,6 +42,12 @@ export default function Login() {
                 placeholder="email@ac.com"
                 className="bg-gray-200 text-base col-span-2 rounded border-slate-600 p-3 "
                 type="text"
+              />
+              <Input
+                type="text"
+                placeholder="email@ac.com"
+                width="w-full"
+                styles="bg-gray-200 text-base col-span-2 rounded border-slate-600 p-3"
               />
             </div>
             <div className="flex font-semibold flex-col text-left">

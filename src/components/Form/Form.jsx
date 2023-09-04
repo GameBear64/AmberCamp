@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import { cleanObject } from '../../utils/utils';
 
 export default function Form({ defaultValues, children, onSubmit, submitOnEnter = false, onlyDirty = false }) {
-  const methods = useForm({ defaultValues });
+  const methods = useForm({ defaultValues, mode: 'onChange' });
   const {
     handleSubmit,
     reset,

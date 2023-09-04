@@ -18,6 +18,7 @@ export default function Profile() {
   const [value, setValue] = useState(
     `<p>👋🏻Hi there, my name is undefined</p><p>I need <strong>BIG</strong> cock for madam</p><p><br></p><p><br></p><blockquote>Also im like the coolest guy ever</blockquote><h1 class="ql-align-center">HEo world</h1><p class="ql-align-center">Its actually hello but whatever</p><pre class="ql-syntax" spellcheck="false">E = MC^2\n</pre>`
   );
+  const [editNote, setEditNote] = useState('');
   const [disable, setDisable] = useState(true);
   let { id } = useParams();
 
@@ -67,9 +68,17 @@ export default function Profile() {
       left={
         <div className="my-10">
           <div className="mx-8">
-            <h1 className="font-semibold text-2xl">Notes</h1>
+            <h1 className="font-semibold text-2xl">
+              Notes
+              <span
+                onClick={() => updateUser({ notes: userInfo?.notes.reverse() })}
+                className="material-symbols-outlined cursor-pointer align-bottom ml-1 mb-1">
+                sort
+              </span>
+            </h1>
             <ButtonInput
-              label={'+Add'}
+              value={editNote}
+              btnText={'+Add'}
               color="bg-gray-100"
               shouldClear
               actionButton={(newNote) => {
@@ -85,8 +94,8 @@ export default function Profile() {
                     updateUser({ notes: userInfo?.notes?.filter((value) => value !== note) });
                   }}
                   onEdit={() => {
-                    // maybe delete the note and put it back in the button input? idk man
-                    // go wild :]
+                    setEditNote(note);
+                    updateUser({ notes: userInfo?.notes?.filter((value) => value !== note) });
                   }}
                 />
               ))}
@@ -102,11 +111,17 @@ export default function Profile() {
               backgroundImage: userInfo?.background ? `url('http://localhost:3030/recourse/${userInfo?.background}')` : '',
             }}>
             <section className="relative flex flex-row pt-36 mx-4 ">
-              <img
-                src={userInfo?.picture ? `http://localhost:3030/recourse/${userInfo?.picture}?size=250` : '../profilePic.jpeg'}
-                alt="center image"
-                className="h-48 border-solid shadow-md border-4 border-white  mx-2.5 rounded-full"
-              />
+              <div className="h-48  relative overflow-hidden rounded-[50%] inline-block border-solid shadow-md border-4 border-white mx-2.5">
+                <img
+                  src={
+                    userInfo?.picture && userInfo?.picture !== 'string'
+                      ? `http://localhost:3030/recourse/${userInfo?.picture}?size=250`
+                      : '../profilePic.jpeg'
+                  }
+                  alt="center image"
+                  className="bg-cover inline-block bg-center rounded-[50%] h-48 w-48"
+                />
+              </div>
               <div className="mt-24">
                 <h3 className="font-semibold text-2xl">{userInfo?.name || userInfo?.handle}</h3>
                 <h3 className="text-lg">@{userInfo?.handle}</h3>
