@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { getCurrentUserId } from '../../utils/utils';
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function NavBar() {
             device_unknown
           </span>
           <span
-            onClick={() => navigate('/user')}
+            onClick={() => navigate(`/user/${getCurrentUserId()}`)}
             className={`material-symbols-outlined text-[26px] cursor-pointer hover:shadow-md rounded transition duration-0 hover:duration-500 p-1`}>
             person
           </span>

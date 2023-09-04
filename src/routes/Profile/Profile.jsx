@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 
 import Notes from '../../components/Notes/Notes';
 import Layout from '../../components/Layout/Layout';
 import ButtonInput from '../../components/Form/Inputs/ButtonInput';
+import 'react-quill/dist/quill.snow.css';
+import { useParams } from 'react-router-dom';
 
 import { useFetch } from '../../utils/useFetch';
-import 'react-quill/dist/quill.snow.css';
-import { useEffect } from 'react';
+import { cleanObject, getCurrentUserId, removeEmptyProperties } from '../../utils/utils';
 
 export default function Profile() {
   const [userInfo, setUserInfo] = useState();
@@ -15,40 +16,28 @@ export default function Profile() {
     `<p>👋🏻Hi there, my name is undefined</p><p>I need <strong>BIG</strong> cock for madam</p><p><br></p><p><br></p><blockquote>Also im like the coolest guy ever</blockquote><h1 class="ql-align-center">HEo world</h1><p class="ql-align-center">Its actually hello but whatever</p><pre class="ql-syntax" spellcheck="false">E = MC^2\n</pre>`
   );
   const [disable, setDisable] = useState(true);
-
-  let context = [
-    'Touch Grass',
-    '15.01/important date/',
-    `This simport { useNavigate } from 'react-router-dom';
-  idebar is of full height (100%) and always shown.
-  
-    Scroll down the page to see the result.
-  
-    Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, alt
-  `,
-    'Touch Grass',
-    '15.01/important date/',
-    `This simport { useNavigate } from 'react-router-dom';
-  idebar is of full height (100%) and always shown
-  Scroll down the page to see the result.
-  
-  Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, alt
-  `,
-  ];
+  let { id } = useParams();
 
   const getUser = () => {
     useFetch({
-      url: 'user',
+      url: `user/${id || getCurrentUserId()}`,
       method: 'GET',
     }).then((res) => {
       if (res.status === 200) {
-        console.log(res.message);
         setUserInfo(res.message);
       } else {
         // For the devs to debug
         console.log(res.message);
       }
     });
+  };
+
+  const updateUser = (updateObject) => {
+    useFetch({
+      url: `user/${id || getCurrentUserId()}`,
+      method: 'POST',
+      body: removeEmptyProperties(updateObject),
+    }).then(() => getUser());
   };
 
   useEffect(() => {
@@ -64,10 +53,27 @@ export default function Profile() {
         <div className="my-10">
           <div className="mx-8">
             <h1 className="font-semibold text-2xl">Notes</h1>
-            <ButtonInput buttonLabel={'+Add'} color="bg-gray-100" />
+            <ButtonInput
+              label={'+Add'}
+              color="bg-gray-100"
+              shouldClear
+              actionButton={(newNote) => {
+                updateUser({ notes: [...userInfo.notes, newNote] });
+              }}
+            />
             <>
-              {context.map((el) => (
-                <Notes key={Math.round(Math.random() * 10000000)} el={el} />
+              {userInfo?.notes?.map((note, i) => (
+                <Notes
+                  key={i}
+                  text={note}
+                  onDelete={() => {
+                    updateUser({ notes: userInfo?.notes?.filter((value) => value !== note) });
+                  }}
+                  onEdit={() => {
+                    // maybe delete the note and put it back in the button input? idk man
+                    // go wild :]
+                  }}
+                />
               ))}
             </>
           </div>
@@ -125,23 +131,26 @@ export default function Profile() {
                     </div>
                   )}
                 </div>
-                <div className="text-right">
-                  <span
-                    onClick={() => setDisable(!disable)}
-                    className="material-symbols-outlined cursor-pointer rounded p-1.5 mt-2 shadow-md bg-orange-300">
-                    edit
-                  </span>
-                </div>
+                {id === getCurrentUserId() && (
+                  <div className="text-right">
+                    <span
+                      onClick={() => setDisable(!disable)}
+                      className="material-symbols-outlined cursor-pointer rounded p-1.5 mt-2 shadow-md bg-orange-300">
+                      edit
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
             <section className="overflow-y-auto overflow-x-hidden col-span-1">
               <div className="shadow-md p-10">
-                <div className="mb-4 flex flex-wrap font-semibold gap-2 float-left ">
-                  <button className="border shadow-md bg-slate-50 py-1 px-2 rounded-lg">Message</button>
-                  <button className="border shadow-md bg-sky-700 text-white py-1 px-2 rounded-lg">Add friend</button>
-                  <button className="border shadow-md bg-red-700 text-white py-1 px-2 rounded-lg">Block</button>
-                </div>
-
+                {id !== getCurrentUserId() && (
+                  <div className="mb-4 flex flex-wrap font-semibold gap-2 float-left ">
+                    <button className="border shadow-md bg-slate-50 py-1 px-2 rounded-lg">Message</button>
+                    <button className="border shadow-md bg-sky-700 text-white py-1 px-2 rounded-lg">Add friend</button>
+                    <button className="border shadow-md bg-red-700 text-white py-1 px-2 rounded-lg">Block</button>
+                  </div>
+                )}
                 <h3 className="font-semibold block">Biography</h3>
                 <p className="text-lg py-4 w-fit">{userInfo?.biography}</p>
                 <hr className="m-4" />

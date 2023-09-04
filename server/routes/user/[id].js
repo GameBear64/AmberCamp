@@ -74,6 +74,34 @@
  *             schema:
  *               type: string
  *               example: User not found
+ *   delete:
+ *     summary: Delete the authenticated user.
+ *     tags:
+ *       - user
+ *     security:
+ *       - ApiKeyAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               password:
+ *                 type: string
+ *                 minLength: 8
+ *                 maxLength: 255
+ *             required:
+ *               - password
+ *     responses:
+ *       '200':
+ *         description: Returns an empty response if the friend request was sent successfully.
+ *       400:
+ *         description: Bad request. Indicates the request data is invalid.
+ *         content:
+ *           application/json:
+ *             type: string
+ *             example: password must be at least 8 characters
  */
 
 const joi = require('joi');
@@ -87,13 +115,13 @@ module.exports.get = async (req, res) => {
 
   let relationship = await user.getRelationship(req.apiUserId);
 
-  return res.status(200).json({ ...user.toObject(), relationship });
+  return res.status(200).json({ ...relationship?.toObject(), ...user?.toObject() });
 };
 
 const validationSchema = joi.object({
-  nickname: joi.string().min(3).max(30),
-  notes: joi.array(),
-  accentColor: joi.string(),
+  nickname: joi.string().min(3).max(30).optional(),
+  notes: joi.array().optional(),
+  accentColor: joi.string().optional(),
 });
 
 module.exports.post = [
@@ -111,8 +139,12 @@ module.exports.post = [
   },
 ];
 
+const deleteValidation = joi.object({
+  password: joi.string().min(8).max(255).required(),
+});
+
 module.exports.delete = [
-  joiValidate(validationSchema),
+  joiValidate(deleteValidation),
   async (req, res) => {
     let user = await UserModel.findOne({ _id: req.apiUserId }).select('+password +settings').populate('picture');
 
