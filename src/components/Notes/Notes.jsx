@@ -1,7 +1,25 @@
 import { useState } from 'react';
-import Options from '../Options/Options';
+import Dropdown from '../Dropdown/Dropdown';
 export default function Notes({ text, onDelete, onEdit }) {
   const [showOptions, setShowOptions] = useState(false);
+  const options = [
+    {
+      text: 'Delete',
+      color: 'bg-red-300',
+      action: () => {
+        setShowOptions(false);
+        onDelete();
+      },
+    },
+    {
+      text: 'Edit',
+      color: 'bg-green-300',
+      action: () => {
+        setShowOptions(false);
+        onEdit();
+      },
+    },
+  ];
   return (
     <div
       onMouseLeave={() => setShowOptions(false)}
@@ -11,26 +29,7 @@ export default function Notes({ text, onDelete, onEdit }) {
         <span onClick={() => setShowOptions(!showOptions)} className="material-symbols-outlined cursor-pointer text-3xl">
           more_horiz
         </span>
-        {showOptions && (
-          <div className="dropdown absolute shadow-md text-base">
-            <ul>
-              <Options
-                options={{ option: 'Delete', color: 'bg-red-300' }}
-                onClick={() => {
-                  setShowOptions(false);
-                  onDelete();
-                }}
-              />
-              <Options
-                options={{ option: 'Edit', color: 'bg-green-300' }}
-                onClick={() => {
-                  setShowOptions(false);
-                  onEdit();
-                }}
-              />
-            </ul>
-          </div>
-        )}
+        {showOptions && <Dropdown options={options} />}
       </div>
     </div>
   );

@@ -29,11 +29,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    description: {
+      type: String,
+      default: '',
+    },
     picture: {
       type: String,
       ref: 'Media',
-      localField: 'picture',
-      foreignField: 'key',
     },
     background: {
       type: String,

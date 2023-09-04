@@ -59,6 +59,7 @@ export default function General() {
       }
     });
   };
+
   useEffect(() => {
     getUser();
   }, []);

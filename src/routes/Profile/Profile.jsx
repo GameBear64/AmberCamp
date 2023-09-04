@@ -8,10 +8,13 @@ import 'react-quill/dist/quill.snow.css';
 import { useParams } from 'react-router-dom';
 
 import { useFetch } from '../../utils/useFetch';
-import { cleanObject, getCurrentUserId, removeEmptyProperties } from '../../utils/utils';
+import { getCurrentUserId, removeEmptyProperties } from '../../utils/utils';
+
+import { successSnackBar } from '../../utils/snackbars';
+import QuillSection from './QuillSection';
 
 export default function Profile() {
-  const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = useState({});
   const [value, setValue] = useState(
     `<p>👋🏻Hi there, my name is undefined</p><p>I need <strong>BIG</strong> cock for madam</p><p><br></p><p><br></p><blockquote>Also im like the coolest guy ever</blockquote><h1 class="ql-align-center">HEo world</h1><p class="ql-align-center">Its actually hello but whatever</p><pre class="ql-syntax" spellcheck="false">E = MC^2\n</pre>`
   );
@@ -38,6 +41,18 @@ export default function Profile() {
       method: 'POST',
       body: removeEmptyProperties(updateObject),
     }).then(() => getUser());
+  };
+
+  const updateDescription = (description) => {
+    useFetch({
+      url: 'user/settings',
+      method: 'PATCH',
+      body: { description },
+    }).then((res) => {
+      if (res.status === 200) {
+        successSnackBar('Profile updated.');
+      }
+    });
   };
 
   useEffect(() => {
@@ -100,47 +115,7 @@ export default function Profile() {
           </section>
           <section className="grid grid-cols-3 grid-rows-1 gap-0 ml-8">
             <div className="mt-32 col-span-2">
-              <div className="flex flex-row gap-4">
-                <div className="w-full">
-                  {disable ? (
-                    <div className="quill">
-                      <div className="ql-snow">
-                        <div className="w-full px-6 ql-editor" dangerouslySetInnerHTML={{ __html: value }} />
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="h-auto">
-                      <ReactQuill
-                        theme="snow"
-                        value={value}
-                        readOnly={disable}
-                        onChange={setValue}
-                        className="h-full"
-                        modules={{
-                          toolbar: [
-                            [{ header: [1, 2, 3, 4, 5, 6, 7] }],
-                            ['bold', 'italic', 'underline', 'strike', 'blockquote', { 'code-block': true }],
-                            [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }, { align: [] }],
-                            [{ script: 'sub' }, { script: 'super' }],
-                            ['link', 'image', 'video'],
-                            // no align image option
-                            [{ color: [] }, { background: [] }],
-                          ],
-                        }}
-                      />
-                    </div>
-                  )}
-                </div>
-                {id === getCurrentUserId() && (
-                  <div className="text-right">
-                    <span
-                      onClick={() => setDisable(!disable)}
-                      className="material-symbols-outlined cursor-pointer rounded p-1.5 mt-2 shadow-md bg-orange-300">
-                      edit
-                    </span>
-                  </div>
-                )}
-              </div>
+              <QuillSection userId={id} value={userInfo.description} setValue={updateDescription} />
             </div>
             <section className="overflow-y-auto overflow-x-hidden col-span-1">
               <div className="shadow-md p-10">

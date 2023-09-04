@@ -41,6 +41,7 @@ const validationSchema = joi.object({
   name: joi.string().min(3).max(30).optional(),
   email: joi.string().min(10).max(255).required().email().optional(),
   biography: joi.string().max(256).optional(),
+  description: joi.string().optional(),
   picture: joi.string().optional(),
   background: joi.string().optional(),
   tags: joi.array().max(6).optional().messages({
