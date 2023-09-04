@@ -15,11 +15,8 @@ import QuillSection from './QuillSection';
 
 export default function Profile() {
   const [userInfo, setUserInfo] = useState({});
-  const [value, setValue] = useState(
-    `<p>👋🏻Hi there, my name is undefined</p><p>I need <strong>BIG</strong> cock for madam</p><p><br></p><p><br></p><blockquote>Also im like the coolest guy ever</blockquote><h1 class="ql-align-center">HEo world</h1><p class="ql-align-center">Its actually hello but whatever</p><pre class="ql-syntax" spellcheck="false">E = MC^2\n</pre>`
-  );
   const [editNote, setEditNote] = useState('');
-  const [disable, setDisable] = useState(true);
+  const [rotate, setRotate] = useState(false);
   let { id } = useParams();
 
   const getUser = () => {
@@ -71,8 +68,11 @@ export default function Profile() {
             <h1 className="font-semibold text-2xl">
               Notes
               <span
-                onClick={() => updateUser({ notes: userInfo?.notes.reverse() })}
-                className="material-symbols-outlined cursor-pointer align-bottom ml-1 mb-1">
+                onClick={() => {
+                  setRotate(!rotate);
+                  updateUser({ notes: userInfo?.notes.reverse() });
+                }}
+                className={`material-symbols-outlined cursor-pointer align-bottom ml-1 mb-1 ${rotate && 'rotate-180'} `}>
                 sort
               </span>
             </h1>
