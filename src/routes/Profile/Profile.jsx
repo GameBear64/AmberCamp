@@ -57,7 +57,11 @@ export default function Profile() {
   }, [id]);
 
   let memberDate = userInfo?.createdAt;
-  memberDate = memberDate?.split('T')[0];
+  if (memberDate) {
+    memberDate = new Date(userInfo?.createdAt).toLocaleString('en-GB', {
+      dateStyle: 'short',
+    });
+  }
 
   return (
     <Layout
@@ -82,7 +86,7 @@ export default function Profile() {
                 updateUser({ notes: [...userInfo.notes, data.noteField] });
                 setEditNote('');
               }}>
-              <ButtonInputField width="w-72" name="noteField" btnText="+Add" />
+              <ButtonInputField name="noteField" btnText="+Add" />
             </Form>
             {userInfo?.notes?.map((note, i) => (
               <Notes
@@ -146,9 +150,7 @@ export default function Profile() {
                 )}
                 <hr className="m-4" />
                 <h2 className="text-slate-600 font-semibold uppercase ">Member since: {memberDate}</h2>
-                <p className="uppercase text-slate-600 font-semibold text-xs mb-3">
-                  time zone: {new Date().getHours()}:{new Date().getMinutes()}
-                </p>
+                <p className="uppercase text-slate-600 font-semibold text-xs mb-3">time zone: {userInfo?.timezone}</p>
                 {userInfo?.biography && (
                   <>
                     <hr className="m-4" />

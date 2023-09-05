@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { PreferencesModel } = require('./Preferences');
 const { RelationshipModel } = require('./Relationship');
+const { TimeZone } = require('../helpers/enums.js');
 
 const userSchema = new mongoose.Schema(
   {
@@ -42,6 +43,11 @@ const userSchema = new mongoose.Schema(
       ref: 'Media',
     },
     tags: [String],
+    timezone: {
+      type: String,
+      enum: Object.values(TimeZone),
+      default: TimeZone['00:00'],
+    },
     pendingContacts: {
       type: [
         {

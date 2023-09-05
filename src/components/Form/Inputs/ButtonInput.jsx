@@ -18,7 +18,6 @@ export default function ButtonInput({
 
   useEffect(() => {
     setState(value);
-    console.log(`value`, value);
   }, [value]);
 
   return (

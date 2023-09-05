@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { Theme, TimeZone } = require('../helpers/enums.js');
+const { Theme } = require('../helpers/enums.js');
 
 const preferencesSchema = new mongoose.Schema({
   theme: {
@@ -15,11 +15,7 @@ const preferencesSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
-  timezone: {
-    type: String,
-    enum: Object.values(TimeZone),
-    default: TimeZone.none,
-  },
+
   // devices: [{ // for the future
   //   tag: String,
   //   device: Object, // fingerprint object

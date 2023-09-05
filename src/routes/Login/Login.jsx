@@ -1,23 +1,20 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFetch } from './../../utils/useFetch';
 import { errorSnackBar, successSnackBar } from '../../utils/snackbars';
 import { Link } from 'react-router-dom';
 import { getCurrentUserId } from '../../utils/utils';
-import Input from '../../components/Form/Inputs/Input';
+import InputField from '../../components/Form/FormInputs/Input';
+import Form from '../../components/Form/Form';
 
 export default function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
-  const loginUser = () => {
+  const loginUser = (data) => {
     useFetch({
       url: 'user/login',
       method: 'POST',
       body: {
-        email,
-        password,
+        ...data,
       },
     }).then((res) => {
       if (res.status === 200) {
@@ -37,41 +34,41 @@ export default function Login() {
           <h1 className="font-medium text-4xl pb-8">Amber Camp Login</h1>
           <div className="flex flex-col space-y-4  ">
             <div className="flex flex-col text-left">
-              <label className="font-semibold text-grey-darkest">Email</label>
-              <input
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="email@ac.com"
-                className="bg-gray-200 text-base col-span-2 rounded border-slate-600 p-3 "
-                type="text"
-              />
-              <Input
-                type="text"
-                placeholder="email@ac.com"
-                width="w-full"
-                styles="bg-gray-200 text-base col-span-2 rounded border-slate-600 p-3"
-              />
-            </div>
-            <div className="flex font-semibold flex-col text-left">
-              <label className="text-grey-darkest">Password</label>
-              <input
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                className="bg-gray-200  text-base border-slate-600 p-3"
-                type="password"
-              />
+              <Form
+                onSubmit={(data) => {
+                  loginUser(data);
+                }}>
+                <InputField
+                  type="email"
+                  placeholder="email@ac.com"
+                  name="email"
+                  width="w-full"
+                  label="Email"
+                  styles="col-span-2"
+                  styleInput="bg-gray-200 rounded p-6"
+                />
+                <InputField
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  width="w-full"
+                  label="Password"
+                  styles="col-span-2 shadow-none"
+                  styleInput="bg-gray-200 rounded p-6"
+                />
+                <button
+                  type="submit"
+                  className="uppercase w-full border-solid bg-orange-700 border-2 p-2 mt-5 font-semibold text-lg rounded-md text-white ">
+                  Login
+                </button>
+                <Link to={'/user/register'} className="float-right mt-2 font-medium underline text-blue-700">
+                  No account? Make one!
+                </Link>
+              </Form>
             </div>
           </div>
-          <button
-            onClick={() => loginUser()}
-            className="uppercase border-solid bg-orange-700 border-2 p-2 mt-5 font-semibold text-lg rounded-md text-white ">
-            Login
-          </button>
-          <Link to={'/user/register'} className="text-right mt-2 font-medium underline text-blue-700">
-            No account? Make one!
-          </Link>
         </div>
       </div>
-
       <div className="flex bg-gray-200 items-center justify-center text-center h-screen ">
         <div>
           <img className="object-contain" src="../bam.png" />

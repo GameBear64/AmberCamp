@@ -11,9 +11,10 @@ export default function MediaSelect({ name, rules = {}, styles, ...rest }) {
         return (
           <div className={styles}>
             <Input
+              styleInput="w-full border-none"
               {...rest}
               type="file"
-              action={(e) => {
+              onChange={(e) => {
                 setValue(name, e.target.files[0], { shouldDirty: true, shouldTouch: true });
               }}
             />

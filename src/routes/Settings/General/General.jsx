@@ -9,9 +9,62 @@ import Input from '../../../components/Form/FormInputs/Input';
 import Textarea from '../../../components/Form/FormInputs/Textarea';
 import TagSelector from '../../../components/Form/FormInputs/TagSelector';
 import MediaSelect from '../../../components/Form/FormInputs/MediaSelect';
+import SelectInput from '../../../components/Form/FormInputs/SelectInput';
 
 export default function General() {
   const [userInfo, setUserInfo] = useState({});
+
+  const timezones = [
+    '-12:00',
+    '-11:30',
+    '-11:00',
+    '-10:30',
+    '-10:00',
+    '-09:30',
+    '-09:00',
+    '-08:30',
+    '-08:00',
+    '-07:30',
+    '-07:00',
+    '-06:30',
+    '-06:00',
+    '-05:30',
+    '-05:00',
+    '-04:30',
+    '-04:00',
+    '-03:30',
+    '-03:00',
+    '-02:30',
+    '-02:00',
+    '-01:30',
+    '-01:00',
+    '-00:30',
+    '00:00',
+    '00:30',
+    '01:00',
+    '01:30',
+    '02:00',
+    '02:30',
+    '03:00',
+    '03:30',
+    '04:00',
+    '04:30',
+    '05:00',
+    '05:30',
+    '06:00',
+    '06:30',
+    '07:00',
+    '07:30',
+    '08:00',
+    '08:30',
+    '09:00',
+    '09:30',
+    '10:00',
+    '10:30',
+    '11:00',
+    '11:30',
+    '12:00',
+  ];
 
   const getUser = () => {
     useFetch({
@@ -19,7 +72,10 @@ export default function General() {
       method: 'GET',
     }).then((res) => {
       if (res.status === 200) {
-        setUserInfo(cleanObject(res.message, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags']));
+        console.log(res.message);
+        setUserInfo(
+          cleanObject(res.message, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone'])
+        );
       } else {
         errorSnackBar(`${res.message}`);
       }
@@ -67,28 +123,37 @@ export default function General() {
   return (
     <div className="p-10 my-3">
       <Form defaultValues={userInfo} onSubmit={(data) => updateUserInfo(removeEmptyProperties(data))} onlyDirty>
-        <MediaSelect styles="mb-5" width="w-80" label="Background Picture" name="background" />
-        <MediaSelect styles="mb-5" width="w-80" label="Profile Picture" name="picture" />
-        <Input
-          rules={{
-            required: 'This field is required.',
-            minLength: {
-              value: 3,
-              message: 'Username must be at least 3 characters!',
-            },
-            maxLength: {
-              value: 30,
-              message: "Username can't be longer than 3 characters!",
-            },
-          }}
-          styles="mb-5"
-          width="w-80"
-          type="text"
-          label="Username"
-          name="name"
-        />
-        <Textarea styles="mb-5" rows="6" cols="30" label="Biography" name="biography" />
-        <TagSelector styles="mb-5" width="w-72" type="text" btnText="+ Add" name="tags" shouldClear />
+        <div className="flex flex-row gap-20">
+          <MediaSelect styles="mb-5" width="w-80" label="Background Picture" name="background" />
+          <MediaSelect styles="mb-5" width="w-80" label="Profile Picture" name="picture" />
+        </div>
+        <div className="flex flex-row gap-20">
+          <div>
+            <Input
+              rules={{
+                required: 'This field is required.',
+                minLength: {
+                  value: 3,
+                  message: 'Username must be at least 3 characters!',
+                },
+                maxLength: {
+                  value: 30,
+                  message: "Username can't be longer than 3 characters!",
+                },
+              }}
+              styles="mb-5"
+              width="w-80"
+              type="text"
+              label="Username"
+              name="name"
+            />
+            <Textarea styles="mb-5" rows="6" cols="30" label="Biography" name="biography" />
+          </div>
+          <div>
+            <TagSelector styles="mb-5" width="w-72" type="text" btnText="+ Add" name="tags" shouldClear />
+            <SelectInput name="timezone" label="Timezone" options={timezones} />
+          </div>
+        </div>
         <button className="font-semibold text-white shadow-md rounded bg-orange-700 py-1 px-2 mt-5 text-[17px]">Submit</button>
       </Form>
     </div>

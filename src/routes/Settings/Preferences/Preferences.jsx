@@ -22,7 +22,6 @@ export default function Preferences() {
           theme: res.message.theme,
           accent: res.message.accent,
           language: res.message.language,
-          timezone: res.message.timezone,
         });
       } else {
         console.log(res.message);
