@@ -42,20 +42,33 @@ const userSchema = new mongoose.Schema(
       ref: 'Media',
     },
     tags: [String],
-    contacts: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        select: false,
-      },
-    ],
-    pendingContacts: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        select: false,
-      },
-    ],
+    pendingContacts: {
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
+      ],
+      select: false,
+    },
+    contacts: {
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
+      ],
+      select: false,
+    },
+    blocked: {
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
+      ],
+      select: false,
+    },
     settings: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Preferences',
@@ -74,17 +87,19 @@ userSchema.methods.validatePassword = async function (pass) {
   return await bcrypt.compare(pass, this.password);
 };
 
-userSchema.methods.getRelationship = async function (myId) {
+userSchema.methods.getRelationship = async function (userId) {
   const excludeSelect = '-__v';
 
   let relation = await RelationshipModel.findOneAndUpdate(
-    { from: myId, to: this._id },
-    { $setOnInsert: { from: myId, to: this._id } },
+    { from: userId, to: this._id },
+    { $setOnInsert: { from: userId, to: this._id } },
     { upsert: true }
   ).select(excludeSelect);
 
   // on upsert it returns null so we need to fetch a second time after initial creation
-  if (relation == null) return await RelationshipModel.findOne({ from: myId, to: this._id }).select(excludeSelect);
+  if (relation == null) return await RelationshipModel.findOne({ from: userId, to: this._id }).select(excludeSelect);
+
+  // Get relationship status
 
   return relation;
 };

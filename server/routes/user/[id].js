@@ -108,14 +108,23 @@ const joi = require('joi');
 const { UserModel } = require('../../models/User');
 
 const { joiValidate } = require('../../helpers/middleware');
+const { getFriendshipStatus } = require('../../helpers/utils');
 
 module.exports.get = async (req, res) => {
-  let user = await UserModel.findOne({ _id: req.params.id });
+  const selectionString = '+pendingContacts +contacts +blocked';
+  let status = 'Me';
+
+  const user = await UserModel.findOne({ _id: req.params.id }).select(selectionString);
   if (!user) return res.status(404).json('User not found');
 
   let relationship = await user.getRelationship(req.apiUserId);
 
-  return res.status(200).json({ ...relationship?.toObject(), ...user?.toObject() });
+  if (req.apiUserId !== req.params.id) {
+    const currentUser = await UserModel.findOne({ _id: req.apiUserId }).select(selectionString);
+    status = getFriendshipStatus(currentUser, user);
+  }
+
+  return res.status(200).json({ ...relationship?.toObject(), ...user?.toObject(), status });
 };
 
 const validationSchema = joi.object({

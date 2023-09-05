@@ -4,6 +4,13 @@ exports.Theme = Object.freeze({
   Black: 'Black',
 });
 
+exports.FriendshipStatus = Object.freeze({
+  Strangers: 'Strangers',
+  Pending: 'Pending',
+  Friends: 'Friends',
+  Blocked: 'Blocked',
+});
+
 //timezone enum
 exports.TimeZone = Object.freeze({
   '-12:00': '-12:00',

@@ -54,7 +54,7 @@ export default function Profile() {
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [id]);
 
   let memberDate = userInfo?.createdAt;
   memberDate = memberDate?.split('T')[0];
