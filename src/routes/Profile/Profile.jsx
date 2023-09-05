@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react';
-import ReactQuill from 'react-quill';
 
 import Notes from '../../components/Notes/Notes';
 import Layout from '../../components/Layout/Layout';
-import ButtonInput from '../../components/Form/Inputs/ButtonInput';
 import 'react-quill/dist/quill.snow.css';
+import ButtonInputField from '../../components/Form/FormInputs/ButtonInput';
 import { useParams } from 'react-router-dom';
-
+import Form from './../../components/Form/Form';
 import { useFetch } from '../../utils/useFetch';
 import { getCurrentUserId, removeEmptyProperties } from '../../utils/utils';
 
-import { successSnackBar } from '../../utils/snackbars';
+import { errorSnackBar, successSnackBar } from '../../utils/snackbars';
 import QuillSection from './QuillSection';
 
 export default function Profile() {
@@ -57,7 +56,7 @@ export default function Profile() {
     getUser();
   }, []);
 
-  let memberDate = userInfo?.created;
+  let memberDate = userInfo?.createdAt;
   memberDate = memberDate?.split('T')[0];
 
   return (
@@ -76,30 +75,28 @@ export default function Profile() {
                 sort
               </span>
             </h1>
-            <ButtonInput
-              value={editNote}
-              btnText={'+Add'}
-              color="bg-gray-100"
-              shouldClear
-              actionButton={(newNote) => {
-                updateUser({ notes: [...userInfo.notes, newNote] });
-              }}
-            />
-            <>
-              {userInfo?.notes?.map((note, i) => (
-                <Notes
-                  key={i}
-                  text={note}
-                  onDelete={() => {
-                    updateUser({ notes: userInfo?.notes?.filter((value) => value !== note) });
-                  }}
-                  onEdit={() => {
-                    setEditNote(note);
-                    updateUser({ notes: userInfo?.notes?.filter((value) => value !== note) });
-                  }}
-                />
-              ))}
-            </>
+            <Form
+              defaultValues={{ noteField: editNote }}
+              onSubmit={(data) => {
+                if (!data.noteField) return errorSnackBar('Cant be empty');
+                updateUser({ notes: [...userInfo.notes, data.noteField] });
+                setEditNote('');
+              }}>
+              <ButtonInputField width="w-72" name="noteField" btnText="+Add" />
+            </Form>
+            {userInfo?.notes?.map((note, i) => (
+              <Notes
+                key={i}
+                text={note}
+                onDelete={() => {
+                  updateUser({ notes: userInfo?.notes?.filter((value) => value !== note) });
+                }}
+                onEdit={() => {
+                  setEditNote(note);
+                  updateUser({ notes: userInfo?.notes?.filter((value) => value !== note) });
+                }}
+              />
+            ))}
           </div>
         </div>
       }
@@ -135,28 +132,36 @@ export default function Profile() {
             <section className="overflow-y-auto overflow-x-hidden col-span-1">
               <div className="shadow-md p-10">
                 {id !== getCurrentUserId() && (
-                  <div className="mb-4 flex flex-wrap font-semibold gap-2 float-left ">
+                  <div className="mb-4 flex flex-wrap font-semibold gap-2 float-left w-full ">
                     <button className="border shadow-md bg-slate-50 py-1 px-2 rounded-lg">Message</button>
                     <button className="border shadow-md bg-sky-700 text-white py-1 px-2 rounded-lg">Add friend</button>
                     <button className="border shadow-md bg-red-700 text-white py-1 px-2 rounded-lg">Block</button>
                   </div>
                 )}
-                <h3 className="font-semibold block">Biography</h3>
-                <p className="text-lg py-4 w-fit">{userInfo?.biography}</p>
+                {userInfo?.biography && (
+                  <>
+                    <h3 className="font-semibold block">Biography</h3>
+                    <p className="text-lg py-4 w-fit">{userInfo?.biography}</p>
+                  </>
+                )}
                 <hr className="m-4" />
                 <h2 className="text-slate-600 font-semibold uppercase ">Member since: {memberDate}</h2>
                 <p className="uppercase text-slate-600 font-semibold text-xs mb-3">
                   time zone: {new Date().getHours()}:{new Date().getMinutes()}
                 </p>
-                <hr className="m-4" />
-                <h3 className="font-semibold">Interests</h3>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {userInfo?.tags?.map((tag, i) => (
-                    <div key={i} className="border shadow-md border-slate-300 rounded-xl m-1 ">
-                      <p className="p-2.5 font-semibold text-center">{tag}</p>
+                {userInfo?.biography && (
+                  <>
+                    <hr className="m-4" />
+                    <h3 className="font-semibold">Interests</h3>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {userInfo?.tags?.map((tag, i) => (
+                        <div key={i} className="border shadow-md border-slate-300 rounded-xl m-1 ">
+                          <p className="p-2.5 font-semibold text-center">{tag}</p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </>
+                )}
               </div>
             </section>
           </section>

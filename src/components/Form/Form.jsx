@@ -9,8 +9,15 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { cleanObject } from '../../utils/utils';
 
-export default function Form({ defaultValues, children, onSubmit, submitOnEnter = false, onlyDirty = false }) {
-  const methods = useForm({ defaultValues, mode: 'onChange' });
+export default function Form({
+  defaultValues,
+  children,
+  onSubmit,
+  submitOnEnter = false,
+  onlyDirty = false,
+  validationMode = 'onChange',
+}) {
+  const methods = useForm({ defaultValues, mode: validationMode });
   const {
     handleSubmit,
     reset,

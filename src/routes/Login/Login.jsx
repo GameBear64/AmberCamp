@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useFetch } from './../../utils/useFetch';
 import { errorSnackBar, successSnackBar } from '../../utils/snackbars';
 import { Link } from 'react-router-dom';
+import { getCurrentUserId } from '../../utils/utils';
 import Input from '../../components/Form/Inputs/Input';
 
 export default function Login() {
@@ -22,7 +23,7 @@ export default function Login() {
       if (res.status === 200) {
         localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.message.jwt);
         successSnackBar('You have logged in successfully!');
-        navigate('/user');
+        navigate(`/user/${getCurrentUserId()}`);
       } else {
         errorSnackBar(`${res.message}!`);
       }

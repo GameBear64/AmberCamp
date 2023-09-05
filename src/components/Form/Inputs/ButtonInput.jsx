@@ -9,6 +9,7 @@ export default function ButtonInput({
   actionButton = () => {},
   shouldClear,
   value,
+  type = 'button',
   width = 'w-60',
   invalid,
   ...rest
@@ -17,6 +18,7 @@ export default function ButtonInput({
 
   useEffect(() => {
     setState(value);
+    console.log(`value`, value);
   }, [value]);
 
   return (
@@ -38,7 +40,7 @@ export default function ButtonInput({
           actionButton(state);
           if (shouldClear) setState('');
         }}
-        type="button"
+        type={type}
         className={`font-semibold ${btnColor} rounded-r shadow-inner ${btnBG} p-1 text-md hover:shadow-inner`}>
         {btnText}
       </button>
