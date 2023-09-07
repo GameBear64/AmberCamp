@@ -1,4 +1,4 @@
-import NavBar from '../NavBar/NavBar';
+import NavBar from '@components/NavBar/NavBar';
 
 export default function Layout({ left, right }) {
   //bg-[#2c2f33] left
