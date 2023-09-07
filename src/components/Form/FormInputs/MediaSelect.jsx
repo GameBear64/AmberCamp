@@ -11,7 +11,12 @@ export default function MediaSelect({ name, rules = {}, styles, ...rest }) {
         return (
           <div className={styles}>
             <Input
-              styleInput="w-full border-none"
+              styleInput="block w-full text-sm text-slate-500
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-full file:border-0
+                file:text-sm file:font-semibold file:cursor-pointer
+                file:bg-gray-100 file:text-black-700
+                hover:file:bg-gray-200 border-none mb-2 font-semibold"
               {...rest}
               type="file"
               onChange={(e) => {

@@ -10,6 +10,7 @@ import Textarea from '../../../components/Form/FormInputs/Textarea';
 import TagSelector from '../../../components/Form/FormInputs/TagSelector';
 import MediaSelect from '../../../components/Form/FormInputs/MediaSelect';
 import SelectInput from '../../../components/Form/FormInputs/SelectInput';
+import Button from '../../../components/Form/Inputs/Button';
 
 export default function General() {
   const [userInfo, setUserInfo] = useState({});
@@ -123,12 +124,9 @@ export default function General() {
   return (
     <div className="p-10 my-3">
       <Form defaultValues={userInfo} onSubmit={(data) => updateUserInfo(removeEmptyProperties(data))} onlyDirty>
-        <div className="flex flex-row gap-20">
-          <MediaSelect styles="mb-5" width="w-80" label="Background Picture" name="background" />
-          <MediaSelect styles="mb-5" width="w-80" label="Profile Picture" name="picture" />
-        </div>
-        <div className="flex flex-row gap-20">
+        <div className="flex flex-row gap-28">
           <div>
+            <MediaSelect styles="mb-5" width="w-80" label="Background Picture" name="background" />
             <Input
               rules={{
                 required: 'This field is required.',
@@ -141,20 +139,21 @@ export default function General() {
                   message: "Username can't be longer than 3 characters!",
                 },
               }}
-              styles="mb-5"
+              styles="mb-5 mt-2"
               width="w-80"
               type="text"
               label="Username"
               name="name"
             />
-            <Textarea styles="mb-5" rows="6" cols="30" label="Biography" name="biography" />
+            <Textarea styles="mb-2 mt-2" rows="6" cols="30" label="Biography" name="biography" />
           </div>
-          <div>
-            <TagSelector styles="mb-5" width="w-72" type="text" btnText="+ Add" name="tags" shouldClear />
-            <SelectInput name="timezone" label="Timezone" options={timezones} />
+          <div className="max-w-md">
+            <MediaSelect styles="mb-5" width="w-80" label="Profile Picture" name="picture" />
+            <TagSelector styles="mb-5 mt-2" width="w-72" type="text" btnText="+ Add" name="tags" shouldClear />
+            <SelectInput name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
           </div>
         </div>
-        <button className="font-semibold text-white shadow-md rounded bg-orange-700 py-1 px-2 mt-5 text-[17px]">Submit</button>
+        <Button label="Save" />
       </Form>
     </div>
   );

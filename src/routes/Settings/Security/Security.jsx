@@ -5,6 +5,7 @@ import FormInputs from '../../../components/Form/Form';
 import IconInput from '../../../components/Form/Inputs/IconInput';
 import IconInputField from '../../../components/Form/FormInputs/IconInput';
 import InputField from '../../../components/Form/FormInputs/Input';
+import Button from '../../../components/Form/Inputs/Button';
 
 export default function Security() {
   let [newEmail, setNewEmail] = useState('');
@@ -52,12 +53,7 @@ export default function Security() {
               </div>
             </div>
           </div>
-          <button
-            onClick={() => changeEmail()}
-            type="email"
-            className="mt-2 mb-4 max-w-[290px] font-semibold text-white shadow-md rounded bg-orange-700 py-1 px-2 text-[17px]">
-            Change Email
-          </button>
+          <Button size="small" label="Change Email" />
           <hr />
           <div className="flex flex-col">
             <h3 className="text-xl my-3">Change Password</h3>
@@ -86,11 +82,7 @@ export default function Security() {
                   icon="sync_lock"
                 />
               </div>
-              <button
-                type="submit"
-                className="mt-2 w-72 font-semibold text-white shadow-md rounded bg-orange-700 py-1 px-2 text-[17px]">
-                Change Password
-              </button>
+              <Button size="small" label="Change Password" type="submit" />
             </FormInputs>
           </div>
         </div>
