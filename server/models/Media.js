@@ -39,8 +39,8 @@ const mediaSchema = new mongoose.Schema(
       default: false,
     },
     track: {
-      type: Boolean,
-      default: false,
+      type: Number,
+      default: 0, // 0 - track; 1 - track and increment
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }

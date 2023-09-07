@@ -1,24 +1,38 @@
 import { useState } from 'react';
-import Options from '../Options/Options';
-export default function Notes({ el }) {
+import Dropdown from '../Dropdown/Dropdown';
+export default function Notes({ text, onDelete, onEdit }) {
   const [showOptions, setShowOptions] = useState(false);
+  const options = [
+    {
+      text: 'Delete',
+      color: 'bg-red-300',
+      action: () => {
+        setShowOptions(false);
+        onDelete();
+      },
+    },
+    {
+      text: 'Edit',
+      color: 'bg-green-300',
+      action: () => {
+        setShowOptions(false);
+        onEdit();
+      },
+    },
+  ];
+
   return (
     <div
       onMouseLeave={() => setShowOptions(false)}
-      className="flex rounded shadow-md flex-row justify-between border-l-8 bg-gray-50 border-orange-300 mb-3 p-1">
-      <p className="text-lg ml-1">{el}</p>
-      <div className="mr-2">
+      className="rounded w-full relative shadow-md flex-row border-l-8 justify-between bg-gray-50 border-orange-300 mb-3 p-1">
+      <div className="float-right hover:shadow-md rounded transition duration-0 hover:duration-500 mx-2">
         <span onClick={() => setShowOptions(!showOptions)} className="material-symbols-outlined cursor-pointer text-3xl">
           more_horiz
         </span>
-        {showOptions && (
-          <div className="dropdown absolute shadow-md text-base">
-            <ul onClick={() => setShowOptions(false)}>
-              <Options options={{ option: 'Delete', color: 'bg-red-300' }} />
-              <Options options={{ option: 'Edit', color: 'bg-green-300' }} />
-            </ul>
-          </div>
-        )}
+        {showOptions && <Dropdown options={options} />}
+      </div>
+      <div className="p-1 whitespace-pre-line">
+        <p className="text-lg ml-1 break-words">{text}</p>
       </div>
     </div>
   );

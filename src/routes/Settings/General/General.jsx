@@ -1,30 +1,71 @@
-// import { useEffect } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useFetch } from '../../../utils/useFetch';
-import { useUpload } from '../../../utils/useUpload';
-import { useState } from 'react';
+
 import { errorSnackBar, successSnackBar } from '../../../utils/snackbars';
-import Input from '../../../components/Form/Inputs/Input';
+import Form from '../../../components/Form/Form';
+import { cleanObject, readFile, removeEmptyProperties } from '../../../utils/utils';
+
+import Input from '../../../components/Form/FormInputs/Input';
+import Textarea from '../../../components/Form/FormInputs/Textarea';
+import TagSelector from '../../../components/Form/FormInputs/TagSelector';
+import MediaSelect from '../../../components/Form/FormInputs/MediaSelect';
+import SelectInput from '../../../components/Form/FormInputs/SelectInput';
+import Button from '../../../components/Form/Inputs/Button';
+
 export default function General() {
-  const [userInfo, setUserInfo] = useState('');
-  const [username, setUsername] = useState('');
-  const [bio, setBio] = useState('');
-  const [image, setImage] = useState({ id: null, key: null, mimetype: null });
-  const [errorUsername, setErrorUsername] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
 
-  function readFile(file) {
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (event) => {
-      useUpload({
-        data: event.target.result.split(';base64,').pop(),
-        name: file.name,
-        mimetype: file.type,
-      }).then((data) => setImage(data));
-    };
-  }
+  const timezones = [
+    '-12:00',
+    '-11:30',
+    '-11:00',
+    '-10:30',
+    '-10:00',
+    '-09:30',
+    '-09:00',
+    '-08:30',
+    '-08:00',
+    '-07:30',
+    '-07:00',
+    '-06:30',
+    '-06:00',
+    '-05:30',
+    '-05:00',
+    '-04:30',
+    '-04:00',
+    '-03:30',
+    '-03:00',
+    '-02:30',
+    '-02:00',
+    '-01:30',
+    '-01:00',
+    '-00:30',
+    '00:00',
+    '00:30',
+    '01:00',
+    '01:30',
+    '02:00',
+    '02:30',
+    '03:00',
+    '03:30',
+    '04:00',
+    '04:30',
+    '05:00',
+    '05:30',
+    '06:00',
+    '06:30',
+    '07:00',
+    '07:30',
+    '08:00',
+    '08:30',
+    '09:00',
+    '09:30',
+    '10:00',
+    '10:30',
+    '11:00',
+    '11:30',
+    '12:00',
+  ];
 
   const getUser = () => {
     useFetch({
@@ -32,23 +73,41 @@ export default function General() {
       method: 'GET',
     }).then((res) => {
       if (res.status === 200) {
-        setUserInfo(res.message);
+        console.log(res.message);
+        setUserInfo(
+          cleanObject(res.message, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone'])
+        );
       } else {
-        errorSnackBar(`${res.message.error}!`);
+        errorSnackBar(`${res.message}`);
       }
     });
   };
 
-  const updateUserInfo = () => {
-    useFetch({
+  const updateUserInfo = async (data) => {
+    try {
+      const picture = await readFile(data?.picture);
+      data.picture = picture.key;
+    } catch (e) {
+      if (e !== 'No file provided') {
+        errorSnackBar('Error uploading image');
+        console.log(e);
+      }
+    }
+
+    try {
+      const background = await readFile(data?.background);
+      data.background = background.key;
+    } catch (e) {
+      if (e !== 'No file provided') {
+        errorSnackBar('Error uploading image');
+        console.log(e);
+      }
+    }
+
+    await useFetch({
       url: 'user/settings',
       method: 'PATCH',
-      body: {
-        name: username,
-        biography: bio,
-        picture: 'string',
-        background: 'string',
-      },
+      body: { ...data },
     }).then((res) => {
       if (res.status === 200) {
         successSnackBar('Profile updated.');
@@ -57,75 +116,45 @@ export default function General() {
       }
     });
   };
+
   useEffect(() => {
     getUser();
-    setUsername(userInfo?.name);
-    setBio(userInfo?.biography);
   }, []);
 
   return (
-    <div className="p-10">
-      <div className="my-3">
-        <p className="text-base mb-1">Profile Picture</p>
-        <input type="file" onChange={(event) => readFile(event.target.files[0] || null)} />
-        <br />
-
-        {(image?.mimetype?.includes('image') || image?.mimetype?.includes('video')) && image?.key && (
-          <img src={`http//:localhost:3030/recourse/${image?.key}?size=250`} alt="" />
-        )}
-      </div>
-      <div className="my-3">
-        <p className="text-base mb-1">Background Picture</p>
-        <input type="file" onChange={(event) => readFile(event.target.files[0] || null)} />
-        <br />
-
-        {(image?.mimetype?.includes('image') || image?.mimetype?.includes('video')) && image?.key && (
-          <img src={`http//:localhost:3030/recourse/${image?.key}?size=250`} alt="" />
-        )}
-      </div>
-      <div className="my-3">
-        {image?.mimetype?.includes('image') && image?.key && (
-          <img src={`http//:localhost:3030/recourse/${image?.key}?size=250`} alt="" />
-        )}
-
-        <div className="flex flex-row text-center">
-          <Input
-            type="text"
-            invalid={errorUsername}
-            label="Username"
-            defauldValue={userInfo.handle}
-            action={(e) => {
-              setUsername(e.target.value);
-            }}
-          />
+    <div className="p-10 my-3">
+      <Form defaultValues={userInfo} onSubmit={(data) => updateUserInfo(removeEmptyProperties(data))} onlyDirty>
+        <div className="flex flex-row gap-28">
+          <div>
+            <MediaSelect styles="mb-5" width="w-80" label="Background Picture" name="background" />
+            <Input
+              rules={{
+                required: 'This field is required.',
+                minLength: {
+                  value: 3,
+                  message: 'Username must be at least 3 characters!',
+                },
+                maxLength: {
+                  value: 30,
+                  message: "Username can't be longer than 3 characters!",
+                },
+              }}
+              styles="mb-5 mt-2"
+              width="w-80"
+              type="text"
+              label="Username"
+              name="name"
+            />
+            <Textarea styles="mb-2 mt-2" rows="6" cols="30" label="Biography" name="biography" />
+          </div>
+          <div className="max-w-md">
+            <MediaSelect styles="mb-5" width="w-80" label="Profile Picture" name="picture" />
+            <TagSelector styles="mb-5 mt-2" width="w-72" type="text" btnText="+ Add" name="tags" shouldClear />
+            <SelectInput name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
+          </div>
         </div>
-      </div>
-      <div className="my-3">
-        <p className="text-base mb-1">Biography</p>
-        <div className="flex flex-row text-center">
-          <textarea
-            className="shadow-slate-100 text-black rounded-lg p-1 text-lg shadow-inner border border-slate-200 "
-            type="text"
-            onChange={(e) => {
-              setBio(e.target.value);
-            }}
-            defaultValue={userInfo.biography}
-            rows="6"
-            cols="60"></textarea>
-        </div>
-      </div>
-      <button
-        onClick={() => {
-          updateUserInfo();
-          if (username.length <= 3) {
-            setErrorUsername(true);
-          } else {
-            setErrorUsername(false);
-          }
-        }}
-        className="font-semibold text-white shadow-md rounded bg-orange-700 py-1 px-2 text-[17px]">
-        Submit
-      </button>
+        <Button label="Save" />
+      </Form>
     </div>
   );
 }

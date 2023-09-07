@@ -1,34 +1,37 @@
-import ButtonInput from '../Inputs/ButtonInput';
-import { Field } from 'react-final-form';
-
-export default function ButtonInputField({
-  label,
-  type = 'text',
-  width = 'w-60',
-  invalid,
+import ConnectForm from '../ConnectForm';
+export default function InputField({
   name,
-  actionInput,
+  rules = {},
   styles,
-  actionButton,
-  textColor,
+  width = 'w-60',
+  btnText,
+  btnBG = 'bg-gray-100',
+  btnColor,
+  ...rest
 }) {
   return (
-    <Field
-      name={name}
-      render={({ input }) => (
-        <div className={styles}>
-          <ButtonInput
-            type={type}
-            width={width}
-            buttonLabel={label}
-            input={input}
-            invalid={invalid}
-            actionButton={actionButton}
-            actionInput={actionInput}
-            textColor={textColor}
-          />
-        </div>
-      )}
-    />
+    <ConnectForm>
+      {({ register, formState: { errors } }) => {
+        return (
+          <div className={styles}>
+            <div className="flex flex-row text-center mb-6 mt-2">
+              <input
+                {...rest}
+                {...register(name, rules)}
+                className={`shadow-slate-200 rounded-l pl-1 shadow-inner border h-10 ${width} ${
+                  errors[name] ? 'border-2 border-red-600' : 'border-slate-200'
+                }`}
+              />
+              <button
+                type="submit"
+                className={`font-semibold ${btnColor} rounded-r shadow-inner ${btnBG} p-1 text-md hover:shadow-inner`}>
+                {btnText}
+              </button>
+            </div>
+            {errors[name] && <p className="text-red-600 font-semibold">{errors[name].message}</p>}
+          </div>
+        );
+      }}
+    </ConnectForm>
   );
 }

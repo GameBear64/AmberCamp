@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const ObjectId = require('mongoose').Types.ObjectId;
 const codes = require('referral-codes');
+const { FriendshipStatus } = require('./enums');
 
 exports.createJWTCookie = (user) => {
   let expireAt = 3 * 30 * 24 * 60 * 60; /*3 months*/
@@ -57,4 +58,23 @@ exports.wildcardMatch = (wildcard, str) => {
   let w = wildcard.replace(/[.+^${}()|[\]\\]/g, '\\$&'); // regexp escape
   const re = new RegExp(`^${w.replace(/\*/g, '.*').replace(/\?/g, '.')}$`, 'i');
   return re.test(str); // remove last 'i' above to have case sensitive
+};
+
+exports.getFriendshipStatus = (firstFriend, secondFriend) => {
+  console.log('1', firstFriend, '2', secondFriend);
+
+  // Pending
+  if (firstFriend.pendingContacts.includes(secondFriend._Id) || secondFriend.pendingContacts.includes(firstFriend._Id))
+    return FriendshipStatus.Pending;
+
+  // Friends
+  if (firstFriend.contacts.includes(secondFriend._Id) && secondFriend.contacts.includes(firstFriend._Id))
+    return FriendshipStatus.Friends;
+
+  // Blocked
+  if (firstFriend.blocked.includes(secondFriend._Id) || secondFriend.blocked.includes(firstFriend._Id))
+    return FriendshipStatus.Blocked;
+
+  // Strangers
+  return FriendshipStatus.Strangers;
 };

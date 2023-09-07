@@ -1,14 +1,14 @@
 import ConnectForm from '../ConnectForm';
-import Input from '../Inputs/Input';
+import SelectInput from '../Inputs/SelectInput';
 
-export default function InputField({ name, rules = {}, styles, styleInput, ...rest }) {
+export default function SelectInputForm({ name, rules = {}, styleInput, styles, ...rest }) {
   return (
     <ConnectForm>
       {({ register, formState: { errors } }) => {
         const { ref, ...registerRest } = register(name, rules);
         return (
           <div className={styles}>
-            <Input innerRef={ref} invalid={errors[name]} styleInput={styleInput} {...registerRest} {...rest} />
+            <SelectInput innerRef={ref} invalid={errors[name]} styleInput={styleInput} {...registerRest} {...rest} />
             {errors[name] && <p className="text-red-600 font-semibold">{errors[name].message}</p>}
           </div>
         );

@@ -24,6 +24,7 @@ let noAuthRoutes = [
   { path: '/user/register', methods: ['POST'] },
   { path: '/recourse/*', methods: ['GET'] },
   { path: '/api-docs/*', methods: ['GET'] },
+  { path: '/favicon.ico', methods: ['GET'] },
 ];
 
 exports.checkAuth = async (req, res, next) => {

@@ -41,7 +41,7 @@
  *         content:
  *           application/json:
  *             type: string
- *             example: That's just sad...
+ *             example: Removing yourself happens at the 'user/delete' route.
  */
 
 const joi = require('joi');
@@ -57,7 +57,7 @@ const validationSchema = joi.object({
 module.exports.post = [
   joiValidate(validationSchema, 'params'),
   async (req, res) => {
-    if (req.params.id == req.apiUserId) return res.status(418).json("That's just sad...");
+    if (req.params.id == req.apiUserId) return res.status(418).json("Removing yourself happens at the 'user/delete' route.");
 
     let user = await UserModel.findOne({ _id: req.apiUserId }).select('contacts pendingContacts');
     let friend = await UserModel.findOne({ _id: req.params.id }).select('contacts pendingContacts');

@@ -1,14 +1,14 @@
-import IconInput from '../Inputs/IconInput';
 import ConnectForm from '../ConnectForm';
+import Textarea from '../Inputs/Textarea';
 
-export default function IconInputField({ name, rules = {}, styles, ...rest }) {
+export default function TextareaField({ name, rules = {}, styles, ...rest }) {
   return (
     <ConnectForm>
       {({ register }) => {
         const { ref, ...registerRest } = register(name, rules);
         return (
           <div className={styles}>
-            <IconInput innerRef={ref} {...registerRest} {...rest} />
+            <Textarea innerRef={ref} {...registerRest} {...rest} />
           </div>
         );
       }}

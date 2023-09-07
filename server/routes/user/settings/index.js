@@ -33,15 +33,22 @@
 
 const joi = require('joi');
 const { UserModel } = require('../../../models/User');
+const { TimeZone } = require('../../../helpers/enums');
 
 const { allowNoBodyChanges, joiValidate } = require('../../../helpers/middleware');
 
 const validationSchema = joi.object({
+  handle: joi.string().min(3).max(30).optional(),
   name: joi.string().min(3).max(30).optional(),
   email: joi.string().min(10).max(255).required().email().optional(),
   biography: joi.string().max(256).optional(),
+  description: joi.string().optional(),
   picture: joi.string().optional(),
   background: joi.string().optional(),
+  tags: joi.array().max(6).optional().messages({
+    'array.max': 'Only 6 tags allowed!',
+  }),
+  timezone: joi.string().valid(...Object.values(TimeZone)), // moooove
 });
 
 module.exports.patch = [
@@ -49,7 +56,6 @@ module.exports.patch = [
   joiValidate(validationSchema),
   async (req, res) => {
     await UserModel.updateOne({ _id: req.apiUserId }, { ...req.body });
-
     return res.status(200).json();
   },
 ];

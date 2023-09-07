@@ -5,10 +5,10 @@ import IconInput from '../../../components/Form/Inputs/IconInput';
 import FormInputs from '../../../components/Form/Form';
 import IconInputField from '../../../components/Form/FormInputs/IconInput';
 import InputField from '../../../components/Form/FormInputs/Input';
-
+import { useNavigate } from 'react-router-dom';
 export default function SecurityMobile() {
   let [newEmail, setNewEmail] = useState('');
-
+  const navigate = useNavigate();
   const changePassword = (fields) => {
     useFetch({
       url: 'user/settings/resetPassword',
@@ -35,7 +35,7 @@ export default function SecurityMobile() {
       if (res.status === 200) {
         successSnackBar('Your email was changed successfully!');
       } else {
-        errorSnackBar(`${res.message.error}!`);
+        errorSnackBar(`${res.message}`);
       }
     });
   };
