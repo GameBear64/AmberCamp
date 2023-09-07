@@ -1,4 +1,5 @@
 import getMD5 from 'spark-md5';
+
 import { chunkBuffer } from './utils';
 
 const baseURL =

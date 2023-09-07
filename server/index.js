@@ -2,11 +2,6 @@
 const express = require('express');
 const app = express();
 
-// process.on('uncaughtException', function (err) {
-//   console.error(err.stack);
-//   return res.status(500).send('Something broke!');
-// });
-
 require('dotenv').config({ path: '../.env' });
 
 //============= Logger ==============

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import Dropdown from '../Dropdown/Dropdown';
+
+import Dropdown from '@components/Dropdown/Dropdown';
 export default function Notes({ text, onDelete, onEdit }) {
   const [showOptions, setShowOptions] = useState(false);
   const options = [

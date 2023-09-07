@@ -1,5 +1,8 @@
+// TODO: remove when BE is ready
+/* eslint-disable no-console */
 import { useState } from 'react';
-import { useFetch } from '../../../utils/useFetch';
+
+import { useFetch } from '@utils/useFetch';
 
 export default function Preferences() {
   let accents = [
@@ -10,25 +13,24 @@ export default function Preferences() {
   let languages = ['English UK', 'English US', 'Italiano', 'Български', 'Français'];
   let [userPreferences, setUserPreferences] = useState('');
 
-  // TODO: fix when BE is ready
-  const getPreferences = () => {
-    useFetch({
-      url: 'user/settings/preferences',
-      method: 'GET',
-    }).then((res) => {
-      if (res.status === 200) {
-        console.log(res.message);
-        setUserPreferences({
-          theme: res.message.theme,
-          accent: res.message.accent,
-          language: res.message.language,
-        });
-      } else {
-        console.log(res.message);
-      }
-    });
-  };
-  // getPreferences();
+  // // TODO: fix when BE is ready
+  // const getPreferences = () => {
+  //   useFetch({
+  //     url: 'user/settings/preferences',
+  //     method: 'GET',
+  //   }).then((res) => {
+  //     if (res.status === 200) {
+  //       console.log(res.message);
+  //       setUserPreferences({
+  //         theme: res.message.theme,
+  //         accent: res.message.accent,
+  //         language: res.message.language,
+  //       });
+  //     } else {
+  //       console.log(res.message);
+  //     }
+  //   });
+  // };
   const changeUserTheme = () => {
     useFetch({
       url: 'user/settings/preferences',

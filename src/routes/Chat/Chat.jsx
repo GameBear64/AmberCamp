@@ -1,5 +1,6 @@
 import { Link, Outlet, useParams } from 'react-router-dom';
-import resizeScreen from '../../utils/resizeScreen';
+
+import resizeScreen from '@utils/resizeScreen';
 export default function ChatList() {
   const screenSize = resizeScreen();
   let { id } = useParams();

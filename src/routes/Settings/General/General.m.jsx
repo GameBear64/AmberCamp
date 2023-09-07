@@ -1,10 +1,10 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useFetch } from '../../../utils/useFetch';
-import { useUpload } from '../../../utils/useUpload';
-import { useState } from 'react';
-import { errorSnackBar, successSnackBar } from '../../../utils/snackbars';
-import Input from '../../../components/Form/Inputs/Input';
+
+import Input from '@components/Form/Inputs/Input';
+import { errorSnackBar, successSnackBar } from '@utils/snackbars';
+import { useFetch } from '@utils/useFetch';
+import { useUpload } from '@utils/useUpload';
 
 export default function GeneralMobile() {
   const navigate = useNavigate();

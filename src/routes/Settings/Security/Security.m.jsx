@@ -1,11 +1,13 @@
-import { useFetch } from '../../../utils/useFetch';
-import { errorSnackBar, successSnackBar } from '../../../utils/snackbars';
 import { useState } from 'react';
-import IconInput from '../../../components/Form/Inputs/IconInput';
-import FormInputs from '../../../components/Form/Form';
-import IconInputField from '../../../components/Form/FormInputs/IconInput';
-import InputField from '../../../components/Form/FormInputs/Input';
 import { useNavigate } from 'react-router-dom';
+
+import IconInput from '@components/Form/Inputs/IconInput';
+import FormInputs from '@form';
+import IconInputField from '@form-inputs/IconInput';
+import InputField from '@form-inputs/Input';
+import { errorSnackBar, successSnackBar } from '@utils/snackbars';
+import { useFetch } from '@utils/useFetch';
+
 export default function SecurityMobile() {
   let [newEmail, setNewEmail] = useState('');
   const navigate = useNavigate();

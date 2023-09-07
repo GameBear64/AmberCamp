@@ -1,7 +1,6 @@
-import Layout from '../../../components/Layout/Layout';
-import { Outlet } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+
+import Layout from '@layout';
 
 export default function Settings() {
   let { pathname } = useLocation();

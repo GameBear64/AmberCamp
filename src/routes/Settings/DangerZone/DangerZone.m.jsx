@@ -1,8 +1,9 @@
-import { useNavigate } from 'react-router-dom';
-import { useFetch } from '../../../utils/useFetch';
 import { useState } from 'react';
-import { errorSnackBar } from '../../../utils/snackbars';
-import ButtonInput from '../../../components/Form/Inputs/ButtonInput';
+import { useNavigate } from 'react-router-dom';
+
+import ButtonInput from '@components/Form/Inputs/ButtonInput';
+import { errorSnackBar } from '@utils/snackbars';
+import { useFetch } from '@utils/useFetch';
 
 export default function DangerZoneMobile() {
   let [password, setPassword] = useState('');
