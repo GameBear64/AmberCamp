@@ -103,7 +103,7 @@ export default function GeneralMobile() {
               type="text"
               invalid={errorUsername}
               label="Username"
-              defauldValue={userInfo.handle}
+              defaultValue={userInfo.handle}
               action={(e) => {
                 setUsername(e.target.value);
               }}
