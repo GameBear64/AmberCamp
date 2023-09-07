@@ -11,8 +11,6 @@ import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 import { cleanObject, readFile, removeEmptyProperties } from '@utils/utils';
 
-import 'easymde/dist/easymde.min.css';
-
 export default function General() {
   const [userInfo, setUserInfo] = useState({});
 
