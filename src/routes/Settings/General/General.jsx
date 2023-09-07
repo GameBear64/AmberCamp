@@ -6,10 +6,12 @@ import Input from '@form-inputs/Input';
 import MediaSelect from '@form-inputs/MediaSelect';
 import SelectInput from '@form-inputs/SelectInput';
 import TagSelector from '@form-inputs/TagSelector';
-import Textarea from '@form-inputs/Textarea';
+import TextareaField from '@form-inputs/Textarea';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 import { cleanObject, readFile, removeEmptyProperties } from '@utils/utils';
+
+import 'easymde/dist/easymde.min.css';
 
 export default function General() {
   const [userInfo, setUserInfo] = useState({});
@@ -121,9 +123,16 @@ export default function General() {
     getUser();
   }, []);
 
+  //
   return (
     <div className="p-10 my-3">
-      <Form defaultValues={userInfo} onSubmit={(data) => updateUserInfo(removeEmptyProperties(data))} onlyDirty>
+      <Form
+        defaultValues={userInfo}
+        onSubmit={(data) => {
+          console.log('from sumbit', data);
+          updateUserInfo(removeEmptyProperties(data));
+        }}
+        onlyDirty>
         <div className="flex flex-row gap-28">
           <div>
             <MediaSelect styles="mb-5" width="w-80" label="Background Picture" name="background" />
@@ -145,7 +154,7 @@ export default function General() {
               label="Username"
               name="name"
             />
-            <Textarea styles="mb-2 mt-2" rows="6" cols="30" label="Biography" name="biography" />
+            <TextareaField styles="mb-2 mt-2" rows="7" cols="30" label="Biography" name="biography" />
           </div>
           <div className="max-w-md">
             <MediaSelect styles="mb-5" width="w-80" label="Profile Picture" name="picture" />
@@ -153,7 +162,7 @@ export default function General() {
             <SelectInput name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
           </div>
         </div>
-        <Button label="Save" />
+        <Button type="submit" label="Save" />
       </Form>
     </div>
   );
