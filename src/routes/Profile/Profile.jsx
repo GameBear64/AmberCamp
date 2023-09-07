@@ -8,6 +8,8 @@ import Layout from '@layout';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 import { getCurrentUserId, removeEmptyProperties } from '@utils/utils';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 
 import QuillSection from './QuillSection';
 
@@ -147,7 +149,9 @@ export default function Profile() {
                 {userInfo?.biography && (
                   <>
                     <h3 className="font-semibold block">Biography</h3>
-                    <p className="text-lg py-4 w-fit">{userInfo?.biography}</p>
+                    <ReactMarkdown remarkPlugins={[gfm]} className="text-lg py-4 w-fit react-markdown">
+                      {userInfo?.biography}
+                    </ReactMarkdown>
                   </>
                 )}
                 <hr className="m-4" />

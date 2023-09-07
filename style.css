@@ -25,3 +25,7 @@
 *::-webkit-scrollbar-thumb {
   min-height: 40px;
 }
+.react-markdown a {
+  color: blue;
+  text-decoration: underline;
+}
