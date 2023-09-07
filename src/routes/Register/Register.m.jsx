@@ -1,17 +1,15 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useFetch } from './../../utils/useFetch';
-import { errorSnackBar, successSnackBar } from '../../utils/snackbars';
-import { Link } from 'react-router-dom';
-import resizeScreen from '../../utils/resizeScreen';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { errorSnackBar, successSnackBar } from '@utils/snackbars';
+import { useFetch } from '@utils/useFetch';
 
 export default function RegisterMobile() {
   const navigate = useNavigate();
   const [handle, setHandle] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [repeatRassword, setRepeatPassword] = useState('');
-  const screenSize = resizeScreen();
+  const [repeatPassword, setRepeatPassword] = useState('');
 
   const registerUser = () => {
     useFetch({
@@ -21,7 +19,7 @@ export default function RegisterMobile() {
         handle,
         email,
         password,
-        confirmPassword: repeatRassword,
+        confirmPassword: repeatPassword,
       },
     }).then((res) => {
       if (res.status === 201) {

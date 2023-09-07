@@ -1,5 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useFetch } from '../../utils/useFetch';
+
+import { useFetch } from '@utils/useFetch';
 
 export default function RouteGuardian() {
   const navigate = useNavigate();

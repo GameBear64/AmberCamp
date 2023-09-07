@@ -1,13 +1,7 @@
-// import { Form } from 'react-final-form';
-// export default function FormInputs(props) {
-//   return (
-//     <Form onSubmit={props.onSubmit} render={({ handleSubmit }) => <form onSubmit={handleSubmit}>{props.children}</form>}></Form>
-//   );
-// }
-
-import { FormProvider, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
-import { cleanObject } from '../../utils/utils';
+import { FormProvider, useForm } from 'react-hook-form';
+
+import { cleanObject } from '@utils/utils';
 
 export default function Form({
   defaultValues,

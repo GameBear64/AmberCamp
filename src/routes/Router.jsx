@@ -1,6 +1,7 @@
-import { Suspense, lazy } from 'react';
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import resizeScreen from '../utils/resizeScreen';
+
+import resizeScreen from '@utils/resizeScreen';
 
 // Auth
 import Guard from './UtilPages/RouterGuard';

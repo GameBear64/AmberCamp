@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useFetch } from '../../utils/useFetch';
-import { useUpload } from '../../utils/useUpload';
-import NavBar from '../../components/NavBar/NavBar';
+
+import NavBar from '@components/NavBar/NavBar';
+import { useFetch } from '@utils/useFetch';
+import { useUpload } from '@utils/useUpload';
 
 export default function ChatListMobile() {
   const [count, setCount] = useState(0);

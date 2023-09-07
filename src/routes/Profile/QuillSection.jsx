@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
-import { getCurrentUserId, htmlDecode } from '../../utils/utils';
+
+import { getCurrentUserId, htmlDecode } from '@utils/utils';
 
 export default function QuillSection({ userId, value, setValue }) {
   const [text, setText] = useState('');

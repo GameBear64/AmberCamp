@@ -1,16 +1,17 @@
-import { useState, useEffect } from 'react';
-
-import Notes from '../../components/Notes/Notes';
-import Layout from '../../components/Layout/Layout';
-import 'react-quill/dist/quill.snow.css';
-import ButtonInputField from '../../components/Form/FormInputs/ButtonInput';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Form from './../../components/Form/Form';
-import { useFetch } from '../../utils/useFetch';
-import { getCurrentUserId, removeEmptyProperties } from '../../utils/utils';
 
-import { errorSnackBar, successSnackBar } from '../../utils/snackbars';
+import Notes from '@components/Notes/Notes';
+import Form from '@form';
+import ButtonInputField from '@form-inputs/ButtonInput';
+import Layout from '@layout';
+import { errorSnackBar, successSnackBar } from '@utils/snackbars';
+import { useFetch } from '@utils/useFetch';
+import { getCurrentUserId, removeEmptyProperties } from '@utils/utils';
+
 import QuillSection from './QuillSection';
+
+import 'react-quill/dist/quill.snow.css';
 
 export default function Profile() {
   const [userInfo, setUserInfo] = useState({});
@@ -27,6 +28,7 @@ export default function Profile() {
         setUserInfo(res.message);
       } else {
         // For the devs to debug
+        // eslint-disable-next-line no-console
         console.log(res.message);
       }
     });

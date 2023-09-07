@@ -1,11 +1,12 @@
-import { useFetch } from '../../../utils/useFetch';
-import { errorSnackBar, successSnackBar } from '../../../utils/snackbars';
 import { useState } from 'react';
-import FormInputs from '../../../components/Form/Form';
-import IconInput from '../../../components/Form/Inputs/IconInput';
-import IconInputField from '../../../components/Form/FormInputs/IconInput';
-import InputField from '../../../components/Form/FormInputs/Input';
-import Button from '../../../components/Form/Inputs/Button';
+
+import Button from '@components/Form/Inputs/Button';
+import IconInput from '@components/Form/Inputs/IconInput';
+import FormInputs from '@form';
+import IconInputField from '@form-inputs/IconInput';
+import InputField from '@form-inputs/Input';
+import { errorSnackBar, successSnackBar } from '@utils/snackbars';
+import { useFetch } from '@utils/useFetch';
 
 export default function Security() {
   let [newEmail, setNewEmail] = useState('');
@@ -25,21 +26,22 @@ export default function Security() {
     });
   };
 
-  const changeEmail = () => {
-    useFetch({
-      url: 'user/settings',
-      method: 'PATCH',
-      body: {
-        email: newEmail,
-      },
-    }).then((res) => {
-      if (res.status === 200) {
-        successSnackBar('Your email was changed successfully!');
-      } else {
-        errorSnackBar(`${res.message}`);
-      }
-    });
-  };
+  // TODO: fix email to use the new form
+  // const changeEmail = () => {
+  //   useFetch({
+  //     url: 'user/settings',
+  //     method: 'PATCH',
+  //     body: {
+  //       email: newEmail,
+  //     },
+  //   }).then((res) => {
+  //     if (res.status === 200) {
+  //       successSnackBar('Your email was changed successfully!');
+  //     } else {
+  //       errorSnackBar(`${res.message}`);
+  //     }
+  //   });
+  // };
 
   return (
     <div className="p-10">

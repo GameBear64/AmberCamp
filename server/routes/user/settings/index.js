@@ -48,7 +48,7 @@ const validationSchema = joi.object({
   tags: joi.array().max(6).optional().messages({
     'array.max': 'Only 6 tags allowed!',
   }),
-  timezone: joi.string().valid(...Object.values(TimeZone)), // moooove
+  timezone: joi.string().valid(...Object.values(TimeZone)),
 });
 
 module.exports.patch = [

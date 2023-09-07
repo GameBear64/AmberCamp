@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useFetch } from '../../../utils/useFetch';
 
-import { errorSnackBar, successSnackBar } from '../../../utils/snackbars';
-import Form from '../../../components/Form/Form';
-import { cleanObject, readFile, removeEmptyProperties } from '../../../utils/utils';
-
-import Input from '../../../components/Form/FormInputs/Input';
-import Textarea from '../../../components/Form/FormInputs/Textarea';
-import TagSelector from '../../../components/Form/FormInputs/TagSelector';
-import MediaSelect from '../../../components/Form/FormInputs/MediaSelect';
-import SelectInput from '../../../components/Form/FormInputs/SelectInput';
-import Button from '../../../components/Form/Inputs/Button';
+import Button from '@components/Form/Inputs/Button';
+import Form from '@form';
+import Input from '@form-inputs/Input';
+import MediaSelect from '@form-inputs/MediaSelect';
+import SelectInput from '@form-inputs/SelectInput';
+import TagSelector from '@form-inputs/TagSelector';
+import Textarea from '@form-inputs/Textarea';
+import { errorSnackBar, successSnackBar } from '@utils/snackbars';
+import { useFetch } from '@utils/useFetch';
+import { cleanObject, readFile, removeEmptyProperties } from '@utils/utils';
 
 export default function General() {
   const [userInfo, setUserInfo] = useState({});
@@ -73,7 +72,6 @@ export default function General() {
       method: 'GET',
     }).then((res) => {
       if (res.status === 200) {
-        console.log(res.message);
         setUserInfo(
           cleanObject(res.message, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone'])
         );
@@ -90,6 +88,7 @@ export default function General() {
     } catch (e) {
       if (e !== 'No file provided') {
         errorSnackBar('Error uploading image');
+        // eslint-disable-next-line no-console
         console.log(e);
       }
     }
@@ -100,6 +99,7 @@ export default function General() {
     } catch (e) {
       if (e !== 'No file provided') {
         errorSnackBar('Error uploading image');
+        // eslint-disable-next-line no-console
         console.log(e);
       }
     }

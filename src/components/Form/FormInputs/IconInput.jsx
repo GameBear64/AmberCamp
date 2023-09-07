@@ -1,5 +1,5 @@
-import IconInput from '../Inputs/IconInput';
 import ConnectForm from '../ConnectForm';
+import IconInput from '../Inputs/IconInput';
 
 export default function IconInputField({ name, rules = {}, styles, ...rest }) {
   return (

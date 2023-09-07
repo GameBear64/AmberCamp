@@ -49,6 +49,7 @@
     "concurrently": "^7.6.0",
     "eslint": "^8.43.0",
     "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "nodemon": "^2.0.22",
     "postcss": "^8.4.24",
     "prettier": "2.8.4",

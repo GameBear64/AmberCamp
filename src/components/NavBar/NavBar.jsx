@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { getCurrentUserId } from '../../utils/utils';
-import resizeScreen from '../../utils/resizeScreen';
+
+import resizeScreen from '@utils/resizeScreen';
+import { getCurrentUserId } from '@utils/utils';
 
 export default function NavBar() {
   const navigate = useNavigate();

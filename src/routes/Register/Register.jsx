@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom';
-import { useFetch } from './../../utils/useFetch';
-import { errorSnackBar, successSnackBar } from '../../utils/snackbars';
-import { Link } from 'react-router-dom';
-import Form from '../../components/Form/Form';
-import InputField from '../../components/Form/FormInputs/Input';
+import { Link, useNavigate } from 'react-router-dom';
+
+import Form from '@form';
+import InputField from '@form-inputs/Input';
+import { errorSnackBar, successSnackBar } from '@utils/snackbars';
+import { useFetch } from '@utils/useFetch';
 
 export default function Register() {
   const navigate = useNavigate();
