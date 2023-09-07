@@ -9,7 +9,7 @@ export default function RegisterMobile() {
   const [handle, setHandle] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [repeatRassword, setRepeatPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
 
   const registerUser = () => {
     useFetch({
@@ -19,7 +19,7 @@ export default function RegisterMobile() {
         handle,
         email,
         password,
-        confirmPassword: repeatRassword,
+        confirmPassword: repeatPassword,
       },
     }).then((res) => {
       if (res.status === 201) {
