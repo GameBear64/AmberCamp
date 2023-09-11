@@ -8,6 +8,8 @@ import InputField from '@form-inputs/Input';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 
+import TopBar from '../../../components/TopBar/TopBar';
+
 export default function SecurityMobile() {
   let [newEmail, setNewEmail] = useState('');
   const navigate = useNavigate();
@@ -44,13 +46,8 @@ export default function SecurityMobile() {
 
   return (
     <div>
-      <div className="p-10">
-        <div className="flex flex-row">
-          <span onClick={() => navigate('/user/settings')} className="material-symbols-outlined align-bottom pt-1 mr-2 text-xl">
-            arrow_back_ios_new
-          </span>
-          <h1 className="font-semibold text-2xl">Security</h1>
-        </div>
+      <TopBar backBtnLable="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
+      <div className="px-10">
         <div className="flex flex-col max-w-md m-auto justify-center">
           <div className="my-5 flex flex-col">
             <h3 className="text-xl mb-3">Change Email</h3>
