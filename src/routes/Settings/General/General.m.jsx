@@ -14,61 +14,11 @@ import { cleanObject, readFile, removeEmptyProperties } from '@utils/utils';
 
 import TopBar from '../../../components/TopBar/TopBar';
 
+import { timezones } from './../../../utils/timezone';
+
 export default function General() {
   const [userInfo, setUserInfo] = useState({});
   const navigate = useNavigate();
-
-  const timezones = [
-    '-12:00',
-    '-11:30',
-    '-11:00',
-    '-10:30',
-    '-10:00',
-    '-09:30',
-    '-09:00',
-    '-08:30',
-    '-08:00',
-    '-07:30',
-    '-07:00',
-    '-06:30',
-    '-06:00',
-    '-05:30',
-    '-05:00',
-    '-04:30',
-    '-04:00',
-    '-03:30',
-    '-03:00',
-    '-02:30',
-    '-02:00',
-    '-01:30',
-    '-01:00',
-    '-00:30',
-    '00:00',
-    '00:30',
-    '01:00',
-    '01:30',
-    '02:00',
-    '02:30',
-    '03:00',
-    '03:30',
-    '04:00',
-    '04:30',
-    '05:00',
-    '05:30',
-    '06:00',
-    '06:30',
-    '07:00',
-    '07:30',
-    '08:00',
-    '08:30',
-    '09:00',
-    '09:30',
-    '10:00',
-    '10:30',
-    '11:00',
-    '11:30',
-    '12:00',
-  ];
 
   const getUser = () => {
     useFetch({
@@ -125,7 +75,6 @@ export default function General() {
     getUser();
   }, []);
 
-  //
   return (
     <>
       <TopBar backBtnLable="Preferences" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
