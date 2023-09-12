@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
+import gfm from 'remark-gfm';
 
 import Notes from '@components/Notes/Notes';
 import Form from '@form';
@@ -8,8 +10,6 @@ import Layout from '@layout';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 import { getCurrentUserId, removeEmptyProperties } from '@utils/utils';
-import ReactMarkdown from 'react-markdown';
-import gfm from 'remark-gfm';
 
 import QuillSection from './QuillSection';
 

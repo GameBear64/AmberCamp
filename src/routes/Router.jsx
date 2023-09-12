@@ -187,7 +187,7 @@ export default function Router() {
       ),
     },
     {
-      path: '/user',
+      path: '/user/:id',
       element: (
         <Suspense fallback={<Loader />}>
           <ProfileMobile />

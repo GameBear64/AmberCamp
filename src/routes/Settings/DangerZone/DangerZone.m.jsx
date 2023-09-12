@@ -5,6 +5,8 @@ import ButtonInput from '@components/Form/Inputs/ButtonInput';
 import { errorSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 
+import TopBar from '../../../components/TopBar/TopBar';
+
 export default function DangerZoneMobile() {
   let [password, setPassword] = useState('');
   let [active, setActive] = useState('');
@@ -29,16 +31,11 @@ export default function DangerZoneMobile() {
   };
 
   return (
-    <div className="my-10">
-      <div className="mx-8">
-        <div className="flex flex-row">
-          <span onClick={() => navigate('/user/settings')} className="material-symbols-outlined align-bottom pt-1 mr-2 text-xl">
-            arrow_back_ios_new
-          </span>
-          <h1 className="font-semibold text-2xl">Danger Zone</h1>
-        </div>
+    <div>
+      <div>
+        <TopBar backBtnLable="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
       </div>
-      <div className="p-10">
+      <div className="px-10 py-8">
         <button onClick={() => navigate('/user/login')} className=" flex flex-row mb-4 text-lg rounded">
           <span className="material-symbols-outlined mr-1.5 text-[27px] align-bottom">move_item</span>Log out
         </button>
