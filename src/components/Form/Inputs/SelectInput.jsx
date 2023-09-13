@@ -1,13 +1,13 @@
 export default function SelectInput({ options, innerRef, label, styleInput, ...rest }) {
   return (
     <div className="my-5">
-      <label className="text-grey-darkest font-semibold uppercase mr-2">{label}</label>
+      <label className="text-grey-darkest mr-2 font-semibold uppercase">{label}</label>
       <select
-        className={`${styleInput} bg-gray-50 border border-gray-300 text-gray-700 text-md rounded-lg ml-1 w-24 p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500`}
+        className={`${styleInput} text-md ml-1 w-24 rounded-lg border border-gray-300 bg-gray-50 p-1 text-gray-700 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-gray-500 dark:focus:ring-gray-500`}
         ref={innerRef}
         {...rest}>
         {options.map((optionText) => (
-          <option className="rounded shadow-md border-none" key={optionText}>
+          <option className="rounded border-none shadow-md" key={optionText}>
             {optionText}
           </option>
         ))}

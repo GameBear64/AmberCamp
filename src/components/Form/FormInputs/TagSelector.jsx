@@ -27,7 +27,7 @@ export default function TagSelector({ name, rules = {}, styles, ...rest }) {
             </div>
             <div className="flex flex-wrap">
               {tags?.map((tag) => (
-                <div key={tag} className="border flex flex-row shadow-md border-slate-300 rounded-xl m-1 ">
+                <div key={tag} className="m-1 flex flex-row rounded-xl border border-slate-300 shadow-md ">
                   <span
                     onClick={() => {
                       setValue(
@@ -39,7 +39,7 @@ export default function TagSelector({ name, rules = {}, styles, ...rest }) {
                     className="material-symbols-outlined m-2">
                     close
                   </span>
-                  <p className="p-2.5 font-semibold text-center">{tag}</p>
+                  <p className="p-2.5 text-center font-semibold">{tag}</p>
                 </div>
               ))}
             </div>
