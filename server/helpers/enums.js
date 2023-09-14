@@ -11,7 +11,11 @@ exports.FriendshipStatus = Object.freeze({
   Blocked: 'Blocked',
 });
 
-//timezone enum
+exports.ConversationType = Object.freeze({
+  Direct: 'Direct',
+  Group: 'Group',
+});
+
 exports.TimeZone = Object.freeze({
   '-12:00': '-12:00',
   '-11:30': '-11:30',

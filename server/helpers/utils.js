@@ -61,8 +61,6 @@ exports.wildcardMatch = (wildcard, str) => {
 };
 
 exports.getFriendshipStatus = (firstFriend, secondFriend) => {
-  console.log('1', firstFriend, '2', secondFriend);
-
   // Pending
   if (firstFriend.pendingContacts.includes(secondFriend._Id) || secondFriend.pendingContacts.includes(firstFriend._Id))
     return FriendshipStatus.Pending;
