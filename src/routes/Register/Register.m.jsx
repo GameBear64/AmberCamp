@@ -1,25 +1,19 @@
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import Form from '@form';
+import InputField from '@form-inputs/Input';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 
 export default function RegisterMobile() {
   const navigate = useNavigate();
-  const [handle, setHandle] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
 
-  const registerUser = () => {
+  const registerUser = (data) => {
     useFetch({
       url: 'user/register',
       method: 'POST',
       body: {
-        handle,
-        email,
-        password,
-        confirmPassword: repeatPassword,
+        ...data,
       },
     }).then((res) => {
       if (res.status === 201) {
@@ -33,58 +27,61 @@ export default function RegisterMobile() {
   };
 
   return (
-    <div className="grid m-auto grid-cols-2 h-screen lg:grid-cols-1">
+    <div className="m-auto grid h-screen grid-cols-2 lg:grid-cols-1">
       <div className="px-4">
-        <div className=" text-center max-w-md m-auto flex flex-col justify-items-center mt-52">
-          <h1 className=" font-medium text-4xl pb-8">Amber Camp Register</h1>
-          <div className=" flex  flex-col space-y-4  ">
-            <div className="flex flex-col text-left">
-              <label className="font-semibold text-grey-darkest">Handler</label>
-              <input
-                placeholder="@handle"
-                className="bg-gray-200 text-base col-span-2 rounded border-slate-600 p-3 "
-                type="text"
-                onChange={(e) => {
-                  setHandle(e.target.value);
-                }}
-              />
-              <label className="font-semibold text-grey-darkest">Email</label>
-              <input
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="email@ac.com"
-                className="bg-gray-200 text-base col-span-2 rounded border-slate-600 p-3 "
-                type="text"
-              />
-            </div>
-
-            <div className="flex font-semibold flex-col text-left ">
-              <label className="text-grey-darkest ">Password</label>
-              <div className=" flex flex-row justify-between lg:flex-col gap-4">
-                <input
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Password"
-                  className="bg-gray-200  text-base border-slate-600 p-3"
-                  type="password"
+        <div className="m-auto mt-52 flex max-w-md flex-col justify-items-center text-center">
+          <h1 className="pb-8 text-4xl font-medium">Amber Camp Register</h1>
+          <div className="flex  flex-col space-y-4">
+            <Form onSubmit={(data) => registerUser(data)}>
+              <div className="flex flex-col text-left">
+                <InputField
+                  type="text"
+                  placeholder="@handle"
+                  name="handle"
+                  width="w-full"
+                  label="Handle"
+                  styles="col-span-2"
+                  styleInput="bg-gray-200 rounded p-5 text-base"
                 />
-                <input
-                  placeholder="Repeat Password"
-                  className="bg-gray-200  text-base border-slate-600 p-3"
-                  type="password"
-                  onChange={(e) => {
-                    setRepeatPassword(e.target.value);
-                  }}
+                <InputField
+                  type="email"
+                  placeholder="email@ac.com"
+                  name="email"
+                  width="w-full"
+                  label="Email"
+                  styles="col-span-2"
+                  styleInput="bg-gray-200 rounded p-5 text-base"
                 />
               </div>
-            </div>
+              <div className="flex flex-col text-left font-semibold">
+                <label className="text-grey-darkest ">Password</label>
+                <div className="flex flex-row justify-between gap-4 lg:flex-col">
+                  <InputField
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    width="w-full"
+                    styles="col-span-2"
+                    styleInput="bg-gray-200 rounded p-5 text-base"
+                  />
+                  <InputField
+                    type="password"
+                    placeholder="Confirm Password"
+                    name="confirmPassword"
+                    width="w-full"
+                    styles="col-span-2"
+                    styleInput="bg-gray-200 rounded p-5 text-base"
+                  />
+                </div>
+              </div>
+              <button className="mt-5 w-full rounded-md border-2 border-solid bg-orange-700 p-2 text-lg font-semibold uppercase text-white">
+                Register
+              </button>
+              <Link to={'/user/login'} className="float-right mt-2 font-medium text-blue-700 underline">
+                Already have an account?
+              </Link>
+            </Form>
           </div>
-          <button
-            onClick={() => registerUser()}
-            className="uppercase border-solid bg-orange-700 border-2 p-2 mt-5 font-semibold text-lg rounded-md text-white ">
-            Register
-          </button>
-          <Link to={'/user/login'} className="text-right underline mt-2 font-medium text-blue-700">
-            Already have an account?
-          </Link>
         </div>
       </div>
     </div>

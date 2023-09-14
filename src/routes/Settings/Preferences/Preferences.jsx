@@ -56,7 +56,7 @@ export default function Preferences() {
       <div className="p-10">
         <div>
           <h2 className="font-semibold">THEME</h2>
-          <div className="flex flex-row gap-4 mt-4">
+          <div className="mt-4 flex flex-row gap-4">
             <div
               onClick={() => {
                 setUserPreferences({
@@ -66,7 +66,7 @@ export default function Preferences() {
                 });
                 console.log(userPreferences);
               }}
-              className={`bg-black rounded-full ${
+              className={`rounded-full bg-black ${
                 userPreferences.theme === 'Dark' ? 'border-4 border-indigo-500/100' : 'border-4 border-slate-500/100'
               } p-10`}></div>
             <div
@@ -78,13 +78,13 @@ export default function Preferences() {
                 });
                 console.log(userPreferences);
               }}
-              className={`bg-white rounded-full ${
+              className={`rounded-full bg-white ${
                 userPreferences.theme === 'Light' ? 'border-4 border-indigo-500/100' : 'border-4 border-slate-500/100'
               } p-10`}></div>
           </div>
         </div>
         <div>
-          <h2 className="font-semibold mt-4">LANGUAGE</h2>
+          <h2 className="mt-4 font-semibold">LANGUAGE</h2>
           <div className="mb-4 mt-2">
             {/* add selected */}
             <select className="rounded border-none" id="">
@@ -104,11 +104,11 @@ export default function Preferences() {
         </div>
         <div>
           <h2 className="font-semibold">ACCENT COLOR</h2>
-          <div className="flex flex-row gap-4 mt-4">
+          <div className="mt-4 flex flex-row gap-4">
             {accents.map((accent) => {
               return (
                 <>
-                  <div className={`bg-[${accent?.color}] rounded-full p-10 border-4 border-slate-500/100`}></div>
+                  <div className={`bg-[${accent?.color}] rounded-full border-4 border-slate-500/100 p-10`}></div>
                 </>
               );
             })}
@@ -120,7 +120,7 @@ export default function Preferences() {
           changeUserTheme();
           console.log(userPreferences);
         }}
-        className="bg-gray-200 px-3 p-1 font-semibold rounded my-4 mx-10">
+        className="mx-10 my-4 rounded bg-gray-200 p-1 px-3 font-semibold">
         Save
       </button>
     </>

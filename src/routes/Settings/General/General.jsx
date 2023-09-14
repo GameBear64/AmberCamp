@@ -11,60 +11,10 @@ import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 import { cleanObject, readFile, removeEmptyProperties } from '@utils/utils';
 
+import { timezones } from '../../../utils/timezone';
+
 export default function General() {
   const [userInfo, setUserInfo] = useState({});
-
-  const timezones = [
-    '-12:00',
-    '-11:30',
-    '-11:00',
-    '-10:30',
-    '-10:00',
-    '-09:30',
-    '-09:00',
-    '-08:30',
-    '-08:00',
-    '-07:30',
-    '-07:00',
-    '-06:30',
-    '-06:00',
-    '-05:30',
-    '-05:00',
-    '-04:30',
-    '-04:00',
-    '-03:30',
-    '-03:00',
-    '-02:30',
-    '-02:00',
-    '-01:30',
-    '-01:00',
-    '-00:30',
-    '00:00',
-    '00:30',
-    '01:00',
-    '01:30',
-    '02:00',
-    '02:30',
-    '03:00',
-    '03:30',
-    '04:00',
-    '04:30',
-    '05:00',
-    '05:30',
-    '06:00',
-    '06:30',
-    '07:00',
-    '07:30',
-    '08:00',
-    '08:30',
-    '09:00',
-    '09:30',
-    '10:00',
-    '10:30',
-    '11:00',
-    '11:30',
-    '12:00',
-  ];
 
   const getUser = () => {
     useFetch({
@@ -121,13 +71,11 @@ export default function General() {
     getUser();
   }, []);
 
-  //
   return (
-    <div className="p-10 my-3">
+    <div className="my-3 p-10">
       <Form
         defaultValues={userInfo}
         onSubmit={(data) => {
-          console.log('from sumbit', data);
           updateUserInfo(removeEmptyProperties(data));
         }}
         onlyDirty>

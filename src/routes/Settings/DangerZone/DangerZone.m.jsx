@@ -5,6 +5,8 @@ import ButtonInput from '@components/Form/Inputs/ButtonInput';
 import { errorSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 
+import TopBar from '../../../components/TopBar/TopBar';
+
 export default function DangerZoneMobile() {
   let [password, setPassword] = useState('');
   let [active, setActive] = useState('');
@@ -29,24 +31,19 @@ export default function DangerZoneMobile() {
   };
 
   return (
-    <div className="my-10">
-      <div className="mx-8">
-        <div className="flex flex-row">
-          <span onClick={() => navigate('/user/settings')} className="material-symbols-outlined align-bottom pt-1 mr-2 text-xl">
-            arrow_back_ios_new
-          </span>
-          <h1 className="font-semibold text-2xl">Danger Zone</h1>
-        </div>
+    <div>
+      <div>
+        <TopBar backBtnLable="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
       </div>
-      <div className="p-10">
-        <button onClick={() => navigate('/user/login')} className=" flex flex-row mb-4 text-lg rounded">
-          <span className="material-symbols-outlined mr-1.5 text-[27px] align-bottom">move_item</span>Log out
+      <div className="px-10 py-8">
+        <button onClick={() => navigate('/user/login')} className=" mb-4 flex flex-row rounded text-lg">
+          <span className="material-symbols-outlined mr-1.5 align-bottom text-[27px]">move_item</span>Log out
         </button>
         <hr />
         {active ? (
           <>
-            <div className="flex mb-5 flex-col">
-              <h1 className="text-lg mt-2">Delete Account</h1>
+            <div className="mb-5 flex flex-col">
+              <h1 className="mt-2 text-lg">Delete Account</h1>
               <label className="mb-1">Please, enter your password to proceed.</label>
               <div className="flex">
                 <ButtonInput
@@ -66,7 +63,7 @@ export default function DangerZoneMobile() {
         ) : (
           <button
             onClick={() => setActive(!active)}
-            className="text-lg mt-4 rounded py-1 px-2.5 hover:bg-red-700 bg-red-600 text-white">
+            className="mt-4 rounded bg-red-600 px-2.5 py-1 text-lg text-white hover:bg-red-700">
             Delete Account
           </button>
         )}

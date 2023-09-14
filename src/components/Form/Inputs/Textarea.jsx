@@ -6,7 +6,7 @@ export default function Textarea({ innerRef, label, action, invalid = false, ...
         <textarea
           ref={innerRef}
           onChange={action}
-          className={`shadow-slate-100 text-black rounded-lg p-1 text-lg shadow-inner border ${
+          className={`rounded-lg border p-1 text-lg text-black shadow-inner shadow-slate-100 ${
             invalid ? 'border-2 border-red-600' : 'border-slate-200'
           }`}
           {...rest}></textarea>
