@@ -10,8 +10,6 @@ exports.createJWTCookie = (user) => {
   });
 };
 
-exports.storedUserFields = ({ _id }) => ({ _id });
-
 exports.isObjectID = (value, helper) => {
   return ObjectId.isValid(value) || helper.message('Invalid Id');
 };
@@ -35,7 +33,6 @@ exports.chunkBuffer = function* (buf, maxBytes) {
 };
 
 // https://stackoverflow.com/a/1054862/7149508
-// TODO: into middleware?
 exports.slugifyString = (text) =>
   text
     ?.toLowerCase()
@@ -57,7 +54,7 @@ exports.imageExtensions = ['jpg', 'jpeg', 'webp', 'png', 'gif', 'avif', 'tiff', 
 exports.wildcardMatch = (wildcard, str) => {
   let w = wildcard.replace(/[.+^${}()|[\]\\]/g, '\\$&'); // regexp escape
   const re = new RegExp(`^${w.replace(/\*/g, '.*').replace(/\?/g, '.')}$`, 'i');
-  return re.test(str); // remove last 'i' above to have case sensitive
+  return re.test(str);
 };
 
 exports.getFriendshipStatus = (firstFriend, secondFriend) => {
@@ -75,4 +72,14 @@ exports.getFriendshipStatus = (firstFriend, secondFriend) => {
 
   // Strangers
   return FriendshipStatus.Strangers;
+};
+
+exports.cleanObject = (object, desiredFields) => {
+  return Object.assign({}, ...desiredFields.map((field) => ([field] in object ? { [field]: object[field] } : {})));
+};
+
+exports.removeEmptyProperties = (object) => {
+  return Object.keys(object)
+    .filter((key) => object[key] !== '')
+    .reduce((acc, key) => ({ ...acc, [key]: object[key] }), {});
 };

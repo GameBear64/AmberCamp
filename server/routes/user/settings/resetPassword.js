@@ -60,8 +60,8 @@
 
 const joi = require('joi');
 const { UserModel } = require('../../../models/User');
-const { createJWTCookie } = require('../../../helpers/utils');
-const { joiValidate } = require('../../../helpers/middleware');
+const { createJWTCookie } = require('../../../utils');
+const { joiValidate } = require('../../../middleware/validation');
 
 const validationSchema = joi.object({
   password: joi.string().min(8).max(255).required(),

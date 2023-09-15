@@ -53,7 +53,7 @@
 
 const joi = require('joi');
 const { UserModel } = require('../../models/User');
-const { joiValidate } = require('../../helpers/middleware');
+const { joiValidate } = require('../../middleware/validation');
 
 module.exports.get = async (req, res) => {
   let user = await UserModel.findOne({ _id: req.apiUserId });

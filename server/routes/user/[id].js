@@ -107,8 +107,8 @@
 const joi = require('joi');
 const { UserModel } = require('../../models/User');
 
-const { joiValidate } = require('../../helpers/middleware');
-const { getFriendshipStatus } = require('../../helpers/utils');
+const { joiValidate } = require('../../middleware/validation');
+const { getFriendshipStatus } = require('../../utils');
 
 module.exports.get = async (req, res) => {
   const selectionString = '+pendingContacts +contacts +blocked';

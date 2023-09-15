@@ -71,8 +71,9 @@
 const joi = require('joi');
 const fs = require('fs').promises;
 
-const { slugifyField, base64ToBuffer, joiValidate } = require('../../helpers/middleware');
-const { chunkUnderMeg, getCode } = require('../../helpers/utils');
+const { joiValidate } = require('../../middleware/validation');
+const { slugifyField, base64ToBuffer } = require('../../middleware/mods');
+const { chunkUnderMeg, getCode } = require('../../utils');
 
 const { MediaModel } = require('../../models/Media');
 

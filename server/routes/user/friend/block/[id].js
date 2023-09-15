@@ -47,8 +47,8 @@
 const joi = require('joi');
 const { UserModel } = require('../../../../models/User');
 
-const { joiValidate } = require('../../../../helpers/middleware');
-const { isObjectID } = require('../../../../helpers/utils');
+const { joiValidate } = require('../../../../middleware/validation');
+const { isObjectID } = require('../../../../utils');
 
 const validationSchema = joi.object({
   id: joi.custom(isObjectID),

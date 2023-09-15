@@ -5,7 +5,7 @@ const fs = require('fs').promises;
 const ffmpeg = require('ffmpeg-static');
 const genThumbnail = require('simple-thumbnail');
 
-const { videoExtensions } = require('../helpers/utils');
+const { videoExtensions } = require('../utils');
 
 const mediaSchema = new mongoose.Schema(
   {

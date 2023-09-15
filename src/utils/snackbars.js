@@ -8,14 +8,43 @@ const snackMessageTemplate = (message, icon) =>
     </div>
   `;
 
-const snackDefaultSettings = (color) => ({
-  position: 'bottom-center',
+const snackPulseTemplate = (from, to) =>
+  `
+  <style>
+    @keyframes pulse {
+      0% {
+        border-color: ${from};
+      }
+      50% {
+        border-color: ${to};
+      }
+      100% {
+        border-color: ${from};
+      }
+    }
+  </style>
+`;
 
+const snackDefaultSettings = (color, { double, animated } = {}) => ({
+  position: 'bottom-center',
+  // timeout: 0, // Dev debug tools
+  // actionText: 'Hide',
   style: {
-    container: [['border-left', `5px solid ${color}`]],
+    container: [
+      ['border-left', `5px solid ${color}`],
+      double ? ['border-right', `5px solid ${color}`] : [],
+      animated ? ['animation', 'pulse 2s infinite'] : [],
+    ],
     message: [['line-height', '1em']],
   },
 });
+
+export const fatalErrorSnackBar = (message) => {
+  new Snackbar(
+    snackPulseTemplate('#ffd400', '#DC343B') + snackMessageTemplate(message, 'gpp_bad'),
+    snackDefaultSettings('#DC343B', { double: true, animated: true })
+  );
+};
 
 export const errorSnackBar = (message) => {
   new Snackbar(snackMessageTemplate(message, 'error'), snackDefaultSettings('#DC343B'));

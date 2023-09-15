@@ -56,7 +56,7 @@ const fs = require('fs');
 
 const { MediaModel } = require('../../../models/Media');
 
-const { joiValidate } = require('../../../helpers/middleware');
+const { joiValidate } = require('../../../middleware/validation');
 
 const getSchema = joi.object({
   key: joi.string().length(Number(process.env.MEDIA_KEY_LEN)).required(),

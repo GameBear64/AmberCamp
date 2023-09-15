@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { Theme } = require('../helpers/enums.js');
+const { Theme } = require('../enums.js');
 
 const preferencesSchema = new mongoose.Schema({
   theme: {

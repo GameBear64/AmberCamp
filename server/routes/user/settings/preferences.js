@@ -65,8 +65,8 @@ const joi = require('joi');
 const { UserModel } = require('../../../models/User');
 const { PreferencesModel } = require('../../../models/Preferences');
 
-const { allowNoBodyChanges, joiValidate } = require('../../../helpers/middleware');
-const { Theme } = require('../../../helpers/enums');
+const { allowNoBodyChanges, joiValidate } = require('../../../middleware/validation');
+const { Theme } = require('../../../enums');
 
 module.exports.get = async (req, res) => {
   let user = await UserModel.findOne({ _id: req.apiUserId }).select('settings').populate('settings');
@@ -75,9 +75,12 @@ module.exports.get = async (req, res) => {
 };
 
 const validationSchema = joi.object({
-  theme: joi.string().valid(...Object.values(Theme)),
-  accent: joi.string().length(6),
-  language: joi.string().length(2),
+  theme: joi
+    .string()
+    .valid(...Object.values(Theme))
+    .optional(),
+  accent: joi.string().length(6).optional(),
+  language: joi.string().length(2).optional(),
 });
 
 module.exports.patch = [

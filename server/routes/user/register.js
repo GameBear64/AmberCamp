@@ -67,8 +67,8 @@
 const joi = require('joi');
 const throttle = require('express-throttle');
 const { UserModel } = require('../../models/User');
-const { createJWTCookie } = require('../../helpers/utils');
-const { joiValidate } = require('../../helpers/middleware');
+const { createJWTCookie } = require('../../utils');
+const { joiValidate } = require('../../middleware/validation');
 
 const validationSchema = joi.object({
   handle: joi.string().min(3).max(50).required(),

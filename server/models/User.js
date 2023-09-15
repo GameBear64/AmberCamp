@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { PreferencesModel } = require('./Preferences');
 const { RelationshipModel } = require('./Relationship');
-const { TimeZone } = require('../helpers/enums.js');
+const { TimeZone } = require('../enums.js');
 
 const userSchema = new mongoose.Schema(
   {

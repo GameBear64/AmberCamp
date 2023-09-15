@@ -33,9 +33,9 @@
 
 const joi = require('joi');
 const { UserModel } = require('../../../models/User');
-const { TimeZone } = require('../../../helpers/enums');
+const { TimeZone } = require('../../../enums');
 
-const { allowNoBodyChanges, joiValidate } = require('../../../helpers/middleware');
+const { allowNoBodyChanges, joiValidate } = require('../../../middleware/validation');
 
 const validationSchema = joi.object({
   handle: joi.string().min(3).max(30).optional(),

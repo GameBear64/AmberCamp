@@ -16,8 +16,11 @@ mongoose
 
 //============= Setup ==============
 const { router } = require('express-file-routing');
+require('express-async-errors');
+
 const cors = require('cors');
-const { trimBodyFields, checkAuth } = require('./helpers/middleware');
+const { checkAuth } = require('./middleware/auth');
+const { trimBodyFields } = require('./middleware/global');
 
 app.use(cors());
 app.use(express.json({ limit: '100mb' }));
@@ -25,6 +28,13 @@ app.use(trimBodyFields);
 app.use(checkAuth);
 
 app.use('/', router());
+
+app.use((_req, res) => res.status(404).send({ message: 'Not found' }));
+app.use((error, _req, res, _next) => {
+  console.log('[SERVER ERROR]', error.message);
+  res.status(error.status || 500);
+  res.send({ message: error.message });
+});
 
 //=============== Docs ===============
 const { swagger } = require('./docs/swagger.js');
