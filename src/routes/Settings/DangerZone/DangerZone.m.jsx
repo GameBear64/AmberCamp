@@ -51,11 +51,12 @@ export default function DangerZoneMobile() {
                   actionInput={(e) => {
                     setPassword(e.target.value);
                   }}
-                  buttonLabel="Delete"
-                  color="bg-red-600"
+                  btnText="Delete"
+                  btnBG="bg-red-600"
+                  btnColor="text-white"
                   actionButton={() => deleteUser()}
-                  active={errorBorder}
-                  type="password"
+                  invalid={errorBorder}
+                  inputType="password"
                 />
               </div>
             </div>

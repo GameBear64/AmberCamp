@@ -82,7 +82,6 @@ export default function General() {
         <Form
           defaultValues={userInfo}
           onSubmit={(data) => {
-            console.log('from sumbit', data);
             updateUserInfo(removeEmptyProperties(data));
           }}
           onlyDirty>
@@ -111,7 +110,7 @@ export default function General() {
               <TextareaField styles="mt-2" rows="7" cols="30" label="Biography" name="biography" />
             </div>
             <div className="max-w-md">
-              <TagSelector styles="mb-5 mt-2" width="w-72" type="text" btnText="+ Add" name="tags" shouldClear />
+              <TagSelector styles="mb-5 mt-2" width="w-72" type="text" btnText="+Add" name="tags" shouldClear />
               <SelectInput name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
             </div>
           </div>

@@ -106,7 +106,7 @@ export default function General() {
           </div>
           <div className="max-w-md">
             <MediaSelect styles="mb-5" width="w-80" label="Profile Picture" name="picture" />
-            <TagSelector styles="mb-5 mt-2" width="w-72" type="text" btnText="+ Add" name="tags" shouldClear />
+            <TagSelector styles="mb-5 mt-2" width="w-72" type="text" btnText="+Add" name="tags" shouldClear />
             <SelectInput name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
           </div>
         </div>
