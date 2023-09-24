@@ -113,7 +113,7 @@ export default function ProfileMobile() {
             </div>
           </div>
           <section className="overflow-y-auto col-span-1 ">
-            <div className="shadow-md pl-10 pr-10 w-auto">
+            <div className="pl-10 pr-10 w-auto">
               {userInfo?.biography && (
                 <>
                   <h3 className="font-semibold block">Biography</h3>
