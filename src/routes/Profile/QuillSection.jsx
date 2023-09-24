@@ -17,7 +17,7 @@ export default function QuillSection({ userId, value, setValue }) {
         {disable ? (
           <div className="quill">
             <div className="ql-snow">
-              <div className="w-full px-6 ql-editor" dangerouslySetInnerHTML={{ __html: text }} />
+              <div className="ql-editor w-full px-6" dangerouslySetInnerHTML={{ __html: text }} />
             </div>
           </div>
         ) : (

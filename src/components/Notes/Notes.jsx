@@ -25,15 +25,15 @@ export default function Notes({ text, onDelete, onEdit }) {
   return (
     <div
       onMouseLeave={() => setShowOptions(false)}
-      className="rounded w-full relative shadow-md flex-row border-l-8 justify-between bg-gray-50 border-orange-300 mb-3 p-1">
-      <div className="float-right hover:shadow-md rounded transition duration-0 hover:duration-500 mx-2">
+      className="relative mb-3 w-full flex-row justify-between rounded border-l-8 border-orange-300 bg-gray-50 p-1 shadow-md">
+      <div className="float-right mx-2 rounded transition duration-0 hover:shadow-md hover:duration-500">
         <span onClick={() => setShowOptions(!showOptions)} className="material-symbols-outlined cursor-pointer text-3xl">
           more_horiz
         </span>
         {showOptions && <Dropdown options={options} />}
       </div>
-      <div className="p-1 whitespace-pre-line">
-        <p className="text-lg ml-1 break-words">{text}</p>
+      <div className="whitespace-pre-line p-1">
+        <p className="ml-1 break-words text-lg">{text}</p>
       </div>
     </div>
   );

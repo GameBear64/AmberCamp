@@ -71,9 +71,8 @@ export default function General() {
     getUser();
   }, []);
 
-  //
   return (
-    <div className="p-10 my-3">
+    <div className="my-3 p-10">
       <Form
         defaultValues={userInfo}
         onSubmit={(data) => {

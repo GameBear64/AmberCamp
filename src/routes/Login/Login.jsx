@@ -28,11 +28,11 @@ export default function Login() {
   };
 
   return (
-    <div className="grid m-auto grid-cols-2 h-screen lg:grid-cols-1">
+    <div className="m-auto grid h-screen grid-cols-2 lg:grid-cols-1">
       <div className="px-4">
-        <div className=" text-center max-w-md m-auto flex flex-col  justify-items-center mt-52">
-          <h1 className="font-medium text-4xl pb-8">Amber Camp Login</h1>
-          <div className="flex flex-col space-y-4  ">
+        <div className="m-auto mt-52 flex max-w-md flex-col justify-items-center text-center">
+          <h1 className="pb-8 text-4xl font-medium">Amber Camp Login</h1>
+          <div className="flex flex-col space-y-4">
             <div className="flex flex-col text-left">
               <Form
                 onSubmit={(data) => {
@@ -58,10 +58,10 @@ export default function Login() {
                 />
                 <button
                   type="submit"
-                  className="uppercase w-full border-solid bg-orange-700 border-2 p-2 mt-5 font-semibold text-lg rounded-md text-white ">
+                  className="mt-5 w-full rounded-md border-2 border-solid bg-orange-700 p-2 text-lg font-semibold uppercase text-white">
                   Login
                 </button>
-                <Link to={'/user/register'} className="float-right mt-2 font-medium underline text-blue-700">
+                <Link to={'/user/register'} className="float-right mt-2 font-medium text-blue-700 underline">
                   No account? Make one!
                 </Link>
               </Form>
@@ -69,10 +69,10 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <div className="flex bg-gray-200 items-center justify-center text-center h-screen ">
+      <div className="flex h-screen items-center justify-center bg-gray-200 text-center ">
         <div>
           <img className="object-contain" src="../bam.png" />
-          <h2 className="font-medium text-4xl pb-8">Amber Camp</h2>
+          <h2 className="pb-8 text-4xl font-medium">Amber Camp</h2>
         </div>
       </div>
     </div>
