@@ -137,8 +137,8 @@ export default function Profile() {
             <div className="col-span-2 mt-32">
               <QuillSection userId={id} value={userInfo.description} setValue={updateDescription} />
             </div>
-            <section className="col-span-1 overflow-y-auto overflow-x-hidden">
-              <div className="p-10 shadow-md">
+            <section className="overflow-y-auto overflow-x-hidden col-span-1">
+              <div className="p-10">
                 {id !== getCurrentUserId() && (
                   <div className="float-left mb-4 flex w-full flex-wrap gap-2 font-semibold ">
                     <button className="rounded-lg border bg-slate-50 px-2 py-1 shadow-md">Message</button>

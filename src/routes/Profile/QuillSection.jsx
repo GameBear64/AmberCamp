@@ -50,7 +50,7 @@ export default function QuillSection({ userId, value, setValue }) {
               }
               setDisable(!disable);
             }}
-            className="material-symbols-outlined mt-2 cursor-pointer rounded bg-orange-300 p-1.5 shadow-md">
+            className="material-symbols-outlined cursor-pointer rounded p-1.5 mt-2 mr-5 shadow-md bg-orange-300">
             edit
           </span>
         </div>

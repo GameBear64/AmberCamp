@@ -9,7 +9,7 @@ import TagSelector from '@form-inputs/TagSelector';
 import TextareaField from '@form-inputs/Textarea';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
-import { cleanObject, readFile, removeEmptyProperties } from '@utils/utils';
+import { cleanObject, readFile } from '@utils/utils';
 
 import { timezones } from '../../../utils/timezone';
 
@@ -76,7 +76,7 @@ export default function General() {
       <Form
         defaultValues={userInfo}
         onSubmit={(data) => {
-          updateUserInfo(removeEmptyProperties(data));
+          updateUserInfo(data);
         }}
         onlyDirty>
         <div className="flex flex-row gap-28">
@@ -104,7 +104,7 @@ export default function General() {
           </div>
           <div className="max-w-md">
             <MediaSelect styles="mb-5" width="w-80" label="Profile Picture" name="picture" />
-            <TagSelector styles="mb-5 mt-2" width="w-72" type="text" btnText="+ Add" name="tags" shouldClear />
+            <TagSelector styles="mb-5 mt-2" width="w-72" type="text" btnText="+Add" name="tags" shouldClear />
             <SelectInput name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
           </div>
         </div>
