@@ -115,8 +115,8 @@ export default function Profile() {
             style={{
               backgroundImage: userInfo?.background ? `url('http://localhost:3030/recourse/${userInfo?.background}')` : '',
             }}>
-            <section className="relative flex flex-row pt-36 mx-4 ">
-              <div className="h-48  relative overflow-hidden rounded-[50%] inline-block border-solid shadow-md border-4 border-white mx-2.5">
+            <section className="relative flex flex-row pt-36 mx-4">
+              <div className="h-48 relative overflow-hidden rounded-[50%] inline-block border-solid shadow-md border-4 border-white mx-2.5">
                 <img
                   src={
                     userInfo?.picture && userInfo?.picture !== 'string'

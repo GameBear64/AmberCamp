@@ -33,6 +33,12 @@ const PreferencesMobile = lazy(() => import('./Settings/Preferences/Preferences.
 const ErrorPage = lazy(() => import('./UtilPages/ErrorPage'));
 const Loader = lazy(() => import('./UtilPages/Loader'));
 const NotFound = lazy(() => import('./UtilPages/NotFound'));
+const ProfileLoader = lazy(() => import('./Profile/ProfileLoader'));
+const ProfileMobileLoader = lazy(() => import('./Profile/ProfileLoader.m'));
+const LoginLoader = lazy(() => import('./Login/LoginLoader'));
+const LoginMobileLoader = lazy(() => import('./Login/LoginLoader.m'));
+const RegisterLoader = lazy(() => import('./Register/RegisterLoader'));
+const RegisterMobileLoader = lazy(() => import('./Register/RegisterLoader.m'));
 
 export default function Router() {
   const screenSize = resizeScreen();
@@ -41,7 +47,7 @@ export default function Router() {
     {
       path: '/user/register',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<RegisterLoader />}>
           <Register />
         </Suspense>
       ),
@@ -49,7 +55,7 @@ export default function Router() {
     {
       path: '/user/login',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<LoginLoader />}>
           <Login />
         </Suspense>
       ),
@@ -91,7 +97,7 @@ export default function Router() {
     {
       path: '/user/:id',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<ProfileLoader />}>
           <Profile />
         </Suspense>
       ),
@@ -146,7 +152,7 @@ export default function Router() {
     {
       path: '/user/register',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<RegisterMobileLoader />}>
           <RegisterMobile />
         </Suspense>
       ),
@@ -154,7 +160,7 @@ export default function Router() {
     {
       path: '/user/login',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<LoginMobileLoader />}>
           <LoginMobile />
         </Suspense>
       ),
@@ -189,7 +195,7 @@ export default function Router() {
     {
       path: '/user/:id',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<ProfileMobileLoader />}>
           <ProfileMobile />
         </Suspense>
       ),

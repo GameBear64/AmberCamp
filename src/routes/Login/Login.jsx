@@ -30,7 +30,7 @@ export default function Login() {
   return (
     <div className="grid m-auto grid-cols-2 h-screen lg:grid-cols-1">
       <div className="px-4">
-        <div className=" text-center max-w-md m-auto flex flex-col  justify-items-center mt-52">
+        <div className="text-center max-w-md m-auto flex flex-col  justify-items-center mt-52">
           <h1 className="font-medium text-4xl pb-8">Amber Camp Login</h1>
           <div className="flex flex-col space-y-4  ">
             <div className="flex flex-col text-left">

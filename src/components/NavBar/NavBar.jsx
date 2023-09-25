@@ -9,7 +9,7 @@ export default function NavBar() {
 
   return (
     <div className="sticky bottom-0">
-      <div className="rounded bg-white flex w-full justify-center h-full shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-4 ">
+      <div className="rounded bg-white flex w-full justify-center h-full shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-4">
         <div className="flex flex-row max-w-md w-full text-center justify-between pt-2">
           <span
             onClick={() => navigate('/chat')}
