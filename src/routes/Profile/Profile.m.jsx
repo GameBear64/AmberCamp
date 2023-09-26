@@ -84,7 +84,7 @@ export default function ProfileMobile() {
               <img
                 src={
                   userInfo?.picture && userInfo?.picture !== 'string'
-                    ? `http://localhost:3030/recourse/${userInfo?.picture}?size=250`
+                    ? `http://localhost:3030/recourse/${userInfo?.picture}?size=0`
                     : '../profilePic.jpeg'
                 }
                 alt="center image"

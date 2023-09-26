@@ -84,10 +84,14 @@ module.exports.get = [
     });
 
     if (req.query?.size) {
-      let path = currentFile.thumbnail || currentFile.path;
+      let path = currentFile?.thumbnail || currentFile.path;
       return sharp(path, { animated: currentFile.mimetype?.includes('gif') })
         .resize(req.query.size, req.query.size, { fit: 'inside' })
         .pipe(res);
+    }
+
+    if (req.query?.size == 0 && currentFile?.thumbnail) {
+      return fs.createReadStream(currentFile?.thumbnail).pipe(res);
     }
 
     fs.createReadStream(currentFile?.path).pipe(res);
