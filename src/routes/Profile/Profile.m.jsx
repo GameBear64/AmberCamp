@@ -22,7 +22,7 @@ export default function ProfileMobile() {
   const [editNote, setEditNote] = useState('');
   const [rotate, setRotate] = useState(false);
   const navigate = useNavigate();
-  let { id } = useParams();
+  const { id } = useParams();
 
   const getUser = () => {
     useFetch({

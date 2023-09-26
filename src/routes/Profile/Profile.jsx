@@ -19,7 +19,7 @@ export default function Profile() {
   const [userInfo, setUserInfo] = useState({});
   const [editNote, setEditNote] = useState('');
   const [rotate, setRotate] = useState(false);
-  let { id } = useParams();
+  const { id } = useParams();
 
   const getUser = () => {
     useFetch({

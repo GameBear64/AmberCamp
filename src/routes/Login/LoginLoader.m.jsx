@@ -9,7 +9,7 @@ export default function LoginMobileLoader() {
         <Skeleton className="mb-4" height={30} width={200} />
         <SkeletonComponent count={3} height={40} width={410} />
         <div className="text-right">
-          <Skeleton duration={1} count={1} height={20} width={150} />
+          <Skeleton height={20} width={150} />
         </div>
       </div>
     </div>

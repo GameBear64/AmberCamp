@@ -77,7 +77,6 @@ export default function General() {
       <Form
         defaultValues={userInfo}
         onSubmit={(data) => {
-          console.log('from sumbit', data);
           updateUserInfo(removeEmptyProperties(data));
         }}
         onlyDirty>
