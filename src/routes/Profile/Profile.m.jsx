@@ -15,8 +15,6 @@ import TopBar from '../../components/TopBar/TopBar';
 
 import QuillSection from './QuillSection';
 
-import 'react-quill/dist/quill.snow.css';
-
 export default function ProfileMobile() {
   const [userInfo, setUserInfo] = useState({});
   const [editNote, setEditNote] = useState('');

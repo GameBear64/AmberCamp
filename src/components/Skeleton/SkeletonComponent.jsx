@@ -1,7 +1,7 @@
 import Skeleton from 'react-loading-skeleton';
 
 export default function SkeletonComponent({ height, width, count, label = false }) {
-  let numberOfComponents = new Array(count);
+  const numberOfComponents = new Array(count);
   return (
     <>
       {numberOfComponents.map((element, i) => {

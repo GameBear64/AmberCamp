@@ -1,6 +1,6 @@
 import Skeleton from 'react-loading-skeleton';
 export default function SingleChatLoader({ count, width }) {
-  let numberOfComponents = new Array(count);
+  const numberOfComponents = new Array(count);
 
   return (
     <div>
