@@ -1,12 +1,10 @@
 import Skeleton from 'react-loading-skeleton';
 export default function SingleChatLoader({ count, width }) {
-  let numberOfComponents = [];
-  for (let i = 0; i < count; i++) {
-    numberOfComponents.push(i);
-  }
+  let numberOfComponents = new Array(count);
+
   return (
     <div>
-      {numberOfComponents.map((number) => {
+      {numberOfComponents.map(() => {
         return (
           <>
             <div className="flex flex-row gap-2 mb-2 mt-2">
