@@ -13,8 +13,6 @@ import { getCurrentUserId, removeEmptyProperties } from '@utils/utils';
 
 import QuillSection from './QuillSection';
 
-import 'react-quill/dist/quill.snow.css';
-
 export default function Profile() {
   const [userInfo, setUserInfo] = useState({});
   const [editNote, setEditNote] = useState('');
