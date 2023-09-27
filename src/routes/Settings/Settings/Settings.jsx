@@ -11,7 +11,7 @@ export default function Settings() {
         left={
           <div className="my-10">
             <div className="mx-8">
-              <h1 className="font-semibold text-2xl">Settings</h1>
+              <h1 className="text-2xl font-semibold">Settings</h1>
               <div className="mt-2">
                 <div className={`mb-2 ${pathname === '/user/settings/general' && 'bg-slate-100'} rounded p-1 text-lg`}>
                   <Link to={`general`}>General</Link>

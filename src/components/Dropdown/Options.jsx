@@ -11,7 +11,7 @@ export default function Options({ text, color, onClick }) {
         setActive(false);
       }}
       onClick={onClick}
-      className={`${active ? color : 'bg-white'} p-2 rounded`}>
+      className={`${active ? color : 'bg-white'} rounded p-2`}>
       {text}
     </li>
   );

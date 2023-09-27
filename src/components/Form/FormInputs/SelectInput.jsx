@@ -9,7 +9,7 @@ export default function SelectInputForm({ name, rules = {}, styleInput, styles, 
         return (
           <div className={styles}>
             <SelectInput innerRef={ref} invalid={errors[name]} styleInput={styleInput} {...registerRest} {...rest} />
-            {errors[name] && <p className="text-red-600 font-semibold">{errors[name].message}</p>}
+            {errors[name] && <p className="font-semibold text-red-600">{errors[name].message}</p>}
           </div>
         );
       }}

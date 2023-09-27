@@ -10,7 +10,7 @@ import TagSelector from '@form-inputs/TagSelector';
 import TextareaField from '@form-inputs/Textarea';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
-import { cleanObject, readFile, removeEmptyProperties } from '@utils/utils';
+import { cleanObject, readFile } from '@utils/utils';
 
 import TopBar from '../../../components/TopBar/TopBar';
 
@@ -82,7 +82,7 @@ export default function General() {
         <Form
           defaultValues={userInfo}
           onSubmit={(data) => {
-            updateUserInfo(removeEmptyProperties(data));
+            updateUserInfo(data);
           }}
           onlyDirty>
           <div className="flex flex-col gap-2">

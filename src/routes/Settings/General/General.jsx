@@ -9,7 +9,7 @@ import TagSelector from '@form-inputs/TagSelector';
 import TextareaField from '@form-inputs/Textarea';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
-import { cleanObject, readFile, removeEmptyProperties } from '@utils/utils';
+import { cleanObject, readFile } from '@utils/utils';
 
 import { timezones } from '../../../utils/timezone';
 
@@ -71,13 +71,12 @@ export default function General() {
     getUser();
   }, []);
 
-  //
   return (
-    <div className="p-10 my-3">
+    <div className="my-3 p-10">
       <Form
         defaultValues={userInfo}
         onSubmit={(data) => {
-          updateUserInfo(removeEmptyProperties(data));
+          updateUserInfo(data);
         }}
         onlyDirty>
         <div className="flex flex-row gap-28">

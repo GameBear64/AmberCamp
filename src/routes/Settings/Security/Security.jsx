@@ -48,9 +48,9 @@ export default function Security() {
       <div className="flex flex-col">
         <div className="flex flex-col gap-1">
           <div className="flex flex-col">
-            <h3 className="text-xl mb-3">Change Email</h3>
+            <h3 className="mb-3 text-xl">Change Email</h3>
             <div className="flex max-w-md flex-col">
-              <div className="flex max-w-md flex-col mb-2">
+              <div className="mb-2 flex max-w-md flex-col">
                 <IconInput width="w-72" label="Change Email" icon="mail" action={(e) => setNewEmail(e.target.value)} />
               </div>
             </div>
@@ -58,12 +58,12 @@ export default function Security() {
           <Button size="small" label="Change Email" />
           <hr />
           <div className="flex flex-col">
-            <h3 className="text-xl my-3">Change Password</h3>
+            <h3 className="my-3 text-xl">Change Password</h3>
             <FormInputs
               onSubmit={(e) => {
                 changePassword(e);
               }}>
-              <div className="flex flex-col mb-2">
+              <div className="mb-2 flex flex-col">
                 <InputField width="w-72" name="password" type="password" label={'Current Password'} />
 
                 <IconInputField

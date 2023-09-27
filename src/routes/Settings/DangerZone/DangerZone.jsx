@@ -29,11 +29,11 @@ export default function DangerZone() {
   };
   return (
     <div className="p-10">
-      <button onClick={() => navigate('/user/login')} className=" flex flex-row mb-4 text-lg rounded">
-        <span className="material-symbols-outlined mr-1.5 text-[27px] align-bottom">move_item</span>Log out
+      <button onClick={() => navigate('/user/login')} className=" mb-4 flex flex-row rounded text-lg">
+        <span className="material-symbols-outlined mr-1.5 align-bottom text-[27px]">move_item</span>Log out
       </button>
       {active ? (
-        <div className="flex mb-5 flex-col">
+        <div className="mb-5 flex flex-col">
           <label className="mb-1">Please, enter your password to proceed.</label>
           <div className="flex">
             <ButtonInput
@@ -51,7 +51,7 @@ export default function DangerZone() {
           </div>
         </div>
       ) : (
-        <button onClick={() => setActive(!active)} className="text-lg rounded py-1 px-2.5 hover:bg-red-700 bg-red-600 text-white">
+        <button onClick={() => setActive(!active)} className="rounded bg-red-600 px-2.5 py-1 text-lg text-white hover:bg-red-700">
           Delete Account
         </button>
       )}

@@ -22,7 +22,7 @@ export default function ButtonInput({
   }, [value]);
 
   return (
-    <div className="flex flex-row text-center mb-6 mt-2">
+    <div className="mb-6 mt-2 flex flex-row text-center">
       <input
         type={inputType}
         {...rest}
@@ -32,7 +32,7 @@ export default function ButtonInput({
           setState(e.target.value);
         }}
         value={state}
-        className={`shadow-slate-200 rounded-l pl-1 shadow-inner border h-10 ${width} ${
+        className={`h-10 rounded-l border pl-1 shadow-inner shadow-slate-200 ${width} ${
           invalid ? 'border-2 border-red-600' : 'border-slate-200'
         }`}
       />

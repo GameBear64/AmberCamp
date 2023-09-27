@@ -48,30 +48,30 @@ export default function SecurityMobile() {
     <div>
       <TopBar backBtnLable="Security" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
       <div className="px-10">
-        <div className="flex flex-col max-w-md m-auto justify-center">
+        <div className="m-auto flex max-w-md flex-col justify-center">
           <div className="my-5 flex flex-col">
-            <h3 className="text-xl mb-3">Change Email</h3>
+            <h3 className="mb-3 text-xl">Change Email</h3>
             <div className="flex max-w-md flex-col">
-              <div className="flex max-w-md flex-col mb-2">
+              <div className="mb-2 flex max-w-md flex-col">
                 <IconInput width="w-full" label="Change Email" icon="mail" action={(e) => setNewEmail(e.target.value)} />
               </div>
               <button
                 onClick={() => changeEmail()}
                 type="email"
-                className="mt-2 max-w-md font-semibold text-white shadow-md rounded bg-orange-700 py-1 px-2 text-[17px]">
+                className="mt-2 max-w-md rounded bg-orange-700 px-2 py-1 text-[17px] font-semibold text-white shadow-md">
                 Change Email
               </button>
             </div>
           </div>
           <hr />
-          <div className="flex flex-col my-5">
-            <h3 className="text-xl mb-3">Change Password</h3>
+          <div className="my-5 flex flex-col">
+            <h3 className="mb-3 text-xl">Change Password</h3>
 
             <FormInputs
               onSubmit={(e) => {
                 changePassword(e);
               }}>
-              <div className="flex flex-col mb-2">
+              <div className="mb-2 flex flex-col">
                 <InputField width="w-full" name="password" type="password" label={'Current Password'} />
 
                 <IconInputField
@@ -94,7 +94,7 @@ export default function SecurityMobile() {
               </div>
               <button
                 type="submit"
-                className="mt-2 max-w-md w-full font-semibold text-white shadow-md rounded bg-orange-700 py-1 px-2 text-[17px]">
+                className="mt-2 w-full max-w-md rounded bg-orange-700 px-2 py-1 text-[17px] font-semibold text-white shadow-md">
                 Change Password
               </button>
             </FormInputs>

@@ -7,7 +7,7 @@ export default function Input({ innerRef, label, invalid = false, width = 'w-60'
           ref={innerRef}
           className={`shadow-slate-100 ${
             invalid ? 'border-2 border-red-600' : 'border-slate-200'
-          } rounded-l pl-1.5 text-[17px] border h-10 ${width} ${styleInput}`}
+          } h-10 rounded-l border pl-1.5 text-[17px] ${width} ${styleInput}`}
           type={type}
           {...rest}
         />
