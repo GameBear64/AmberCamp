@@ -77,8 +77,8 @@ export default function General() {
 
   return (
     <>
-      <TopBar backBtnLable="Preferences" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
-      <div className="my-3 p-10">
+      <TopBar backBtnLable="General" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
+      <div className="p-10 my-3">
         <Form
           defaultValues={userInfo}
           onSubmit={(data) => {

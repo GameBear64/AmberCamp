@@ -46,7 +46,7 @@ export default function SecurityMobile() {
 
   return (
     <div>
-      <TopBar backBtnLable="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
+      <TopBar backBtnLable="Security" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
       <div className="px-10">
         <div className="m-auto flex max-w-md flex-col justify-center">
           <div className="my-5 flex flex-col">

@@ -31,8 +31,26 @@ const PreferencesMobile = lazy(() => import('./Settings/Preferences/Preferences.
 
 // Other
 const ErrorPage = lazy(() => import('./UtilPages/ErrorPage'));
-const Loader = lazy(() => import('./UtilPages/Loader'));
+import Loader from './UtilPages/Loader';
 const NotFound = lazy(() => import('./UtilPages/NotFound'));
+import ChatLoader from './Chat/ChatLoader';
+import ChatMobileLoader from './Chat/ChatLoader.m';
+import ChatListLoader from './ChatList/ChatListLoader';
+import ChatListMobileLoader from './ChatList/ChatListLoader.m';
+import LoginLoader from './Login/LoginLoader';
+import LoginMobileLoader from './Login/LoginLoader.m';
+import ProfileLoader from './Profile/ProfileLoader';
+import ProfileMobileLoader from './Profile/ProfileLoader.m';
+import RegisterLoader from './Register/RegisterLoader';
+import RegisterMobileLoader from './Register/RegisterLoader.m';
+import DangerZoneLoader from './Settings/DangerZone/DangerZoneLoader';
+import DangerZoneMobileLoader from './Settings/DangerZone/DangerZoneLoader.m';
+import GeneralLoader from './Settings/General/GeneralLoader';
+import GeneralMobileLoader from './Settings/General/GeneralLoader.m';
+import SecurityLoader from './Settings/Security/SecurityLoader';
+import SecurityMobileLoader from './Settings/Security/SecurityLoader.m';
+import SettingsLoader from './Settings/Settings/SettingLoader';
+import SettingsMobileLoader from './Settings/Settings/SettingsLoader.m';
 
 export default function Router() {
   const screenSize = resizeScreen();
@@ -41,7 +59,7 @@ export default function Router() {
     {
       path: '/user/register',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<RegisterLoader />}>
           <Register />
         </Suspense>
       ),
@@ -49,7 +67,7 @@ export default function Router() {
     {
       path: '/user/login',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<LoginLoader />}>
           <Login />
         </Suspense>
       ),
@@ -65,24 +83,20 @@ export default function Router() {
     {
       path: '/chat',
       element: (
-        <Suspense fallback={<Loader />}>
-          <ChatList className="classList-component " />
+        <Suspense fallback={<ChatListLoader />}>
+          <ChatList className="classList-component" />
         </Suspense>
       ),
       children: [
         {
           path: '',
-          element: (
-            <Suspense fallback={<Loader />}>
-              <h1> no chat </h1>
-            </Suspense>
-          ),
+          element: <Suspense fallback={<ChatLoader />}>{<p>no chat</p>}</Suspense>,
         },
         {
           path: ':id',
           element: (
-            <Suspense fallback={<Loader />}>
-              <Chat className="chat-component" />
+            <Suspense fallback={<ChatLoader />}>
+              <Chat />
             </Suspense>
           ),
         },
@@ -91,7 +105,7 @@ export default function Router() {
     {
       path: '/user/:id',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<ProfileLoader />}>
           <Profile />
         </Suspense>
       ),
@@ -99,7 +113,7 @@ export default function Router() {
     {
       path: '/user/settings',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<SettingsLoader />}>
           <Settings />
         </Suspense>
       ),
@@ -107,7 +121,7 @@ export default function Router() {
         {
           path: 'general',
           element: (
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<GeneralLoader />}>
               <General />
             </Suspense>
           ),
@@ -115,7 +129,7 @@ export default function Router() {
         {
           path: 'dangerzone',
           element: (
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DangerZoneLoader />}>
               <DangerZone />
             </Suspense>
           ),
@@ -131,7 +145,7 @@ export default function Router() {
         {
           path: 'security',
           element: (
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<SecurityLoader />}>
               <Security />
             </Suspense>
           ),
@@ -146,7 +160,7 @@ export default function Router() {
     {
       path: '/user/register',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<RegisterMobileLoader />}>
           <RegisterMobile />
         </Suspense>
       ),
@@ -154,7 +168,7 @@ export default function Router() {
     {
       path: '/user/login',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<LoginMobileLoader />}>
           <LoginMobile />
         </Suspense>
       ),
@@ -173,7 +187,7 @@ export default function Router() {
     {
       path: '/chat',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<ChatListMobileLoader />}>
           <ChatListMobile />
         </Suspense>
       ),
@@ -181,7 +195,7 @@ export default function Router() {
     {
       path: `/chat/:id`,
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<ChatMobileLoader />}>
           <Chat className="chat-component" />
         </Suspense>
       ),
@@ -189,7 +203,7 @@ export default function Router() {
     {
       path: '/user/:id',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<ProfileMobileLoader />}>
           <ProfileMobile />
         </Suspense>
       ),
@@ -197,7 +211,7 @@ export default function Router() {
     {
       path: '/user/settings',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<SettingsMobileLoader />}>
           <SettingsMobile />
         </Suspense>
       ),
@@ -205,7 +219,7 @@ export default function Router() {
     {
       path: '/user/settings/dangerzone',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<DangerZoneMobileLoader />}>
           <DangerZoneMobile />
         </Suspense>
       ),
@@ -213,7 +227,7 @@ export default function Router() {
     {
       path: 'user/settings/general',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<GeneralMobileLoader />}>
           <GeneralMobile />
         </Suspense>
       ),
@@ -221,7 +235,7 @@ export default function Router() {
     {
       path: 'user/settings/security',
       element: (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<SecurityMobileLoader />}>
           <SecurityMobile />
         </Suspense>
       ),
