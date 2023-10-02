@@ -74,18 +74,16 @@ module.exports.get = async (req, res) => {
   return res.status(200).json(user.settings);
 };
 
-const validationSchema = joi.object({
-  theme: joi
-    .string()
-    .valid(...Object.values(Theme))
-    .optional(),
-  accent: joi.string().length(6).optional(),
-  language: joi.string().length(2).optional(),
-});
-
 module.exports.patch = [
   allowNoBodyChanges(),
-  joiValidate(validationSchema),
+  joiValidate({
+    theme: joi
+      .string()
+      .valid(...Object.values(Theme))
+      .optional(),
+    accent: joi.string().length(6).optional(),
+    language: joi.string().length(2).optional(),
+  }),
   async (req, res) => {
     let user = await UserModel.findOne({ _id: req.apiUserId }).select('settings');
 

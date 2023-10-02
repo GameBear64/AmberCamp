@@ -47,15 +47,11 @@
 const joi = require('joi');
 const { UserModel } = require('../../../../models/User');
 
-const { joiValidate } = require('../../../../middleware/validation');
+const { joiValidate, InformationTypes } = require('../../../../middleware/validation');
 const { isObjectID } = require('../../../../utils');
 
-const validationSchema = joi.object({
-  id: joi.custom(isObjectID),
-});
-
 module.exports.post = [
-  joiValidate(validationSchema, 'params'),
+  joiValidate({ id: joi.custom(isObjectID) }, InformationTypes.PARAMS),
   async (req, res) => {
     if (req.params.id == req.apiUserId) return res.status(418).json("Removing yourself happens at the 'user/delete' route.");
 

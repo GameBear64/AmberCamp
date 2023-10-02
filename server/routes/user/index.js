@@ -61,12 +61,8 @@ module.exports.get = async (req, res) => {
   return res.status(200).json(user);
 };
 
-const validationSchema = joi.object({
-  password: joi.string().min(8).max(255).required(),
-});
-
 module.exports.delete = [
-  joiValidate(validationSchema),
+  joiValidate({ password: joi.string().min(8).max(255).required() }),
   async (req, res) => {
     let user = await UserModel.findOne({ _id: req.apiUserId }).select('+password +settings').populate('picture');
 

@@ -60,14 +60,12 @@ const { UserModel } = require('../../models/User');
 const { createJWTCookie } = require('../../utils');
 const { joiValidate } = require('../../middleware/validation');
 
-const validationSchema = joi.object({
-  email: joi.string().min(10).max(255).required(),
-  password: joi.string().min(8).max(255).required(),
-});
-
 module.exports.post = [
   throttle({ burst: 5, period: '10s' }),
-  joiValidate(validationSchema),
+  joiValidate({
+    email: joi.string().min(10).max(255).required(),
+    password: joi.string().min(8).max(255).required(),
+  }),
   async (req, res) => {
     let userAttempting = await UserModel.findOne({ email: req.body.email }).select('+password');
     if (!userAttempting) return res.status(404).json('User does not exists');

@@ -56,15 +56,7 @@ const fs = require('fs');
 
 const { MediaModel } = require('../../../models/Media');
 
-const { joiValidate } = require('../../../middleware/validation');
-
-const getSchema = joi.object({
-  key: joi.string().length(Number(process.env.MEDIA_KEY_LEN)).required(),
-});
-
-const sizeQuerySchema = joi.object({
-  size: joi.number().max(500),
-});
+const { joiValidate, InformationTypes } = require('../../../middleware/validation');
 
 const turnSizeIntoNumberBeforeValidation = () => (req, res, next) => {
   if (req.query?.size) req.query.size = Number(req.query.size);
@@ -73,8 +65,8 @@ const turnSizeIntoNumberBeforeValidation = () => (req, res, next) => {
 
 module.exports.get = [
   turnSizeIntoNumberBeforeValidation(),
-  joiValidate(getSchema, 'params'),
-  joiValidate(sizeQuerySchema, 'query'),
+  joiValidate({ key: joi.string().length(Number(process.env.MEDIA_KEY_LEN)).required() }, InformationTypes.PARAMS),
+  joiValidate({ size: joi.number().max(500) }, InformationTypes.QUERY),
   async (req, res) => {
     const currentFile = await MediaModel.findOne({ key: req.params.key });
     if (!currentFile) return res.status(404).json('File not found');

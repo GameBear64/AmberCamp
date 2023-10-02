@@ -127,14 +127,12 @@ module.exports.get = async (req, res) => {
   return res.status(200).json({ ...relationship?.toObject(), ...user?.toObject(), status });
 };
 
-const validationSchema = joi.object({
-  nickname: joi.string().min(3).max(30).optional(),
-  notes: joi.array().optional(),
-  accentColor: joi.string().optional(),
-});
-
 module.exports.post = [
-  joiValidate(validationSchema),
+  joiValidate({
+    nickname: joi.string().min(3).max(30).optional(),
+    notes: joi.array().optional(),
+    accentColor: joi.string().optional(),
+  }),
   async (req, res) => {
     let user = await UserModel.findOne({ _id: req.params.id });
     if (!user) return res.status(404).json('User not found');
@@ -148,12 +146,8 @@ module.exports.post = [
   },
 ];
 
-const deleteValidation = joi.object({
-  password: joi.string().min(8).max(255).required(),
-});
-
 module.exports.delete = [
-  joiValidate(deleteValidation),
+  joiValidate({ password: joi.string().min(8).max(255).required() }),
   async (req, res) => {
     let user = await UserModel.findOne({ _id: req.apiUserId }).select('+password +settings').populate('picture');
 
