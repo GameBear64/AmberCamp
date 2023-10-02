@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const { PreferencesModel } = require('./Preferences');
 const { RelationshipModel } = require('./Relationship');
-const { TimeZone } = require('../helpers/enums.js');
+const { Theme, TimeZone } = require('../helpers/enums.js');
 
 const userSchema = new mongoose.Schema(
   {
@@ -42,7 +41,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       ref: 'Media',
     },
-    tags: [String],
+    tags: {
+      type: [String],
+      default: [],
+    },
     timezone: {
       type: String,
       enum: Object.values(TimeZone),
@@ -75,10 +77,18 @@ const userSchema = new mongoose.Schema(
       ],
       select: false,
     },
-    settings: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Preferences',
-      select: false,
+    theme: {
+      type: String,
+      enum: Object.values(Theme),
+      default: Theme.Light,
+    },
+    accent: {
+      type: String,
+      default: '',
+    },
+    language: {
+      type: String,
+      default: '',
     },
     passwordChangedAt: {
       type: Date,
@@ -105,28 +115,15 @@ userSchema.methods.getRelationship = async function (userId) {
   // on upsert it returns null so we need to fetch a second time after initial creation
   if (relation == null) return await RelationshipModel.findOne({ from: userId, to: this._id }).select(excludeSelect);
 
-  // Get relationship status
-
   return relation;
 };
 
 userSchema.pre('save', async function (next) {
-  if (this.isNew) {
-    this.settings = await PreferencesModel.create({});
-  }
-
   if (this.isModified('password') || this.isNew) {
     this.password = bcrypt.hashSync(this.password, 10);
 
     this.passwordChangedAt = Date.now() - 1000;
   }
-
-  next();
-});
-
-// https://github.com/Automattic/mongoose/issues/8971#issuecomment-638282153
-userSchema.pre(/^delete/, { document: true, query: false }, async function (next) {
-  await PreferencesModel.deleteOne({ _id: this.settings });
 
   next();
 });

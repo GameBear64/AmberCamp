@@ -33,7 +33,7 @@
 
 const joi = require('joi');
 const { UserModel } = require('../../../models/User');
-const { TimeZone } = require('../../../helpers/enums');
+const { TimeZone, Theme } = require('../../../helpers/enums');
 
 const { allowNoBodyChanges, joiValidate } = require('../../../helpers/middleware');
 
@@ -49,6 +49,9 @@ const validationSchema = joi.object({
     'array.max': 'Only 6 tags allowed!',
   }),
   timezone: joi.string().valid(...Object.values(TimeZone)),
+  theme: joi.string().valid(...Object.values(Theme)),
+  accent: joi.string().length(6),
+  language: joi.string().length(2),
 });
 
 module.exports.patch = [
