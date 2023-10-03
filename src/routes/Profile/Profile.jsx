@@ -13,13 +13,11 @@ import { getCurrentUserId, removeEmptyProperties } from '@utils/utils';
 
 import QuillSection from './QuillSection';
 
-import 'react-quill/dist/quill.snow.css';
-
 export default function Profile() {
   const [userInfo, setUserInfo] = useState({});
   const [editNote, setEditNote] = useState('');
   const [rotate, setRotate] = useState(false);
-  let { id } = useParams();
+  const { id } = useParams();
 
   const getUser = () => {
     useFetch({
@@ -115,8 +113,8 @@ export default function Profile() {
             style={{
               backgroundImage: userInfo?.background ? `url('http://localhost:3030/recourse/${userInfo?.background}')` : '',
             }}>
-            <section className="relative mx-4 flex flex-row pt-36 ">
-              <div className="relative  mx-2.5 inline-block h-48 overflow-hidden rounded-[50%] border-4 border-solid border-white shadow-md">
+            <section className="relative flex flex-row pt-36 mx-4">
+              <div className="h-48 relative overflow-hidden rounded-[50%] inline-block border-solid shadow-md border-4 border-white mx-2.5">
                 <img
                   src={
                     userInfo?.picture && userInfo?.picture !== 'string'
@@ -137,8 +135,8 @@ export default function Profile() {
             <div className="col-span-2 mt-32">
               <QuillSection userId={id} value={userInfo.description} setValue={updateDescription} />
             </div>
-            <section className="col-span-1 overflow-y-auto overflow-x-hidden">
-              <div className="p-10 shadow-md">
+            <section className="overflow-y-auto overflow-x-hidden col-span-1">
+              <div className="p-10">
                 {id !== getCurrentUserId() && (
                   <div className="float-left mb-4 flex w-full flex-wrap gap-2 font-semibold ">
                     <button className="rounded-lg border bg-slate-50 px-2 py-1 shadow-md">Message</button>

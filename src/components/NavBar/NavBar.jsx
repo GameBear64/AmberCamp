@@ -9,8 +9,8 @@ export default function NavBar() {
 
   return (
     <div className="sticky bottom-0">
-      <div className="flex h-full w-full justify-center rounded bg-white px-4 shadow-[0_3px_10px_rgb(0,0,0,0.2)] ">
-        <div className="flex w-full max-w-md flex-row justify-between pt-2 text-center">
+      <div className="rounded bg-white flex w-full justify-center h-full shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-4">
+        <div className="flex flex-row max-w-md w-full text-center justify-between pt-2">
           <span
             onClick={() => navigate('/chat')}
             className={`material-symbols-outlined cursor-pointer rounded p-1 text-[26px] transition duration-0 hover:shadow-md hover:duration-500`}>

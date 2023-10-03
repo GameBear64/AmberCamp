@@ -12,6 +12,7 @@ export default function ButtonInput({
   type = 'button',
   width = 'w-60',
   invalid,
+  inputType = 'text',
   ...rest
 }) {
   const [state, setState] = useState('');
@@ -23,6 +24,7 @@ export default function ButtonInput({
   return (
     <div className="mb-6 mt-2 flex flex-row text-center">
       <input
+        type={inputType}
         {...rest}
         ref={innerRef}
         onChange={(e) => {
@@ -40,7 +42,7 @@ export default function ButtonInput({
           if (shouldClear) setState('');
         }}
         type={type}
-        className={`font-semibold ${btnColor} rounded-r shadow-inner ${btnBG} text-md p-1 hover:shadow-inner`}>
+        className={`font-semibold ${btnColor} rounded-r shadow-inner block ${btnBG} p-1 text-[16px] hover:shadow-inner`}>
         {btnText}
       </button>
     </div>

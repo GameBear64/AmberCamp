@@ -15,14 +15,12 @@ import TopBar from '../../components/TopBar/TopBar';
 
 import QuillSection from './QuillSection';
 
-import 'react-quill/dist/quill.snow.css';
-
 export default function ProfileMobile() {
   const [userInfo, setUserInfo] = useState({});
   const [editNote, setEditNote] = useState('');
   const [rotate, setRotate] = useState(false);
   const navigate = useNavigate();
-  let { id } = useParams();
+  const { id } = useParams();
 
   const getUser = () => {
     useFetch({
@@ -112,8 +110,8 @@ export default function ProfileMobile() {
               </div>
             </div>
           </div>
-          <section className="col-span-1 overflow-y-auto ">
-            <div className="w-auto px-10 shadow-md">
+          <section className="overflow-y-auto col-span-1 ">
+            <div className="pl-10 pr-10 w-auto">
               {userInfo?.biography && (
                 <>
                   <h3 className="block font-semibold">Biography</h3>

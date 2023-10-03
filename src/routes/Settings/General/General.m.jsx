@@ -10,7 +10,7 @@ import TagSelector from '@form-inputs/TagSelector';
 import TextareaField from '@form-inputs/Textarea';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
-import { cleanObject, readFile, removeEmptyProperties } from '@utils/utils';
+import { cleanObject, readFile } from '@utils/utils';
 
 import TopBar from '../../../components/TopBar/TopBar';
 
@@ -77,12 +77,12 @@ export default function General() {
 
   return (
     <>
-      <TopBar backBtnLable="Preferences" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
-      <div className="my-3 p-10">
+      <TopBar backBtnLable="General" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
+      <div className="p-10 my-3">
         <Form
           defaultValues={userInfo}
           onSubmit={(data) => {
-            updateUserInfo(removeEmptyProperties(data));
+            updateUserInfo(data);
           }}
           onlyDirty>
           <div className="flex flex-col gap-2">
@@ -110,7 +110,7 @@ export default function General() {
               <TextareaField styles="mt-2" rows="7" cols="30" label="Biography" name="biography" />
             </div>
             <div className="max-w-md">
-              <TagSelector styles="mb-5 mt-2" width="w-72" type="text" btnText="+ Add" name="tags" shouldClear />
+              <TagSelector styles="mb-5 mt-2" width="w-72" type="text" btnText="+Add" name="tags" shouldClear />
               <SelectInput name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
             </div>
           </div>

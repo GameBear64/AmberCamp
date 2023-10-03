@@ -30,9 +30,9 @@ export default function LoginMobile() {
   return (
     <div className="m-auto grid h-screen grid-cols-2 lg:grid-cols-1">
       <div className="px-4">
-        <div className="m-auto mt-52 flex max-w-md flex-col  justify-items-center text-center">
-          <h1 className="pb-8 text-4xl font-medium">Amber Camp Login</h1>
-          <div className="flex flex-col space-y-4  ">
+        <div className="text-center max-w-md m-auto flex flex-col justify-items-center mt-52">
+          <h1 className="font-medium text-4xl pb-8">Amber Camp Login</h1>
+          <div className="flex flex-col">
             <div className="flex flex-col text-left">
               <Form
                 onSubmit={(data) => {
