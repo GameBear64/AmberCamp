@@ -50,13 +50,39 @@ conversationSchema.pre('deleteOne', async function (next) {
 });
 
 conversationSchema.pre('save', async function (next) {
-  for await (const [i, participant] of this.participants.entries()) {
+  for await (const [i, participant] of this.users.entries()) {
     await ParticipantModel.create({
       user: participant,
       conversation: this._id,
       // first person in participants array becomes the owner
       groupOwner: i === 0 && this.type === ConversationType.Group,
     });
+  }
+
+  next();
+});
+
+conversationSchema.pre('updateOne', async function (next) {
+  const thisId = this.getQuery()._id;
+  const thisUpdate = this.getUpdate();
+
+  // i could not think of anything else
+  const pushedUsers = thisUpdate?.$push?.users?.$each || thisUpdate?.$push?.users ? [thisUpdate?.$push?.users] : [];
+  const pulledUsers = thisUpdate?.$pull?.users?.$each || thisUpdate?.$pull?.users ? [thisUpdate?.$pull?.users] : [];
+
+  if (pushedUsers.length !== 0) {
+    for await (const participant of pushedUsers) {
+      await ParticipantModel.create({
+        user: participant,
+        conversation: thisId,
+      });
+    }
+  }
+
+  if (pulledUsers.length !== 0) {
+    for await (const participant of pulledUsers) {
+      await ParticipantModel.deleteOne({ user: participant });
+    }
   }
 
   next();

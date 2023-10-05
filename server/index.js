@@ -57,16 +57,17 @@ app.use(checkAuth);
 
 app.use('/', router());
 
+//=============== Docs ===============
+const { swagger } = require('./docs/swagger.js');
+swagger(app);
+
+//========= Error Handlers ==========
 app.use((_req, res) => res.status(404).send({ message: 'Not found' }));
 app.use((error, _req, res, _next) => {
   console.log('[SERVER ERROR]', error.message);
   res.status(error.status || 500);
   res.send({ message: error.message });
 });
-
-//=============== Docs ===============
-const { swagger } = require('./docs/swagger.js');
-swagger(app);
 
 //===== Listen on port #### =====
 server.listen(process.env.VITE_SERVER_PORT, () => {

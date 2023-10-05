@@ -1,6 +1,6 @@
 /**
  * @openapi
- * /friend/unblock/{id}:
+ * /user/friend/unblock/{id}:
  *   post:
  *     summary: Unblock a friend
  *     description: Unblocks the user with the specified ID who was previously blocked as a friend.

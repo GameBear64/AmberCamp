@@ -1,6 +1,6 @@
 /**
  * @openapi
- * /friend/block/{id}:
+ * /user/friend/block/{id}:
  *   post:
  *     summary: Block a friend
  *     description: Blocks the user with the specified ID as a friend.

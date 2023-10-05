@@ -9,23 +9,52 @@
  *     security:
  *       - ApiKeyAuth: []
  *     requestBody:
- *       required: true
+ *       required: false
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
+ *               handle:
+ *                 type: string
+ *                 minLength: 3
+ *                 maxLength: 30
  *               name:
  *                 type: string
  *                 minLength: 3
  *                 maxLength: 30
+ *               email:
+ *                 type: string
+ *                 minLength: 10
+ *                 maxLength: 255
+ *                 format: email
  *               biography:
  *                 type: string
  *                 maxLength: 256
+ *               description:
+ *                 type: string
  *               picture:
  *                 type: string
  *               background:
  *                 type: string
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 maxItems: 6
+ *               timezone:
+ *                 type: string
+ *                 enum: [TIME_ZONE_VALUES]
+ *               theme:
+ *                 type: string
+ *                 enum: [THEME_VALUES]
+ *               accent:
+ *                 type: string
+ *                 pattern: ^[0-9A-Fa-f]{6}$
+ *               language:
+ *                 type: string
+ *                 pattern: ^[a-zA-Z]{2}$
+ *           description: Updated user settings.
  *     responses:
  *       '200':
  *         description: Returns an empty response if the friend request was sent successfully.

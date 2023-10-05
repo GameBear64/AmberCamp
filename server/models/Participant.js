@@ -20,10 +20,11 @@ const participantSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    // direct conversations have no owners
     groupOwner: {
       type: Boolean,
       default: false,
-    }, // direct convos have no owners
+    },
   },
   { timestamps: true }
 );

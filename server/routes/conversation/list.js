@@ -1,5 +1,20 @@
-// GET: Get all conversations that include the user id in its participants, order by date
-// fetch all user participation, get the hidden conversations, filter above list and send
+/**
+ * @openapi
+ * /conversation/list:
+ *   get:
+ *     summary: Get conversations for the current user.
+ *     description: |
+ *       This endpoint retrieves a list of conversations for the current user, excluding conversations marked as hidden from history.
+ *     tags:
+ *       - conversation
+ *     security:
+ *       - ApiKeyAuth: []
+ *     responses:
+ *       200:
+ *         description: List of conversations successfully retrieved.
+ *       500:
+ *         description: Internal server error.
+ */
 
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -67,8 +82,6 @@ module.exports.get = [
         },
       },
     ]);
-
-    // order by date updated
 
     res.status(200).json(conversation);
   },

@@ -1,9 +1,93 @@
+/**
+ * @openapi
+ * /conversation/{id}:
+ *   get:
+ *     summary: Get conversation details.
+ *     description: |
+ *       This endpoint retrieves details about a conversation based on the provided conversation ID.
+ *     tags:
+ *       - conversation
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the conversation to retrieve details from.
+ *     security:
+ *       - ApiKeyAuth: []
+ *     responses:
+ *       200:
+ *         description: Conversation details successfully retrieved.
+ *       418:
+ *         description: Cannot talk to yourself.
+ *   post:
+ *     summary: Send a message to a conversation.
+ *     description: |
+ *       This endpoint allows a user to send a message to a conversation identified by the provided conversation ID.
+ *     tags:
+ *       - conversation
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the conversation to send a message to.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               message:
+ *                 type: string
+ *                 maxLength: 50000
+ *                 required: true
+ *           description: The message to send.
+ *     security:
+ *       - ApiKeyAuth: []
+ *     responses:
+ *       200:
+ *         description: Message sent successfully.
+ *       201:
+ *         description: Conversation created and message sent successfully (if conversation did not exist).
+ *       406:
+ *         description: Conversation or user does not exist.
+ *       418:
+ *         description: Cannot send a message to yourself.
+ *       429:
+ *         description: Rate limit exceeded.
+ *   delete:
+ *     summary: Delete a conversation.
+ *     description: |
+ *       This endpoint allows a user to delete a conversation based on the provided conversation ID.
+ *     tags:
+ *       - conversation
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the conversation to delete.
+ *     security:
+ *       - ApiKeyAuth: []
+ *     responses:
+ *       200:
+ *         description: Conversation deleted successfully.
+ *       403:
+ *         description: Only the group owner can delete the group.
+ */
+
 const joi = require('joi');
 const throttle = require('express-throttle');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 const { ConversationType } = require('../../../enums.js');
 const { joiValidate, InformationTypes } = require('../../../middleware/validation');
+const { isObjectID } = require('../../../utils');
 
 const { ConversationModel } = require('../../../models/Conversation');
 const { UserModel } = require('../../../models/User');
@@ -12,6 +96,7 @@ const { ParticipantModel } = require('../../../models/Participant');
 
 module.exports.get = [
   joiValidate({ page: joi.number().min(1) }, InformationTypes.QUERY),
+  joiValidate({ id: joi.custom(isObjectID) }, InformationTypes.PARAMS),
   async (req, res) => {
     if (req.params.id === req.apiUserId) return res.status(418).json('You want to talk to yourself? Think.');
 
@@ -78,7 +163,8 @@ module.exports.get = [
 
 module.exports.post = [
   throttle({ burst: 10, period: '5s' }),
-  joiValidate(joi.object({ message: joi.string().max(50000).required() })),
+  joiValidate({ id: joi.custom(isObjectID) }, InformationTypes.PARAMS),
+  joiValidate({ message: joi.string().max(50000).required() }),
   async (req, res) => {
     if (req.params.id === req.apiUserId) return res.status(418).json('Go get some friends...');
 
@@ -123,9 +209,8 @@ module.exports.post = [
   },
 ];
 
-// module.exports.delete = patch dm themes here, group settings are at the group endpoint
-
 module.exports.delete = [
+  joiValidate({ id: joi.custom(isObjectID) }, InformationTypes.PARAMS),
   async (req, res) => {
     const [conversation] = await ConversationModel.aggregate([
       {
