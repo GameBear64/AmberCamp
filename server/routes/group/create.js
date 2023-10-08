@@ -47,7 +47,7 @@ module.exports.post = [
   allowNoBodyChanges(),
   joiValidate({ id: joi.custom(isObjectID) }, InformationTypes.PARAMS),
   joiValidate({
-    name: joi.string().min(3).max(30),
+    name: joi.string().min(3).max(30).required(),
     icon: joi.string().optional(),
     users: joi.array().items(joi.custom(isObjectID)).min(1).required(),
   }),
