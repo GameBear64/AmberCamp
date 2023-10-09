@@ -1,6 +1,6 @@
 /**
  * @openapi
- * /friend/block/{id}:
+ * /user/friend/block/{id}:
  *   post:
  *     summary: Block a friend
  *     description: Blocks the user with the specified ID as a friend.
@@ -47,15 +47,11 @@
 const joi = require('joi');
 const { UserModel } = require('../../../../models/User');
 
-const { joiValidate } = require('../../../../helpers/middleware');
-const { isObjectID } = require('../../../../helpers/utils');
-
-const validationSchema = joi.object({
-  id: joi.custom(isObjectID),
-});
+const { joiValidate, InformationTypes } = require('../../../../middleware/validation');
+const { isObjectID } = require('../../../../utils');
 
 module.exports.post = [
-  joiValidate(validationSchema, 'params'),
+  joiValidate({ id: joi.custom(isObjectID) }, InformationTypes.PARAMS),
   async (req, res) => {
     if (req.params.id == req.apiUserId) return res.status(418).json("You can't run from yourself...");
 

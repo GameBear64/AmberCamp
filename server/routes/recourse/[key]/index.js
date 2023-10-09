@@ -56,15 +56,7 @@ const fs = require('fs');
 
 const { MediaModel } = require('../../../models/Media');
 
-const { joiValidate } = require('../../../helpers/middleware');
-
-const getSchema = joi.object({
-  key: joi.string().length(Number(process.env.MEDIA_KEY_LEN)).required(),
-});
-
-const sizeQuerySchema = joi.object({
-  size: joi.number().max(500),
-});
+const { joiValidate, InformationTypes } = require('../../../middleware/validation');
 
 const turnSizeIntoNumberBeforeValidation = () => (req, res, next) => {
   if (req.query?.size) req.query.size = Number(req.query.size);
@@ -73,8 +65,8 @@ const turnSizeIntoNumberBeforeValidation = () => (req, res, next) => {
 
 module.exports.get = [
   turnSizeIntoNumberBeforeValidation(),
-  joiValidate(getSchema, 'params'),
-  joiValidate(sizeQuerySchema, 'query'),
+  joiValidate({ key: joi.string().length(Number(process.env.MEDIA_KEY_LEN)).required() }, InformationTypes.PARAMS),
+  joiValidate({ size: joi.number().max(500) }, InformationTypes.QUERY),
   async (req, res) => {
     const currentFile = await MediaModel.findOne({ key: req.params.key });
     if (!currentFile) return res.status(404).json('File not found');
@@ -84,10 +76,14 @@ module.exports.get = [
     });
 
     if (req.query?.size) {
-      let path = currentFile.thumbnail || currentFile.path;
+      let path = currentFile?.thumbnail || currentFile.path;
       return sharp(path, { animated: currentFile.mimetype?.includes('gif') })
         .resize(req.query.size, req.query.size, { fit: 'inside' })
         .pipe(res);
+    }
+
+    if (req.query?.size == 0 && currentFile?.thumbnail) {
+      return fs.createReadStream(currentFile?.thumbnail).pipe(res);
     }
 
     fs.createReadStream(currentFile?.path).pipe(res);

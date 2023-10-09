@@ -4,8 +4,9 @@ const fs = require('fs').promises;
 
 const ffmpeg = require('ffmpeg-static');
 const genThumbnail = require('simple-thumbnail');
+const sharp = require('sharp');
 
-const { videoExtensions } = require('../helpers/utils');
+const { videoExtensions } = require('../utils');
 
 const mediaSchema = new mongoose.Schema(
   {
@@ -63,6 +64,13 @@ mediaSchema.pre('save', async function (next) {
   if (this.done && videoExtensions.includes(this.type)) {
     const thumbFilePath = `uploads/${this.author}/${this.md5}.png`;
     await genThumbnail(this.path, thumbFilePath, '500x?', { path: ffmpeg });
+
+    this.thumbnail = thumbFilePath;
+  }
+
+  if (this.done && this.type == 'gif') {
+    const thumbFilePath = `uploads/${this.author}/${this.md5}.gif`;
+    await sharp(this.path, { animated: true }).resize(200, 200, { fit: 'inside' }).toFile(thumbFilePath);
 
     this.thumbnail = thumbFilePath;
   }

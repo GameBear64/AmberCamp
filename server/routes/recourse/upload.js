@@ -71,22 +71,11 @@
 const joi = require('joi');
 const fs = require('fs').promises;
 
-const { slugifyField, base64ToBuffer, joiValidate } = require('../../helpers/middleware');
-const { chunkUnderMeg, getCode } = require('../../helpers/utils');
+const { joiValidate } = require('../../middleware/validation');
+const { slugifyField, base64ToBuffer } = require('../../middleware/mods');
+const { chunkUnderMeg, getCode } = require('../../utils');
 
 const { MediaModel } = require('../../models/Media');
-
-const postSchema = joi.object({
-  name: joi.string().max(240).required(),
-  type: joi.string().max(10).regex(/\w+/).required(), // TODO: max should be 255 of combined type + name
-  mimetype: joi.string().required(),
-  data: joi.custom(chunkUnderMeg).required(),
-  md5: joi.string().required(),
-  progress: joi
-    .string()
-    .regex(/(\d+)-(\d+)-(\d+)/)
-    .required(),
-});
 
 async function createMasterFile(userPath, filePath, req) {
   await fs.stat(userPath).catch(async () => await fs.mkdir(userPath));
@@ -141,7 +130,17 @@ async function verifyAndThumb(currentFile, filePath, res) {
 module.exports.post = [
   slugifyField('name'),
   base64ToBuffer('data'),
-  joiValidate(postSchema),
+  joiValidate({
+    name: joi.string().max(240).required(),
+    type: joi.string().max(10).regex(/\w+/).required(), // TODO: max should be 255 of combined type + name
+    mimetype: joi.string().required(),
+    data: joi.custom(chunkUnderMeg).required(),
+    md5: joi.string().required(),
+    progress: joi
+      .string()
+      .regex(/(\d+)-(\d+)-(\d+)/)
+      .required(),
+  }),
   async (req, res) => {
     let { name, type, data, md5, progress } = req.body;
     let [currentChunk, progressPercentage] = progress.split('-');

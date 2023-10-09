@@ -31,7 +31,7 @@ export default function ButtonInput({
           actionInput(e);
           setState(e.target.value);
         }}
-        value={state}
+        value={state || ''}
         className={`h-10 rounded-l border pl-1 shadow-inner shadow-slate-200 ${width} ${
           invalid ? 'border-2 border-red-600' : 'border-slate-200'
         }`}

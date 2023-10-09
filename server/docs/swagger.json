@@ -23,6 +23,15 @@
       },
       {
         "name": "media"
+      },
+      {
+        "name": "conversation"
+      },
+      {
+        "name": "group"
+      },
+      {
+        "name": "message"
       }
     ],
     "components": {

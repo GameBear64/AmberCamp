@@ -62,7 +62,7 @@ export default function ChatList() {
             <br />
             <br />
             <br />
-            <a href="http:localhost:3030/api-docs/#/" target="_blank" rel="noreferrer">
+            <a href="http://localhost:3030/api-docs/#/" target="_blank" rel="noreferrer">
               API Documentation
             </a>
             <br />

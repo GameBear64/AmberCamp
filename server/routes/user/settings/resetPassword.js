@@ -60,19 +60,17 @@
 
 const joi = require('joi');
 const { UserModel } = require('../../../models/User');
-const { createJWTCookie } = require('../../../helpers/utils');
-const { joiValidate } = require('../../../helpers/middleware');
-
-const validationSchema = joi.object({
-  password: joi.string().min(8).max(255).required(),
-  newPassword: joi.string().min(8).max(255).required(),
-  confirmPassword: joi.string().valid(joi.ref('newPassword')).required().messages({
-    'any.only': 'Confirmation password did not match.',
-  }),
-});
+const { createJWTCookie } = require('../../../utils');
+const { joiValidate } = require('../../../middleware/validation');
 
 module.exports.post = [
-  joiValidate(validationSchema),
+  joiValidate({
+    password: joi.string().min(8).max(255).required(),
+    newPassword: joi.string().min(8).max(255).required(),
+    confirmPassword: joi.string().valid(joi.ref('newPassword')).required().messages({
+      'any.only': 'Confirmation password did not match.',
+    }),
+  }),
   async (req, res) => {
     let user = await UserModel.findOne({ _id: req.apiUserId }).select('password');
 
