@@ -124,7 +124,13 @@ module.exports.get = async (req, res) => {
     status = getFriendshipStatus(currentUser, user);
   }
 
-  return res.status(200).json({ ...relationship?.toObject(), ...user?.toObject(), status });
+  // remove private fields
+  const cleanedUser = user?.toObject();
+  delete cleanedUser.pendingContacts;
+  delete cleanedUser.contacts;
+  delete cleanedUser.blocked;
+
+  return res.status(200).json({ ...relationship?.toObject(), ...cleanedUser, status });
 };
 
 module.exports.post = [

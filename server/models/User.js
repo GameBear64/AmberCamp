@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema(
     timezone: {
       type: String,
       enum: Object.values(TimeZone),
-      default: TimeZone['00:00'],
+      default: TimeZone.GMT,
     },
     pendingContacts: {
       type: [

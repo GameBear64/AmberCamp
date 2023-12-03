@@ -21,6 +21,7 @@ const ObjectId = require('mongoose').Types.ObjectId;
 const { ConversationModel } = require('../../models/Conversation');
 
 module.exports.get = [
+  // TODO: agregate with the relationship to get the nickname status as well
   async (req, res) => {
     const conversation = await ConversationModel.aggregate([
       {
@@ -41,7 +42,7 @@ module.exports.get = [
                 $expr: { $in: ['$user', '$$users'] },
               },
             },
-            { $project: { hideFromHistory: 1 } },
+            { $project: { hideFromHistory: 1, updatedAt: 1 } },
           ],
           as: 'currentUser',
         },
@@ -59,30 +60,34 @@ module.exports.get = [
           from: 'users',
           localField: 'users',
           foreignField: '_id',
-          pipeline: [{ $project: { _id: 1, picture: 1, handle: 1 } }],
+          pipeline: [{ $project: { _id: 1, picture: 1, handle: 1, name: 1 } }],
           as: 'users',
         },
       },
       {
         $project: {
-          messages: 0,
-          createdAt: 0,
-          currentUser: 0,
+          newMessages: {
+            $gt: [
+              { $convert: { input: '$currentUser.updatedAt', to: 'double' } },
+              { $convert: { input: '$updatedAt', to: 'double' } },
+            ],
+          },
+          users: 1,
+          type: 1,
+          name: 1,
+          icons: 1,
+          theme: 1,
         },
       },
       {
         $sort: {
-          createdAt: -1,
-        },
-      },
-      {
-        $group: {
-          _id: '$type',
-          conversations: { $push: '$$ROOT' },
+          updatedAt: -1,
         },
       },
     ]);
 
-    res.status(200).json(conversation);
+    res
+      .status(200)
+      .json({ direct: conversation.filter((c) => c.type == 'Direct'), group: conversation.filter((c) => c.type == 'Group') });
   },
 ];

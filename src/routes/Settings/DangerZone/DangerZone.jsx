@@ -29,7 +29,7 @@ export default function DangerZone() {
   };
   return (
     <div className="p-10">
-      <button onClick={() => navigate('/user/login')} className=" mb-4 flex flex-row rounded text-lg">
+      <button onClick={() => navigate('/login')} className=" mb-4 flex flex-row rounded text-lg">
         <span className="material-symbols-outlined mr-1.5 align-bottom text-[27px]">move_item</span>Log out
       </button>
       {active ? (

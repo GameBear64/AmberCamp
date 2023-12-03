@@ -6,31 +6,29 @@ export default function Settings() {
   let { pathname } = useLocation();
 
   return (
-    <div>
-      <Layout
-        left={
-          <div className="my-10">
-            <div className="mx-8">
-              <h1 className="text-2xl font-semibold">Settings</h1>
-              <div className="mt-2">
-                <div className={`mb-2 ${pathname === '/user/settings/general' && 'bg-slate-100'} rounded p-1 text-lg`}>
-                  <Link to={`general`}>General</Link>
-                </div>
-                <div className={`mb-2 ${pathname === '/user/settings/preferences' && 'bg-slate-100'} rounded p-1 text-lg`}>
-                  <Link to={`preferences`}>Preferences</Link>
-                </div>
-                <div className={`mb-2 ${pathname === '/user/settings/security' && 'bg-slate-100'} rounded p-1 text-lg`}>
-                  <Link to={`security`}>Security</Link>
-                </div>
-                <div className={`mb-2 ${pathname === '/user/settings/dangerzone' && 'bg-slate-100'} rounded p-1 text-lg`}>
-                  <Link to={`dangerzone`}>Danger Zone</Link>
-                </div>
+    <Layout
+      left={
+        <div className="my-10">
+          <div className="mx-8">
+            <h1 className="text-2xl font-semibold">Settings</h1>
+            <div className="mt-2">
+              <div className={`mb-2 ${pathname === '/settings/general' && 'bg-slate-100'} rounded p-1 text-lg`}>
+                <Link to={`general`}>General</Link>
+              </div>
+              <div className={`mb-2 ${pathname === '/settings/preferences' && 'bg-slate-100'} rounded p-1 text-lg`}>
+                <Link to={`preferences`}>Preferences</Link>
+              </div>
+              <div className={`mb-2 ${pathname === '/settings/security' && 'bg-slate-100'} rounded p-1 text-lg`}>
+                <Link to={`security`}>Security</Link>
+              </div>
+              <div className={`mb-2 ${pathname === '/settings/dangerzone' && 'bg-slate-100'} rounded p-1 text-lg`}>
+                <Link to={`dangerzone`}>Danger Zone</Link>
               </div>
             </div>
           </div>
-        }
-        right={<Outlet />}
-      />
-    </div>
+        </div>
+      }
+      right={<Outlet />}
+    />
   );
 }

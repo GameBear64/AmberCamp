@@ -12,7 +12,7 @@ const io = require('socket.io')(server, {
 require('dotenv').config({ path: '../.env' });
 
 //============= Logger ==============
-if (process.env.NODE_ENV == 'dev') app.use(require('morgan')('dev'));
+if (process.env.NODE_ENV == 'development') app.use(require('morgan')('dev'));
 
 //=============== DB ================
 const mongoose = require('mongoose');
@@ -26,9 +26,12 @@ const fileRegex = /events\/(?<cmd>\w+)\.js/g;
 const { Glob } = require('glob');
 const eventPaths = new Glob('./events/*.js', {});
 
-io.on('connection', (socket) => {
-  console.log(`⚡: ${socket.id} user just connected!`);
+io.use((socket, next) => {
+  socket.authUser = socket.handshake.auth.jwt;
+  next();
+});
 
+io.on('connection', (socket) => {
   // socket.onAny((eventName, ...args) => {
   //   console.log('[ALL] ', eventName, args);
   // });
@@ -62,11 +65,11 @@ const { swagger } = require('./docs/swagger.js');
 swagger(app);
 
 //========= Error Handlers ==========
-app.use((_req, res) => res.status(404).send({ message: 'Not found' }));
+app.use((_req, res) => res.status(404).json('Route not found, try another method?'));
+
 app.use((error, _req, res, _next) => {
-  console.log('[SERVER ERROR]', error.message);
-  res.status(error.status || 500);
-  res.send({ message: error.message });
+  console.log('[SERVER ERROR]', error);
+  res.status(error.status || 500).json(error.message);
 });
 
 //===== Listen on port #### =====

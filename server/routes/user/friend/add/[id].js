@@ -45,6 +45,8 @@
  */
 
 const joi = require('joi');
+const ObjectId = require('mongoose').Types.ObjectId;
+
 const { UserModel } = require('../../../../models/User');
 
 const { joiValidate, InformationTypes } = require('../../../../middleware/validation');
@@ -57,6 +59,8 @@ module.exports.post = [
 
     let user = await UserModel.findOne({ _id: req.apiUserId }).select('contacts pendingContacts');
     let friend = await UserModel.findOne({ _id: req.params.id }).select('contacts pendingContacts');
+    console.log('aa', user, friend);
+
     if (!friend) return res.status(404).json('User not found');
 
     if (user.contacts.includes(req.params.id)) return res.status(409).json('Already friends');

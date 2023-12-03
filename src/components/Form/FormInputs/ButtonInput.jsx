@@ -5,7 +5,7 @@ export default function InputField({
   styles,
   width = 'w-60',
   btnText,
-  btnBG = 'bg-gray-100',
+  btnBG = 'bg-neutral-100',
   btnColor,
   ...rest
 }) {
@@ -14,11 +14,11 @@ export default function InputField({
       {({ register, formState: { errors } }) => {
         return (
           <div className={styles}>
-            <div className="mb-6 mt-2 flex flex-row text-center">
+            <div className={`mb-6 mt-2 flex flex-row text-center ${width}`}>
               <input
                 {...rest}
                 {...register(name, rules)}
-                className={`h-10 rounded-l border pl-1 shadow-inner shadow-slate-200 ${width} ${
+                className={`h-10 w-full rounded-l border pl-1 shadow-inner shadow-slate-200 ${
                   errors[name] ? 'border-2 border-red-600' : 'border-slate-200'
                 }`}
               />

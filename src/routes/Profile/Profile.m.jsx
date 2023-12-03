@@ -73,7 +73,7 @@ export default function ProfileMobile() {
         <TopBar backBtnLable="Profile" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
 
         <section
-          className="h-52 rounded-b bg-gray-700 bg-cover bg-center shadow-md"
+          className="h-52 rounded-b bg-neutral-700 bg-cover bg-center shadow-md"
           style={{
             backgroundImage: userInfo?.background ? `url('http://localhost:3030/recourse/${userInfo?.background}')` : '',
           }}>
@@ -110,8 +110,8 @@ export default function ProfileMobile() {
               </div>
             </div>
           </div>
-          <section className="overflow-y-auto col-span-1 ">
-            <div className="pl-10 pr-10 w-auto">
+          <section className="col-span-1 overflow-y-auto ">
+            <div className="w-auto px-10">
               {userInfo?.biography && (
                 <>
                   <h3 className="block font-semibold">Biography</h3>

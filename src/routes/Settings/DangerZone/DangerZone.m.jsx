@@ -36,7 +36,7 @@ export default function DangerZoneMobile() {
         <TopBar backBtnLable="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
       </div>
       <div className="px-10 py-8">
-        <button onClick={() => navigate('/user/login')} className=" mb-4 flex flex-row rounded text-lg">
+        <button onClick={() => navigate('/login')} className=" mb-4 flex flex-row rounded text-lg">
           <span className="material-symbols-outlined mr-1.5 align-bottom text-[27px]">move_item</span>Log out
         </button>
         <hr />

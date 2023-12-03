@@ -1,84 +1,64 @@
 import { useEffect, useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 
 import Layout from '@layout';
 import { useFetch } from '@utils/useFetch';
-import { useUpload } from '@utils/useUpload';
+
+import SeparatedList from './SeparatedList';
+
+const ChatType = Object.freeze({
+  Direct: 'Direct',
+  Group: 'Group',
+});
 
 export default function ChatList() {
-  const [count, setCount] = useState(0);
-  const [message, setMessage] = useState('Loading...');
-  const [progress, setProgress] = useState(0);
-  const [image, setImage] = useState({ id: null, key: null, mimetype: null });
+  const [messageList, setMessageList] = useState({});
+  const [currentList, setCurrentList] = useState(ChatType.Direct);
+
+  let { id } = useParams();
 
   useEffect(() => {
-    useFetch({ url: '' }).then((data) => setMessage(data.message));
+    useFetch({ url: 'conversation/list' }).then(({ message }) => setMessageList(message));
   }, []);
 
-  function readFile(file) {
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (event) => {
-      useUpload({
-        data: event.target.result.split(';base64,').pop(),
-        name: file.name,
-        mimetype: file.type,
-        setProgress,
-      }).then((data) => setImage(data));
-    };
-  }
+  useEffect(() => {
+    const isGroupOpened = messageList?.group?.find((chat) => chat._id == id);
+    if (isGroupOpened) setCurrentList(ChatType.Group);
+  }, [id, messageList]);
 
   return (
     <Layout
       left={
-        <>
-          <h1>index</h1>
-          <p>{message.message}</p>
-          <h1>ChatList</h1>
-          <div className="card">
-            <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
+        <div className="chats flex flex-col">
+          <div className="my-2 flex w-full justify-evenly border-2">
+            <button
+              className={`material-symbols-outlined p-2 ${currentList === ChatType.Direct ? 'bg-neutral-200' : ''}`}
+              onClick={() => setCurrentList(ChatType.Direct)}>
+              chat_bubble
+            </button>
+            <button
+              className={`material-symbols-outlined p-2 ${currentList === ChatType.Group ? 'bg-neutral-200' : ''}`}
+              onClick={() => setCurrentList(ChatType.Group)}>
+              forum
+            </button>
           </div>
-          <div className="chats flex flex-col">
-            <Link className="chat" to={`/chat`}>
-              no chat
-            </Link>
-            <Link className="chat" to={`/chat/1`}>
-              go to <span className="material-icons">chat_bubble</span>
-            </Link>
-            <Link className="chat" to={`/chat/2`}>
-              go to <span className="material-icons">chat_bubble</span>
-            </Link>
-            <Link className="chat" to={`/chat/3`}>
-              go to <span className="material-icons">chat_bubble</span>
-            </Link>
-            <Link className="chat" to={`/chat/4`}>
-              go to <span className="material-icons">chat_bubble</span>
-            </Link>
-            <Link className="chat" to={`/chat/5`}>
-              go to <span className="material-icons">chat_bubble</span>
-            </Link>
-            <br />
-            <br />
-            <br />
-            <a href="http://localhost:3030/api-docs/#/" target="_blank" rel="noreferrer">
-              API Documentation
-            </a>
-            <br />
-            <br />
-            <br />
-            <br />
-            <input type="file" onChange={(event) => readFile(event.target.files[0] || null)} />
-            <br />
-            <progress id="file" value={progress} max="100">
-              {progress}%
-            </progress>
-            {(image?.mimetype?.includes('image') || image?.mimetype?.includes('video')) && image?.key && (
-              <img src={`http://localhost:3030/recourse/${image?.key}?size=250`} alt="" />
-            )}
-          </div>
-        </>
+
+          {currentList === ChatType.Direct && <SeparatedList list={messageList.direct} />}
+          {currentList === ChatType.Group && <SeparatedList list={messageList.group} />}
+
+          <Link className="mt-10" to={`/chat`}>
+            no chat
+          </Link>
+          <Link to={`/chat/1`}>
+            go to <span className="material-icons">chat_bubble</span>
+          </Link>
+          <Link to={`/chat/2`}>
+            go to <span className="material-icons">chat_bubble</span>
+          </Link>
+          <a href="http://localhost:3030/api-docs/#/" target="_blank" rel="noreferrer" className="mt-10">
+            API Documentation
+          </a>
+        </div>
       }
       right={<Outlet />}
     />

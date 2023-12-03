@@ -29,3 +29,9 @@
   color: blue;
   text-decoration: underline;
 }
+
+@layer components {
+  .btn {
+    @apply ml-auto mr-0 flex max-h-max  max-w-max  items-center justify-center whitespace-nowrap rounded border border-neutral-500 bg-transparent px-2 py-1 font-bold text-neutral-500 hover:border-neutral-800 hover:shadow-lg focus:outline-none focus:ring;
+  }
+}

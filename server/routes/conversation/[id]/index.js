@@ -92,7 +92,7 @@ const { isObjectID } = require('../../../utils');
 const { ConversationModel } = require('../../../models/Conversation');
 const { UserModel } = require('../../../models/User');
 const { MessageModel } = require('../../../models/Message');
-const { ParticipantModel } = require('../../../models/Participant');
+// const { ParticipantModel } = require('../../../models/Participant');
 
 module.exports.get = [
   joiValidate({ page: joi.number().min(1) }, InformationTypes.QUERY),
@@ -128,8 +128,47 @@ module.exports.get = [
                 $expr: { $in: ['$user', '$$users'] },
               },
             },
+            { $project: { _id: 0, __v: 0, conversation: 0 } },
           ],
           as: 'participants',
+        },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'users',
+          foreignField: '_id',
+          pipeline: [{ $project: { _id: 1, picture: 1, handle: 1, name: 1 } }],
+          as: 'users',
+        },
+      },
+      {
+        $addFields: {
+          participants: {
+            $map: {
+              input: '$participants',
+              as: 'participant',
+              in: {
+                $mergeObjects: [
+                  '$$participant',
+                  {
+                    user: {
+                      $arrayElemAt: [
+                        {
+                          $filter: {
+                            input: '$users',
+                            as: 'user',
+                            cond: { $eq: ['$$user._id', '$$participant.user'] },
+                          },
+                        },
+                        0,
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          },
         },
       },
       {
@@ -151,13 +190,27 @@ module.exports.get = [
           from: 'messages',
           localField: 'messages',
           foreignField: '_id',
+          pipeline: [
+            {
+              $lookup: {
+                from: 'users',
+                localField: 'author',
+                foreignField: '_id',
+                pipeline: [{ $project: { _id: 1, picture: 1, handle: 1, name: 1 } }],
+                as: 'author',
+              },
+            },
+            {
+              $unwind: '$author',
+            },
+          ],
           as: 'messages',
         },
       },
     ]);
 
-    await ConversationModel.updateOne({ id: conversation.id }, { hideFromHistory: false }, { timestamps: false });
-    res.status(200).json(conversation);
+    await ConversationModel.updateOne({ id: conversation?.id }, { hideFromHistory: false }, { timestamps: false });
+    res.status(200).json(conversation || {});
   },
 ];
 
@@ -168,30 +221,14 @@ module.exports.post = [
   async (req, res) => {
     if (req.params.id === req.apiUserId) return res.status(418).json('Go get some friends...');
 
-    const [conversation] = await ConversationModel.aggregate([
-      {
-        $match: {
-          $or: [
-            {
-              type: ConversationType.Direct,
-              users: { $all: [ObjectId(req.params.id), ObjectId(req.apiUserId)], $size: 2 },
-            },
-            {
-              _id: ObjectId(req.params.id),
-              type: ConversationType.Group,
-              users: { $all: [ObjectId(req.apiUserId)] },
-            },
-          ],
-        },
-      },
-    ]);
+    const conversation = await ConversationModel.findOne({ 'participants.user': { $in: [ObjectId(req.apiUserId)] } });
 
     if (conversation) {
       const newMessage = await MessageModel.create({ author: req.apiUserId, body: req.body.message });
-      await ConversationModel.updateOne(
-        { id: conversation.id },
-        { $push: { messages: { $each: [newMessage.id], $position: 0 } }, hideFromHistory: false }
-      );
+      await conversation.updateOne({
+        $push: { messages: { $each: [newMessage.id], $position: 0 } },
+        hideFromHistory: false,
+      });
 
       return res.status(200).json();
     }
@@ -200,7 +237,10 @@ module.exports.post = [
     const targetUser = await UserModel.findOne({ _id: req.params.id });
     if (targetUser) {
       const newMessage = await MessageModel.create({ author: req.apiUserId, body: req.body.message });
-      await ConversationModel.create({ users: [req.apiUserId, req.params.id], messages: [newMessage.id] });
+      await ConversationModel.create({
+        participants: [{ user: ObjectId(req.apiUserId) }, { user: ObjectId(req.params.id) }],
+        messages: [newMessage.id],
+      });
 
       return res.status(201).json();
     } else {
@@ -212,32 +252,13 @@ module.exports.post = [
 module.exports.delete = [
   joiValidate({ id: joi.custom(isObjectID) }, InformationTypes.PARAMS),
   async (req, res) => {
-    const [conversation] = await ConversationModel.aggregate([
-      {
-        $match: {
-          $or: [
-            {
-              type: ConversationType.Direct,
-              users: { $all: [ObjectId(req.params.id), ObjectId(req.apiUserId)], $size: 2 },
-            },
-            {
-              _id: ObjectId(req.params.id),
-              type: ConversationType.Group,
-              users: { $all: [ObjectId(req.apiUserId)] },
-            },
-          ],
-        },
-      },
-    ]);
+    const conversation = await ConversationModel.findOne({ 'participants.user': { $in: [ObjectId(req.apiUserId)] } });
 
     if (conversation.type == ConversationType.Group) {
-      const groupMember = await ParticipantModel.findOne({ user: req.apiUserId, conversation: conversation._id });
-
-      if (!groupMember.groupOwner) return res.status(403).json('Only the group owner can delete the group.');
+      const isOwner = conversation.participants.find((user) => user.groupOwner);
+      if (!isOwner) return res.status(403).json('Only the group owner can delete the group.');
     }
-
     await ConversationModel.deleteOne({ _id: conversation._id });
-
     res.status(200).json();
   },
 ];

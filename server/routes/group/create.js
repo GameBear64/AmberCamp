@@ -41,7 +41,7 @@ const { isObjectID } = require('../../utils');
 const { ConversationType } = require('../../enums.js');
 
 const { ConversationModel } = require('../../models/Conversation');
-const { ParticipantModel } = require('../../models/Participant');
+// const { ParticipantModel } = require('../../models/Participant');
 
 module.exports.post = [
   allowNoBodyChanges(),
@@ -52,15 +52,15 @@ module.exports.post = [
     users: joi.array().items(joi.custom(isObjectID)).min(1).required(),
   }),
   async (req, res) => {
-    const groupMember = await ParticipantModel.findOne({ user: req.apiUserId, conversation: req.params.id });
-    if (!groupMember.groupOwner) return res.status(403).json('Only the group owner can edit the group.');
+    // const groupMember = await ParticipantModel.findOne({ user: req.apiUserId, conversation: req.params.id });
+    // if (!groupMember.groupOwner) return res.status(403).json('Only the group owner can edit the group.');
 
-    await ConversationModel.create({
-      type: ConversationType.Group,
-      name: req.body.name,
-      icon: req.body.icon,
-      users: { $each: req.body.users },
-    });
+    // await ConversationModel.create({
+    //   type: ConversationType.Group,
+    //   name: req.body.name,
+    //   icon: req.body.icon,
+    //   users: { $each: req.body.users },
+    // });
 
     return res.status(200).json();
   },

@@ -2,7 +2,7 @@ import { errorSnackBar } from '../../../utils/snackbars';
 import ConnectForm from '../ConnectForm';
 import ButtonInput from '../Inputs/ButtonInput';
 
-export default function TagSelector({ name, rules = {}, styles, ...rest }) {
+export default function TagSelector({ name, rules = {}, styles, label, ...rest }) {
   return (
     <ConnectForm>
       {({ register, setValue, watch }) => {
@@ -10,9 +10,9 @@ export default function TagSelector({ name, rules = {}, styles, ...rest }) {
         const tags = watch(name, []);
 
         return (
-          <>
+          <div>
             <div className={styles}>
-              <label className="text-left">Tags</label>
+              <label className="text-left font-semibold">{label}</label>
               <ButtonInput
                 {...rest}
                 label="Tags"
@@ -43,7 +43,7 @@ export default function TagSelector({ name, rules = {}, styles, ...rest }) {
                 </div>
               ))}
             </div>
-          </>
+          </div>
         );
       }}
     </ConnectForm>

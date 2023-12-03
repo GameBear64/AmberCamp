@@ -4,6 +4,9 @@ import { Link, useParams } from 'react-router-dom';
 import ButtonInput from '@components/Form/Inputs/ButtonInput';
 import resizeScreen from '@utils/resizeScreen';
 import socket from '@utils/socket';
+import { useFetch } from '@utils/useFetch';
+
+import { ChatLoader } from './Loader';
 
 export default function ChatList() {
   const screenSize = resizeScreen();
@@ -19,9 +22,15 @@ export default function ChatList() {
     return () => socket.off('message');
   }, []);
 
+  useEffect(() => {
+    useFetch({ url: `conversation/${id}` }).then((data) => setChatLog(data.message.messages));
+  }, [id]);
+
   const sendMessage = (message) => {
     socket.emit('message', message);
   };
+
+  if (id == 2) return <ChatLoader />;
 
   return (
     <div className="flex h-full flex-col">
@@ -33,10 +42,10 @@ export default function ChatList() {
       )}
 
       <ul className="grow">
-        {chatLog.map(({ user, message }, i) => (
-          <li key={i}>
-            <strong className="mr-3">{user}</strong>
-            {message}
+        {chatLog?.map((msg) => (
+          <li key={msg._id}>
+            <strong className="mr-3">{msg.author.name || msg.author.handle}</strong>
+            {msg.body}
           </li>
         ))}
       </ul>

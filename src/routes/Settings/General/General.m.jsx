@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@components/Form/Inputs/Button';
+import SettingsLayout from '@components/Layout/SettingsLayout';
 import Form from '@form';
 import Input from '@form-inputs/Input';
 import MediaSelect from '@form-inputs/MediaSelect';
@@ -77,46 +78,40 @@ export default function General() {
 
   return (
     <>
-      <TopBar backBtnLable="General" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
-      <div className="p-10 my-3">
-        <Form
-          defaultValues={userInfo}
-          onSubmit={(data) => {
-            updateUserInfo(data);
-          }}
-          onlyDirty>
-          <div className="flex flex-col gap-2">
-            <div>
-              <MediaSelect styles="mb-5" width="w-80" label="Background Picture" name="background" />
-              <MediaSelect styles="mb-5" width="w-80" label="Profile Picture" name="picture" />
-              <Input
-                rules={{
-                  required: 'This field is required.',
-                  minLength: {
-                    value: 3,
-                    message: 'Username must be at least 3 characters!',
-                  },
-                  maxLength: {
-                    value: 30,
-                    message: "Username can't be longer than 3 characters!",
-                  },
-                }}
-                styles="mb-5 mt-2"
-                width="w-80"
-                type="text"
-                label="Username"
-                name="name"
-              />
-              <TextareaField styles="mt-2" rows="7" cols="30" label="Biography" name="biography" />
-            </div>
-            <div className="max-w-md">
-              <TagSelector styles="mb-5 mt-2" width="w-72" type="text" btnText="+Add" name="tags" shouldClear />
-              <SelectInput name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
-            </div>
-          </div>
+      <TopBar backBtnLabel="General" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
+      <Form
+        defaultValues={userInfo}
+        onSubmit={(data) => {
+          updateUserInfo(data);
+        }}
+        onlyDirty>
+        <SettingsLayout>
+          <MediaSelect styles="mb-5" width="w-80" label="Background Picture" name="background" />
+          <MediaSelect styles="mb-5" width="w-80" label="Profile Picture" name="picture" />
+          <Input
+            rules={{
+              required: 'This field is required.',
+              minLength: {
+                value: 3,
+                message: 'Username must be at least 3 characters!',
+              },
+              maxLength: {
+                value: 30,
+                message: "Username can't be longer than 3 characters!",
+              },
+            }}
+            styles="mb-5 mt-2"
+            width="w-80"
+            type="text"
+            label="Username"
+            name="name"
+          />
+          <TextareaField styles="mt-2" rows="7" cols="30" label="Biography" name="biography" />
+          <TagSelector styles="mb-5 mt-2" width="w-72" type="text" btnText="+Add" name="tags" shouldClear label="Profile Tags" />
+          <SelectInput name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
           <Button type="submit" label="Save" />
-        </Form>
-      </div>
+        </SettingsLayout>
+      </Form>
     </>
   );
 }

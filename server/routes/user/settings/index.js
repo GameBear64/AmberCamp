@@ -76,9 +76,7 @@ module.exports.patch = [
     description: joi.string().optional(),
     picture: joi.string().optional(),
     background: joi.string().optional(),
-    tags: joi.array().max(6).optional().messages({
-      'array.max': 'Only 6 tags allowed!',
-    }),
+    tags: joi.array().max(6).optional().messages({ 'array.max': 'Only 6 tags allowed!' }),
     timezone: joi.string().valid(...Object.values(TimeZone)),
     theme: joi.string().valid(...Object.values(Theme)),
     accent: joi.string().length(6),

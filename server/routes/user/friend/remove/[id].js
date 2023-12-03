@@ -59,16 +59,13 @@ module.exports.post = [
     let friend = await UserModel.findOne({ _id: req.params.id }).select('contacts pendingContacts');
     if (!friend) return res.status(404).json('User not found');
 
-    if (!user.contacts.includes(req.params.id)) return res.status(409).json('Can not remove someone not in your contacts');
+    if (!(user.contacts.includes(req.params.id) || friend.pendingContacts.includes(req.apiUserId)))
+      return res.status(409).json('Can not remove someone not in your contacts');
 
-    if (user.pendingContacts.includes(req.userInSession)) {
-      await friend.updateOne({ $pull: { pendingContacts: req.apiUserId } }, { timestamps: false });
-    } else {
-      //current user
-      await user.updateOne({ $pull: { contacts: req.params.id } }, { timestamps: false });
-      //user's friend
-      await friend.updateOne({ $pull: { contacts: req.apiUserId } }, { timestamps: false });
-    }
+    //current user
+    await user.updateOne({ $pull: { contacts: req.params.id, pendingContacts: req.params.id } }, { timestamps: false });
+    //user's friend
+    await friend.updateOne({ $pull: { contacts: req.apiUserId, pendingContacts: req.apiUserId } }, { timestamps: false });
 
     return res.status(200).json();
   },

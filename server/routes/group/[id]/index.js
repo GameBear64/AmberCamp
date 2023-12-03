@@ -42,7 +42,7 @@ const { joiValidate, allowNoBodyChanges, InformationTypes } = require('../../../
 const { isObjectID } = require('../../../utils');
 
 const { ConversationModel } = require('../../../models/Conversation');
-const { ParticipantModel } = require('../../../models/Participant');
+// const { ParticipantModel } = require('../../../models/Participant');
 
 module.exports.patch = [
   allowNoBodyChanges(),
@@ -52,10 +52,10 @@ module.exports.patch = [
     icon: joi.string().optional(),
   }),
   async (req, res) => {
-    const groupMember = await ParticipantModel.findOne({ user: req.apiUserId, conversation: req.params.id });
-    if (!groupMember.groupOwner) return res.status(403).json('Only the group owner can edit the group.');
+    // const groupMember = await ParticipantModel.findOne({ user: req.apiUserId, conversation: req.params.id });
+    // if (!groupMember.groupOwner) return res.status(403).json('Only the group owner can edit the group.');
 
-    await ConversationModel.updateOne({ _id: req.params.id }, { ...req.body });
+    // await ConversationModel.updateOne({ _id: req.params.id }, { ...req.body });
 
     return res.status(200).json();
   },

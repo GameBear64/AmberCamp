@@ -120,7 +120,7 @@ export default function Preferences() {
           changeUserTheme();
           console.log(userPreferences);
         }}
-        className="mx-10 my-4 rounded bg-gray-200 p-1 px-3 font-semibold">
+        className="mx-10 my-4 rounded bg-neutral-200 p-1 px-3 font-semibold">
         Save
       </button>
     </>

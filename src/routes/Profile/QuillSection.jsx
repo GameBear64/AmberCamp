@@ -12,7 +12,7 @@ export default function QuillSection({ userId, value, setValue }) {
   }, [value]);
 
   return (
-    <div className="flex flex-row gap-4">
+    <div className="relative mt-5">
       <div className="w-full">
         {disable ? (
           <div className="quill">
@@ -42,7 +42,7 @@ export default function QuillSection({ userId, value, setValue }) {
         )}
       </div>
       {userId === getCurrentUserId() && (
-        <div className="text-right">
+        <div className="absolute -top-3 right-2 text-right">
           <span
             onClick={() => {
               if (!disable) {
@@ -50,8 +50,8 @@ export default function QuillSection({ userId, value, setValue }) {
               }
               setDisable(!disable);
             }}
-            className="material-symbols-outlined cursor-pointer rounded p-1.5 mt-2 mr-5 shadow-md bg-orange-300">
-            edit
+            className="material-symbols-outlined cursor-pointer rounded bg-orange-300 p-1.5 shadow-md">
+            {disable ? 'edit' : 'save'}
           </span>
         </div>
       )}

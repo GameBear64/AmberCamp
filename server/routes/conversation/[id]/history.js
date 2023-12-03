@@ -83,6 +83,20 @@ module.exports.get = [
           from: 'messages',
           localField: 'messages',
           foreignField: '_id',
+          pipeline: [
+            {
+              $lookup: {
+                from: 'users',
+                localField: 'author',
+                foreignField: '_id',
+                pipeline: [{ $project: { _id: 1, picture: 1, handle: 1, name: 1 } }],
+                as: 'author',
+              },
+            },
+            {
+              $unwind: '$author',
+            },
+          ],
           as: 'messages',
         },
       },

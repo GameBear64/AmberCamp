@@ -74,7 +74,7 @@ const { joiValidate, allowNoBodyChanges, InformationTypes } = require('../../../
 const { isObjectID } = require('../../../utils');
 
 const { ConversationModel } = require('../../../models/Conversation');
-const { ParticipantModel } = require('../../../models/Participant');
+// const { ParticipantModel } = require('../../../models/Participant');
 
 module.exports.patch = [
   allowNoBodyChanges(),
@@ -90,12 +90,12 @@ module.exports.patch = [
     color: joi.string().optional(),
   }),
   async (req, res) => {
-    const groupMember = await ParticipantModel.findOne({ user: req.apiUserId, conversation: req.params.id });
-    if (!(groupMember.groupOwner || req.params.participant == req.apiUserId)) {
-      return res.status(403).json('You do not have permission to do this.');
-    }
+    // const groupMember = await ParticipantModel.findOne({ user: req.apiUserId, conversation: req.params.id });
+    // if (!(groupMember.groupOwner || req.params.participant == req.apiUserId)) {
+    //   return res.status(403).json('You do not have permission to do this.');
+    // }
 
-    await ParticipantModel.updateOne({ _id: req.params.id }, { ...req.body });
+    // await ParticipantModel.updateOne({ _id: req.params.id }, { ...req.body });
     return res.status(200).json();
   },
 ];
@@ -110,10 +110,10 @@ module.exports.put = [
   ),
   async (req, res) => {
     // direct messages do not have group owners so this guards against dms as well
-    const groupMember = await ParticipantModel.findOne({ user: req.apiUserId, conversation: req.params.id });
-    if (groupMember.groupOwner) return res.status(403).json('You do not have permission to do this.');
+    // const groupMember = await ParticipantModel.findOne({ user: req.apiUserId, conversation: req.params.id });
+    // if (groupMember.groupOwner) return res.status(403).json('You do not have permission to do this.');
 
-    await ConversationModel.updateOne({ _id: req.params.id }, { $push: { users: req.params.participant } });
+    // await ConversationModel.updateOne({ _id: req.params.id }, { $push: { users: req.params.participant } });
 
     return res.status(200).json();
   },
@@ -128,12 +128,12 @@ module.exports.delete = [
     InformationTypes.PARAMS
   ),
   async (req, res) => {
-    const groupMember = await ParticipantModel.findOne({ user: req.apiUserId, conversation: req.params.id });
-    if (!(groupMember.groupOwner || req.params.participant == req.apiUserId)) {
-      return res.status(403).json('You do not have permission to do this.');
-    }
+    // const groupMember = await ParticipantModel.findOne({ user: req.apiUserId, conversation: req.params.id });
+    // if (!(groupMember.groupOwner || req.params.participant == req.apiUserId)) {
+    //   return res.status(403).json('You do not have permission to do this.');
+    // }
 
-    await ConversationModel.updateOne({ _id: req.params.id }, { $pull: { users: req.params.participant } });
+    // await ConversationModel.updateOne({ _id: req.params.id }, { $pull: { users: req.params.participant } });
 
     return res.status(200).json();
   },

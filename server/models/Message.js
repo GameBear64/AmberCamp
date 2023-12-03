@@ -30,7 +30,7 @@ const messageSchema = new mongoose.Schema(
 
 messageSchema.pre('deleteOne', async function (next) {
   const doc = await this.model.findOne(this.getQuery());
-  await MediaModel.deleteMany({ _id: { $in: doc.flag } });
+  await MediaModel.deleteMany({ _id: { $in: doc } });
 
   next();
 });

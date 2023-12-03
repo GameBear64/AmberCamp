@@ -41,7 +41,7 @@ export default function Register() {
                   width="w-full"
                   label="Handle"
                   styles="col-span-2"
-                  styleInput="bg-gray-200 rounded p-5 text-base"
+                  styleInput="bg-neutral-200 rounded p-5 text-base"
                 />
                 <InputField
                   type="email"
@@ -50,7 +50,7 @@ export default function Register() {
                   width="w-full"
                   label="Email"
                   styles="col-span-2"
-                  styleInput="bg-gray-200 rounded p-5 text-base"
+                  styleInput="bg-neutral-200 rounded p-5 text-base"
                 />
               </div>
               <div className="flex flex-col text-left font-semibold">
@@ -62,7 +62,7 @@ export default function Register() {
                     name="password"
                     width="w-full"
                     styles="col-span-2"
-                    styleInput="bg-gray-200 rounded p-5 text-base"
+                    styleInput="bg-neutral-200 rounded p-5 text-base"
                   />
                   <InputField
                     type="password"
@@ -70,21 +70,21 @@ export default function Register() {
                     name="confirmPassword"
                     width="w-full"
                     styles="col-span-2"
-                    styleInput="bg-gray-200 rounded p-5 text-base"
+                    styleInput="bg-neutral-200 rounded p-5 text-base"
                   />
                 </div>
               </div>
               <button className="mt-5 w-full rounded-md border-2 border-solid bg-orange-700 p-2 text-lg font-semibold uppercase text-white">
                 Register
               </button>
-              <Link to={'/user/login'} className="float-right mt-2 font-medium text-blue-700 underline">
+              <Link to={'/login'} className="float-right mt-2 font-medium text-blue-700 underline">
                 Already have an account?
               </Link>
             </Form>
           </div>
         </div>
       </div>
-      <div className="flex h-screen items-center justify-center bg-gray-200 text-center">
+      <div className="flex h-screen items-center justify-center bg-neutral-200 text-center">
         <div>
           <img className="object-contain" src="../bam.png" />
           <h2 className="pb-8 text-4xl font-medium">Amber Camp</h2>

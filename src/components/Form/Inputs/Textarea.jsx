@@ -1,7 +1,7 @@
 export default function Textarea({ innerRef, label, action, invalid = false, ...rest }) {
   return (
     <div className="flex flex-col">
-      <label className="text-left">{label}</label>
+      <label className="text-left font-semibold">{label}</label>
       <div className="mt-1.5">
         <textarea
           ref={innerRef}
