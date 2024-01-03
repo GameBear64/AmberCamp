@@ -4,6 +4,8 @@ import { Link, Outlet, useParams } from 'react-router-dom';
 import Layout from '@layout';
 import { useFetch } from '@utils/useFetch';
 
+import Icon from '../../components/Icon';
+
 import SeparatedList from './SeparatedList';
 
 const ChatType = Object.freeze({
@@ -29,20 +31,27 @@ export default function ChatList() {
   return (
     <Layout
       left={
-        <div className="chats flex flex-col">
-          <div className="my-2 flex w-full justify-evenly border-2">
+        <div className="chats mx-2 flex flex-col">
+          <div className="mb-2 flex w-full justify-evenly ">
             <button
-              className={`material-symbols-outlined p-2 ${currentList === ChatType.Direct ? 'bg-neutral-200' : ''}`}
+              className={`m-2 flex justify-center text-[16px] font-semibold ${
+                currentList === ChatType.Direct && 'border-b-[3px] border-yellow-400'
+              }`}
               onClick={() => setCurrentList(ChatType.Direct)}>
-              chat_bubble
+              Messages
             </button>
             <button
-              className={`material-symbols-outlined p-2 ${currentList === ChatType.Group ? 'bg-neutral-200' : ''}`}
+              className={`m-2 flex justify-center text-[16px] font-semibold ${
+                currentList === ChatType.Group && 'border-b-[3px] border-yellow-400'
+              }`}
               onClick={() => setCurrentList(ChatType.Group)}>
-              forum
+              Groups
             </button>
           </div>
-
+          <input
+            className="my-2 h-10 w-full rounded-lg border-2 border-gray-300 bg-white px-5 text-sm focus:outline-none"
+            placeholder="Search"
+          />
           {currentList === ChatType.Direct && <SeparatedList list={messageList.direct} />}
           {currentList === ChatType.Group && <SeparatedList list={messageList.group} />}
 
@@ -50,10 +59,10 @@ export default function ChatList() {
             no chat
           </Link>
           <Link to={`/chat/1`}>
-            go to <span className="material-icons">chat_bubble</span>
+            go to <Icon icon="chat_bubble" />
           </Link>
           <Link to={`/chat/2`}>
-            go to <span className="material-icons">chat_bubble</span>
+            go to <Icon icon="chat_bubble" />
           </Link>
           <a href="http://localhost:3030/api-docs/#/" target="_blank" rel="noreferrer" className="mt-10">
             API Documentation

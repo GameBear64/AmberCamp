@@ -1,7 +1,7 @@
 import ConnectForm from '../ConnectForm';
 import Input from '../Inputs/Input';
 
-export default function InputField({ name, rules = {}, styles, styleInput, ...rest }) {
+export default function InputField({ name, rules = {}, styles, styleInput = 'input-primary', ...rest }) {
   return (
     <ConnectForm>
       {({ register, formState: { errors } }) => {

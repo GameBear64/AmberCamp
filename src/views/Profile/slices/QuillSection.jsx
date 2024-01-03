@@ -3,6 +3,8 @@ import ReactQuill from 'react-quill';
 
 import { getCurrentUserId, htmlDecode } from '@utils/utils';
 
+import Icon from '../../../components/Icon';
+
 export default function QuillSection({ userId, value, setValue }) {
   const [text, setText] = useState('');
   const [disable, setDisable] = useState(true);
@@ -42,18 +44,16 @@ export default function QuillSection({ userId, value, setValue }) {
         )}
       </div>
       {userId === getCurrentUserId() && (
-        <div className="absolute -top-3 right-2 text-right">
-          <span
-            onClick={() => {
-              if (!disable) {
-                setValue(text);
-              }
-              setDisable(!disable);
-            }}
-            className="material-symbols-outlined cursor-pointer rounded bg-orange-300 p-1.5 shadow-md">
-            {disable ? 'edit' : 'save'}
-          </span>
-        </div>
+        <Icon
+          icon={disable ? 'edit' : 'save'}
+          styles="rounded absolute -top-3 right-2 text-right bg-slate-200 text-black p-1.5 shadow-primary"
+          action={() => {
+            if (!disable) {
+              setValue(text);
+            }
+            setDisable(!disable);
+          }}
+        />
       )}
     </div>
   );

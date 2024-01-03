@@ -1,32 +1,25 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+import { getCurrentUserId } from '../../utils/utils';
 
 export default function NavBar() {
-  const navigate = useNavigate();
-
   return (
-    <div className="sticky bottom-0">
-      <div className="h-full w-full rounded bg-white px-4 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
-        <div className="flex w-full max-w-md flex-row justify-around pt-2 text-center">
-          <button
-            onClick={() => navigate('/chat')}
-            className="material-symbols-outlined rounded p-1 text-[26px] transition duration-0 hover:shadow-md hover:duration-500">
-            forum
-          </button>
-          <button
-            onClick={() => navigate(`/contacts`)}
-            className="material-symbols-outlined rounded p-1 text-[26px] transition duration-0 hover:shadow-md hover:duration-500">
-            groups
-          </button>
-          <button className="material-symbols-outlined rounded p-1 text-[26px] transition duration-0 hover:shadow-md hover:duration-500">
-            device_unknown
-          </button>
-          <button
-            onClick={() => navigate(`/settings`)}
-            className="material-symbols-outlined rounded p-1 text-[26px] transition duration-0 hover:shadow-md hover:duration-500">
-            settings
-          </button>
-        </div>
+    <div className="flex h-screen flex-col justify-between overflow-hidden border-r-2 border-gray-300 p-2">
+      <div className="flex flex-col gap-2 text-center">
+        <Link to={`/contacts/${getCurrentUserId()}`} className="material-symbols-outlined nav-btn">
+          account_circle
+        </Link>
+        <Link to="/chat" className="material-symbols-outlined nav-btn">
+          forum
+        </Link>
+        <Link to={`/contacts/${getCurrentUserId()}`} className="material-symbols-outlined nav-btn">
+          group
+        </Link>
+        <Link className="material-symbols-outlined nav-btn ">quiz</Link>
       </div>
+      <Link to="/settings" className="material-symbols-outlined nav-btn">
+        settings
+      </Link>
     </div>
   );
 }

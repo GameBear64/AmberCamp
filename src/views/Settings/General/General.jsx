@@ -90,14 +90,13 @@ export default function General() {
             },
           }}
           width="w-80"
-          type="text"
           label="Username"
-          name="name"
+          name="handle"
         />
         <TextareaField rows="7" cols="30" label="Biography" name="biography" />
         <TagSelector width="w-80" type="text" btnText="+Add" name="tags" shouldClear label="Profile Tags" />
         <SelectInput name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
-        <Button type="submit" label="Save" />
+        <Button label="Save" />
       </SettingsLayout>
     </Form>
   );

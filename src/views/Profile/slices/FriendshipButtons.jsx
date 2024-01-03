@@ -60,38 +60,36 @@ export default function FriendshipButtons({ userInfo, setUserInfo }) {
     return (
       <div className="float-left mb-4 flex w-full flex-wrap gap-2 font-semibold ">
         {userInfo.status == 'Strangers' && (
-          <button className="btn border-blue-500 text-blue-500 hover:border-blue-800" onClick={add}>
+          <button className="btn-blue" onClick={add}>
             Add friend
           </button>
         )}
         {userInfo.status == 'PendingIn' && (
-          <button className="btn border-green-500 text-green-500 hover:border-green-800" onClick={add}>
+          <button className="btn-green" onClick={add}>
             Accept Request
           </button>
         )}
         {userInfo.status == 'PendingOut' && (
-          <button className="btn" onClick={cancel}>
+          <button className="btn-green" onClick={cancel}>
             Cancel Request
           </button>
         )}
         {userInfo.status == 'Friends' && (
-          <button className="btn border-green-500 text-green-500 hover:border-green-800" onClick={() => navigate(`/chat/${id}`)}>
+          <button className="btn-green" onClick={() => navigate(`/chat/${id}`)}>
             Message
           </button>
         )}
         {userInfo.status == 'Blocked' && (
-          <button className="btn border-red-500 text-red-500 hover:border-red-800" onClick={unblock}>
+          <button className="btn-red" onClick={unblock}>
             Unblock
           </button>
         )}
         {userInfo.status != 'Blocked' && (
-          <button className="btn border-red-500 text-red-500 hover:border-red-800" onClick={block}>
+          <button className="btn-red" onClick={block}>
             Block
           </button>
         )}
       </div>
     );
   }
-
-  return <></>;
 }

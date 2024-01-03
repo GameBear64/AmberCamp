@@ -1,3 +1,4 @@
+import Icon from '../../Icon';
 import ConnectForm from '../ConnectForm';
 import Input from '../Inputs/Input';
 
@@ -19,16 +20,12 @@ export default function MediaSelect({ name, rules = {}, styles, label, ...rest }
                   alt=""
                 />
                 <div className="absolute right-[2px] top-[2px] rounded-md">
-                  {/* <span className="material-symbols-outlined rounded-l-lg border-2 border-neutral-400 bg-white text-neutral-700">
-                    edit
-                  </span> */}
-                  <span
-                    className="material-symbols-outlined rounded-lg border-2 border-neutral-400 bg-white text-neutral-700"
-                    onClick={() => {
-                      setValue(name, '', { shouldDirty: true, shouldTouch: true });
-                    }}>
-                    delete
-                  </span>
+                  <Icon icon="edit" styles="rounded-lg border-2 border-neutral-400 bg-white text-neutral-700" />
+                  <Icon
+                    icon="delete"
+                    action={() => setValue(name, '', { shouldDirty: true, shouldTouch: true })}
+                    styles="rounded-lg border-2 border-neutral-400 bg-white text-neutral-700"
+                  />
                 </div>
               </div>
             ) : (

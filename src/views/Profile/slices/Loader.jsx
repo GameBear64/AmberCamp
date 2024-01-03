@@ -1,6 +1,6 @@
 import Skeleton from 'react-loading-skeleton';
 
-import Layout from '../../components/Layout/Layout';
+import Layout from '../../../components/Layout/Layout';
 
 export function NotesLoader() {
   const numberOfNotes = Array.from({ length: Math.floor(Math.random() * 6) + 1 }, (_, i) => i + 1);

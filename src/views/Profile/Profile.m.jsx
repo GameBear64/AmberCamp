@@ -13,7 +13,7 @@ import { getCurrentUserId, removeEmptyProperties } from '@utils/utils';
 
 import TopBar from '../../components/TopBar/TopBar';
 
-import QuillSection from './QuillSection';
+import QuillSection from './slices/QuillSection';
 
 export default function ProfileMobile() {
   const [userInfo, setUserInfo] = useState({});
@@ -60,12 +60,9 @@ export default function ProfileMobile() {
     getUser();
   }, [id]);
 
-  let memberDate = userInfo?.createdAt;
-  if (memberDate) {
-    memberDate = new Date(userInfo?.createdAt).toLocaleString('en-GB', {
-      dateStyle: 'short',
-    });
-  }
+  let memberDate = new Date(userInfo?.createdAt).toLocaleString('en-GB', {
+    dateStyle: 'short',
+  });
 
   return (
     <div>
@@ -96,7 +93,7 @@ export default function ProfileMobile() {
           </section>
         </section>
         <section className="flex flex-col">
-          <div className="col-span-2 mx-9 mb-10  mt-32">
+          <div className="col-span-2 mx-9 mb-10 mt-32">
             {id !== getCurrentUserId() && (
               <div className="float-left mb-4 flex w-full flex-wrap gap-2 font-semibold">
                 <button className="rounded-lg border bg-slate-50 px-2 py-1 shadow-md">Message</button>

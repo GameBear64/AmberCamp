@@ -7,7 +7,11 @@ import { errorSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 import { removeEmptyProperties } from '@utils/utils';
 
-export default function NotesSection({ id, styles, userInfo, refresh }) {
+import Icon from '../../../components/Icon';
+
+import { getUser } from './endpoints';
+
+export default function NotesSection({ id, userInfo, setUserInfo }) {
   const [editNote, setEditNote] = useState('');
   const [rotate, setRotate] = useState(false);
 
@@ -16,41 +20,41 @@ export default function NotesSection({ id, styles, userInfo, refresh }) {
       url: `user/${id}`,
       method: 'POST',
       body: removeEmptyProperties(updateObject),
-    }).then(() => refresh());
+    }).then(() => {
+      getUser(id).then((res) => setUserInfo(res.message));
+    });
   };
 
   return (
-    <div className={styles}>
+    <div className="m-10">
       <h1 className="text-2xl font-semibold">
         Notes
-        <span
-          onClick={() => {
-            setRotate(!rotate);
+        <Icon
+          icon="sort"
+          action={() => {
             updateUser({ notes: userInfo?.notes.reverse() });
+            setRotate(!rotate);
           }}
-          className={`material-symbols-outlined mb-1 ml-2 cursor-pointer align-bottom ${rotate && 'rotate-180'}`}>
-          sort
-        </span>
+          styles={`mb-1 ml-2 align-bottom ${rotate && 'rotate-180'}`}
+        />
       </h1>
       <Form
         defaultValues={{ noteField: editNote }}
         onSubmit={(data) => {
           if (!data.noteField) return errorSnackBar("Note can't be empty");
-          updateUser({ notes: [...userInfo.notes, data.noteField] });
+          updateUser({ notes: [data.noteField, ...userInfo.notes] });
           setEditNote('');
         }}>
-        <ButtonInputField name="noteField" btnText="+Add" width="w-70" />
+        <ButtonInputField name="noteField" btnText="+Add" width="w-full" />
       </Form>
       {userInfo?.notes?.map((note, i) => (
         <Notes
           key={i}
           text={note}
-          onDelete={() => {
-            updateUser({ notes: userInfo?.notes?.filter((value) => value !== note) });
-          }}
+          onDelete={() => updateUser({ notes: userInfo?.notes?.filter((value) => value !== note) })}
           onEdit={() => {
-            setEditNote(note);
             updateUser({ notes: userInfo?.notes?.filter((value) => value !== note) });
+            setEditNote(note);
           }}
         />
       ))}

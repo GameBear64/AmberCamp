@@ -7,9 +7,7 @@ export default function TopBar({ backButton, backBtnLabel, actionButton, title, 
         <span className="material-symbols-outlined mr-2 pt-1 align-bottom text-xl">{backButton}</span>
         <h1 className="text-2xl font-semibold">{backBtnLabel}</h1>
       </div>
-      <div>
-        <h1 className="text-2xl font-semibold">{title}</h1>
-      </div>
+      <h1 className="text-2xl font-semibold">{title}</h1>
       <div onClick={actionOptions}>
         <span className="material-symbols-outlined mr-2 pt-1 align-bottom text-2xl">{moreOptions}</span>
       </div>

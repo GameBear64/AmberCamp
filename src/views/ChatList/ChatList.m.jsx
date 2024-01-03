@@ -75,7 +75,7 @@ export default function ChatListMobile() {
             {progress}%
           </progress>
           {(image?.mimetype?.includes('image') || image?.mimetype?.includes('video')) && image?.key && (
-            <img src={`http://localhost:3030/recourse/${image?.key}?size=250`} alt="" />
+            <img src={`http://localhost:3030/recourse/${image?.key}?size=250`} />
           )}
         </div>
       </div>
