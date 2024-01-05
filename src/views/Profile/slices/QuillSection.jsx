@@ -5,7 +5,9 @@ import { getCurrentUserId, htmlDecode } from '@utils/utils';
 
 import Icon from '../../../components/Icon';
 
-export default function QuillSection({ userId, value, setValue }) {
+import { updateDescription } from './endpoints';
+
+export default function QuillSection({ userId, value }) {
   const [text, setText] = useState('');
   const [disable, setDisable] = useState(true);
 
@@ -47,9 +49,9 @@ export default function QuillSection({ userId, value, setValue }) {
         <Icon
           icon={disable ? 'edit' : 'save'}
           styles="rounded absolute -top-3 right-2 text-right bg-slate-200 text-black p-1.5 shadow-primary"
-          action={() => {
+          onClick={() => {
             if (!disable) {
-              setValue(text);
+              updateDescription(text);
             }
             setDisable(!disable);
           }}

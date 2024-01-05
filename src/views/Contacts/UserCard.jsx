@@ -28,7 +28,7 @@ export default function UserCard({ contact, status = '' }) {
           styles={`text-gray-700 ${status === 'blocked' ? 'bg-red-200 text-red-700' : 'bg-slate-200'} ${
             status === 'pending' && 'font-extrabold'
           } justify-center items-center rounded-full text-[17px] px-2.5 text-center flex`}
-          action={() => status === 'friends' && navigate(`/chat/${contact?._id}`)}
+          onClick={() => status === 'friends' && navigate(`/chat/${contact?._id}`)}
         />
       </div>
     </div>

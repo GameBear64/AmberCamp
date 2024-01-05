@@ -40,7 +40,7 @@ export default function DangerZone() {
             localStorage.removeItem('jwt');
             navigate('/login');
           }}
-          className=" mb-4 flex flex-row rounded text-lg">
+          className="mb-4 flex flex-row rounded text-lg">
           <span className="material-symbols-outlined mr-1.5 align-bottom text-[27px]">move_item</span>Log out
         </button>
         <hr className="hidden lg:block" />

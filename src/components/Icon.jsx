@@ -1,6 +1,6 @@
-export default function Icon({ icon, styles, action }) {
+export default function Icon({ icon, styles, ...rest }) {
   return (
-    <span onClick={action} className={`material-symbols-outlined cursor-pointer ${styles}`}>
+    <span {...rest} className={`material-symbols-outlined cursor-pointer ${styles}`}>
       {icon}
     </span>
   );

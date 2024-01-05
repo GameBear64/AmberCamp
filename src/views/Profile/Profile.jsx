@@ -5,7 +5,7 @@ import gfm from 'remark-gfm';
 
 import Icon from '../../components/Icon';
 
-import { getUser, updateDescription } from './slices/endpoints';
+import { getUser } from './slices/endpoints';
 import FriendshipButtons from './slices/FriendshipButtons';
 import { ProfileMobileLoader } from './slices/Loader';
 import NotesSection from './slices/NotesSection';
@@ -47,6 +47,7 @@ export default function Profile() {
                   ? `http://localhost:3030/recourse/${userInfo?.picture}?size=0`
                   : '../profilePic.jpeg'
               }
+              alt=""
             />
           </div>
           <div className="flex flex-col text-right">
@@ -88,7 +89,7 @@ export default function Profile() {
         </div>
       </div>
       <section className="grid grid-cols-[1fr_25em] grid-rows-1">
-        <QuillSection userId={id} value={userInfo.description} setValue={updateDescription} />
+        <QuillSection userId={id} value={userInfo.description} />
         <section className="overflow-y-auto overflow-x-hidden border-l">
           <NotesSection id={id} userInfo={userInfo} setUserInfo={setUserInfo} />
         </section>

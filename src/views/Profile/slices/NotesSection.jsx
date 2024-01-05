@@ -31,7 +31,7 @@ export default function NotesSection({ id, userInfo, setUserInfo }) {
         Notes
         <Icon
           icon="sort"
-          action={() => {
+          onClick={() => {
             updateUser({ notes: userInfo?.notes.reverse() });
             setRotate(!rotate);
           }}

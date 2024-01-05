@@ -24,8 +24,18 @@ export default function Pending({ incoming, outgoing, type }) {
   );
 
   return (
-    <ContactsList list={pendingType === ContactType.Incoming ? incoming : outgoing} type="pending">
-      {btns()}
-    </ContactsList>
+    <>
+      {pendingType === ContactType.Incoming && (
+        <ContactsList list={incoming} type="pending">
+          {btns()}
+        </ContactsList>
+      )}
+
+      {pendingType === ContactType.Outgoing && (
+        <ContactsList list={outgoing} type="pending">
+          {btns()}
+        </ContactsList>
+      )}
+    </>
   );
 }

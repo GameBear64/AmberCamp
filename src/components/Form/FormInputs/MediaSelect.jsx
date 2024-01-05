@@ -20,10 +20,10 @@ export default function MediaSelect({ name, rules = {}, styles, label, ...rest }
                   alt=""
                 />
                 <div className="absolute right-[2px] top-[2px] rounded-md">
-                  <Icon icon="edit" styles="rounded-lg border-2 border-neutral-400 bg-white text-neutral-700" />
+                  {/* <Icon icon="edit" styles="rounded-lg border-2 border-neutral-400 bg-white text-neutral-700" /> */}
                   <Icon
                     icon="delete"
-                    action={() => setValue(name, '', { shouldDirty: true, shouldTouch: true })}
+                    onClick={() => setValue(name, '', { shouldDirty: true, shouldTouch: true })}
                     styles="rounded-lg border-2 border-neutral-400 bg-white text-neutral-700"
                   />
                 </div>

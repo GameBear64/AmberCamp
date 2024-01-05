@@ -9,7 +9,7 @@ export default function NotFound() {
       <h2 className="mt-10 text-center text-xl">The page you are looking for could not be found...</h2>
       <button
         onClick={() => navigate(-1)}
-        className=" mt-4 rounded bg-neutral-600 px-2.5 py-1 text-lg text-white hover:bg-neutral-700">
+        className="mt-4 rounded bg-neutral-600 px-2.5 py-1 text-lg text-white hover:bg-neutral-700">
         Go back
       </button>
     </div>
