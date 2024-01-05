@@ -2,10 +2,10 @@ import Options from './Options';
 
 export default function Dropdown({ options }) {
   return (
-    <div className="dropdown absolute z-10 text-base shadow-md">
+    <div className="dropdown shadow-primary absolute z-10 text-base">
       <ul>
-        {options.map((option) => (
-          <Options key={option.text} text={option.text} color={option?.color} onClick={option?.action} />
+        {options.map((option, i) => (
+          <Options key={i} option={option} />
         ))}
       </ul>
     </div>

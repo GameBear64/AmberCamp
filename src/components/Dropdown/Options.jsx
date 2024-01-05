@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Options({ text, color, onClick }) {
+export default function Options({ option }) {
   const [active, setActive] = useState(false);
   return (
     <li
@@ -10,9 +10,9 @@ export default function Options({ text, color, onClick }) {
       onMouseLeave={() => {
         setActive(false);
       }}
-      onClick={onClick}
-      className={`${active ? color : 'bg-white'} rounded p-2`}>
-      {text}
+      onClick={option?.action}
+      className={`${active ? option?.color : 'bg-white'} cursor-pointer rounded p-2`}>
+      {option?.text}
     </li>
   );
 }
