@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import Form from '@form';
 import InputField from '@form-inputs/Input';
-import { errorSnackBar, successSnackBar } from '@utils/snackbars';
+import { successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 
 import Button from '../../components/Form/Inputs/Button';
@@ -18,13 +18,9 @@ export default function Login() {
         ...data,
       },
     }).then((res) => {
-      if (res.status === 200) {
-        localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.message.jwt);
-        successSnackBar("You've logged in successfully!");
-        navigate(`/chat`);
-      } else {
-        errorSnackBar(`${res.message}!`);
-      }
+      localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.jwt);
+      successSnackBar("You've logged in successfully!");
+      navigate(`/chat`);
     });
   };
 

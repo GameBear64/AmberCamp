@@ -1,9 +1,10 @@
+import Icon from '../../Icon';
 export default function IconInput({ label, invalid, icon, action, width = 'w-60', innerRef, ...rest }) {
   return (
     <>
       <label>{label}</label>
       <div className="mt-1.5">
-        <span className="material-symbols-outlined absolute px-1 pt-2 text-slate-700">{icon}</span>
+        <Icon styles="absolute px-1 pt-2 text-slate-700" icon={icon} />
         <input
           ref={innerRef}
           onChange={action}

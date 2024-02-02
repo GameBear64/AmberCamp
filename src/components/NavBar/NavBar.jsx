@@ -12,9 +12,6 @@ export default function NavBar() {
         <Link to="/chat" className="material-symbols-outlined nav-btn">
           forum
         </Link>
-        <Link to={`/contacts/${getCurrentUserId()}`} className="material-symbols-outlined nav-btn">
-          group
-        </Link>
         <Link className="material-symbols-outlined nav-btn ">quiz</Link>
       </div>
       <Link to="/settings" className="material-symbols-outlined nav-btn">

@@ -22,13 +22,7 @@ export default function General() {
       url: 'user',
       method: 'GET',
     }).then((res) => {
-      if (res.status === 200) {
-        setUserInfo(
-          cleanObject(res.message, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone'])
-        );
-      } else {
-        errorSnackBar(`${res.message}`);
-      }
+      setUserInfo(cleanObject(res, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone']));
     });
   };
 

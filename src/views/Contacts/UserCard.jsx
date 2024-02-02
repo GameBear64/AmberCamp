@@ -4,7 +4,7 @@ import Icon from '../../components/Icon';
 
 import { Status } from './slice/emuns';
 
-export default function UserCard({ contact, status = '' }) {
+export default function UserCard({ contact, status = false }) {
   const navigate = useNavigate();
 
   return (
@@ -23,13 +23,15 @@ export default function UserCard({ contact, status = '' }) {
           <p className="text-sm font-bold leading-snug text-gray-900">{contact?.name || contact?.handle}</p>
           <p className="text-xs leading-snug text-gray-600">@{contact?.handle}</p>
         </div>
-        <Icon
-          icon={Status[status]}
-          styles={`text-gray-700 ${status === 'blocked' ? 'bg-red-200 text-red-700' : 'bg-slate-200'} ${
-            status === 'pending' && 'font-extrabold'
-          } justify-center items-center rounded-full text-[17px] px-2.5 text-center flex`}
-          onClick={() => status === 'friends' && navigate(`/chat/${contact?._id}`)}
-        />
+        {status && (
+          <Icon
+            icon={Status[status]}
+            styles={`text-gray-700 ${status === 'blocked' ? 'bg-red-200 text-red-700' : 'bg-slate-200'} ${
+              status === 'pending' && 'font-extrabold'
+            } justify-center items-center rounded-full text-[17px] px-2.5 text-center flex`}
+            onClick={() => status === 'friends' && navigate(`/chat/${contact?._id}`)}
+          />
+        )}
       </div>
     </div>
   );

@@ -80,9 +80,14 @@ export default function FriendshipButtons({ userInfo, setUserInfo }) {
           </button>
         )}
         {userInfo.status == 'Blocked' && (
-          <button className="btn-red" onClick={unblock}>
-            Unblock
-          </button>
+          <>
+            <button className="btn-green" onClick={unblock}>
+              Message History
+            </button>
+            <button className="btn-red" onClick={unblock}>
+              Unblock
+            </button>
+          </>
         )}
         {userInfo.status != 'Blocked' && (
           <button className="btn-red" onClick={block}>

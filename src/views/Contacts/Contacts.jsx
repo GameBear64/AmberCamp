@@ -13,7 +13,7 @@ export default function Contacts() {
   const [currentList, setCurrentList] = useState(ContactType.Friends);
 
   useEffect(() => {
-    useFetch({ url: 'user/friend/list' }).then(({ message }) => setContactList(message));
+    useFetch({ url: 'user/friend/list' }).then((message) => setContactList(message));
   }, []);
 
   return (

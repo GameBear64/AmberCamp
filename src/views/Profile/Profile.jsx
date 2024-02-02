@@ -16,15 +16,7 @@ export default function Profile() {
   const { id } = useParams();
 
   useEffect(() => {
-    getUser(id).then((res) => {
-      if (res.status === 200) {
-        setUserInfo(res.message);
-      } else {
-        // For the devs to debug
-        // eslint-disable-next-line no-console
-        console.log(res.message);
-      }
-    });
+    getUser(id).then((res) => setUserInfo(res));
   }, [id]);
 
   if (!userInfo?.handle) return <ProfileMobileLoader />;
@@ -39,7 +31,7 @@ export default function Profile() {
       />
       <div className="border-b p-4">
         <div className="relative flex w-full">
-          <div className="relative mt-[-6rem] flex h-[9rem] w-[9rem] flex-1">
+          <div className="relative mt-[-6rem] flex flex-1">
             <img
               className="border-0.5 relative h-[9rem] w-[9rem] rounded-full border-gray-900"
               src={

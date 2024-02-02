@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import ButtonInput from '@components/Form/Inputs/ButtonInput';
-import resizeScreen from '@utils/resizeScreen';
 import socket from '@utils/socket';
 import { useFetch } from '@utils/useFetch';
 
+import { messages } from './slices/enums';
+import ChatArea from './ChatArea';
+import ChatBar from './ChatBar';
 import { ChatLoader } from './Loader';
+import Message from './Message';
 
 export default function ChatList() {
-  const screenSize = resizeScreen();
   let { id } = useParams();
-
   const [chatLog, setChatLog] = useState([]);
 
   useEffect(() => {
@@ -23,7 +23,9 @@ export default function ChatList() {
   }, []);
 
   useEffect(() => {
-    useFetch({ url: `conversation/${id}` }).then((data) => setChatLog(data.message.messages));
+    useFetch({ url: `conversation/651c0636b4df32649f187034` }).then((data) => {
+      setChatLog(data.messages);
+    });
   }, [id]);
 
   const sendMessage = (message) => {
@@ -33,24 +35,21 @@ export default function ChatList() {
   if (id == 2) return <ChatLoader />;
 
   return (
-    <div className="flex h-full flex-col">
-      <h1>Chat {id}</h1>
-      {screenSize <= 1024 && (
-        <Link to={`/chat`}>
-          back to <span className="material-icons">home</span>
-        </Link>
-      )}
-
-      <ul className="grow">
-        {chatLog?.map((msg) => (
-          <li key={msg._id}>
-            <strong className="mr-3">{msg.author.name || msg.author.handle}</strong>
-            {msg.body}
-          </li>
-        ))}
-      </ul>
-
-      <ButtonInput actionButton={sendMessage} shouldClear btnText="Send" btnBG="bg-gray-800" btnColor="text-white" />
+    <div className="flex h-full flex-col justify-between pb-5">
+      <ChatBar
+        user={{
+          user: 'momo',
+          img: 'https://i1.sndcdn.com/artworks-cZKUJX6BqGAgx1FZ-AyLpLQ-t500x500.jpg',
+        }}
+      />
+      <div className="flex h-full flex-col justify-between overflow-y-auto pb-8 pt-5">
+        <ul className="relative flex w-full flex-col gap-2">
+          {messages.map((message, i) => (
+            <Message last={i <= 1} key={i} message={message} />
+          ))}
+        </ul>
+      </div>
+      <ChatArea onKeyDown={(e) => e.code === 'Enter' && sendMessage('hi')} onClick={() => sendMessage('hi')} />
     </div>
   );
 }

@@ -5,6 +5,14 @@ import Layout from '@layout';
 import { useFetch } from '@utils/useFetch';
 
 import Icon from '../../components/Icon';
+import UserCard from '../Contacts/UserCard';
+
+const user = {
+  picture: 'nVin2djaZ7Ri1AglrUtFSeWocCq9T5sgA2Ohp4302tpjeI8lnS',
+  _id: '64f72291ec62865d44a9ccc3',
+  name: 'iHope',
+  handle: 'iHope',
+};
 
 import SeparatedList from './SeparatedList';
 
@@ -27,6 +35,7 @@ export default function ChatList() {
     const isGroupOpened = messageList?.group?.find((chat) => chat._id == id);
     if (isGroupOpened) setCurrentList(ChatType.Group);
   }, [id, messageList]);
+  console.log(messageList);
 
   return (
     <Layout
@@ -52,18 +61,22 @@ export default function ChatList() {
             className="my-2 h-10 w-full rounded-lg border-2 border-gray-300 bg-white px-5 text-sm focus:outline-none"
             placeholder="Search"
           />
-          {currentList === ChatType.Direct && <SeparatedList list={messageList.direct} />}
-          {currentList === ChatType.Group && <SeparatedList list={messageList.group} />}
+          {currentList === ChatType.Direct && <SeparatedList list={messageList?.direct} />}
+          {currentList === ChatType.Group && <SeparatedList list={messageList?.group} />}
 
-          <Link className="mt-10" to={`/chat`}>
+          <UserCard contact={user} status="friends" />
+          <UserCard contact={user} status="friends" />
+          <UserCard contact={user} status="friends" />
+          <UserCard contact={user} status="friends" />
+          {/* <Link className="mt-10" to={`/chat`}>
             no chat
-          </Link>
-          <Link to={`/chat/1`}>
+          </Link> */}
+          {/* <Link to={`/chat/651c0636b4df32649f187034`}>
             go to <Icon icon="chat_bubble" />
           </Link>
           <Link to={`/chat/2`}>
             go to <Icon icon="chat_bubble" />
-          </Link>
+          </Link> */}
           <a href="http://localhost:3030/api-docs/#/" target="_blank" rel="noreferrer" className="mt-10">
             API Documentation
           </a>

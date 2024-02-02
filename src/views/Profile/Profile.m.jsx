@@ -11,7 +11,7 @@ import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 import { getCurrentUserId, removeEmptyProperties } from '@utils/utils';
 
-import TopBar from '../../components/TopBar/TopBar';
+import MobileNavBar from '../../components/MobileNavBar/MobileNavBar';
 
 import QuillSection from './slices/QuillSection';
 
@@ -67,7 +67,7 @@ export default function ProfileMobile() {
   return (
     <div>
       <div className="m-auto">
-        <TopBar backBtnLable="Profile" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
+        <MobileNavBar backBtnLable="Profile" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
 
         <section
           className="h-52 rounded-b bg-neutral-700 bg-cover bg-center shadow-md"

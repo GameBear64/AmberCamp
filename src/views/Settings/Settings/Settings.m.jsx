@@ -2,14 +2,14 @@ import { useNavigate } from 'react-router-dom';
 
 import NavBar from '@components/NavBar/NavBar';
 
-import TopBar from '../../../components/TopBar/TopBar';
+import MobileNavBar from '../../../components/MobileNavBar/MobileNavBar';
 
 export default function SettingsMobile() {
   const navigate = useNavigate();
   return (
     <div className="grid h-screen grid-cols-1 grid-rows-[1fr_3em]">
       <div>
-        <TopBar backBtnLable="Settings" backButton="arrow_back_ios_new" actionButton={() => navigate('/chat')} />
+        <MobileNavBar backBtnLable="Settings" backButton="arrow_back_ios_new" actionButton={() => navigate('/chat')} />
         <div className="mx-9">
           <div className="mt-4">
             <div

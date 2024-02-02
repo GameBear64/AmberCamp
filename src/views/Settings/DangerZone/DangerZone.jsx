@@ -5,7 +5,7 @@ import ButtonInput from '@components/Form/Inputs/ButtonInput';
 import { errorSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 
-import TopBar from '../../../components/TopBar/TopBar';
+import MobileNavBar from '../../../components/MobileNavBar/MobileNavBar';
 
 export default function DangerZone() {
   let [password, setPassword] = useState('');
@@ -20,19 +20,18 @@ export default function DangerZone() {
       body: {
         password,
       },
-    }).then((res) => {
-      if (res.status === 201) {
-        setErrorBorder(false);
-      } else {
-        setErrorBorder(true);
-        errorSnackBar(`${res.message}!`);
-      }
-    });
+    })
+      .then(() => setErrorBorder(false))
+      .catch(() => setErrorBorder(true));
   };
   return (
     <div className="p-10 lg:p-0">
       <div className="hidden lg:block">
-        <TopBar backBtnLabel="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
+        <MobileNavBar
+          backBtnLabel="Danger Zone"
+          backButton="arrow_back_ios_new"
+          actionButton={() => navigate('/user/settings')}
+        />
       </div>
       <div className="lg:px-10 lg:py-8">
         <button
@@ -51,9 +50,7 @@ export default function DangerZone() {
             <label className="mb-1">Please, enter your password to proceed.</label>
             <ButtonInput
               textColor="text-white"
-              actionInput={(e) => {
-                setPassword(e.target.value);
-              }}
+              actionInput={(e) => setPassword(e.target.value)}
               btnText="Delete"
               btnBG="bg-red-600"
               btnColor="text-white"

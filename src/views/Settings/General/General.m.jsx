@@ -13,7 +13,7 @@ import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 import { cleanObject, readFile } from '@utils/utils';
 
-import TopBar from '../../../components/TopBar/TopBar';
+import MobileNavBar from '../../../components/MobileNavBar/MobileNavBar';
 
 import { timezones } from './../../../utils/timezone';
 
@@ -78,7 +78,7 @@ export default function General() {
 
   return (
     <>
-      <TopBar backBtnLabel="General" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
+      <MobileNavBar backBtnLabel="General" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
       <Form
         defaultValues={userInfo}
         onSubmit={(data) => {

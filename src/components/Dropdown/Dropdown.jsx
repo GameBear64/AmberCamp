@@ -1,11 +1,11 @@
 import Options from './Options';
 
-export default function Dropdown({ options }) {
+export default function Dropdown({ options, stylesDropdown = false, stylesOptions, ...rest }) {
   return (
-    <div className="dropdown shadow-primary absolute z-10 text-base">
+    <div {...rest} className={`shadow-primary z-10 text-base ${stylesDropdown ? stylesDropdown : 'absolute'}`}>
       <ul>
         {options.map((option, i) => (
-          <Options key={i} option={option} />
+          <Options key={i} style={stylesOptions} option={option} />
         ))}
       </ul>
     </div>
