@@ -4,9 +4,9 @@ import Button from '@components/Form/Inputs/Button';
 import FormInputs from '@form';
 import IconInputField from '@form-inputs/IconInput';
 import { successSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 
-import MobileNavBar from '../../../components/MobileNavBar/MobileNavBar';
+import MobileNavBar from '../../../components/NavBar/MobileNavBar';
 
 export default function Security() {
   const navigate = useNavigate();

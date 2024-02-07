@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 
 import Layout from '@layout';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 
 import Icon from '../../components/Icon';
 import UserCard from '../Contacts/UserCard';
@@ -35,7 +35,7 @@ export default function ChatList() {
     const isGroupOpened = messageList?.group?.find((chat) => chat._id == id);
     if (isGroupOpened) setCurrentList(ChatType.Group);
   }, [id, messageList]);
-  console.log(messageList);
+  // console.log(messageList);
 
   return (
     <Layout

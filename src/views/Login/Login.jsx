@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Form from '@form';
 import InputField from '@form-inputs/Input';
 import { successSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 
 import Button from '../../components/Form/Inputs/Button';
 

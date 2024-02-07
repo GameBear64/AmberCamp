@@ -9,7 +9,7 @@ import SelectInput from '@form-inputs/SelectInput';
 import TagSelector from '@form-inputs/TagSelector';
 import TextareaField from '@form-inputs/Textarea';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 import { cleanObject, readFile } from '@utils/utils';
 
 import { timezones } from '../../../utils/timezone';
@@ -53,12 +53,8 @@ export default function General() {
       url: 'user/settings',
       method: 'PATCH',
       body: { ...data },
-    }).then((res) => {
-      if (res.status === 200) {
+    }).then(() => {
         successSnackBar('Profile updated.');
-      } else {
-        errorSnackBar(`${res.message}!`);
-      }
     });
   };
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import socket from '@utils/socket';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 
 import { messages } from './slices/enums';
 import ChatArea from './ChatArea';
@@ -16,7 +16,7 @@ export default function ChatList() {
 
   useEffect(() => {
     socket.on('message', (msg) => {
-      setChatLog((prev) => [...prev, msg]);
+      setChatLog((prev) => [...prev, msg.message]);
     });
 
     return () => socket.off('message');
@@ -24,7 +24,7 @@ export default function ChatList() {
 
   useEffect(() => {
     useFetch({ url: `conversation/651c0636b4df32649f187034` }).then((data) => {
-      setChatLog(data.messages);
+      setChatLog(data?.messages || []);
     });
   }, [id]);
 

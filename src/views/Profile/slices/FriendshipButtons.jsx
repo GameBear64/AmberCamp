@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { successSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 import { getCurrentUserId } from '@utils/utils';
 
 export default function FriendshipButtons({ userInfo, setUserInfo }) {
@@ -12,11 +12,9 @@ export default function FriendshipButtons({ userInfo, setUserInfo }) {
     useFetch({
       url: `user/friend/add/${id}`,
       method: 'POST',
-    }).then((res) => {
-      if (res.status === 200) {
-        successSnackBar('Friend request send');
-        setUserInfo((prev) => ({ ...prev, status: 'Pending' }));
-      }
+    }).then(() => {
+      successSnackBar('Friend request send');
+      setUserInfo((prev) => ({ ...prev, status: 'Pending' }));
     });
   };
 
@@ -24,11 +22,9 @@ export default function FriendshipButtons({ userInfo, setUserInfo }) {
     useFetch({
       url: `user/friend/remove/${id}`,
       method: 'POST',
-    }).then((res) => {
-      if (res.status === 200) {
-        successSnackBar('Request canceled');
-        setUserInfo((prev) => ({ ...prev, status: 'Strangers' }));
-      }
+    }).then(() => {
+      successSnackBar('Request canceled');
+      setUserInfo((prev) => ({ ...prev, status: 'Strangers' }));
     });
   };
 
@@ -36,11 +32,9 @@ export default function FriendshipButtons({ userInfo, setUserInfo }) {
     useFetch({
       url: `user/friend/block/${id}`,
       method: 'POST',
-    }).then((res) => {
-      if (res.status === 200) {
-        successSnackBar('User blocked');
-        setUserInfo((prev) => ({ ...prev, status: 'Blocked' }));
-      }
+    }).then(() => {
+      successSnackBar('User blocked');
+      setUserInfo((prev) => ({ ...prev, status: 'Blocked' }));
     });
   };
 
@@ -48,11 +42,9 @@ export default function FriendshipButtons({ userInfo, setUserInfo }) {
     useFetch({
       url: `user/friend/unblock/${id}`,
       method: 'POST',
-    }).then((res) => {
-      if (res.status === 200) {
-        successSnackBar('User unblocked');
-        setUserInfo((prev) => ({ ...prev, status: 'Strangers' }));
-      }
+    }).then(() => {
+      successSnackBar('User unblocked');
+      setUserInfo((prev) => ({ ...prev, status: 'Strangers' }));
     });
   };
 

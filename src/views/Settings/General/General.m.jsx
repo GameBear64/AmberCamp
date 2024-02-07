@@ -10,10 +10,10 @@ import SelectInput from '@form-inputs/SelectInput';
 import TagSelector from '@form-inputs/TagSelector';
 import TextareaField from '@form-inputs/Textarea';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 import { cleanObject, readFile } from '@utils/utils';
 
-import MobileNavBar from '../../../components/MobileNavBar/MobileNavBar';
+import MobileNavBar from '../../../components/NavBar/MobileNavBar';
 
 import { timezones } from './../../../utils/timezone';
 
@@ -26,13 +26,9 @@ export default function General() {
       url: 'user',
       method: 'GET',
     }).then((res) => {
-      if (res.status === 200) {
-        setUserInfo(
-          cleanObject(res.message, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone'])
-        );
-      } else {
-        errorSnackBar(`${res.message}`);
-      }
+      setUserInfo(
+        cleanObject(res.message, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone'])
+      );
     });
   };
 
@@ -63,12 +59,8 @@ export default function General() {
       url: 'user/settings',
       method: 'PATCH',
       body: { ...data },
-    }).then((res) => {
-      if (res.status === 200) {
-        successSnackBar('Profile updated.');
-      } else {
-        errorSnackBar(`${res.message}!`);
-      }
+    }).then(() => {
+      successSnackBar('Profile updated.');
     });
   };
 

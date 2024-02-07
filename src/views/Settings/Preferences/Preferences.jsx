@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 import { useState } from 'react';
 
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 
 export default function Preferences() {
   let accents = [
@@ -19,16 +19,12 @@ export default function Preferences() {
   //     url: 'user/settings/preferences',
   //     method: 'GET',
   //   }).then((res) => {
-  //     if (res.status === 200) {
   //       console.log(res.message);
   //       setUserPreferences({
   //         theme: res.message.theme,
   //         accent: res.message.accent,
   //         language: res.message.language,
   //       });
-  //     } else {
-  //       console.log(res.message);
-  //     }
   //   });
   // };
   const changeUserTheme = () => {
@@ -41,12 +37,7 @@ export default function Preferences() {
         language: userPreferences.language,
       },
     }).then((res) => {
-      if (res.status === 200) {
-        console.log(res.message);
-      } else {
-        // For the devs to debug
-        console.log(res.message);
-      }
+      console.log(res.message);
     });
   };
   // console.log(userPreferences);

@@ -4,7 +4,7 @@ import Notes from '@components/Notes/Notes';
 import Form from '@form';
 import ButtonInputField from '@form-inputs/ButtonInput';
 import { errorSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 import { removeEmptyProperties } from '@utils/utils';
 
 import Icon from '../../../components/Icon';

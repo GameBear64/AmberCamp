@@ -5,10 +5,10 @@ import IconInput from '@components/Form/Inputs/IconInput';
 import FormInputs from '@form';
 import IconInputField from '@form-inputs/IconInput';
 import InputField from '@form-inputs/Input';
-import { errorSnackBar, successSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import { successSnackBar } from '@utils/snackbars';
+import useFetch from '@utils/useFetch';
 
-import MobileNavBar from '../../../components/MobileNavBar/MobileNavBar';
+import TopBar from '../../../components/NavBar/MobileNavBar';
 
 export default function SecurityMobile() {
   let [newEmail, setNewEmail] = useState('');
@@ -19,12 +19,8 @@ export default function SecurityMobile() {
       method: 'POST',
       body: fields,
     }).then((res) => {
-      if (res.status === 200) {
-        localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.message.jwt);
-        successSnackBar('Your password was changed successfully!');
-      } else {
-        errorSnackBar(`${res.message}`);
-      }
+      localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.message.jwt);
+      successSnackBar('Your password was changed successfully!');
     });
   };
 
@@ -35,18 +31,14 @@ export default function SecurityMobile() {
       body: {
         email: newEmail,
       },
-    }).then((res) => {
-      if (res.status === 200) {
-        successSnackBar('Your email was changed successfully!');
-      } else {
-        errorSnackBar(`${res.message}`);
-      }
+    }).then(() => {
+      successSnackBar('Your email was changed successfully!');
     });
   };
 
   return (
     <div>
-      <MobileNavBar backBtnLable="Security" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
+      <TopBar backBtnLable="Security" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
       <div className="px-10">
         <div className="m-auto flex max-w-md flex-col justify-center">
           <div className="my-5 flex flex-col">

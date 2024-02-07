@@ -1,5 +1,5 @@
 import { successSnackBar } from '../../../utils/snackbars';
-import { useFetch } from '../../../utils/useFetch';
+import useFetch from '../../../utils/useFetch';
 import { getCurrentUserId } from '../../../utils/utils';
 
 export const getUser = (id) => {
@@ -14,9 +14,7 @@ export const updateDescription = (description) => {
     url: 'user/settings',
     method: 'PATCH',
     body: { description },
-  }).then((res) => {
-    if (res.status === 200) {
-      successSnackBar('Profile updated.');
-    }
+  }).then(() => {
+    successSnackBar('Profile updated.');
   });
 };

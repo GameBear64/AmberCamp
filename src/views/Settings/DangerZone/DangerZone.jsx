@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import ButtonInput from '@components/Form/Inputs/ButtonInput';
 import { errorSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 
-import MobileNavBar from '../../../components/MobileNavBar/MobileNavBar';
+import MobileNavBar from '../../../components/NavBar/MobileNavBar';
 
 export default function DangerZone() {
   let [password, setPassword] = useState('');

@@ -1,22 +1,23 @@
 import { lazy, Suspense } from 'react';
-const ChatListMobile = lazy(() => import('../../views/ChatList/ChatList.m'));
-const ProfileMobile = lazy(() => import('../../views/Profile/Profile.m'));
-const Settings = lazy(() => import('../../views/Settings/Settings/Settings.m'));
-const DangerZone = lazy(() => import('../../views/Settings/DangerZone/DangerZone'));
-const GeneralMobile = lazy(() => import('../../views/Settings/General/General.m'));
-const SecurityMobile = lazy(() => import('../../views/Settings/Security/Security'));
-const PreferencesMobile = lazy(() => import('../../views/Settings/Preferences/Preferences.m'));
-const Redirect = lazy(() => import('../../views/UtilPages/Redirect'));
-const Chat = lazy(() => import('../../views/Chat/Chat'));
+const ChatListMobile = lazy(() => import('../views/ChatList/ChatList.m'));
+const ProfileMobile = lazy(() => import('../views/Profile/Profile.m'));
+const Settings = lazy(() => import('../views/Settings/Settings/Settings.m'));
+const DangerZone = lazy(() => import('../views/Settings/DangerZone/DangerZone'));
+const GeneralMobile = lazy(() => import('../views/Settings/General/General.m'));
+const SecurityMobile = lazy(() => import('../views/Settings/Security/Security.m'));
+const PreferencesMobile = lazy(() => import('../views/Settings/Preferences/Preferences.m'));
+const Redirect = lazy(() => import('./Special/Redirect'));
+const Chat = lazy(() => import('../views/Chat/Chat'));
+const Contacts = lazy(() => import('../views/Contacts/Contacts'));
 
-import { ChatLoaderMobile } from '../../views/Chat/Loader';
-import { ChatListLoader } from '../../views/ChatList/Loader';
-import { ChatListMobileLoader } from '../../views/ChatList/Loader';
-import Contacts from '../../views/Contacts/Contacts';
-import { ProfileMobileLoader } from '../../views/Profile/slices/Loader';
-import { SettingsTabsLoader } from '../../views/Settings/Loader';
-import { SettingsPageLoader } from '../../views/Settings/Loader';
-import Loader from '../../views/UtilPages/Loader';
+import { ChatLoaderMobile } from '../views/Chat/Loader';
+import { ChatListLoader } from '../views/ChatList/Loader';
+import { ChatListMobileLoader } from '../views/ChatList/Loader';
+import { ProfileMobileLoader } from '../views/Profile/slices/Loader';
+import { SettingsTabsLoader } from '../views/Settings/Loader';
+import { SettingsPageLoader } from '../views/Settings/Loader';
+
+import Loader from './Special/Loader';
 
 const mobileRoutes = [
   {

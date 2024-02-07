@@ -2,8 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import Form from '@form';
 import InputField from '@form-inputs/Input';
-import { errorSnackBar, successSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import { successSnackBar } from '@utils/snackbars';
+import useFetch from '@utils/useFetch';
 
 import Button from '../../components/Form/Inputs/Button';
 
@@ -14,17 +14,11 @@ export default function Register() {
     useFetch({
       url: 'user/register',
       method: 'POST',
-      body: {
-        ...data,
-      },
+      body: data,
     }).then((res) => {
-      if (res.status === 201) {
-        successSnackBar(`Your registration was successful!`);
-        localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.message.jwt);
-        navigate('/chat');
-      } else {
-        errorSnackBar(`${res.message}!`);
-      }
+      successSnackBar(`Your registration was successful!`);
+      localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.jwt);
+      navigate('/chat');
     });
   };
 

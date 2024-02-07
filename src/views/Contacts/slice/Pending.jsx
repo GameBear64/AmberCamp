@@ -2,12 +2,12 @@ import { useState } from 'react';
 
 import ContactsList from '../ContactsList';
 
-import { ContactType } from './emuns';
+import { ContactType } from './enums';
 
 export default function Pending({ incoming, outgoing, type }) {
   const [pendingType, setPendingType] = useState(type);
 
-  const btns = () => (
+  const secondaryButtons = () => (
     <div className="mx-7 mb-4 mt-1 flex flex-row justify-between text-[16px] font-semibold">
       <button
         className={`rounded px-2 py-1 ${pendingType === ContactType.Incoming && 'shadow-primary'}`}
@@ -27,13 +27,13 @@ export default function Pending({ incoming, outgoing, type }) {
     <>
       {pendingType === ContactType.Incoming && (
         <ContactsList list={incoming} type="pending">
-          {btns()}
+          {secondaryButtons()}
         </ContactsList>
       )}
 
       {pendingType === ContactType.Outgoing && (
         <ContactsList list={outgoing} type="pending">
-          {btns()}
+          {secondaryButtons()}
         </ContactsList>
       )}
     </>

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import NavBar from '@components/NavBar/NavBar';
 
-import MobileNavBar from '../../../components/MobileNavBar/MobileNavBar';
+import MobileNavBar from '../../../components/NavBar/MobileNavBar';
 
 export default function SettingsMobile() {
   const navigate = useNavigate();

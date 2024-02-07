@@ -8,10 +8,10 @@ import Notes from '@components/Notes/Notes';
 import Form from '@form';
 import ButtonInputField from '@form-inputs/ButtonInput';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 import { getCurrentUserId, removeEmptyProperties } from '@utils/utils';
 
-import MobileNavBar from '../../components/MobileNavBar/MobileNavBar';
+import MobileNavBar from '../../components/NavBar/MobileNavBar';
 
 import QuillSection from './slices/QuillSection';
 
@@ -27,13 +27,7 @@ export default function ProfileMobile() {
       url: `user/${id || getCurrentUserId()}`,
       method: 'GET',
     }).then((res) => {
-      if (res.status === 200) {
-        setUserInfo(res.message);
-      } else {
-        // For the devs to debug
-        // eslint-disable-next-line no-console
-        console.log(res.message);
-      }
+      setUserInfo(res.message);
     });
   };
 
@@ -50,10 +44,8 @@ export default function ProfileMobile() {
       url: 'user/settings',
       method: 'PATCH',
       body: { description },
-    }).then((res) => {
-      if (res.status === 200) {
-        successSnackBar('Profile updated.');
-      }
+    }).then(() => {
+      successSnackBar('Profile updated.');
     });
   };
   useEffect(() => {

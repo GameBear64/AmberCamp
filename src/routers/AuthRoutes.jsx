@@ -1,8 +1,9 @@
-import { Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 
-import { LoginLoader } from '../../views/Login/Loader';
-import Login from '../../views/Login/Login';
-import Register from '../../views/Register/Register';
+import { LoginLoader } from '../views/Login/Loader';
+const Login = lazy(() => import('../views/Login/Login'));
+const Register = lazy(() => import('../views/Register/Register'));
+
 
 const authRoutes = [
   {
