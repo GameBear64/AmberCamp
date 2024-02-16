@@ -50,6 +50,10 @@ export const errorSnackBar = (message) => {
   new Snackbar(snackMessageTemplate(message, 'error'), snackDefaultSettings('#DC343B'));
 };
 
+export const impossibleSnackBar = (message) => {
+  new Snackbar(snackMessageTemplate(message, 'flag'), snackDefaultSettings('#775496'));
+};
+
 export const warningSnackBar = (message) => {
   new Snackbar(snackMessageTemplate(message, 'warning'), snackDefaultSettings('#ffd400'));
 };

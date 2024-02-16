@@ -13,7 +13,7 @@ const NotFound = lazy(() => import('./Special/NotFound'));
 
 import Loader from './Special/Loader';
 
-export const router = (screenSize) => createBrowserRouter([
+export const router = (screenSize = 1023) => createBrowserRouter([
   {
     path: '/',
     element: (

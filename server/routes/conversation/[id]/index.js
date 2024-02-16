@@ -92,7 +92,6 @@ const { isObjectID } = require('../../../utils');
 const { ConversationModel } = require('../../../models/Conversation');
 const { UserModel } = require('../../../models/User');
 const { MessageModel } = require('../../../models/Message');
-// const { ParticipantModel } = require('../../../models/Participant');
 
 module.exports.get = [
   joiValidate({ page: joi.number().min(1) }, InformationTypes.QUERY),
@@ -106,77 +105,50 @@ module.exports.get = [
           $or: [
             {
               type: ConversationType.Direct,
-              users: { $all: [ObjectId(req.params.id), ObjectId(req.apiUserId)], $size: 2 },
+              participants: {
+                $all: [
+                  {$elemMatch: { user: ObjectId(req.params.id) }},
+                  {$elemMatch: { user: ObjectId(req.apiUserId) }}
+                ],
+                $size: 2
+              }
             },
             {
               _id: ObjectId(req.params.id),
               type: ConversationType.Group,
-              users: { $all: [ObjectId(req.apiUserId)] },
-            },
-          ],
-        },
-      },
-      {
-        $lookup: {
-          from: 'participants',
-          localField: '_id',
-          foreignField: 'conversation',
-          let: { users: '$users' },
-          pipeline: [
-            {
-              $match: {
-                $expr: { $in: ['$user', '$$users'] },
-              },
-            },
-            { $project: { _id: 0, __v: 0, conversation: 0 } },
-          ],
-          as: 'participants',
-        },
-      },
-      {
-        $lookup: {
-          from: 'users',
-          localField: 'users',
-          foreignField: '_id',
-          pipeline: [{ $project: { _id: 1, picture: 1, handle: 1, name: 1 } }],
-          as: 'users',
-        },
-      },
-      {
-        $addFields: {
-          participants: {
-            $map: {
-              input: '$participants',
-              as: 'participant',
-              in: {
-                $mergeObjects: [
-                  '$$participant',
-                  {
-                    user: {
-                      $arrayElemAt: [
-                        {
-                          $filter: {
-                            input: '$users',
-                            as: 'user',
-                            cond: { $eq: ['$$user._id', '$$participant.user'] },
-                          },
-                        },
-                        0,
-                      ],
-                    },
-                  },
+              participants: {
+                $all: [
+                  {$elemMatch: { user: ObjectId(req.apiUserId) }}
                 ],
-              },
-            },
-          },
-        },
+              }
+            }
+          ]
+        }
       },
+      // {
+      //   $lookup: {
+      //     from: 'users',
+      //     localField: 'participants.user',
+      //     foreignField: '_id',
+      //     pipeline: [{ $project: { _id: 1, picture: 1, handle: 1, name: 1 } }],
+      //     as: 'populatedParticipants',
+      //   },
+      // },
+      // {
+      //   $set: {
+      //     'participants': {
+      //       $map: {
+      //         input: '$participants', as: 'participant',
+      //         in: { $mergeObjects: [ '$$participant', { user: { $arrayElemAt: ['$populatedParticipants', { $indexOfArray: ['$populatedParticipants._id', '$$participant.user'] }] } } ] }
+      //       }
+      //     }
+      //   }
+      // },
+      // {
+      //   $unset: 'populatedParticipants'
+      // },
       {
         $project: {
-          name: 1,
-          participants: 1,
-          icon: 1,
-          type: 1,
           messagesCount: {
             $size: '$messages',
           },

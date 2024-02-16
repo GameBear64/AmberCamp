@@ -23,13 +23,16 @@ export default function Form({
   }, [defaultValues]);
 
   const checkKeyDown = (e) => {
-    if (e.code === 'Enter' && !submitOnEnter) e.preventDefault();
+    if (e.key === 'Enter' && !submitOnEnter) e.preventDefault();
   };
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={handleSubmit((e) => onSubmit(onlyDirty ? cleanObject(e, Object.keys(dirtyFields)) : e))}
+        onSubmit={handleSubmit((e) => {
+          onSubmit(onlyDirty ? cleanObject(e, Object.keys(dirtyFields)) : e)
+          if (submitOnEnter) reset();
+        })}
         onKeyDown={(e) => checkKeyDown(e)}>
         {children}
       </form>

@@ -106,3 +106,8 @@ export const options = [
     styles: 'text-red-500',
   },
 ];
+
+export const ChatType = Object.freeze({
+  Direct: 'Direct',
+  Group: 'Group',
+});

@@ -22,69 +22,48 @@ const { ConversationModel } = require('../../models/Conversation');
 
 module.exports.get = [
   // TODO: agregate with the relationship to get the nickname status as well
+  // TODO: use lastMessageSeen
+
   async (req, res) => {
     const conversation = await ConversationModel.aggregate([
       {
         $match: {
-          users: { $all: [ObjectId(req.apiUserId)] },
-        },
-      },
-      {
-        $lookup: {
-          from: 'participants',
-          localField: '_id',
-          foreignField: 'conversation',
-          let: { users: '$users' },
-          pipeline: [
-            {
-              $match: {
-                user: ObjectId(req.apiUserId),
-                $expr: { $in: ['$user', '$$users'] },
-              },
-            },
-            { $project: { hideFromHistory: 1, updatedAt: 1 } },
-          ],
-          as: 'currentUser',
-        },
-      },
-      {
-        $unwind: '$currentUser',
-      },
-      {
-        $match: {
-          'currentUser.hideFromHistory': { $ne: true },
-        },
+          participants: {
+            $elemMatch: {
+              user: ObjectId(req.apiUserId),
+              hideFromHistory: false
+            }
+          }
+        }
       },
       {
         $lookup: {
           from: 'users',
-          localField: 'users',
+          localField: 'participants.user',
           foreignField: '_id',
           pipeline: [{ $project: { _id: 1, picture: 1, handle: 1, name: 1 } }],
-          as: 'users',
+          as: 'populatedParticipants',
         },
       },
       {
-        $project: {
-          newMessages: {
-            $gt: [
-              { $convert: { input: '$currentUser.updatedAt', to: 'double' } },
-              { $convert: { input: '$updatedAt', to: 'double' } },
-            ],
-          },
-          users: 1,
-          type: 1,
-          name: 1,
-          icons: 1,
-          theme: 1,
-        },
+        $set: {
+          'participants': {
+            $map: {
+              input: '$participants', as: 'participant',
+              in: { $mergeObjects: [ '$$participant', { user: { $arrayElemAt: ['$populatedParticipants', { $indexOfArray: ['$populatedParticipants._id', '$$participant.user'] }] } } ] }
+            }
+          }
+        }
+      },
+      {
+        $unset: 'populatedParticipants'
       },
       {
         $sort: {
           updatedAt: -1,
         },
       },
-    ]);
+    ]);    
 
     res
       .status(200)
