@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 
-import { getCurrentUserId, htmlDecode } from '@utils/utils';
-
-import Icon from '../../../components/Icon';
+import Icon from '@components/Icon';
+import { getUserId } from '@stores/user';
+import { htmlDecode } from '@utils/utils';
 
 import { updateDescription } from './endpoints';
 
@@ -45,7 +45,7 @@ export default function QuillSection({ userId, value }) {
           </div>
         )}
       </div>
-      {userId === getCurrentUserId() && (
+      {userId === getUserId() && (
         <Icon
           icon={disable ? 'edit' : 'save'}
           styles="rounded absolute -top-3 right-2 text-right bg-slate-200 text-black p-1.5 shadow-primary"

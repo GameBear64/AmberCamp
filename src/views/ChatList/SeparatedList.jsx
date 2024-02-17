@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 
-import { getCurrentUserId } from '@utils/utils';
+import { getUserId } from '@stores/user';
 
 export default function SeparatedList({ list }) {
   const { id } = useParams();
@@ -11,7 +11,7 @@ export default function SeparatedList({ list }) {
       {list?.map((conversation) => {
         let conversationName = conversation?.name;
         if (conversation.type === 'Direct') {
-          const otherUser = conversation.users.find((user) => user._id !== getCurrentUserId());
+          const otherUser = conversation.users.find((user) => user._id !== getUserId());
           conversationName = otherUser.username || otherUser.handle;
         }
         return (
