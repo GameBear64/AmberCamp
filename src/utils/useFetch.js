@@ -11,7 +11,7 @@ export function useFetch({ url, requireAuth = true, method, body }) {
   if (requireAuth) {
     options = {
       headers: {
-        jwt: window.localStorage.getItem(`${import.meta.env.VITE_LOCAL_STORAGE_NAME}`),
+        jwt: window.localStorage.getItem(import.meta.env.VITE_LOCAL_STORAGE_NAME),
         'content-type': 'application/json',
       },
       ...options,

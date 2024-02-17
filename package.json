@@ -13,6 +13,7 @@
     "lint": "npm run prettier && npm run eslint"
   },
   "dependencies": {
+    "@nanostores/react": "^0.7.1",
     "awesome-snackbar": "^2.0.7",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -28,6 +29,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.11.2",
     "morgan": "^1.10.0",
+    "nanostores": "^0.9.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.0",
