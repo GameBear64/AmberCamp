@@ -3,11 +3,11 @@ const ChatListMobile = lazy(() => import('../../views/ChatList/ChatList.m'));
 const ProfileMobile = lazy(() => import('../../views/Profile/Profile.m'));
 const Settings = lazy(() => import('../../views/Settings/Settings/Settings.m'));
 const DangerZone = lazy(() => import('../../views/Settings/DangerZone/DangerZone'));
-const GeneralMobile = lazy(() => import('../../views/Settings/General/General.m'));
 const SecurityMobile = lazy(() => import('../../views/Settings/Security/Security'));
-const PreferencesMobile = lazy(() => import('../../views/Settings/Preferences/Preferences.m'));
+const PreferencesMobile = lazy(() => import('../../views/Settings/Preferences'));
 const Redirect = lazy(() => import('../../views/UtilPages/Redirect'));
 const Chat = lazy(() => import('../../views/Chat/Chat'));
+const General = lazy(() => import('../../views/Settings/General'));
 
 import { ChatLoaderMobile } from '../../views/Chat/Loader';
 import { ChatListLoader } from '../../views/ChatList/Loader';
@@ -56,7 +56,7 @@ const mobileRoutes = [
     ),
   },
   {
-    path: '/settings',
+    path: 'user/settings',
     element: (
       <Suspense fallback={<SettingsTabsLoader />}>
         <Settings />
@@ -75,7 +75,7 @@ const mobileRoutes = [
     path: '/settings/general',
     element: (
       <Suspense fallback={<SettingsPageLoader />}>
-        <GeneralMobile />
+        <General />
       </Suspense>
     ),
   },

@@ -5,10 +5,10 @@ const Chat = lazy(() => import('../../views/Chat/Chat'));
 const Contacts = lazy(() => import('../../views/Contacts/Contacts'));
 const Profile = lazy(() => import('../../views/Profile/Profile'));
 const Settings = lazy(() => import('../../views/Settings/Settings/Settings'));
-const General = lazy(() => import('../../views/Settings/General/General'));
+const General = lazy(() => import('../../views/Settings/General'));
 const Security = lazy(() => import('../../views/Settings/Security/Security'));
 const DangerZone = lazy(() => import('../../views/Settings/DangerZone/DangerZone'));
-const Preferences = lazy(() => import('../../views/Settings/Preferences/Preferences'));
+const Preferences = lazy(() => import('../../views/Settings/Preferences'));
 import { getCurrentUserId } from '@utils/utils';
 
 import { ChatLoader } from '../../views/Chat/Loader';

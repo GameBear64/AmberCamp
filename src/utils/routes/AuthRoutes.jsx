@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 
-import { LoginLoader } from '../../views/Login/Loader';
-import Login from '../../views/Login/Login';
-import Register from '../../views/Register/Register';
+import { LoginLoader } from '../../loaders/LoginLoader';
+import Login from '../../views/Login';
+import Register from '../../views/Register';
 
 const authRoutes = [
   {

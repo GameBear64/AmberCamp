@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
-
+import { SettingsLinks } from './enums';
 import Layout from '@layout';
 
 export default function Settings() {
@@ -12,6 +12,7 @@ export default function Settings() {
           <div className="mx-8">
             <h1 className="text-2xl font-semibold">Settings</h1>
             <div className="mt-2">
+              {Object.keys(SettingsLinks)}
               <div className={`mb-2 ${pathname === '/settings/general' && 'bg-slate-100'} rounded p-1 text-lg`}>
                 <Link to={`general`}>General</Link>
               </div>

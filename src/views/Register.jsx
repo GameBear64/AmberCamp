@@ -5,7 +5,7 @@ import InputField from '@form-inputs/Input';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 
-import Button from '../../components/Form/Inputs/Button';
+import Button from '../components/Form/Inputs/Button';
 
 export default function Register() {
   const navigate = useNavigate();
