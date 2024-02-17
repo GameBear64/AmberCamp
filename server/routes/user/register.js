@@ -84,6 +84,7 @@ module.exports.post = [
 
     let user = await UserModel.create(req.body);
     return res.status(201).json({
+      id: user._id,
       jwt: createJWTCookie(user),
     });
   },
