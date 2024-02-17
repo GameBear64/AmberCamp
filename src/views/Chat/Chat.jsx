@@ -1,9 +1,9 @@
 import { useContext, useEffect, useMemo,useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { getUserId } from '@stores/user';
 import socket from '@utils/socket';
 import useFetch from '@utils/useFetch';
-import { getCurrentUserId } from '@utils/utils';
 
 import ChatArea from '../../components/Chat/ChatArea';
 import { ChatInfo } from '../ChatList/ChatList'
@@ -27,7 +27,7 @@ export default function ChatList() {
   }, [id, chatList]);
 
   const chatBarInfo = useMemo(() => 
-    chatInfo.participants.find(({user}) => user._id !== getCurrentUserId())?.user
+    chatInfo.participants.find(({user}) => user._id !== getUserId())?.user
   , [chatInfo]);
 
   useEffect(() => {
