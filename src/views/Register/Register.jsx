@@ -1,11 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
 
+import Button from '@components/Form/Inputs/Button';
 import Form from '@form';
 import InputField from '@form-inputs/Input';
+import { setUser } from '@stores/user';
 import { successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
-
-import Button from '../../components/Form/Inputs/Button';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -16,8 +16,9 @@ export default function Register() {
       method: 'POST',
       body: data,
     }).then((res) => {
-      successSnackBar(`Your registration was successful!`);
+      setUser(res.id)
       localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.jwt);
+      successSnackBar(`Your registration was successful!`);
       navigate('/chat');
     });
   };

@@ -74,6 +74,7 @@ module.exports.post = [
     if (!validPassword) return res.status(404).json('Incorrect password');
 
     return res.status(200).json({
+      id: userAttempting._id,
       jwt: createJWTCookie(userAttempting),
     });
   },

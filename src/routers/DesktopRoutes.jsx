@@ -9,7 +9,7 @@ const General = lazy(() => import('../views/Settings/General/General'));
 const Security = lazy(() => import('../views/Settings/Security/Security'));
 const DangerZone = lazy(() => import('../views/Settings/DangerZone/DangerZone'));
 const Preferences = lazy(() => import('../views/Settings/Preferences/Preferences'));
-import { getCurrentUserId } from '@utils/utils';
+import { getUserId } from '@stores/user';
 
 import { ChatLoader } from '../views/Chat/Loader';
 import { ChatListLoader } from '../views/ChatList/Loader';
@@ -66,7 +66,7 @@ const routes = [
         path: '',
         element: (
           <Suspense fallback={<ChatLoader />}>
-            <Redirect to={`/contacts/${getCurrentUserId()}`} />
+            <Redirect to={`/contacts/${getUserId()}`} />
           </Suspense>
         ),
       },

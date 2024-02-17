@@ -1,10 +1,10 @@
+import { getUserId } from '../../../stores/user';
 import { successSnackBar } from '../../../utils/snackbars';
 import useFetch from '../../../utils/useFetch';
-import { getCurrentUserId } from '../../../utils/utils';
 
 export const getUser = (id) => {
   return useFetch({
-    url: `user/${id || getCurrentUserId()}`,
+    url: `user/${id || getUserId()}`,
     method: 'GET',
   });
 };

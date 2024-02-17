@@ -7,9 +7,10 @@ import gfm from 'remark-gfm';
 import Notes from '@components/Notes/Notes';
 import Form from '@form';
 import ButtonInputField from '@form-inputs/ButtonInput';
+import { getUserId } from '@stores/user';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
-import { getCurrentUserId, removeEmptyProperties } from '@utils/utils';
+import { removeEmptyProperties } from '@utils/utils';
 
 import MobileNavBar from '../../components/NavBar/MobileNavBar';
 
@@ -24,7 +25,7 @@ export default function ProfileMobile() {
 
   const getUser = () => {
     useFetch({
-      url: `user/${id || getCurrentUserId()}`,
+      url: `user/${id || getUserId()}`,
       method: 'GET',
     }).then((res) => {
       setUserInfo(res.message);
@@ -33,7 +34,7 @@ export default function ProfileMobile() {
 
   const updateUser = (updateObject) => {
     useFetch({
-      url: `user/${id || getCurrentUserId()}`,
+      url: `user/${id || getUserId()}`,
       method: 'POST',
       body: removeEmptyProperties(updateObject),
     }).then(() => getUser());
@@ -86,7 +87,7 @@ export default function ProfileMobile() {
         </section>
         <section className="flex flex-col">
           <div className="col-span-2 mx-9 mb-10 mt-32">
-            {id !== getCurrentUserId() && (
+            {id !== getUserId() && (
               <div className="float-left mb-4 flex w-full flex-wrap gap-2 font-semibold">
                 <button className="rounded-lg border bg-slate-50 px-2 py-1 shadow-md">Message</button>
                 <button className="rounded-lg border bg-sky-700 px-2 py-1 text-white shadow-md">Add friend</button>

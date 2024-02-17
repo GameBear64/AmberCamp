@@ -21,7 +21,7 @@ export async function useUpload({ data, name, mimetype, size = 1000000 /* 1MB */
     return fetch(`${baseURL}:${import.meta.env.VITE_SERVER_PORT}/recourse/upload`, {
       method: 'POST',
       headers: {
-        jwt: window.localStorage.getItem(`${import.meta.env.VITE_LOCAL_STORAGE_NAME}`),
+        jwt: window.localStorage.getItem(import.meta.env.VITE_LOCAL_STORAGE_NAME),
         'content-type': 'application/json',
       },
       body: JSON.stringify({

@@ -14,6 +14,7 @@ export default defineConfig({
       '@form': fileURLToPath(new URL('./src/components/Form/Form', import.meta.url)),
       '@form-inputs': fileURLToPath(new URL('./src/components/Form/FormInputs', import.meta.url)),
       '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
+      '@stores': fileURLToPath(new URL('./src/stores', import.meta.url)),
     },
   },
   build: {
