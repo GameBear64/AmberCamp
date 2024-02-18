@@ -40,9 +40,14 @@ export default function ChatList() {
       setChatLog((prev) => prev.filter((msg) => msg._id != msgId));
     });
 
+    socket.on('message/edited', (msg) => {
+      setChatLog(prev => prev.map(message => message._id === msg.id ? {...message, body: msg.body} : message))
+    });
+
     return () => {
       socket.off('message/created');
       socket.off('message/deleted');
+      socket.off('message/edited');
     };
   }, []);
 

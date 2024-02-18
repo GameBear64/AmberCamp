@@ -13,7 +13,7 @@ export default function Message({ message }) {
 
   const editMessage = (data) => {
     setEditMode(false);
-    socket.emit('message/edit', { messageId: message._id, message: data.message });
+    socket.emit('message/edit', { id: message._id, body: data.message });
   };
 
   return (

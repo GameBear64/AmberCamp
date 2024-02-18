@@ -1,16 +1,25 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 
 import Dropdown from '@components/Dropdown/Dropdown';
 
+import { successSnackBar } from '@utils/snackbars';
 import socket from '@utils/socket';
 
 import { MessagesContext } from '../../views/Chat/Chat';
 import { reactions } from '../../views/Chat/slices/enums';
 
 export default function MessageOptions({ id, setEditMode }) {
+  const {chatLog} = useContext(MessagesContext);
+
   const editMessage = () => {
     setEditMode((prev) => !prev);
   };
+  
+  const copyText = () => {    
+    const msg = chatLog?.find(m => m._id == id)
+    navigator.clipboard.writeText(msg.body)
+    successSnackBar('Message copied!')
+  }
 
   const deleteMessage = () => {
     socket.emit('message/delete', id);
@@ -32,6 +41,7 @@ export default function MessageOptions({ id, setEditMode }) {
               text: 'Copy Text',
               icon: 'content_copy',
               color: 'bg-slate-100',
+              action: copyText
             },
             {
               text: 'Mark Unread',
