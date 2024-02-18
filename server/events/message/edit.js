@@ -1,4 +1,1 @@
-module.exports = async ({ io, socket }, data) => {
-  
-
-}
+module.exports = async ({ io, socket }, data) => {};

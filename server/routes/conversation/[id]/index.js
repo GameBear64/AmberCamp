@@ -106,24 +106,19 @@ module.exports.get = [
             {
               type: ConversationType.Direct,
               participants: {
-                $all: [
-                  {$elemMatch: { user: ObjectId(req.params.id) }},
-                  {$elemMatch: { user: ObjectId(req.apiUserId) }}
-                ],
-                $size: 2
-              }
+                $all: [{ $elemMatch: { user: ObjectId(req.params.id) } }, { $elemMatch: { user: ObjectId(req.apiUserId) } }],
+                $size: 2,
+              },
             },
             {
               _id: ObjectId(req.params.id),
               type: ConversationType.Group,
               participants: {
-                $all: [
-                  {$elemMatch: { user: ObjectId(req.apiUserId) }}
-                ],
-              }
-            }
-          ]
-        }
+                $all: [{ $elemMatch: { user: ObjectId(req.apiUserId) } }],
+              },
+            },
+          ],
+        },
       },
       // {
       //   $lookup: {

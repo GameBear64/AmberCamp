@@ -1,31 +1,32 @@
-import { createContext, useEffect, useState} from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
 import Layout from '@layout';
+
 import useFetch from '@utils/useFetch';
 
 import { ChatType } from '../Chat/slices/enums';
 
 import SeparatedList from './SeparatedList';
 
-export const ChatInfo = createContext()
+export const ChatInfo = createContext();
 
 export default function ChatList() {
   const [messageList, setMessageList] = useState({
     direct: [],
-    group: []
+    group: [],
   });
-  
+
   const [currentList, setCurrentList] = useState(ChatType.Direct);
 
   const { id } = useParams();
 
   useEffect(() => {
-    useFetch({ url: 'conversation/list' }).then(data => setMessageList(data));
+    useFetch({ url: 'conversation/list' }).then((data) => setMessageList(data));
   }, []);
 
   useEffect(() => {
-    if (messageList.group.length < 1) return; 
+    if (messageList.group.length < 1) return;
 
     const isGroupOpened = messageList.group.find((chat) => chat?._id == id);
     if (isGroupOpened) setCurrentList(ChatType.Group);
@@ -64,7 +65,7 @@ export default function ChatList() {
         </div>
       }
       right={
-        <ChatInfo.Provider value={ messageList } >
+        <ChatInfo.Provider value={messageList}>
           <Outlet />
         </ChatInfo.Provider>
       }

@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
 
-import { errorSnackBar } from './snackbars'
+import { errorSnackBar } from './snackbars';
 
 const socket = io(`http://${window.location.hostname}:3030`, {
   autoConnect: true,
@@ -10,11 +10,11 @@ const socket = io(`http://${window.location.hostname}:3030`, {
 });
 
 socket.on('error', (data) => {
-  errorSnackBar(data)
+  errorSnackBar(data);
 });
 
 socket.on('impossible', (data) => {
-  errorSnackBar(data)
+  errorSnackBar(data);
 });
 
-export default socket
+export default socket;

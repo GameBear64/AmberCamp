@@ -31,10 +31,10 @@ module.exports.get = [
           participants: {
             $elemMatch: {
               user: ObjectId(req.apiUserId),
-              hideFromHistory: false
-            }
-          }
-        }
+              hideFromHistory: false,
+            },
+          },
+        },
       },
       {
         $lookup: {
@@ -47,23 +47,36 @@ module.exports.get = [
       },
       {
         $set: {
-          'participants': {
+          participants: {
             $map: {
-              input: '$participants', as: 'participant',
-              in: { $mergeObjects: [ '$$participant', { user: { $arrayElemAt: ['$populatedParticipants', { $indexOfArray: ['$populatedParticipants._id', '$$participant.user'] }] } } ] }
-            }
-          }
-        }
+              input: '$participants',
+              as: 'participant',
+              in: {
+                $mergeObjects: [
+                  '$$participant',
+                  {
+                    user: {
+                      $arrayElemAt: [
+                        '$populatedParticipants',
+                        { $indexOfArray: ['$populatedParticipants._id', '$$participant.user'] },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        },
       },
       {
-        $unset: 'populatedParticipants'
+        $unset: 'populatedParticipants',
       },
       {
         $sort: {
           updatedAt: -1,
         },
       },
-    ]);    
+    ]);
 
     res
       .status(200)

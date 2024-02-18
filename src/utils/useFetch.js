@@ -18,20 +18,20 @@ export default function useFetch({ url, requireAuth = true, redirect = true, met
   };
 
   return fetch(`${baseURL}:${import.meta.env.VITE_SERVER_PORT}/${url}`, options)
-    .then(async res => {
-      const data = await res.text().then(text => (text ? JSON.parse(text) : null));
+    .then(async (res) => {
+      const data = await res.text().then((text) => (text ? JSON.parse(text) : null));
 
       if (res.status === 401) {
         localStorage.removeItem(import.meta.env.VITE_LOCAL_STORAGE_NAME);
         if (redirect) {
-          router().navigate('/login')
+          router().navigate('/login');
           window.location.reload();
         }
       }
       if (!res.ok) return Promise.reject(data || res?.status);
       return data;
     })
-    .catch(error => {
+    .catch((error) => {
       errorSnackBar(error);
       return Promise.reject(error);
     });

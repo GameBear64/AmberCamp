@@ -1,8 +1,10 @@
 import { useState } from 'react';
 
 import Notes from '@components/Notes/Notes';
-import Form from '@form/Form';
+
 import { ButtonField } from '@form/Fields';
+import Form from '@form/Form';
+
 import { errorSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
 import { removeEmptyProperties } from '@utils/utils';

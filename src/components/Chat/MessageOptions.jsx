@@ -1,17 +1,20 @@
-import { useContext, useEffect } from "react"; 
+import { useContext, useEffect } from 'react';
 
 import Dropdown from '@components/Dropdown/Dropdown';
+
 import socket from '@utils/socket';
 
-import { MessagesContext } from "../../views/Chat/Chat";
+import { MessagesContext } from '../../views/Chat/Chat';
 import { reactions } from '../../views/Chat/slices/enums';
 
-export default function MessageOptions({id}) {
-  const editMessage = () => {}
+export default function MessageOptions({ id, setEditMode }) {
+  const editMessage = () => {
+    setEditMode((prev) => !prev);
+  };
 
   const deleteMessage = () => {
     socket.emit('message/delete', id);
-  }
+  };
 
   return (
     <div>
@@ -23,7 +26,7 @@ export default function MessageOptions({id}) {
               text: 'Edit Message',
               icon: 'edit',
               color: 'bg-slate-100',
-              action: editMessage
+              action: editMessage,
             },
             {
               text: 'Copy Text',
@@ -40,8 +43,7 @@ export default function MessageOptions({id}) {
               icon: 'cancel',
               color: 'bg-red-100',
               styles: 'text-red-500',
-              action: deleteMessage
-
+              action: deleteMessage,
             },
           ]}
           stylesOptions="flex flex-row items-center justify-between gap-3 rounded text-slate-800"

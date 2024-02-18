@@ -30,7 +30,7 @@ export default function Form({
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit((e) => {
-          onSubmit(onlyDirty ? cleanObject(e, Object.keys(dirtyFields)) : e)
+          onSubmit(onlyDirty ? cleanObject(e, Object.keys(dirtyFields)) : e);
           if (submitOnEnter) reset();
         })}
         onKeyDown={(e) => checkKeyDown(e)}>

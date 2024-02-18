@@ -1,6 +1,5 @@
 import Icon from '@components/Icon';
 export default function ChatBar({ user }) {
-  
   return (
     <div className="shadow-primary sticky top-0 z-20 flex flex-row justify-between bg-white px-8 py-3">
       <div className="flex flex-row items-center gap-2">

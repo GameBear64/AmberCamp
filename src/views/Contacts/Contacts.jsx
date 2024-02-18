@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import Layout from '@layout';
+
 import useFetch from '@utils/useFetch';
 
 import { ContactType } from './slice/enums';

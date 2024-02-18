@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 
 import Icon from '@components/Icon';
+
 import { getUserId } from '@stores/user';
 import { htmlDecode } from '@utils/utils';
 

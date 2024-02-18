@@ -1,8 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-import Button from '@form/Inputs/Button';
-import Form from '@form/Form';
 import { Input } from '@form/Fields';
+import Form from '@form/Form';
+import Button from '@form/Inputs/Button';
+
 import { setUser } from '@stores/user';
 import { successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
@@ -19,7 +20,7 @@ export default function Login() {
       },
     }).then((res) => {
       localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.jwt);
-      setUser(res.id)
+      setUser(res.id);
       successSnackBar("You've logged in successfully!");
       navigate(`/chat`);
     });

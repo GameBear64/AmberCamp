@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '@components/Form/Inputs/Button';
 import SettingsLayout from '@components/Layout/SettingsLayout';
-import Form from '@form/Form';
+
 import { Input, MediaSelect, SelectField, TagSelector, Textarea } from '@form/Fields';
+import Form from '@form/Form';
+
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
 import { cleanObject, readFile } from '@utils/utils';

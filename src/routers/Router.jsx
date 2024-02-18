@@ -13,23 +13,24 @@ const NotFound = lazy(() => import('./Special/NotFound'));
 
 import Loader from './Special/Loader';
 
-export const router = (screenSize = 1023) => createBrowserRouter([
-  {
-    path: '/',
-    element: (
-      <Suspense fallback={<Loader />}>
-        <Guard />
-      </Suspense>
-    ),
-    errorElement: <ErrorPage />,
-    children: [...(screenSize > 1023 ? routes : mobileRoutes)],
-  },
-  ...authRoutes,
-  { path: '*', element: <NotFound /> },
-]);
+export const router = (screenSize = 1023) =>
+  createBrowserRouter([
+    {
+      path: '/',
+      element: (
+        <Suspense fallback={<Loader />}>
+          <Guard />
+        </Suspense>
+      ),
+      errorElement: <ErrorPage />,
+      children: [...(screenSize > 1023 ? routes : mobileRoutes)],
+    },
+    ...authRoutes,
+    { path: '*', element: <NotFound /> },
+  ]);
 
 export default function Router() {
   const screenSize = resizeScreen();
-  
+
   return <RouterProvider router={router(screenSize)} />;
 }

@@ -4,7 +4,6 @@ import { LoginLoader } from '../views/Login/Loader';
 const Login = lazy(() => import('../views/Login/Login'));
 const Register = lazy(() => import('../views/Register/Register'));
 
-
 const authRoutes = [
   {
     path: '/register',
