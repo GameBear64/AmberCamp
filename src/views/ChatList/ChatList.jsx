@@ -15,9 +15,10 @@ export default function ChatList() {
     direct: [],
     group: []
   });
+  
   const [currentList, setCurrentList] = useState(ChatType.Direct);
 
-  let { id } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     useFetch({ url: 'conversation/list' }).then(data => setMessageList(data));
@@ -57,19 +58,6 @@ export default function ChatList() {
           {currentList === ChatType.Direct && <SeparatedList list={messageList.direct} />}
           {currentList === ChatType.Group && <SeparatedList list={messageList.group} />}
 
-          {/* <UserCard contact={user} status="friends" />
-          <UserCard contact={user} status="friends" />
-          <UserCard contact={user} status="friends" />
-          <UserCard contact={user} status="friends" /> */}
-          {/* <Link className="mt-10" to={`/chat`}>
-            no chat
-          </Link> */}
-          {/* <Link to={`/chat/651c0636b4df32649f187034`}>
-            go to <Icon icon="chat_bubble" />
-          </Link>
-          <Link to={`/chat/2`}>
-            go to <Icon icon="chat_bubble" />
-          </Link> */}
           <a href="http://localhost:3030/api-docs/#/" target="_blank" rel="noreferrer" className="mt-10">
             API Documentation
           </a>

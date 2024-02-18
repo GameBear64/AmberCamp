@@ -1,16 +1,18 @@
-import { useContext, useEffect, useMemo,useState } from 'react';
+import { createContext, useContext, useEffect, useMemo,useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import ChatArea from '@components/Chat/ChatArea';
+import ChatBar from '@components/Chat/ChatBar';
+import Message from '@components/Chat/Message';
 import { getUserId } from '@stores/user';
 import socket from '@utils/socket';
 import useFetch from '@utils/useFetch';
 
-import ChatArea from '../../components/Chat/ChatArea';
 import { ChatInfo } from '../ChatList/ChatList'
 
-import ChatBar from './ChatBar';
 import { ChatLoader } from './Loader';
-import Message from './Message';
+
+export const MessagesContext = createContext([]);
 
 export default function ChatList() {
   const { id } = useParams();
@@ -35,7 +37,15 @@ export default function ChatList() {
       setChatLog((prev) => [...prev, msg]);
     });
 
-    return () => socket.off('message/created');
+    socket.on('message/deleted', (msgId) => {
+      setChatLog(prev => prev.filter(msg => msg._id != msgId))
+    });
+
+
+    return () => {
+      socket.off('message/created');
+      socket.off('message/deleted');
+    }
   }, []);
 
   useEffect(() => {
@@ -54,9 +64,11 @@ export default function ChatList() {
     <div className="flex h-full flex-col justify-between pb-5">
       <ChatBar user={chatBarInfo}/>
       <div className="flex h-full flex-col justify-between overflow-y-auto pb-8 pt-5">
-        <ul className="relative flex w-full flex-col gap-2">
-          {chatLog?.map((message, i) => <Message key={i} message={message} />)}
-        </ul>
+        <MessagesContext.Provider value={{chatLog, setChatLog}}>
+          <ul className="relative flex w-full flex-col gap-2">
+            {chatLog?.map((message) => <Message key={message._id} message={message} />)}
+          </ul>
+        </MessagesContext.Provider>
       </div>
       <ChatArea submitHandler={sendMessage} />
     </div>

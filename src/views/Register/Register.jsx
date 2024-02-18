@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-import Button from '@components/Form/Inputs/Button';
-import Form from '@form';
-import InputField from '@form-inputs/Input';
+import Button from '@form/Inputs/Button';
+import Form from '@form/Form';
+import { Input } from '@form/Fields';
 import { setUser } from '@stores/user';
 import { successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
@@ -16,8 +16,8 @@ export default function Register() {
       method: 'POST',
       body: data,
     }).then((res) => {
-      setUser(res.id)
       localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.jwt);
+      setUser(res.id)
       successSnackBar(`Your registration was successful!`);
       navigate('/chat');
     });
@@ -29,14 +29,14 @@ export default function Register() {
         <h1 className="pb-8 text-4xl font-medium">Amber Camp Register</h1>
         <div className="flex flex-col text-left lg:mx-5">
           <Form onSubmit={(data) => registerUser(data)}>
-            <InputField placeholder="@handle" name="handle" label="Handle" styles="col-span-2" />
-            <InputField type="email" placeholder="email@ac.com" name="email" label="Email" styles="col-span-2" />
+            <Input placeholder="@handle" name="handle" label="Handle" styles="col-span-2" />
+            <Input type="email" placeholder="email@ac.com" name="email" label="Email" styles="col-span-2" />
 
             <div className="flex flex-col text-left font-semibold">
               <label className="text-grey-darkest ">Password</label>
               <div className="flex flex-row justify-between gap-4 lg:flex-col">
-                <InputField type="password" placeholder="Password" name="password" styles="col-span-2" />
-                <InputField type="password" placeholder="Confirm Password" name="confirmPassword" styles="col-span-2" />
+                <Input type="password" placeholder="Password" name="password" styles="col-span-2" />
+                <Input type="password" placeholder="Confirm Password" name="confirmPassword" styles="col-span-2" />
               </div>
             </div>
             <Button styles="w-full uppercase" label="Register" />

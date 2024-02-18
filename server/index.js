@@ -34,7 +34,6 @@ io.use(socketAuth);
 io.on('connection', (socket) => {
   for (const file of eventPaths) {
     let eventFile = file.replace(fileRegex, '$<cmd>');
-    console.log(file, eventFile);
 
     socket.on(eventFile, (...args) => {
       require(`./${file}`)({ io, socket }, ...args);

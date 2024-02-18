@@ -9,7 +9,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-quill/dist/quill.snow.css';
 
 // set user store
-useFetch({url: 'user'}).then(data => setUser({id: data._id}))
+useFetch({url: 'user', redirect: false}).then(data => setUser({id: data._id}))
 
 const Main = () => <Router />;
 

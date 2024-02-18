@@ -86,6 +86,7 @@ module.exports.get = [
       return fs.createReadStream(currentFile?.thumbnail).pipe(res);
     }
 
+    // NOTE: KNOWN BUG: if the file is present in the db but not in the file system we get an err
     fs.createReadStream(currentFile?.path).pipe(res);
   },
 ];

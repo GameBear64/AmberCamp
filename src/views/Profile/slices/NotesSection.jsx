@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import Notes from '@components/Notes/Notes';
-import Form from '@form';
-import ButtonInputField from '@form-inputs/ButtonInput';
+import Form from '@form/Form';
+import { ButtonField } from '@form/Fields';
 import { errorSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
 import { removeEmptyProperties } from '@utils/utils';
@@ -45,7 +45,7 @@ export default function NotesSection({ id, userInfo, setUserInfo }) {
           updateUser({ notes: [data.noteField, ...userInfo.notes] });
           setEditNote('');
         }}>
-        <ButtonInputField name="noteField" btnText="+Add" width="w-full" />
+        <ButtonField name="noteField" btnText="+Add" width="w-full" />
       </Form>
       {userInfo?.notes?.map((note, i) => (
         <Notes

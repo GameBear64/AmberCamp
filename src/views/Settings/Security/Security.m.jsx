@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import IconInput from '@components/Form/Inputs/IconInput';
-import FormInputs from '@form';
-import IconInputField from '@form-inputs/IconInput';
-import InputField from '@form-inputs/Input';
+import Form from '@form/Form';
+import { Input, IconField } from '@form/Fields';
 import { successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
-
-import TopBar from '../../../components/NavBar/MobileNavBar';
+import TopBar from '@components/NavBar/MobileNavBar';
 
 export default function SecurityMobile() {
   let [newEmail, setNewEmail] = useState('');
@@ -45,7 +42,7 @@ export default function SecurityMobile() {
             <h3 className="mb-3 text-xl">Change Email</h3>
             <div className="flex max-w-md flex-col">
               <div className="mb-2 flex max-w-md flex-col">
-                <IconInput width="w-full" label="Change Email" icon="mail" action={(e) => setNewEmail(e.target.value)} />
+                <IconField width="w-full" label="Change Email" icon="mail" action={(e) => setNewEmail(e.target.value)} />
               </div>
               <button
                 onClick={() => changeEmail()}
@@ -59,14 +56,14 @@ export default function SecurityMobile() {
           <div className="my-5 flex flex-col">
             <h3 className="mb-3 text-xl">Change Password</h3>
 
-            <FormInputs
+            <Form
               onSubmit={(e) => {
                 changePassword(e);
               }}>
               <div className="mb-2 flex flex-col">
-                <InputField width="w-full" name="password" type="password" label={'Current Password'} />
+                <Input width="w-full" name="password" type="password" label={'Current Password'} />
 
-                <IconInputField
+                <IconField
                   styles="flex max-w-md flex-col mb-3"
                   name="newPassword"
                   type="password"
@@ -75,7 +72,7 @@ export default function SecurityMobile() {
                   icon="lock"
                 />
 
-                <IconInputField
+                <IconField
                   styles="flex max-w-md flex-col mb-2"
                   name="confirmPassword"
                   type="password"
@@ -89,7 +86,7 @@ export default function SecurityMobile() {
                 className="mt-2 w-full max-w-md rounded bg-orange-700 px-2 py-1 text-[17px] font-semibold text-white shadow-md">
                 Change Password
               </button>
-            </FormInputs>
+            </Form>
           </div>
         </div>
       </div>

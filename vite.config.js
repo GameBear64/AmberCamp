@@ -11,8 +11,7 @@ export default defineConfig({
     alias: {
       '@layout': fileURLToPath(new URL('./src/components/Layout/Layout', import.meta.url)),
       '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
-      '@form': fileURLToPath(new URL('./src/components/Form/Form', import.meta.url)),
-      '@form-inputs': fileURLToPath(new URL('./src/components/Form/FormInputs', import.meta.url)),
+      '@form': fileURLToPath(new URL('./src/components/Form', import.meta.url)),
       '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
       '@stores': fileURLToPath(new URL('./src/stores', import.meta.url)),
     },

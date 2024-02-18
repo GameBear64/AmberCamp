@@ -1,5 +1,5 @@
-import Form from '@form';
-import InputField from '@form-inputs/Input';
+import Form from '@form/Form';
+import { Input } from '@form/Fields';
 
 import Icon from '../Icon';
 
@@ -10,7 +10,7 @@ export default function ChatArea({ submitHandler }) {
       <Icon styles="absolute px-2 pt-3 text-slate-700" icon="add_circle" />
       <Form onSubmit={submitHandler} submitOnEnter>
         <div className="flex w-full flex-row">
-          <InputField
+          <Input
             name='message'
             styleInput="shadow-primary w-full rounded-l bg-gray-50 py-3 pl-10 pr-5 focus:outline-none"
             placeholder="Send a message"

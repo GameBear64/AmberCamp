@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import gfm from 'remark-gfm';
 
 import Notes from '@components/Notes/Notes';
-import Form from '@form';
-import ButtonInputField from '@form-inputs/ButtonInput';
+import Form from '@form/Form';
+import { ButtonField } from '@form/Fields';
 import { getUserId } from '@stores/user';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
@@ -151,7 +151,7 @@ export default function ProfileMobile() {
               updateUser({ notes: [...userInfo.notes, data.noteField] });
               setEditNote('');
             }}>
-            <ButtonInputField width="w-[400px]" name="noteField" btnText="+Add" />
+            <ButtonField width="w-[400px]" name="noteField" btnText="+Add" />
           </Form>
           {userInfo?.notes?.map((note, i) => (
             <Notes

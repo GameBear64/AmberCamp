@@ -1,12 +1,10 @@
 import { useState } from 'react';
 
-import Icon from '../../components/Icon';
+import Icon from '../Icon';
 
 import MessageOptions from './MessageOptions';
 
 export default function Message({ message }) {
-  // console.log('mes', message);
-  
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -29,7 +27,7 @@ export default function Message({ message }) {
         </div>
         {/*TODO: ${last && 'top-0'} lets not use props for this, reduce variables*/}
         <div onMouseLeave={() => setShowMenu(false)} className={`absolute bottom-1 right-0 top-0 z-20`}>
-          {showMenu && <MessageOptions />}
+          {showMenu && <MessageOptions id={message._id}/>}
         </div>
       </div>
     </li>

@@ -2,12 +2,8 @@ import { useEffect, useState } from 'react';
 
 import Button from '@components/Form/Inputs/Button';
 import SettingsLayout from '@components/Layout/SettingsLayout';
-import Form from '@form';
-import Input from '@form-inputs/Input';
-import MediaSelect from '@form-inputs/MediaSelect';
-import SelectInput from '@form-inputs/SelectInput';
-import TagSelector from '@form-inputs/TagSelector';
-import TextareaField from '@form-inputs/Textarea';
+import Form from '@form/Form';
+import { Input, MediaSelect, SelectField, TagSelector, Textarea } from '@form/Fields';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
 import { cleanObject, readFile } from '@utils/utils';
@@ -83,9 +79,9 @@ export default function General() {
           label="Username"
           name="handle"
         />
-        <TextareaField rows="7" cols="30" label="Biography" name="biography" />
+        <Textarea rows="7" cols="30" label="Biography" name="biography" />
         <TagSelector width="w-80" type="text" btnText="+Add" name="tags" shouldClear label="Profile Tags" />
-        <SelectInput name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
+        <SelectField name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
         <Button label="Save" />
       </SettingsLayout>
     </Form>
