@@ -10,7 +10,7 @@ export default function TagSelector({ name, rules = {}, styles, label, ...rest }
         const tags = watch(name, []);
 
         return (
-          <div>
+          <>
             <div className={styles}>
               <label className="text-left font-semibold">{label}</label>
               <ButtonInput
@@ -43,7 +43,7 @@ export default function TagSelector({ name, rules = {}, styles, label, ...rest }
                 </div>
               ))}
             </div>
-          </div>
+          </>
         );
       }}
     </ConnectForm>
