@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
-import Icon from '../../components/Icon';
-
-import { Status } from './slice/enums';
+import { Status } from '../../utils/enums/ContactEnums';
+import Icon from '../Icon';
 
 export default function UserCard({ contact, status = '' }) {
   const navigate = useNavigate();

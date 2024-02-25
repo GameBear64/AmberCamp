@@ -6,7 +6,7 @@ import IconInputField from '@form-inputs/IconInput';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 
-import TopBar from '../../../components/TopBar/TopBar';
+import TopBar from '../../components/TopBar/TopBar';
 
 export default function Security() {
   const navigate = useNavigate();

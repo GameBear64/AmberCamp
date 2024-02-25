@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom';
 import Layout from '@layout';
 import { useFetch } from '@utils/useFetch';
 
-import { ContactType } from './slice/enums';
-import Pending from './slice/Pending';
-import ContactsList from './ContactsList';
+import ContactsList from '../components/Contacts/ContactsList';
+import Pending from '../components/Contacts/Pending';
+import { ContactType } from '../utils/enums/ContactEnums';
 
 export default function Contacts() {
   const [contactList, setContactList] = useState({});

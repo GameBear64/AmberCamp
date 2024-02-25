@@ -2,10 +2,9 @@ import { Link, useLocation } from 'react-router-dom';
 
 import Layout from '@layout';
 
-import TopBar from '../../../components/TopBar/TopBar';
-
-import { SettingsLinks } from './enums';
-import { SettingsLinkIcons } from './enums';
+import TopBar from '../../components/TopBar/TopBar';
+import { SettingsLinks } from '../../utils/enums/SettingsEnum';
+import { SettingsLinkIcons } from '../../utils/enums/SettingsEnum';
 
 export default function Settings() {
   let { pathname } = useLocation();

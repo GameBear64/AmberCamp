@@ -1,26 +1,26 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-const ChatList = lazy(() => import('../views/ChatList/ChatList'));
-const Chat = lazy(() => import('../views/Chat/Chat'));
-const Contacts = lazy(() => import('../views/Contacts/Contacts'));
-const Profile = lazy(() => import('../views/Profile/Profile'));
-const Settings = lazy(() => import('../views/Settings/Settings/Settings'));
+const ChatList = lazy(() => import('../views/ChatList'));
+const Chat = lazy(() => import('../views/Chat'));
+const Contacts = lazy(() => import('../views/Contacts'));
+const Profile = lazy(() => import('../views/Profile'));
+const Settings = lazy(() => import('../views/Settings/Settings'));
 const General = lazy(() => import('../views/Settings/General'));
-const Security = lazy(() => import('../views/Settings/Security/Security'));
-const DangerZone = lazy(() => import('../views/Settings/DangerZone/DangerZone'));
+const Security = lazy(() => import('../views/Settings/Security'));
+const DangerZone = lazy(() => import('../views/Settings/DangerZone'));
 const Preferences = lazy(() => import('../views/Settings/Preferences'));
 import { useStore } from '@nanostores/react';
 
 import authRoutes from '../routers/authRoutes';
 import Redirect from '../routers/utils/Redirect';
 import { $user } from '../stores/user';
-import { ChatLoader } from '../views/Chat/Loader';
-import { ChatListLoader } from '../views/ChatList/Loader';
-import { ProfileLoader } from '../views/Profile/slices/Loader';
-import { SettingsLoader } from '../views/Settings/Loader';
-import { SettingsPageLoader } from '../views/Settings/Loader';
 
+import { ChatListLoader } from './loaders/ChatListLoader';
+import { ChatLoader } from './loaders/ChatLoader';
+import { ProfileLoader } from './loaders/ProfileLoader';
+import { SettingsLoader } from './loaders/SettingsLoader';
+import { SettingsPageLoader } from './loaders/SettingsLoader';
 import ErrorPage from './static/ErrorPage';
 import Loader from './static/Loader';
 import NotFound from './static/NotFound';
@@ -75,7 +75,7 @@ export default function Router() {
           path: '/contacts',
           element: (
             <Suspense fallback={<ChatListLoader />}>
-              <ScreenHandler to={`/contacts/${user.id}`}>
+              <ScreenHandler from="/contacts" to={`/contacts/${user.id}`}>
                 <Contacts />
               </ScreenHandler>
             </Suspense>
@@ -95,7 +95,7 @@ export default function Router() {
           path: '/settings',
           element: (
             <Suspense fallback={<SettingsLoader />}>
-              <ScreenHandler to="general">
+              <ScreenHandler from="/settings" to="general">
                 <Settings />
               </ScreenHandler>
             </Suspense>

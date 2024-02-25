@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import ContactsList from '../ContactsList';
+import { ContactType } from '../../utils/enums/ContactEnums';
 
-import { ContactType } from './enums';
+import ContactsList from './ContactsList';
 
 export default function Pending({ incoming, outgoing, type }) {
   const [pendingType, setPendingType] = useState(type);

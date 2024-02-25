@@ -1,19 +1,24 @@
 import { useState } from 'react';
 
+import Icon from '@components/Icon';
 import Notes from '@components/Notes/Notes';
 import Form from '@form';
 import ButtonInputField from '@form-inputs/ButtonInput';
+import { getUserId } from '@stores/user';
 import { errorSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 import { removeEmptyProperties } from '@utils/utils';
 
-import Icon from '../../../components/Icon';
-
-import { getUser } from './endpoints';
-
 export default function NotesSection({ id, userInfo, setUserInfo }) {
   const [editNote, setEditNote] = useState('');
   const [rotate, setRotate] = useState(false);
+
+  const getUser = (id) => {
+    return useFetch({
+      url: `user/${id || getUserId()}`,
+      method: 'GET',
+    });
+  };
 
   const updateUser = (updateObject) => {
     useFetch({

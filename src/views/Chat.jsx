@@ -6,7 +6,7 @@ import resizeScreen from '@utils/resizeScreen';
 import socket from '@utils/socket';
 import { useFetch } from '@utils/useFetch';
 
-import { ChatLoader } from './Loader';
+import { ChatLoader } from '../routers/loaders/ChatLoader';
 
 export default function ChatList() {
   const screenSize = resizeScreen();

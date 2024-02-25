@@ -2,7 +2,8 @@ import Skeleton from 'react-loading-skeleton';
 
 import Layout from '../../components/Layout/Layout';
 import { UsersListSkeleton } from '../../components/Skeleton/UsersListSkeleton';
-import { ChatLoader } from '../Chat/Loader';
+
+import { ChatLoader } from './ChatLoader';
 
 export function ChatListLoader() {
   return (

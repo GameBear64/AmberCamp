@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-import UserCard from './UserCard';
+import UserCard from '../Cards/UserCard';
 
 export default function ContactsList({ list, type, children }) {
   const [data, setData] = useState(list);

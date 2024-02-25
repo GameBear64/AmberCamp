@@ -6,7 +6,7 @@ import { removeUser } from '@stores/user';
 import { errorSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 
-import TopBar from '../../../components/TopBar/TopBar';
+import TopBar from '../../components/TopBar/TopBar';
 
 export default function DangerZone() {
   let [password, setPassword] = useState('');

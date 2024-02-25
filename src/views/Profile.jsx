@@ -6,15 +6,14 @@ import gfm from 'remark-gfm';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import { removeEmptyProperties } from '@utils/utils';
 
-import Icon from '../../components/Icon';
-import TopBar from '../../components/TopBar/TopBar';
-import { getUserId } from '../../stores/user';
-import { useFetch } from '../../utils/useFetch';
-
-import FriendshipButtons from './slices/FriendshipButtons';
-import { ProfileMobileLoader } from './slices/Loader';
-import NotesSection from './slices/NotesSection';
-import QuillSection from './slices/QuillSection';
+import Icon from '../components/Icon';
+import FriendshipButtons from '../components/Profile/FriendshipButtons';
+import NotesSection from '../components/Profile/NotesSection';
+import QuillSection from '../components/Profile/QuillSection';
+import TopBar from '../components/TopBar/TopBar';
+import { ProfileMobileLoader } from '../routers/loaders/ProfileLoader';
+import { getUserId } from '../stores/user';
+import { useFetch } from '../utils/useFetch';
 
 export default function Profile() {
   const [userInfo, setUserInfo] = useState({});

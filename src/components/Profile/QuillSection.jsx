@@ -3,13 +3,25 @@ import ReactQuill from 'react-quill';
 
 import Icon from '@components/Icon';
 import { getUserId } from '@stores/user';
+import { successSnackBar } from '@utils/snackbars';
+import { useFetch } from '@utils/useFetch';
 import { htmlDecode } from '@utils/utils';
-
-import { updateDescription } from './endpoints';
 
 export default function QuillSection({ userId, value }) {
   const [text, setText] = useState('');
   const [disable, setDisable] = useState(true);
+
+  const updateDescription = (description) => {
+    useFetch({
+      url: 'user/settings',
+      method: 'PATCH',
+      body: { description },
+    }).then((res) => {
+      if (res.status === 200) {
+        successSnackBar('Profile updated.');
+      }
+    });
+  };
 
   useEffect(() => {
     setText(htmlDecode(value)?.replace(/<\/? ?script ?\/?>/g, ''));
