@@ -20,7 +20,7 @@ export default function Login() {
     }).then((res) => {
       if (res.status === 200) {
         localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.message.jwt);
-        setUser(res.message.id);
+        setUser({ id: res.message.id });
         successSnackBar("You've logged in successfully!");
         navigate(`/chat`);
       } else {

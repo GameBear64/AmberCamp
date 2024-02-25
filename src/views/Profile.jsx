@@ -3,25 +3,25 @@ import ReactMarkdown from 'react-markdown';
 import { useNavigate, useParams } from 'react-router-dom';
 import gfm from 'remark-gfm';
 
-import { errorSnackBar, successSnackBar } from '@utils/snackbars';
-import { removeEmptyProperties } from '@utils/utils';
+import Icon from '@components/Icon';
+import FriendshipButtons from '@components/Profile/FriendshipButtons';
+import NotesSection from '@components/Profile/NotesSection';
+import QuillSection from '@components/Profile/QuillSection';
+import TopBar from '@components/TopBar/TopBar';
+import { useStore } from '@nanostores/react';
+import { $user } from '@stores/user';
+import { useFetch } from '@utils/useFetch';
 
-import Icon from '../components/Icon';
-import FriendshipButtons from '../components/Profile/FriendshipButtons';
-import NotesSection from '../components/Profile/NotesSection';
-import QuillSection from '../components/Profile/QuillSection';
-import TopBar from '../components/TopBar/TopBar';
 import { ProfileMobileLoader } from '../routers/loaders/ProfileLoader';
-import { getUserId } from '../stores/user';
-import { useFetch } from '../utils/useFetch';
 
 export default function Profile() {
   const [userInfo, setUserInfo] = useState({});
   const { id } = useParams();
+  const user = useStore($user);
 
   const getUser = () => {
     useFetch({
-      url: `user/${id || getUserId()}`,
+      url: `user/${id || user.id}`,
       method: 'GET',
     }).then((res) => {
       if (res.status === 200) {

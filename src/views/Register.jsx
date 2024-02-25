@@ -20,7 +20,7 @@ export default function Register() {
     }).then((res) => {
       if (res.status === 201) {
         localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.message.jwt);
-        setUser(res.message.id);
+        setUser({ id: res.message.id });
         successSnackBar(`Your registration was successful!`);
         navigate('/chat');
       } else {
