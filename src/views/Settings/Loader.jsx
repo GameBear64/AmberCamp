@@ -32,7 +32,11 @@ function SettingsTabsLoader() {
 }
 
 function SettingsLoader() {
-  return <Layout left={<SettingsTabsLoader />} right={<SettingsPageLoader />} />;
+  return (
+    <Layout>
+      <SettingsPageLoader />
+    </Layout>
+  );
 }
 
 export { SettingsPageLoader, SettingsTabsLoader, SettingsLoader };

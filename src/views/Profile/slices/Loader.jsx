@@ -17,35 +17,34 @@ export function NotesLoader() {
 export function ProfileLoader() {
   return (
     <Layout
-      left={<NotesLoader />}
-      right={
-        <>
-          <section className="h-60 bg-[#DDDDDD]">
-            <section className="relative mx-4 flex flex-row pt-36">
-              <div className="relative mx-2.5 inline-block h-48 overflow-hidden rounded-[50%] border-4 border-solid border-white shadow-md">
-                <Skeleton className="inline-block rounded-[50%]" width={190} height={200} />
-              </div>
-              <div className="mt-28">
-                <Skeleton width={100} height={20} />
-                <Skeleton width={200} height={20} />
-              </div>
-            </section>
-          </section>
-          <section className="mx-12 mt-20 flex flex-row justify-between gap-6">
-            <div className="mt-10">
-              <Skeleton count={4} width="45vw" height={30} />
+    // left={<NotesLoader />}
+    >
+      <>
+        <section className="h-60 bg-[#DDDDDD]">
+          <section className="relative mx-4 flex flex-row pt-36">
+            <div className="relative mx-2.5 inline-block h-48 overflow-hidden rounded-[50%] border-4 border-solid border-white shadow-md">
+              <Skeleton className="inline-block rounded-[50%]" width={190} height={200} />
             </div>
-            <div className="flex flex-col gap-5">
-              <Skeleton width="6vw" height={20} />
-              <Skeleton width="13vw" height={20} />
-              <Skeleton count={3} width="20vw" height={20} />
-              <Skeleton className="my-5" width="20vw" height={20} />
-              <Skeleton count={4} width="20vw" height={30} />
+            <div className="mt-28">
+              <Skeleton width={100} height={20} />
+              <Skeleton width={200} height={20} />
             </div>
           </section>
-        </>
-      }
-    />
+        </section>
+        <section className="mx-12 mt-20 flex flex-row justify-between gap-6">
+          <div className="mt-10">
+            <Skeleton count={4} width="45vw" height={30} />
+          </div>
+          <div className="flex flex-col gap-5">
+            <Skeleton width="6vw" height={20} />
+            <Skeleton width="13vw" height={20} />
+            <Skeleton count={3} width="20vw" height={20} />
+            <Skeleton className="my-5" width="20vw" height={20} />
+            <Skeleton count={4} width="20vw" height={30} />
+          </div>
+        </section>
+      </>
+    </Layout>
   );
 }
 

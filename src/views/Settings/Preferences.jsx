@@ -46,7 +46,7 @@ export default function Preferences() {
   return (
     <>
       <div className="hidden lg:block">
-        <TopBar backBtnLabel="Preferences" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
+        <TopBar backBtnLabel="Preferences" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
       </div>
       this will be the place for themes, etc.
     </>

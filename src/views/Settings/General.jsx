@@ -78,7 +78,7 @@ export default function General() {
   return (
     <>
       <div className="hidden lg:block">
-        <TopBar backBtnLabel="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
+        <TopBar backBtnLabel="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
       </div>
       <div className="m-auto flex flex-col gap-1 p-10 lg:max-w-md lg:justify-center lg:px-10">
         <Form defaultValues={userInfo} onSubmit={(data) => updateUserInfo(data)} onlyDirty>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ButtonInput from '@components/Form/Inputs/ButtonInput';
-import { removeUser } from '@stores/user'
+import { removeUser } from '@stores/user';
 import { errorSnackBar } from '@utils/snackbars';
 import { useFetch } from '@utils/useFetch';
 
@@ -33,12 +33,12 @@ export default function DangerZone() {
   return (
     <div className="p-10 lg:p-0">
       <div className="hidden lg:block">
-        <TopBar backBtnLabel="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
+        <TopBar backBtnLabel="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
       </div>
       <div className="lg:px-10 lg:py-8">
         <button
           onClick={() => {
-            removeUser()
+            removeUser();
             navigate('/login');
           }}
           className="mb-4 flex flex-row rounded text-lg">

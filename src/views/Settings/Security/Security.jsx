@@ -43,7 +43,7 @@ export default function Security() {
   return (
     <>
       <div className="hidden lg:block">
-        <TopBar backBtnLabel="Security" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
+        <TopBar backBtnLabel="Security" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
       </div>
       <div className="m-auto flex flex-col gap-1 p-10 lg:max-w-md lg:justify-center lg:px-10">
         <h3 className="mb-3 text-xl">Change Email</h3>
