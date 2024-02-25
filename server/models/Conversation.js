@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { ConversationType } = require('../enums.js');
+const { ConversationType } = require('../helpers/enums.js');
 const { MessageModel } = require('./Message.js');
 
 const conversationSchema = new mongoose.Schema(

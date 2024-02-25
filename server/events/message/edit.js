@@ -3,8 +3,6 @@ const { ConversationModel } = require('../../models/Conversation');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 module.exports = async ({ io, socket }, message) => {
-  // console.log(data);
-
   const targetMessage = await MessageModel.findOne({ _id: message.id });
 
   if (!targetMessage) return socket.emit('error', 'Message Not Found');

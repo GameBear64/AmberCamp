@@ -31,6 +31,16 @@ export default function Message({ message }) {
           </div>
           {!editMode && <p className="text-md w-full max-w-[65em] break-all leading-snug text-gray-600">{message?.body}</p>}
           {editMode && <ChatArea submitHandler={editMessage} defaultValue={message?.body} />}
+        <div className='flex'>
+          {message.reactions.map(reaction => (
+            <Icon
+              key={reaction._id}
+              // TODO: known bug, will be fixed with the introduction of themes, extract emojis into classes
+              styles={`bg-slate-50 px-2 flex font-semibold text-${reaction.color}-500`}
+              icon={reaction.emoji}
+            />
+          ))}
+        </div>
         </div>
         <div className="flex h-full items-center">
           <Icon

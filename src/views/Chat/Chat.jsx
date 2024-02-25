@@ -13,12 +13,19 @@ import { ChatInfo } from '../ChatList/ChatList';
 
 import { ChatLoader } from './Loader';
 
-export const MessagesContext = createContext([]);
+export const MessagesContext = createContext({});
 
 export default function ChatList() {
   const { id } = useParams();
   const chatList = useContext(ChatInfo);
   const [chatLog, setChatLog] = useState([]);
+
+  // === TYPING STUFF ===
+  const [typing, setTyping] = useState(false);
+  const [typeTimeout, setTypeTimeout] = useState();
+
+  const typingTimeout = () => setTyping(false)
+  // ====================
 
   const chatInfo = useMemo(() => {
     const foundDirect = chatList.direct.find((entry) => entry.participants.some(({ user }) => user._id === id));
@@ -29,7 +36,7 @@ export default function ChatList() {
     return foundDirect || foundGroup;
   }, [id, chatList]);
 
-  const chatBarInfo = useMemo(() => chatInfo.participants.find(({ user }) => user._id !== getUserId())?.user, [chatInfo]);
+  const otherUser = useMemo(() => chatInfo.participants.find(({ user }) => user._id !== getUserId())?.user, [chatInfo]);
 
   useEffect(() => {
     socket.on('message/created', (msg) => {
@@ -44,10 +51,28 @@ export default function ChatList() {
       setChatLog(prev => prev.map(message => message._id === msg.id ? {...message, body: msg.body} : message))
     });
 
+    socket.on('message/reacted', (msg) => {      
+      // TODO: known bug, there is no deference between users reacting
+      setChatLog(prev => prev.map(message => message._id === msg.id ? {...message, reactions: msg.reactions} : message))
+    });
+
+    socket.on('message/typing', (from) => {    
+      if (from == otherUser?._id) {
+        if (typing) {
+          clearTimeout(typeTimeout)
+        } else {
+          setTyping(true);
+        }
+        setTypeTimeout(setTimeout(typingTimeout, 5000))
+      }
+    });
+
     return () => {
       socket.off('message/created');
       socket.off('message/deleted');
       socket.off('message/edited');
+      socket.off('message/reacted');
+      socket.off('message/typing');
     };
   }, []);
 
@@ -64,18 +89,19 @@ export default function ChatList() {
   if (id == 2) return <ChatLoader />;
 
   return (
-    <div className="flex h-full flex-col justify-between pb-5">
-      <ChatBar user={chatBarInfo} />
-      <div className="flex h-full flex-col justify-between overflow-y-auto pb-8 pt-5">
-        <MessagesContext.Provider value={{ chatLog, setChatLog }}>
-          <ul className="relative flex w-full flex-col gap-2">
-            {chatLog?.map((message) => (
-              <Message key={message._id} message={message} />
-            ))}
-          </ul>
-        </MessagesContext.Provider>
+    <MessagesContext.Provider value={{ chatLog, setChatLog, otherUser }}>
+      <div className="flex h-full flex-col justify-between pb-5">
+        <ChatBar />
+        <div className="flex h-full flex-col justify-between overflow-y-auto pb-8 pt-5">
+            <ul className="relative flex w-full flex-col gap-2">
+              {chatLog?.map((message) => (
+                <Message key={message._id} message={message} />
+              ))}
+            </ul>
+        </div>
+        <ChatArea submitHandler={sendMessage} />
+        {typing && <span>{otherUser.handle} is typing...</span>}
       </div>
-      <ChatArea submitHandler={sendMessage} />
-    </div>
+    </MessagesContext.Provider>
   );
 }

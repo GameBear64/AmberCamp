@@ -31,7 +31,7 @@
 const joi = require('joi');
 const ObjectId = require('mongoose').Types.ObjectId;
 
-const { ConversationType } = require('../../../enums.js');
+const { ConversationType } = require('../../../helpers/enums.js');
 const { joiValidate, InformationTypes } = require('../../../middleware/validation');
 const { isObjectID } = require('../../../utils');
 

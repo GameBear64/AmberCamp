@@ -6,10 +6,9 @@ import { successSnackBar } from '@utils/snackbars';
 import socket from '@utils/socket';
 
 import { MessagesContext } from '../../views/Chat/Chat';
-import { reactions } from '../../views/Chat/slices/enums';
 
 export default function MessageOptions({ id, setEditMode }) {
-  const {chatLog} = useContext(MessagesContext);
+  const { chatLog } = useContext(MessagesContext);
 
   const editMessage = () => {
     setEditMode((prev) => !prev);
@@ -25,10 +24,22 @@ export default function MessageOptions({ id, setEditMode }) {
     socket.emit('message/delete', id);
   };
 
+  const addReaction = (emoji, color) => {
+    socket.emit('message/react', {messageId: id, emoji, color });
+  }
+
   return (
     <div>
       <div className="flex flex-row gap-1.5">
-        <Dropdown stylesDropdown="flex" options={reactions} />
+        <Dropdown
+          stylesDropdown="flex"
+          options={[
+            { icon: 'add', color: 'bg-slate-100' },
+            { icon: 'favorite', iconColor: 'text-red-700', color: 'bg-slate-100', action: () => addReaction('favorite', 'pink') },
+            { icon: 'thumb_up', color: 'bg-slate-100', iconColor: 'text-yellow-600', action: () => addReaction('thumb_up', 'lime') },
+            { icon: 'thumb_down', color: 'bg-slate-100', action: () => addReaction('thumb_down', 'red') },
+          ]} 
+        />
         <Dropdown
           options={[
             {

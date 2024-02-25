@@ -52,3 +52,4 @@ exports.TimeZone = Object.freeze({
   'GMT+11': 'GMT+11',
   'GMT+12': 'GMT+12',
 });
+

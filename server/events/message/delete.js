@@ -11,6 +11,7 @@ module.exports = async ({ io, socket }, messageId) => {
   const conversation = await ConversationModel.findOne({ messages: { $in: [ObjectId(messageId)] } });
   const participantIDs = conversation.participants.map(({ user }) => user.toString());
 
+  await conversation.updateOne({ $pull: { messages: targetMessage._id } });
   await targetMessage.deleteOne();
 
   return io.to(participantIDs).emit('message/deleted', messageId);

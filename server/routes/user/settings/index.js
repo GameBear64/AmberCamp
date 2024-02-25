@@ -62,7 +62,7 @@
 
 const joi = require('joi');
 const { UserModel } = require('../../../models/User');
-const { TimeZone, Theme } = require('../../../enums');
+const { TimeZone, Theme } = require('../../../helpers/enums');
 
 const { allowNoBodyChanges, joiValidate } = require('../../../middleware/validation');
 

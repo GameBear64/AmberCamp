@@ -6,7 +6,7 @@ const { UserModel } = require('../../models/User');
 module.exports = async ({ io, socket }, data) => {
   if (data.userId === socket.apiUserId) return socket.emit('error', 'Go get some friends...');
 
-  const conversation = await ConversationModel.findOne({ 'participants.user': { $in: [ObjectId(socket.apiUserId)] } });
+  const conversation = await ConversationModel.findOne({ 'participants.user': { $all: [ObjectId(socket.apiUserId), ObjectId(data.userId)] } });
 
   if (conversation) {
     let newMessage = await MessageModel.create({ author: socket.apiUserId, body: data.message });
@@ -18,6 +18,7 @@ module.exports = async ({ io, socket }, data) => {
     const participantIDs = conversation.participants.map(({ user }) => user.toString());
     newMessage = await MessageModel.populate(newMessage, { path: 'author', select: 'handle picture' });
 
+    console.log(participantIDs)
     return io.to(participantIDs).emit('message/created', newMessage);
   }
 

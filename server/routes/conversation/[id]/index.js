@@ -21,77 +21,16 @@
  *         description: Conversation details successfully retrieved.
  *       418:
  *         description: Cannot talk to yourself.
- *   post:
- *     summary: Send a message to a conversation.
- *     description: |
- *       This endpoint allows a user to send a message to a conversation identified by the provided conversation ID.
- *     tags:
- *       - conversation
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The ID of the conversation to send a message to.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               message:
- *                 type: string
- *                 maxLength: 50000
- *                 required: true
- *           description: The message to send.
- *     security:
- *       - ApiKeyAuth: []
- *     responses:
- *       200:
- *         description: Message sent successfully.
- *       201:
- *         description: Conversation created and message sent successfully (if conversation did not exist).
- *       406:
- *         description: Conversation or user does not exist.
- *       418:
- *         description: Cannot send a message to yourself.
- *       429:
- *         description: Rate limit exceeded.
- *   delete:
- *     summary: Delete a conversation.
- *     description: |
- *       This endpoint allows a user to delete a conversation based on the provided conversation ID.
- *     tags:
- *       - conversation
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The ID of the conversation to delete.
- *     security:
- *       - ApiKeyAuth: []
- *     responses:
- *       200:
- *         description: Conversation deleted successfully.
- *       403:
- *         description: Only the group owner can delete the group.
  */
 
 const joi = require('joi');
-const throttle = require('express-throttle');
 const ObjectId = require('mongoose').Types.ObjectId;
 
-const { ConversationType } = require('../../../enums.js');
+const { ConversationType } = require('../../../helpers/enums.js');
 const { joiValidate, InformationTypes } = require('../../../middleware/validation');
 const { isObjectID } = require('../../../utils');
 
 const { ConversationModel } = require('../../../models/Conversation');
-const { UserModel } = require('../../../models/User');
-const { MessageModel } = require('../../../models/Message');
 
 module.exports.get = [
   joiValidate({ page: joi.number().min(1) }, InformationTypes.QUERY),
@@ -120,33 +59,8 @@ module.exports.get = [
           ],
         },
       },
-      // {
-      //   $lookup: {
-      //     from: 'users',
-      //     localField: 'participants.user',
-      //     foreignField: '_id',
-      //     pipeline: [{ $project: { _id: 1, picture: 1, handle: 1, name: 1 } }],
-      //     as: 'populatedParticipants',
-      //   },
-      // },
-      // {
-      //   $set: {
-      //     'participants': {
-      //       $map: {
-      //         input: '$participants', as: 'participant',
-      //         in: { $mergeObjects: [ '$$participant', { user: { $arrayElemAt: ['$populatedParticipants', { $indexOfArray: ['$populatedParticipants._id', '$$participant.user'] }] } } ] }
-      //       }
-      //     }
-      //   }
-      // },
-      // {
-      //   $unset: 'populatedParticipants'
-      // },
       {
         $project: {
-          messagesCount: {
-            $size: '$messages',
-          },
           messages: {
             $slice: ['$messages', 0, 20],
           },
@@ -174,58 +88,46 @@ module.exports.get = [
           as: 'messages',
         },
       },
+      {
+        $project: {
+          messages: 1,
+          messagesCount: {
+            $size: '$messages',
+          },
+        }
+      }
     ]);
 
-    await ConversationModel.updateOne({ id: conversation?.id }, { hideFromHistory: false }, { timestamps: false });
+    const lastMessage = conversation.messages[conversation.messagesCount - 1]?._id || null
+
+    await ConversationModel.updateOne(
+      { id: conversation?.id, 'participants.user': ObjectId(req.apiUserId) },
+      { $set: 
+        { 
+          "participants.$.hideFromHistory" : false,
+          "participants.$.lastMessageSeen" : lastMessage,
+        }
+      },
+      { timestamps: false }
+    );
+    
+
     res.status(200).json(conversation || {});
   },
 ];
 
-module.exports.post = [
-  throttle({ burst: 10, period: '5s' }),
-  joiValidate({ id: joi.custom(isObjectID) }, InformationTypes.PARAMS),
-  joiValidate({ message: joi.string().max(50000).required() }),
-  async (req, res) => {
-    if (req.params.id === req.apiUserId) return res.status(418).json('Go get some friends...');
 
-    const conversation = await ConversationModel.findOne({ 'participants.user': { $in: [ObjectId(req.apiUserId)] } });
+// this is dumb but ill keep it for reference
+// module.exports.delete = [
+//   joiValidate({ id: joi.custom(isObjectID) }, InformationTypes.PARAMS),
+//   async (req, res) => {
+//     const conversation = await ConversationModel.findOne({ 'participants.user': { $in: [ObjectId(req.apiUserId)] } });
 
-    if (conversation) {
-      const newMessage = await MessageModel.create({ author: req.apiUserId, body: req.body.message });
-      await conversation.updateOne({
-        $push: { messages: { $each: [newMessage.id], $position: 0 } },
-        hideFromHistory: false,
-      });
-
-      return res.status(200).json();
-    }
-
-    // check if ID is of a person
-    const targetUser = await UserModel.findOne({ _id: req.params.id });
-    if (targetUser) {
-      const newMessage = await MessageModel.create({ author: req.apiUserId, body: req.body.message });
-      await ConversationModel.create({
-        participants: [{ user: ObjectId(req.apiUserId) }, { user: ObjectId(req.params.id) }],
-        messages: [newMessage.id],
-      });
-
-      return res.status(201).json();
-    } else {
-      return res.status(406).json('Conversation or user does not exist.');
-    }
-  },
-];
-
-module.exports.delete = [
-  joiValidate({ id: joi.custom(isObjectID) }, InformationTypes.PARAMS),
-  async (req, res) => {
-    const conversation = await ConversationModel.findOne({ 'participants.user': { $in: [ObjectId(req.apiUserId)] } });
-
-    if (conversation.type == ConversationType.Group) {
-      const isOwner = conversation.participants.find((user) => user.groupOwner);
-      if (!isOwner) return res.status(403).json('Only the group owner can delete the group.');
-    }
-    await ConversationModel.deleteOne({ _id: conversation._id });
-    res.status(200).json();
-  },
-];
+//     if (conversation.type == ConversationType.Group) {
+//       const isOwner = conversation.participants.find((user) => user.groupOwner);
+//       if (!isOwner) return res.status(403).json('Only the group owner can delete the group.');
+//     }
+//     await ConversationModel.deleteOne({ _id: conversation._id });
+//     res.status(200).json();
+//   },
+// ];

@@ -29,7 +29,7 @@
 const joi = require('joi');
 
 const { joiValidate, InformationTypes } = require('../../middleware/validation');
-let enums = require('../../enums');
+let enums = require('../../helpers/enums');
 
 module.exports.get = [
   joiValidate(
