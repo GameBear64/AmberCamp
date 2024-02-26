@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { Status } from '../../utils/enums/ContactEnums';
+import { Status } from '../../utils/enums/contacts';
 import Icon from '../Icon';
 
 export default function UserCard({ contact, status = false }) {

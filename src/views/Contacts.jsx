@@ -7,7 +7,7 @@ import useFetch from '@utils/useFetch';
 
 import ContactsList from '../components/Contacts/ContactsList';
 import Pending from '../components/Contacts/Pending';
-import { ContactType } from '../utils/enums/ContactEnums';
+import { ContactType } from '../utils/enums/contacts';
 
 export default function Contacts() {
   const [contactList, setContactList] = useState({});
