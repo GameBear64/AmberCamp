@@ -18,7 +18,7 @@ export default function Register() {
       body: data,
     }).then((res) => {
       localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.jwt);
-      setUser(res.id);
+      setUser({id: res.id});
       successSnackBar(`Your registration was successful!`);
       navigate('/chat');
     });

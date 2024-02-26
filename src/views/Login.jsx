@@ -20,7 +20,7 @@ export default function Login() {
         ...data,
       },
     }).then((res) => {
-      setUser(res.id)
+      setUser({id: res.id})
       localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.jwt);
       successSnackBar("You've logged in successfully!");
       navigate(`/chat`);
