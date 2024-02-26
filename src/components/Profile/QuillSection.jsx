@@ -17,11 +17,7 @@ export default function QuillSection({ userId, value }) {
       url: 'user/settings',
       method: 'PATCH',
       body: { description },
-    }).then((res) => {
-      if (res.status === 200) {
-        successSnackBar('Profile updated.');
-      }
-    });
+    }).then(() => successSnackBar('Profile updated.'));
   };
 
   useEffect(() => {

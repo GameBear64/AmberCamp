@@ -26,13 +26,7 @@ export default function Profile() {
       url: `user/${id || user.id}`,
       method: 'GET',
     }).then((res) => {
-      if (res.status === 200) {
-        setUserInfo(res.message);
-      } else {
-        // For the devs to debug
-        // eslint-disable-next-line no-console
-        console.log(res.message);
-      }
+      setUserInfo(res);
     });
   };
 

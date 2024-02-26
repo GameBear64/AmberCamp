@@ -22,13 +22,9 @@ export default function General() {
       url: 'user',
       method: 'GET',
     }).then((res) => {
-      if (res.status === 200) {
-        setUserInfo(
-          cleanObject(res.message, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone'])
-        );
-      } else {
-        errorSnackBar(`${res.message}`);
-      }
+      setUserInfo(
+        cleanObject(res, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone'])
+      );
     });
   };
 
@@ -59,13 +55,7 @@ export default function General() {
       url: 'user/settings',
       method: 'PATCH',
       body: { ...data },
-    }).then((res) => {
-      if (res.status === 200) {
-        successSnackBar('Profile updated.');
-      } else {
-        errorSnackBar(`${res.message}!`);
-      }
-    });
+    }).then(() => successSnackBar('Profile updated.'));
   };
 
   useEffect(() => {
