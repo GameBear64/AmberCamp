@@ -29,9 +29,8 @@
  */
 
 const joi = require('joi');
-const ObjectId = require('mongoose').Types.ObjectId;
 
-const { ConversationType } = require('../../../helpers/enums.js');
+const { DirectOrGroup } = require('../../../helpers/aggregations');
 const { joiValidate, InformationTypes } = require('../../../middleware/validation');
 const { isObjectID } = require('../../../utils');
 
@@ -45,21 +44,7 @@ module.exports.get = [
     const messagesPerPage = 20;
 
     const [conversation] = await ConversationModel.aggregate([
-      {
-        $match: {
-          $or: [
-            {
-              type: ConversationType.Direct,
-              users: { $all: [ObjectId(req.params.id), ObjectId(req.apiUserId)], $size: 2 },
-            },
-            {
-              _id: ObjectId(req.params.id),
-              type: ConversationType.Group,
-              users: { $all: [ObjectId(req.apiUserId)] },
-            },
-          ],
-        },
-      },
+      ...DirectOrGroup(req),
       {
         $project: {
           messagesCount: {

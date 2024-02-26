@@ -3,11 +3,11 @@ import { Outlet } from 'react-router-dom';
 
 import Layout from '@layout';
 
-import useFetch from '@utils/useFetch';
+import ContactsList from '@components/Contacts/ContactsList';
+import Pending from '@components/Contacts/Pending';
 
-import ContactsList from '../components/Contacts/ContactsList';
-import Pending from '../components/Contacts/Pending';
-import { ContactType } from '../utils/enums/contacts';
+import { ContactType } from '@utils/enums/contacts';
+import useFetch from '@utils/useFetch';
 
 export default function Contacts() {
   const [contactList, setContactList] = useState({});

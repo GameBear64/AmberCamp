@@ -19,6 +19,7 @@
 const ObjectId = require('mongoose').Types.ObjectId;
 
 const { ConversationModel } = require('../../models/Conversation');
+const { participantsToUsers } = require('../../helpers/aggregations');
 
 module.exports.get = [
   // TODO: agregate with the relationship to get the nickname status as well
@@ -36,41 +37,7 @@ module.exports.get = [
           },
         },
       },
-      {
-        $lookup: {
-          from: 'users',
-          localField: 'participants.user',
-          foreignField: '_id',
-          pipeline: [{ $project: { _id: 1, picture: 1, handle: 1, name: 1 } }],
-          as: 'populatedParticipants',
-        },
-      },
-      {
-        $set: {
-          participants: {
-            $map: {
-              input: '$participants',
-              as: 'participant',
-              in: {
-                $mergeObjects: [
-                  '$$participant',
-                  {
-                    user: {
-                      $arrayElemAt: [
-                        '$populatedParticipants',
-                        { $indexOfArray: ['$populatedParticipants._id', '$$participant.user'] },
-                      ],
-                    },
-                  },
-                ],
-              },
-            },
-          },
-        },
-      },
-      {
-        $unset: 'populatedParticipants',
-      },
+      ...participantsToUsers,
       {
         $sort: {
           updatedAt: -1,

@@ -26,7 +26,7 @@
 const joi = require('joi');
 const ObjectId = require('mongoose').Types.ObjectId;
 
-const { ConversationType } = require('../../../helpers/enums.js');
+const { participantsToUsers, DirectOrGroup } = require('../../../helpers/aggregations');
 const { joiValidate, InformationTypes } = require('../../../middleware/validation');
 const { isObjectID } = require('../../../utils');
 
@@ -39,28 +39,13 @@ module.exports.get = [
     if (req.params.id === req.apiUserId) return res.status(418).json('You want to talk to yourself? Think.');
 
     const [conversation] = await ConversationModel.aggregate([
-      {
-        $match: {
-          $or: [
-            {
-              type: ConversationType.Direct,
-              participants: {
-                $all: [{ $elemMatch: { user: ObjectId(req.params.id) } }, { $elemMatch: { user: ObjectId(req.apiUserId) } }],
-                $size: 2,
-              },
-            },
-            {
-              _id: ObjectId(req.params.id),
-              type: ConversationType.Group,
-              participants: {
-                $all: [{ $elemMatch: { user: ObjectId(req.apiUserId) } }],
-              },
-            },
-          ],
-        },
-      },
+      ...DirectOrGroup(req),
+      ...participantsToUsers,
       {
         $project: {
+          participants: 1,
+          type: 1,
+          updatedAt: 1,
           messages: {
             $slice: ['$messages', 0, 20],
           },
@@ -91,6 +76,9 @@ module.exports.get = [
       {
         $project: {
           messages: 1,
+          participants: 1,
+          type: 1,
+          updatedAt: 1,
           messagesCount: {
             $size: '$messages',
           },

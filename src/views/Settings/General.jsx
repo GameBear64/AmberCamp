@@ -8,8 +8,8 @@ import TopBar from '@components/Layout/TopBar';
 import { Input, MediaSelect, SelectField, TagSelector, Textarea } from '@form/Fields';
 import Form from '@form/Form';
 
+import { timezones } from '@utils/enums/timezone';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
-import { timezones } from '@utils/timezone';
 import useFetch from '@utils/useFetch';
 import { cleanObject, readFile } from '@utils/utils';
 

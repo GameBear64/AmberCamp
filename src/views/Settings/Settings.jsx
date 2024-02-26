@@ -4,8 +4,7 @@ import Layout from '@layout';
 
 import TopBar from '@components/Layout/TopBar';
 
-import { SettingsLinks } from '@utils/enums/SettingsEnums';
-import { SettingsLinkIcons } from '@utils/enums/SettingsEnums';
+import { SettingsLinkIcons, SettingsLinks } from '@utils/enums/settings';
 
 export default function Settings() {
   let { pathname } = useLocation();

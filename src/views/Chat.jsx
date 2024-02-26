@@ -1,9 +1,8 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import ChatArea from '@components/Chat/ChatArea';
 import ChatBar from '@components/Chat/ChatBar';
-import { ChatInfo } from '@components/Chat/ChatList';
 import Message from '@components/Chat/Message';
 
 import { getUserId } from '@stores/user';
@@ -16,8 +15,8 @@ export const MessagesContext = createContext({});
 
 export default function Chat() {
   const { id } = useParams();
-  const chatList = useContext(ChatInfo);
   const [chatLog, setChatLog] = useState([]);
+  const [chatUsers, setChatUsers] = useState([]);
 
   // === TYPING STUFF ===
   const [typing, setTyping] = useState(false);
@@ -26,16 +25,7 @@ export default function Chat() {
   const typingTimeout = () => setTyping(false)
   // ====================
 
-  const chatInfo = useMemo(() => {
-    const foundDirect = chatList.direct.find((entry) => entry.participants.some(({ user }) => user._id === id));
-    const foundGroup = chatList.group.find((entry) => entry._id === id);
-
-    if (!foundDirect && !foundGroup) return { participants: [] };
-
-    return foundDirect || foundGroup;
-  }, [id, chatList]);
-
-  const otherUser = useMemo(() => chatInfo.participants.find(({ user }) => user._id !== getUserId())?.user, [chatInfo]);
+  const otherUser = useMemo(() => chatUsers.find(({ user }) => user._id !== getUserId())?.user, [chatUsers]);
 
   useEffect(() => {
     socket.on('message/created', (msg) => {
@@ -78,6 +68,7 @@ export default function Chat() {
   useEffect(() => {
     useFetch({ url: `conversation/${id}` }).then((data) => {
       setChatLog(data?.messages || []);
+      setChatUsers(data.participants)
     });
   }, [id]);
 

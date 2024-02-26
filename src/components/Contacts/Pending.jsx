@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ContactType } from '@utils/enums/ContactEnums';
+import { ContactType } from '@utils/enums/contacts';
 
 import ContactsList from './ContactsList';
 
