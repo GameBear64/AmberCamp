@@ -1,5 +1,5 @@
 import Icon from '../Icon';
-export default function MobileNavBar({ backButton, backBtnLabel, actionButton, title, moreOptions, actionOptions }) {
+export default function TopBar({ backButton, backBtnLabel, actionButton, title, moreOptions, actionOptions }) {
   return (
     <div
       onClick={actionButton}

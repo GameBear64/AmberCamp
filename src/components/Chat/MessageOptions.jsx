@@ -5,7 +5,7 @@ import Dropdown from '@components/Dropdown/Dropdown';
 import { successSnackBar } from '@utils/snackbars';
 import socket from '@utils/socket';
 
-import { MessagesContext } from '../../views/Chat/Chat';
+import { MessagesContext } from '../../views/Chat';
 
 export default function MessageOptions({ id, setEditMode }) {
   const { chatLog } = useContext(MessagesContext);

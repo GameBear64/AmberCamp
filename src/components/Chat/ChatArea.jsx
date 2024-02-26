@@ -5,7 +5,7 @@ import Form from '@form/Form';
 
 import socket from '@utils/socket';
 
-import { MessagesContext } from '../../views/Chat/Chat';
+import { MessagesContext } from '../../views/Chat';
 import Icon from '../Icon';
 
 export default function ChatArea({ submitHandler, defaultValue }) {

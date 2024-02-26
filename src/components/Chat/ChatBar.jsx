@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import Icon from '@components/Icon';
 
-import { MessagesContext } from '../../views/Chat/Chat';
+import { MessagesContext } from '../../views/Chat';
 
 export default function ChatBar() {
   const { otherUser } = useContext(MessagesContext);
