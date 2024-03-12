@@ -1,4 +1,5 @@
 import { errorSnackBar } from '../../../utils/snackbars';
+import Icon from '../../Icon';
 import ConnectForm from '../ConnectForm';
 import ButtonInput from '../Inputs/ButtonInput';
 
@@ -27,8 +28,8 @@ export default function TagSelector({ name, rules = {}, styles, label, ...rest }
             </div>
             <div className="flex flex-wrap">
               {tags?.map((tag) => (
-                <div key={tag} className="m-1 flex flex-row rounded-xl border border-slate-300 shadow-md ">
-                  <span
+                <div key={tag} className="m-1 flex flex-row rounded-xl border border-base-m shadow-sm">
+                  <Icon
                     onClick={() => {
                       setValue(
                         name,
@@ -36,9 +37,9 @@ export default function TagSelector({ name, rules = {}, styles, label, ...rest }
                         { shouldDirty: true, shouldTouch: true }
                       );
                     }}
-                    className="material-symbols-outlined m-2">
-                    close
-                  </span>
+                    styles="m-2"
+                    icon="close"
+                  />
                   <p className="p-2.5 text-center font-semibold">{tag}</p>
                 </div>
               ))}

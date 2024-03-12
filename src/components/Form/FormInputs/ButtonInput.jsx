@@ -5,7 +5,7 @@ export default function InputField({
   styles,
   width = 'w-60',
   btnText,
-  btnBG = 'bg-neutral-100',
+  btnBG = 'bg-base-s',
   btnColor,
   ...rest
 }) {
@@ -18,9 +18,7 @@ export default function InputField({
               <input
                 {...rest}
                 {...register(name, rules)}
-                className={`h-10 w-full rounded-l border pl-1 shadow-inner shadow-slate-200 ${
-                  errors[name] ? 'border-2 border-red-600' : 'border-slate-200'
-                }`}
+                className={`h-10 w-full rounded-l bg-base-m pl-1 focus:outline-none ${errors[name] && 'border-2 border-red-600'}`}
               />
               <button
                 type="submit"

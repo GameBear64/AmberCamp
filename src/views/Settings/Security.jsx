@@ -46,12 +46,9 @@ export default function Security() {
         <TopBar backBtnLabel="Security" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
       </div>
       <div className="m-auto flex flex-col gap-1 p-10 lg:max-w-md lg:justify-center lg:px-10">
-        <h3 className="mb-3 text-xl">Change Email</h3>
+        <h3 className="mb-3 text-xl text-txtPrimary">Change Email</h3>
         <div className="mb-2 flex max-w-md flex-col">
-          <FormInputs
-            onSubmit={(e) => {
-              changeEmail(e);
-            }}>
+          <FormInputs onSubmit={(e) => changeEmail(e)}>
             <div className="mb-2">
               <IconInputField name="email" type="email" width="w-72 lg:w-full" label="Change Email" icon="mail" />
             </div>
@@ -59,11 +56,8 @@ export default function Security() {
           </FormInputs>
         </div>
         <hr />
-        <h3 className="my-3 text-xl">Change Password</h3>
-        <FormInputs
-          onSubmit={(e) => {
-            changePassword(e);
-          }}>
+        <h3 className="my-3 text-xl text-txtPrimary">Change Password</h3>
+        <FormInputs onSubmit={(e) => changePassword(e)}>
           <div className="mb-2 flex flex-col gap-3">
             <IconInputField name="password" type="password" width="w-72 lg:w-full" label="Current Password" />
             <IconInputField name="newPassword" type="password" width="w-72 lg:w-full" label="New Password" icon="lock" />

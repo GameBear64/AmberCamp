@@ -4,9 +4,9 @@ export default function Input({ innerRef, label, invalid = false, styleInput, ..
       <label className="text-left font-semibold">{label}</label>
       <input
         ref={innerRef}
-        className={`mt-1.5 shadow-slate-100 ${
-          invalid ? 'border-2 border-red-600' : 'border-slate-200'
-        } h-10 rounded-l border pl-1.5 text-[17px] ${styleInput}`}
+        className={`mt-1.5 bg-base-m text-txtPrimary ${
+          invalid && 'border-2 border-red-600'
+        } h-10 rounded-l pl-1.5 text-[17px] ${styleInput}`}
         {...rest}
       />
     </div>
