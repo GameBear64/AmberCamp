@@ -6,6 +6,7 @@
     "dev": "concurrently -n BE,FE -c yellow,blue \"npm run BE\" \"npm run FE\"",
     "BE": "cd server && nodemon",
     "FE": "vite",
+    "lineStats": "cloc --fullpath --not-match-d=\"(node_modules|App/ios|App/android)\" --not-match-f=\"(yarn.lock|package.json|pnpm-lock.yaml|package-lock.json)\" .",
     "build": "vite build",
     "preview": "vite preview",
     "prettier": "prettier --write \"src/**/*.{js,jsx}\" \"server/**/*.js\"",
