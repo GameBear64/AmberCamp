@@ -41,7 +41,7 @@ export default function Preferences() {
         </div>
         <div>
           <h2 className="font-semibold text-txtSecondary">ACCENT</h2>
-          <div className="mt-2 flex flex-row gap-4">
+          <div className="mt-2 flex flex-row flex-wrap gap-4">
             <button
               onClick={() => setAccent('Pink')}
               className={`accent-button bg-pink-600 ${accent === 'Pink' && 'border-4 border-txtSecondary'} `}></button>
