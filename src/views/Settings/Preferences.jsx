@@ -24,18 +24,18 @@ export default function Preferences() {
               onClick={() => setTheme('Light')}
               className="light-icon rounded-full bg-yellow-500 px-3 py-2
               text-white shadow-md transition duration-700 ease-in-out">
-              <Icon styles="text-2xl" icon="light_mode" />
+              <span className="material-symbols-outlined cursor-pointer text-2xl">light_mode</span>
             </button>
             <button
               onClick={() => setTheme('Dark')}
               className="dark-icon rounded-full bg-blue-950 px-3 py-2 text-white shadow-md transition duration-700 ease-in-out">
-              <Icon styles="text-2xl" icon="dark_mode" />
+              <span className="material-symbols-outlined cursor-pointer text-2xl">dark_mode</span>
             </button>
             <button
               onClick={() => setTheme('Black')}
               className="black-icon rounded-full bg-black px-3 py-2 text-white shadow-md
               transition duration-700 ease-in-out">
-              <Icon styles="text-2xl" icon="nights_stay" />
+              <span className="material-symbols-outlined cursor-pointer text-2xl">nights_stay</span>
             </button>
           </div>
         </div>

@@ -7,7 +7,7 @@ import { $preferences } from '../../stores/preferences';
 export default function Layout({ children }) {
   const preferences = useStore($preferences);
   const outlet = useOutlet();
-  const themes = `theme-${preferences.theme.toLocaleLowerCase()} theme-${preferences.accent?.toLocaleLowerCase()}`;
+  const themes = `theme-${preferences.theme?.toLocaleLowerCase()} theme-${preferences.accent?.toLocaleLowerCase()}`;
   return (
     <div className={`flex h-screen bg-base ${themes}`}>
       <div className="flex-1">

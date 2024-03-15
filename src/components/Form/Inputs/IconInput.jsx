@@ -6,7 +6,6 @@ export default function IconInput({ label, invalid, icon, action, width = 'w-60'
       <label className="text-txtPrimary">{label}</label>
       <div className="mt-1.5">
         <Icon styles="absolute px-1 pt-2" icon={icon} />
-        {icon}
         <input
           ref={innerRef}
           onChange={action}
