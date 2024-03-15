@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  /* works only if theme is applied to the body */
+  background-color: var(--base);
+}
+
 * {
   scrollbar-width: thin;
   scrollbar-color: black;
