@@ -56,7 +56,7 @@ export default function QuillSection({ userId, value }) {
       {userId === getUserId() && (
         <Icon
           icon={disable ? 'edit' : 'save'}
-          styles="rounded absolute -top-3 right-2 text-right bg-slate-200 text-black p-1.5 shadow-primary"
+          styles="rounded absolute -top-3 right-2 text-right bg-base-m text-black p-1.5"
           onClick={() => {
             if (!disable) {
               updateDescription(text);

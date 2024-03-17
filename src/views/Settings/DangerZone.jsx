@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import TopBar from '@components/TopBar/TopBar';
 import { ButtonField, Form } from '@form/Fields';
 import { removeUser } from '@stores/user';
+import { errorSnackBar } from '@utils/snackbars';
+import { useFetch } from '@utils/useFetch';
+
 import useFetch from '@utils/useFetch';
 
 export default function DangerZone() {
@@ -31,8 +34,9 @@ export default function DangerZone() {
             removeUser();
             navigate('/login');
           }}
-          className="mb-4 flex flex-row rounded text-lg">
-          <span className="material-symbols-outlined mr-1.5 align-bottom text-[27px]">move_item</span>Log out
+          className="mb-4 flex flex-row rounded text-lg text-txtPrimary">
+          <Icon styles="mr-1.5 align-bottom text-[27px]" icon="move_item" />
+          Log out
         </button>
         <hr className="hidden lg:block" />
 
@@ -42,11 +46,9 @@ export default function DangerZone() {
             <label className="mb-1">Please, enter your password to proceed.</label>
             <ButtonField
               textColor="text-white"
-              actionInput={(e) => {
-                setPassword(e.target.value);
-              }}
+              actionInput={(e) => setPassword(e.target.value)}
               btnText="Delete"
-              btnBG="bg-red-600"
+              btnBG="bg-primary-shade"
               btnColor="text-white"
               actionButton={() => deleteUser()}
               inputType="password"
@@ -55,7 +57,7 @@ export default function DangerZone() {
         ) : (
           <button
             onClick={() => setActive(!active)}
-            className="rounded bg-red-600 px-2.5 py-1 text-lg text-white hover:bg-red-700 lg:mt-4">
+            className="rounded bg-primary-shade px-2.5 py-1 text-lg text-white hover:bg-primary-dark lg:mt-4">
             Delete Account
           </button>
         )}

@@ -64,7 +64,7 @@ export default function General() {
       <div className="hidden lg:block">
         <TopBar backBtnLabel="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
       </div>
-      <div className="m-auto flex flex-col gap-1 p-10 lg:max-w-md lg:justify-center lg:px-10">
+      <div className="m-auto flex flex-col gap-1 p-10 text-txtPrimary lg:max-w-md lg:justify-center lg:px-10">
         <Form defaultValues={userInfo} onSubmit={(data) => updateUserInfo(data)} onlyDirty>
           <SettingsLayout styles="w-3/6 m-auto lg:w-full">
             <MediaSelect styles="" label="Background Picture" name="background" />

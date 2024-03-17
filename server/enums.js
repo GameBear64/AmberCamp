@@ -4,6 +4,15 @@ exports.Theme = Object.freeze({
   Black: 'Black',
 });
 
+exports.Accent = Object.freeze({
+  Orange: 'Orange',
+  Red: 'Red',
+  Green: 'Green',
+  Violet: 'Violet',
+  Blue: 'Blue',
+  Pink: 'Pink',
+});
+
 exports.FriendshipStatus = Object.freeze({
   Strangers: 'Strangers',
   PendingIn: 'PendingIn',

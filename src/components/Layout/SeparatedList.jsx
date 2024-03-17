@@ -2,6 +2,8 @@ import { Link, useParams } from 'react-router-dom';
 
 import { getUserId } from '@stores/user';
 
+import Icon from '../Icon';
+
 export default function SeparatedList({ list }) {
   const { id } = useParams();
 
@@ -21,7 +23,7 @@ export default function SeparatedList({ list }) {
               conversation._id == id ? 'border-rose-600' : 'border-cyan-600'
             }`}>
             <Link to={`/chat/${conversation._id}`}>{conversationName}</Link>
-            <button className="material-symbols-outlined">close</button>
+            <Icon icon="close" />
           </div>
         );
       })}

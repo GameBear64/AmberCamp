@@ -10,7 +10,7 @@ export default function SettingsLayout({ children, styles }) {
             child
           ) : (
             <>
-              <label className="mb-2 self-start text-2xl font-bold">{child.props.label}</label>
+              <label className="mb-2 self-start text-2xl font-bold text-txtPrimary">{child.props.label}</label>
               <div>{cloneElement(child, { label: undefined })}</div>
             </>
           )}

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { RelationshipModel } = require('./Relationship');
-const { Theme, TimeZone } = require('../enums.js');
+const { Theme, TimeZone, Accent } = require('../enums.js');
 
 const userSchema = new mongoose.Schema(
   {
@@ -84,7 +84,8 @@ const userSchema = new mongoose.Schema(
     },
     accent: {
       type: String,
-      default: '',
+      enum: Object.values(Accent),
+      default: Accent.Orange,
     },
     language: {
       type: String,

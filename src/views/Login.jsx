@@ -27,9 +27,23 @@ export default function Login() {
         <h1 className="pb-8 text-4xl font-medium">Amber Camp Login</h1>
         <div className="flex flex-col text-left lg:mx-5">
           <Form onSubmit={(data) => loginUser(data)}>
-            <Input type="email" placeholder="email@ac.com" name="email" label="Email" styles="col-span-2" />
-            <Input type="password" placeholder="Password" name="password" label="Password" styles="col-span-2 shadow-none" />
-            <SubmitButton styles="w-full uppercase" label="Login" />
+            <Input
+              type="email"
+              placeholder="email@ac.com"
+              name="email"
+              label="Email"
+              styles="col-span-2"
+              bgColor="bg-neutral-black"
+            />
+            <Input
+              bgColor="bg-neutral-black"
+              type="password"
+              placeholder="Password"
+              name="password"
+              label="Password"
+              styles="col-span-2 shadow-none"
+            />
+            <SubmitButton styles="w-full uppercase bg-red-600" label="Login" />
             <Link to={'/register'} className="float-right mt-2 font-medium text-blue-700 underline">
               No account? Make one!
             </Link>
