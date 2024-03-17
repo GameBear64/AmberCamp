@@ -5,11 +5,9 @@ import ButtonInput from '@components/Form/Inputs/ButtonInput';
 import TopBar from '@components/Layout/TopBar';
 
 import { removeUser } from '@stores/user';
-import { errorSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 
 import Icon from '../../components/Icon';
-import TopBar from '../../components/TopBar/TopBar';
 
 export default function DangerZone() {
   let [password, setPassword] = useState('');

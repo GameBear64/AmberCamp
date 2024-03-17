@@ -30,8 +30,8 @@ export default function Register() {
         <h1 className="pb-8 text-4xl font-medium">Amber Camp Register</h1>
         <div className="flex flex-col text-left lg:mx-5">
           <Form onSubmit={(data) => registerUser(data)}>
-            <InputField bgColor="bg-neutral-black" placeholder="@handle" name="handle" label="Handle" styles="col-span-2" />
-            <InputField
+            <Input bgColor="bg-neutral-black" placeholder="@handle" name="handle" label="Handle" styles="col-span-2" />
+            <Input
               bgColor="bg-neutral-black"
               type="email"
               placeholder="email@ac.com"
@@ -43,14 +43,8 @@ export default function Register() {
             <div className="flex flex-col text-left font-semibold">
               <label className="text-grey-darkest ">Password</label>
               <div className="flex flex-row justify-between gap-4 lg:flex-col">
-                <InputField
-                  bgColor="bg-neutral-black"
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  styles="col-span-2"
-                />
-                <InputField
+                <Input bgColor="bg-neutral-black" type="password" placeholder="Password" name="password" styles="col-span-2" />
+                <Input
                   bgColor="bg-neutral-black"
                   type="password"
                   placeholder="Confirm Password"

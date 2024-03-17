@@ -87,9 +87,9 @@ export default function General() {
               name="handle"
             />
 
-            <TextareaField rows="7" cols="30" label="Biography" name="biography" />
+            <Textarea rows="7" cols="30" label="Biography" name="biography" />
             <TagSelector width="w-full" type="text" btnText="+Add" name="tags" shouldClear label="Profile Tags" />
-            <SelectInput name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
+            <SelectField name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
             <Button size="small" styles="lg:w-full" label="Save" />
           </SettingsLayout>
         </Form>

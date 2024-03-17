@@ -33,7 +33,7 @@ export default function Login() {
         <h1 className="pb-8 text-4xl font-medium">Amber Camp Login</h1>
         <div className="flex flex-col text-left lg:mx-5">
           <Form onSubmit={(data) => loginUser(data)}>
-            <InputField
+            <Input
               type="email"
               placeholder="email@ac.com"
               name="email"
@@ -41,7 +41,7 @@ export default function Login() {
               styles="col-span-2"
               bgColor="bg-neutral-black"
             />
-            <InputField
+            <Input
               bgColor="bg-neutral-black"
               type="password"
               placeholder="Password"

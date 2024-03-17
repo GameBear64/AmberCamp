@@ -28,7 +28,6 @@ import Loader from './static/Loader';
 import NotFound from './static/NotFound';
 import Guard from './utils/RouterGuard';
 import ScreenHandler from './utils/ScreenHandler';
-import authRoutes from './AuthRoutes';
 
 let router;
 

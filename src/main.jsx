@@ -17,9 +17,9 @@ import 'react-quill/dist/quill.snow.css';
 useFetch({ url: 'user', redirect: false }).then((data) => {
   setUser({ id: data._id });
   setPreferences({
-    theme: data.message.theme,
-    accent: data.message.accent,
-    language: data.message.language,
+    theme: data.theme,
+    accent: data.accent,
+    language: data.language,
   });
 });
 
