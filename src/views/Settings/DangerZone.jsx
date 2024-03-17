@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import ButtonInput from '@components/Form/Inputs/ButtonInput';
+import TopBar from '@components/TopBar/TopBar';
+import { ButtonField, Form } from '@form/Fields';
 import { removeUser } from '@stores/user';
-import { errorSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
-
-import TopBar from '../../components/TopBar/TopBar';
 
 export default function DangerZone() {
   let [password, setPassword] = useState('');
@@ -42,7 +40,7 @@ export default function DangerZone() {
           <div className="mb-5 flex flex-col">
             <h1 className="mt-2 text-lg">Delete Account</h1>
             <label className="mb-1">Please, enter your password to proceed.</label>
-            <ButtonInput
+            <ButtonField
               textColor="text-white"
               actionInput={(e) => {
                 setPassword(e.target.value);

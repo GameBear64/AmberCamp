@@ -12,9 +12,7 @@ export default function Register() {
     useFetch({
       url: 'user/register',
       method: 'POST',
-      body: {
-        ...data,
-      },
+      body: { ...data },
     }).then((response) => {
       localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, response.jwt);
       setUser({ id: response.id });

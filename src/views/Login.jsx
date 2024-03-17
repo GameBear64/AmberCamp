@@ -12,9 +12,7 @@ export default function Login() {
     useFetch({
       url: 'user/login',
       method: 'POST',
-      body: {
-        ...data,
-      },
+      body: { ...data },
     }).then((response) => {
       localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, response.jwt);
       setUser({ id: response.id });
