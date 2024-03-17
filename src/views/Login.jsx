@@ -20,7 +20,7 @@ export default function Login() {
         ...data,
       },
     }).then((res) => {
-      setUser({id: res.id})
+      setUser({ id: res.id });
       localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.jwt);
       successSnackBar("You've logged in successfully!");
       navigate(`/chat`);
@@ -33,9 +33,23 @@ export default function Login() {
         <h1 className="pb-8 text-4xl font-medium">Amber Camp Login</h1>
         <div className="flex flex-col text-left lg:mx-5">
           <Form onSubmit={(data) => loginUser(data)}>
-            <Input type="email" placeholder="email@ac.com" name="email" label="Email" styles="col-span-2" />
-            <Input type="password" placeholder="Password" name="password" label="Password" styles="col-span-2 shadow-none" />
-            <Button styles="w-full uppercase" label="Login" />
+            <InputField
+              type="email"
+              placeholder="email@ac.com"
+              name="email"
+              label="Email"
+              styles="col-span-2"
+              bgColor="bg-neutral-black"
+            />
+            <InputField
+              bgColor="bg-neutral-black"
+              type="password"
+              placeholder="Password"
+              name="password"
+              label="Password"
+              styles="col-span-2 shadow-none"
+            />
+            <Button styles="w-full uppercase bg-red-600" label="Login" />
             <Link to={'/register'} className="float-right mt-2 font-medium text-blue-700 underline">
               No account? Make one!
             </Link>

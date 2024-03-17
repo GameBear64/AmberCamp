@@ -5,7 +5,11 @@ import ButtonInput from '@components/Form/Inputs/ButtonInput';
 import TopBar from '@components/Layout/TopBar';
 
 import { removeUser } from '@stores/user';
-import useFetch from '@utils/useFetch';
+import { errorSnackBar } from '@utils/snackbars';
+import { useFetch } from '@utils/useFetch';
+
+import Icon from '../../components/Icon';
+import TopBar from '../../components/TopBar/TopBar';
 
 export default function DangerZone() {
   let [password, setPassword] = useState('');
@@ -35,8 +39,9 @@ export default function DangerZone() {
             removeUser();
             navigate('/login');
           }}
-          className="mb-4 flex flex-row rounded text-lg">
-          <span className="material-symbols-outlined mr-1.5 align-bottom text-[27px]">move_item</span>Log out
+          className="mb-4 flex flex-row rounded text-lg text-txtPrimary">
+          <Icon styles="mr-1.5 align-bottom text-[27px]" icon="move_item" />
+          Log out
         </button>
         <hr className="hidden lg:block" />
 
@@ -48,7 +53,7 @@ export default function DangerZone() {
               textColor="text-white"
               actionInput={(e) => setPassword(e.target.value)}
               btnText="Delete"
-              btnBG="bg-red-600"
+              btnBG="bg-primary-shade"
               btnColor="text-white"
               actionButton={() => deleteUser()}
               invalid={errorBorder}
@@ -58,7 +63,7 @@ export default function DangerZone() {
         ) : (
           <button
             onClick={() => setActive(!active)}
-            className="rounded bg-red-600 px-2.5 py-1 text-lg text-white hover:bg-red-700 lg:mt-4">
+            className="rounded bg-primary-shade px-2.5 py-1 text-lg text-white hover:bg-primary-dark lg:mt-4">
             Delete Account
           </button>
         )}

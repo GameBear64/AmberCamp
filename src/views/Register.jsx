@@ -18,7 +18,7 @@ export default function Register() {
       body: data,
     }).then((res) => {
       localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.jwt);
-      setUser({id: res.id});
+      setUser({ id: res.id });
       successSnackBar(`Your registration was successful!`);
       navigate('/chat');
     });
@@ -30,17 +30,36 @@ export default function Register() {
         <h1 className="pb-8 text-4xl font-medium">Amber Camp Register</h1>
         <div className="flex flex-col text-left lg:mx-5">
           <Form onSubmit={(data) => registerUser(data)}>
-            <Input placeholder="@handle" name="handle" label="Handle" styles="col-span-2" />
-            <Input type="email" placeholder="email@ac.com" name="email" label="Email" styles="col-span-2" />
+            <InputField bgColor="bg-neutral-black" placeholder="@handle" name="handle" label="Handle" styles="col-span-2" />
+            <InputField
+              bgColor="bg-neutral-black"
+              type="email"
+              placeholder="email@ac.com"
+              name="email"
+              label="Email"
+              styles="col-span-2"
+            />
 
             <div className="flex flex-col text-left font-semibold">
               <label className="text-grey-darkest ">Password</label>
               <div className="flex flex-row justify-between gap-4 lg:flex-col">
-                <Input type="password" placeholder="Password" name="password" styles="col-span-2" />
-                <Input type="password" placeholder="Confirm Password" name="confirmPassword" styles="col-span-2" />
+                <InputField
+                  bgColor="bg-neutral-black"
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  styles="col-span-2"
+                />
+                <InputField
+                  bgColor="bg-neutral-black"
+                  type="password"
+                  placeholder="Confirm Password"
+                  name="confirmPassword"
+                  styles="col-span-2"
+                />
               </div>
             </div>
-            <Button styles="w-full uppercase" label="Register" />
+            <Button styles="w-full uppercase bg-red-600" label="Register" />
             <Link to={'/login'} className="float-right mt-2 font-medium text-blue-700 underline">
               Already have an account?
             </Link>

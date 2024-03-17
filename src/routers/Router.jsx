@@ -15,6 +15,7 @@ const Preferences = lazy(() => import('../views/Settings/Preferences'));
 
 import { $user } from '@stores/user';
 
+import authRoutes from '../routers/AuthRoutes';
 import Redirect from '../routers/utils/Redirect';
 
 import { ChatListLoader } from './loaders/ChatListLoader';
@@ -29,7 +30,7 @@ import Guard from './utils/RouterGuard';
 import ScreenHandler from './utils/ScreenHandler';
 import authRoutes from './AuthRoutes';
 
-let router
+let router;
 
 export default function Router() {
   const user = useStore($user);
@@ -148,4 +149,4 @@ export default function Router() {
   return <RouterProvider router={router} />;
 }
 
-export { router }
+export { router };

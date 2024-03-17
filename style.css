@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  /* works only if theme is applied to the body */
+  background-color: var(--base);
+}
+
 * {
   scrollbar-width: thin;
   scrollbar-color: black;
@@ -25,31 +30,158 @@
 *::-webkit-scrollbar-thumb {
   min-height: 40px;
 }
-.react-markdown a {
-  color: blue;
-  text-decoration: underline;
-}
 
 @layer components {
   .btn {
-    @apply ml-auto mr-0 flex max-h-max max-w-max items-center justify-center whitespace-nowrap rounded border border-neutral-500 bg-transparent px-2 py-1 font-bold text-neutral-500 hover:border-neutral-800 hover:shadow-lg focus:outline-none focus:ring;
+    @apply ml-auto text-txtPrimary mr-0 flex max-h-max max-w-max items-center justify-center whitespace-nowrap rounded border border-neutral-500 bg-transparent px-2 py-1 font-bold text-neutral-500 hover:border-neutral-800 hover:shadow-lg focus:outline-none focus:ring;
   }
   .nav-btn {
-    @apply relative px-1.5 py-3 flex items-center space-x-4 justify-start text-gray-700 rounded-lg;
+    @apply relative px-1.5 py-3 flex items-center space-x-4 justify-start text-icon rounded-lg;
+  }
+  .react-markdown a {
+    @apply underline text-primary;
   }
   .input-primary {
     @apply bg-neutral-200 rounded p-5 text-base w-full;
   }
   .btn-red {
-    @apply flex justify-center flex-row border-[1.5px] text-red-600 border-red-600 bg-red-50 py-1 px-3 rounded-lg font-semibold;
+    @apply flex bg-base justify-center text-txtPrimary flex-row border-[1.5px] text-red-600 border-red-600 py-1 px-3 rounded-lg font-semibold;
   }
   .btn-green {
-    @apply flex justify-center flex-row border-[1.5px] text-green-600 border-green-600 bg-green-50 py-1 px-3 rounded-lg font-semibold;
+    @apply flex bg-base justify-center text-txtPrimary flex-row border-[1.5px] text-green-600 border-green-600 py-1 px-3 rounded-lg font-semibold;
   }
   .btn-blue {
-    @apply flex justify-center flex-row border-[1.5px] text-blue-600 border-blue-600 bg-blue-50 py-1 px-3 rounded-lg font-semibold;
+    @apply flex bg-base justify-center text-txtPrimary flex-row border-[1.5px] text-blue-600 border-blue-600 py-1 px-3 rounded-lg font-semibold;
   }
   .shadow-primary {
     @apply shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)];
   }
+  .accent-button {
+    @apply flex h-10 w-10 items-center justify-center rounded-full shadow-md transition duration-700 ease-in-out;
+  }
+}
+.theme-orange {
+  --color-primary-50: theme('colors.orange.50');
+  --color-primary-100: theme('colors.orange.100');
+  --color-primary-200: theme('colors.orange.200');
+  --color-primary-300: theme('colors.orange.300');
+  --color-primary-400: theme('colors.orange.400');
+  --color-primary-500: theme('colors.orange.500');
+  --color-primary-600: theme('colors.orange.600');
+  --color-primary-700: theme('colors.orange.700');
+  --color-primary-800: theme('colors.orange.800');
+  --color-primary-900: theme('colors.orange.900');
+}
+
+.theme-red {
+  --color-primary-50: theme('colors.red.50');
+  --color-primary-100: theme('colors.red.100');
+  --color-primary-200: theme('colors.red.200');
+  --color-primary-300: theme('colors.red.300');
+  --color-primary-400: theme('colors.red.400');
+  --color-primary-500: theme('colors.red.500');
+  --color-primary-600: theme('colors.red.600');
+  --color-primary-700: theme('colors.red.700');
+  --color-primary-800: theme('colors.red.800');
+  --color-primary-900: theme('colors.red.900');
+}
+
+.theme-green {
+  --color-primary-50: theme('colors.lime.100');
+  --color-primary-100: theme('colors.lime.200');
+  --color-primary-200: theme('colors.lime.300');
+  --color-primary-300: theme('colors.lime.400');
+  --color-primary-400: theme('colors.lime.500');
+  --color-primary-500: theme('colors.lime.600');
+  --color-primary-600: theme('colors.lime.700');
+  --color-primary-700: theme('colors.lime.800');
+  --color-primary-800: theme('colors.lime.900');
+  --color-primary-900: theme('colors.lime.950');
+}
+
+.theme-blue {
+  --color-primary-50: theme('colors.blue.50');
+  --color-primary-100: theme('colors.blue.100');
+  --color-primary-200: theme('colors.blue.200');
+  --color-primary-300: theme('colors.blue.300');
+  --color-primary-400: theme('colors.blue.400');
+  --color-primary-500: theme('colors.blue.500');
+  --color-primary-600: theme('colors.blue.600');
+  --color-primary-700: theme('colors.blue.700');
+  --color-primary-800: theme('colors.blue.800');
+  --color-primary-900: theme('colors.blue.900');
+}
+
+.theme-violet {
+  --color-primary-50: theme('colors.violet.50');
+  --color-primary-100: theme('colors.violet.100');
+  --color-primary-200: theme('colors.violet.200');
+  --color-primary-300: theme('colors.violet.300');
+  --color-primary-400: theme('colors.violet.400');
+  --color-primary-500: theme('colors.violet.500');
+  --color-primary-600: theme('colors.violet.600');
+  --color-primary-700: theme('colors.violet.700');
+  --color-primary-800: theme('colors.violet.800');
+  --color-primary-900: theme('colors.violet.900');
+}
+
+.theme-pink {
+  --color-primary-50: theme('colors.pink.50');
+  --color-primary-100: theme('colors.pink.100');
+  --color-primary-200: theme('colors.pink.200');
+  --color-primary-300: theme('colors.pink.300');
+  --color-primary-400: theme('colors.pink.400');
+  --color-primary-500: theme('colors.pink.500');
+  --color-primary-600: theme('colors.pink.600');
+  --color-primary-700: theme('colors.pink.700');
+  --color-primary-800: theme('colors.pink.800');
+  --color-primary-900: theme('colors.pink.900');
+}
+
+.theme-light {
+  --base-x: theme('colors.white');
+  --base: theme('colors.neutral.50');
+  --base-m: theme('colors.neutral.100');
+  --base-s: theme('colors.neutral.300');
+  --base-xs: theme('colors.neutral.500');
+  --base-xxs: theme('colors.neutral.200');
+  --txtPrimary: theme('colors.neutral.800');
+  --txtSecondary: theme('colors.neutral.600');
+  --icon: theme('colors.gray.700');
+  --primary-light: var(--color-primary-200);
+  --primary: var(--color-primary-500);
+  --primary-shade: var(--color-primary-600);
+  --primary-dark: var(--color-primary-800);
+}
+
+.theme-dark {
+  --base-x: theme('colors.neutral.800');
+  --base: theme('colors.neutral.900');
+  --base-m: theme('colors.neutral.700');
+  --base-s: theme('colors.neutral.600');
+  --base-xs: theme('colors.neutral.500');
+  --base-xxs: theme('colors.neutral.400');
+  --txtPrimary: theme('colors.white');
+  --txtSecondary: theme('colors.neutral.300');
+  --icon: theme('colors.white');
+  --primary-light: var(--color-primary-300);
+  --primary: var(--color-primary-500);
+  --primary-shade: var(--color-primary-600);
+  --primary-dark: var(--color-primary-800);
+}
+
+.theme-black {
+  --base-x: theme('colors.neutral.900');
+  --base: theme('colors.black');
+  --base-m: theme('colors.neutral.800');
+  --base-s: theme('colors.neutral.600');
+  --base-xs: theme('colors.neutral.400');
+  --base-xxs: theme('colors.neutral.300');
+  --txtPrimary: theme('colors.white');
+  --txtSecondary: theme('colors.neutral.300');
+  --icon: theme('colors.white');
+  --primary-light: var(--color-primary-300);
+  --primary: var(--color-primary-500);
+  --primary-shade: var(--color-primary-600);
+  --primary-dark: var(--color-primary-800);
 }

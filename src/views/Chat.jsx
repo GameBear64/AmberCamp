@@ -9,6 +9,7 @@ import { getUserId } from '@stores/user';
 import socket from '@utils/socket';
 import useFetch from '@utils/useFetch';
 
+import Icon from '../components/Icon';
 import { ChatLoader } from '../routers/loaders/ChatLoader';
 
 export const MessagesContext = createContext({});
@@ -22,7 +23,7 @@ export default function Chat() {
   const [typing, setTyping] = useState(false);
   const [typeTimeout, setTypeTimeout] = useState();
 
-  const typingTimeout = () => setTyping(false)
+  const typingTimeout = () => setTyping(false);
   // ====================
 
   const otherUser = useMemo(() => chatUsers.find(({ user }) => user._id !== getUserId())?.user, [chatUsers]);
@@ -37,22 +38,22 @@ export default function Chat() {
     });
 
     socket.on('message/edited', (msg) => {
-      setChatLog(prev => prev.map(message => message._id === msg.id ? {...message, body: msg.body} : message))
+      setChatLog((prev) => prev.map((message) => (message._id === msg.id ? { ...message, body: msg.body } : message)));
     });
 
-    socket.on('message/reacted', (msg) => {      
+    socket.on('message/reacted', (msg) => {
       // TODO: known bug, there is no deference between users reacting
-      setChatLog(prev => prev.map(message => message._id === msg.id ? {...message, reactions: msg.reactions} : message))
+      setChatLog((prev) => prev.map((message) => (message._id === msg.id ? { ...message, reactions: msg.reactions } : message)));
     });
 
-    socket.on('message/typing', (from) => {    
+    socket.on('message/typing', (from) => {
       if (from == otherUser?._id) {
         if (typing) {
-          clearTimeout(typeTimeout)
+          clearTimeout(typeTimeout);
         } else {
           setTyping(true);
         }
-        setTypeTimeout(setTimeout(typingTimeout, 5000))
+        setTypeTimeout(setTimeout(typingTimeout, 5000));
       }
     });
 
@@ -68,7 +69,7 @@ export default function Chat() {
   useEffect(() => {
     useFetch({ url: `conversation/${id}` }).then((data) => {
       setChatLog(data?.messages || []);
-      setChatUsers(data.participants)
+      setChatUsers(data.participants);
     });
   }, [id]);
 
@@ -83,11 +84,11 @@ export default function Chat() {
       <div className="flex h-full flex-col justify-between pb-5">
         <ChatBar />
         <div className="flex h-full flex-col justify-between overflow-y-auto pb-8 pt-5">
-            <ul className="relative flex w-full flex-col gap-2">
-              {chatLog?.map((message) => (
-                <Message key={message._id} message={message} />
-              ))}
-            </ul>
+          <ul className="relative flex w-full flex-col gap-2">
+            {chatLog?.map((message) => (
+              <Message key={message._id} message={message} />
+            ))}
+          </ul>
         </div>
         <ChatArea submitHandler={sendMessage} />
         {typing && <span>{otherUser.handle} is typing...</span>}

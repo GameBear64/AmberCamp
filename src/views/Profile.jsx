@@ -59,8 +59,10 @@ export default function Profile() {
             alt=""
           />
           <div className="mb-2">
-            <h2 className="flex items-center text-xl font-bold leading-6">{userInfo?.name || userInfo?.handle}</h2>
-            <p className="text-sm font-medium leading-4 text-gray-600">@{userInfo?.handle}</p>
+            <h2 className="flex items-center text-xl font-bold leading-6 text-txtPrimary">
+              {userInfo?.name || userInfo?.handle}
+            </h2>
+            <p className="text-sm font-medium leading-4 text-txtSecondary">@{userInfo?.handle}</p>
           </div>
         </div>
         <div className="ml-3 mt-3 w-full justify-center space-y-1">
@@ -68,13 +70,15 @@ export default function Profile() {
             <FriendshipButtons userInfo={userInfo} setUserInfo={setUserInfo} />
           </div>
           <div className="flex flex-col gap-4">
-            <ReactMarkdown remarkPlugins={[gfm]} className="react-markdown leading-tight">
+            <ReactMarkdown remarkPlugins={[gfm]} className="react-markdown leading-tight text-txtSecondary">
               {userInfo?.biography}
             </ReactMarkdown>
             {userInfo?.tags?.length > 0 && (
-              <span className="flex flex-row gap-3">
+              <span className="flex flex-row gap-3 ">
                 {userInfo?.tags.map((tag, i) => (
-                  <p key={i} className="rounded-xl border border-slate-300 p-1.5 text-center font-semibold shadow-sm">
+                  <p
+                    key={i}
+                    className="flex flex-row rounded-xl border border-base-m p-2.5 text-center font-semibold text-txtPrimary shadow-sm">
                     {tag}
                   </p>
                 ))}
@@ -83,13 +87,13 @@ export default function Profile() {
             <div className="flex flex-wrap gap-2 text-gray-600 lg:flex-col">
               <div className="flex">
                 <Icon icon="calendar_month" />
-                <span className="ml-1">
+                <span className="ml-1 text-txtSecondary">
                   {new Date(userInfo?.createdAt).toLocaleString('en-GB', {
                     dateStyle: 'short',
                   })}
                 </span>
               </div>
-              <div className="flex">
+              <div className="flex text-txtSecondary">
                 <Icon icon="schedule" />
                 <span className="ml-1">{userInfo?.timezone}</span>
               </div>
@@ -98,7 +102,7 @@ export default function Profile() {
         </div>
       </div>
 
-      <section className="grid grid-cols-[1fr_25em] grid-rows-1 lg:mx-2 lg:flex lg:flex-col">
+      <section className="grid grid-cols-[1fr_25em] grid-rows-1 text-txtPrimary lg:mx-2 lg:flex lg:flex-col">
         <QuillSection userId={id} value={userInfo.description} />
         <section className="overflow-y-auto overflow-x-hidden border-l">
           <NotesSection id={id} userInfo={userInfo} setUserInfo={setUserInfo} />

@@ -12,7 +12,7 @@ export default function Options({ option, style }) {
         setActive(false);
       }}
       onClick={option?.action}
-      className={`cursor-pointer rounded p-2 ${style} ${option?.styles} ${active ? option?.color : 'bg-white'}`}>
+      className={`${active ? option?.color : 'bg-base'} cursor-pointer p-2 text-txtPrimary`}>
       {option?.text}
       {option?.icon && <Icon styles={`text-xl ${option?.iconColor ? option.iconColor : 'text-slate-700'}`} icon={option?.icon} />}
     </li>

@@ -2,7 +2,6 @@ import UserCard from '@components/Cards/UserCard';
 
 import { getUserId } from '@stores/user';
 
-// NOTE: check history, components are just functions
 export default function SeparatedList({ list }) {
   if (list?.length < 1) return <p> nobody here yet </p>;
 

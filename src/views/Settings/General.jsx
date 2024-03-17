@@ -22,9 +22,7 @@ export default function General() {
       url: 'user',
       method: 'GET',
     }).then((res) => {
-      setUserInfo(
-        cleanObject(res, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone'])
-      );
+      setUserInfo(cleanObject(res, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone']));
     });
   };
 
@@ -64,40 +62,38 @@ export default function General() {
 
   return (
     <>
-      <TopBar backBtnLabel="General" backButton="arrow_back_ios_new" actionButton={() => navigate('/user/settings')} />
-      <Form
-        defaultValues={userInfo}
-        onSubmit={(data) => {
-          updateUserInfo(data);
-        }}
-        onlyDirty>
-        <SettingsLayout>
-          <MediaSelect styles="mb-5" width="w-80" label="Background Picture" name="background" />
-          <MediaSelect styles="mb-5" width="w-80" label="Profile Picture" name="picture" />
-          <Input
-            rules={{
-              required: 'This field is required.',
-              minLength: {
-                value: 3,
-                message: 'Username must be at least 3 characters!',
-              },
-              maxLength: {
-                value: 30,
-                message: "Username can't be longer than 3 characters!",
-              },
-            }}
-            styles="mb-5 mt-2"
-            width="w-80"
-            type="text"
-            label="Username"
-            name="name"
-          />
-          <Textarea styles="mt-2" rows="7" cols="30" label="Biography" name="biography" />
-          <TagSelector styles="mb-5 mt-2" width="w-72" type="text" btnText="+Add" name="tags" shouldClear label="Profile Tags" />
-          <SelectField name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
-          <Button type="submit" label="Save" />
-        </SettingsLayout>
-      </Form>
+      <div className="hidden lg:block">
+        <TopBar backBtnLabel="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
+      </div>
+      <div className="m-auto flex flex-col gap-1 p-10 text-txtPrimary lg:max-w-md lg:justify-center lg:px-10">
+        <Form defaultValues={userInfo} onSubmit={(data) => updateUserInfo(data)} onlyDirty>
+          <SettingsLayout styles="w-3/6 m-auto lg:w-full">
+            <MediaSelect styles="" label="Background Picture" name="background" />
+            <MediaSelect styles="" label="Profile Picture" name="picture" />
+            <Input
+              rules={{
+                required: 'This field is required.',
+                minLength: {
+                  value: 3,
+                  message: 'Username must be at least 3 characters!',
+                },
+                maxLength: {
+                  value: 30,
+                  message: "Username can't be longer than 3 characters!",
+                },
+              }}
+              width="w-80"
+              label="Username"
+              name="handle"
+            />
+
+            <TextareaField rows="7" cols="30" label="Biography" name="biography" />
+            <TagSelector width="w-full" type="text" btnText="+Add" name="tags" shouldClear label="Profile Tags" />
+            <SelectInput name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
+            <Button size="small" styles="lg:w-full" label="Save" />
+          </SettingsLayout>
+        </Form>
+      </div>
     </>
   );
 }
