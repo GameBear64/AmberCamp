@@ -1,15 +1,17 @@
+import Icon from '../../Icon';
+
 export default function IconInput({ label, invalid, icon, action, width = 'w-60', innerRef, ...rest }) {
   return (
     <>
-      <label>{label}</label>
+      <label className="text-txtPrimary">{label}</label>
       <div className="mt-1.5">
-        <span className="material-symbols-outlined absolute px-1 pt-2 text-slate-700">{icon}</span>
+        <Icon styles="absolute px-1 pt-2" icon={icon} />
         <input
           ref={innerRef}
           onChange={action}
-          className={`pl-2 shadow-slate-100 ${invalid && 'border-2 border-red-600'} h-10 rounded-l border ${
+          className={`bg-base-m pl-2 ${invalid && 'border-2 border-red-600'} h-10 rounded-l text-txtPrimary ${
             icon && 'pl-8'
-          } text-lg shadow-inner ${width} border-slate-200`}
+          } text-lg shadow-inner ${width}`}
           {...rest}
         />
       </div>

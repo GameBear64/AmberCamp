@@ -2,7 +2,23 @@
 module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'base-x': 'var(--base-x)',
+        base: 'var(--base)',
+        'base-m': 'var(--base-m)',
+        'base-s': 'var(--base-s)',
+        'base-xs': 'var(--base-xs)', //for borders
+        'base-xxs': 'var(--base-xxs)', //for borders
+        txtPrimary: 'var(--txtPrimary)',
+        txtSecondary: 'var(--txtSecondary)',
+        icon: 'var(--icon)',
+        'primary-light': 'var(--primary-light)',
+        primary: 'var(--primary)',
+        'primary-shade': 'var(--primary-shade)',
+        'primary-dark': 'var(--primary-dark)',
+      },
+    },
     screens: {
       //https://tailwindcss.com/docs/responsive-design
       '2xl': { max: '1535px' },

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 export default function ButtonInput({
   btnText,
-  btnBG = 'bg-neutral-100',
+  btnBG = 'bg-base-s',
   btnColor,
   innerRef,
   actionInput = () => {},
@@ -22,7 +22,7 @@ export default function ButtonInput({
   }, [value]);
 
   return (
-    <div className={`mb-6 mt-2 flex flex-row text-center ${width}`}>
+    <div className={`mb-6 mt-2 flex flex-row text-center text-txtPrimary ${width}`}>
       <input
         type={inputType}
         {...rest}
@@ -32,8 +32,8 @@ export default function ButtonInput({
           setState(e.target.value);
         }}
         value={state || ''}
-        className={`h-10 w-full rounded-l border pl-1 shadow-inner shadow-slate-200 ${
-          invalid ? 'border-2 border-red-600' : 'border-slate-200'
+        className={`h-10 w-full rounded-l bg-base-m pl-1 text-txtPrimary focus:outline-none ${
+          invalid && 'border-2 border-red-600'
         }`}
       />
       <button

@@ -21,24 +21,24 @@ export default function Contacts() {
       <>
         <div className="my-2 flex w-full justify-evenly ">
           <button
-            className={`m-2 flex justify-center text-[16px] font-semibold ${
-              currentList === ContactType.Friends && 'border-b-[3px] border-yellow-400'
+            className={`m-2 flex justify-center text-[16px] font-semibold text-txtPrimary ${
+              currentList === ContactType.Friends && 'border-b-[3px] border-primary'
             }`}
             onClick={() => setCurrentList(ContactType.Friends)}>
             Friends
           </button>
 
           <button
-            className={`m-2 flex justify-center text-[16px] font-semibold ${
-              currentList === ContactType.Pending && 'border-b-[3px] border-yellow-400'
+            className={`m-2 flex justify-center text-[16px] font-semibold text-txtPrimary ${
+              currentList === ContactType.Pending && 'border-b-[3px] border-primary'
             }`}
             onClick={() => setCurrentList(ContactType.Pending)}>
             Pending
           </button>
 
           <button
-            className={`m-2 flex justify-center text-[16px] font-semibold ${
-              currentList === ContactType.Blocked && 'border-b-[3px] border-yellow-400'
+            className={`m-2 flex justify-center text-[16px] font-semibold text-txtPrimary ${
+              currentList === ContactType.Blocked && 'border-b-[3px] border-primary'
             }`}
             onClick={() => setCurrentList(ContactType.Blocked)}>
             Blocked

@@ -62,7 +62,7 @@
 
 const joi = require('joi');
 const { UserModel } = require('../../../models/User');
-const { TimeZone, Theme } = require('../../../enums');
+const { TimeZone, Theme, Accent } = require('../../../enums');
 
 const { allowNoBodyChanges, joiValidate } = require('../../../middleware/validation');
 
@@ -79,7 +79,7 @@ module.exports.patch = [
     tags: joi.array().max(6).optional().messages({ 'array.max': 'Only 6 tags allowed!' }),
     timezone: joi.string().valid(...Object.values(TimeZone)),
     theme: joi.string().valid(...Object.values(Theme)),
-    accent: joi.string().length(6),
+    accent: joi.string().valid(...Object.values(Accent)),
     language: joi.string().length(2),
   }),
   async (req, res) => {

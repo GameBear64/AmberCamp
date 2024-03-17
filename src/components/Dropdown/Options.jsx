@@ -11,7 +11,7 @@ export default function Options({ option }) {
         setActive(false);
       }}
       onClick={option?.action}
-      className={`${active ? option?.color : 'bg-white'} cursor-pointer rounded p-2`}>
+      className={`${active ? option?.color : 'bg-base'} cursor-pointer p-2 text-txtPrimary`}>
       {option?.text}
     </li>
   );

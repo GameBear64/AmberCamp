@@ -6,6 +6,7 @@ import resizeScreen from '@utils/resizeScreen';
 import socket from '@utils/socket';
 import { useFetch } from '@utils/useFetch';
 
+import Icon from '../components/Icon';
 import { ChatLoader } from '../routers/loaders/ChatLoader';
 
 export default function ChatList() {
@@ -37,7 +38,7 @@ export default function ChatList() {
       <h1>Chat {id}</h1>
       {screenSize <= 1024 && (
         <Link to={`/chat`}>
-          back to <span className="material-icons">home</span>
+          back to <Icon icon="home" />
         </Link>
       )}
 
