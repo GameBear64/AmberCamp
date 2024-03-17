@@ -11,7 +11,7 @@ export default function TextareaField({ name, label, rules = {}, ...rest }) {
           <div className="mt-1.5">
             <textarea
               ref={ref}
-              className={`w-full min-w-[10em] rounded-lg border p-1 text-lg text-black shadow-inner shadow-slate-100 ${
+              className={`w-full min-w-[10em] rounded-lg bg-base-m p-1 text-lg text-txtPrimary ${
                 errors[name] ? 'border-2 border-red-600' : 'border-slate-200'
               }`}
               {...registerRest}

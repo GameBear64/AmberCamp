@@ -11,9 +11,7 @@ export default function InputField({ name, label, rules = {}, styles, styleInput
               <label className="text-left font-semibold">{label}</label>
               <input
                 ref={ref}
-                className={`mt-1.5 shadow-slate-100 ${
-                  errors[name] ? 'border-2 border-red-600' : 'border-slate-200'
-                } h-10 rounded-l border pl-1.5 text-[17px] ${styleInput}`}
+                className={`mt-1.5 text-txtPrimary ${ errors[name] && 'border-2 border-red-600' } h-10 rounded-l pl-1.5 text-[17px] ${styleInput}`}
                 {...registerRest}
                 {...rest}
               />
