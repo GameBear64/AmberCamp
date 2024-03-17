@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 
+import TopBar from '@components/TopBar/TopBar';
 import { useStore } from '@nanostores/react';
+import { $preferences, setAccent, setTheme } from '@stores/preferences';
 
-import TopBar from '../../components/TopBar/TopBar';
-import { $preferences, setAccent, setTheme } from '../../stores/preferences';
 export default function Preferences() {
   const navigate = useNavigate();
   const accent = useStore($preferences).accent;

@@ -1,6 +1,6 @@
 import { map } from 'nanostores';
 
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 
 const defaultState = { theme: 'Light', accent: 'Orange', language: 'EN' };
 export const $preferences = map(defaultState);
