@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { useStore } from '@nanostores/react';
@@ -24,13 +24,13 @@ useFetch({ url: 'user' }).then((data) => {
 
 function Main() {
   const preferences = useStore($preferences);
-  const themes = `theme-${preferences.theme.toLocaleLowerCase()} theme-${preferences.accent?.toLocaleLowerCase()}`;
 
   useEffect(() => {
-    document.body.className = themes
-  }, [preferences.theme, preferences.accent])
+    const themes = `theme-${preferences.theme.toLocaleLowerCase()} theme-${preferences.accent?.toLocaleLowerCase()}`;
+    document.body.className = themes;
+  }, [preferences.theme, preferences.accent]);
 
-  return <Router />
+  return <Router />;
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<Main />);
