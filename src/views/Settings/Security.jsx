@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@components/Form/Inputs/Button';
 import FormInputs from '@form';
 import IconInputField from '@form-inputs/IconInput';
-import { errorSnackBar, successSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import { successSnackBar } from '@utils/snackbars';
+import useFetch from '@utils/useFetch';
 
 import TopBar from '../../components/TopBar/TopBar';
 
@@ -16,13 +16,9 @@ export default function Security() {
       url: `user/settings/resetPassword`,
       method: 'POST',
       body: fields,
-    }).then((res) => {
-      if (res.status === 200) {
-        localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.message.jwt);
-        successSnackBar('Your password was changed successfully!');
-      } else {
-        errorSnackBar(`${res.message}`);
-      }
+    }).then((response) => {
+      localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, response.jwt);
+      successSnackBar('Your password was changed successfully!');
     });
   };
 
@@ -31,13 +27,7 @@ export default function Security() {
       url: 'user/settings',
       method: 'PATCH',
       body: newEmail,
-    }).then((res) => {
-      if (res.status === 200) {
-        successSnackBar('Your email was changed successfully!');
-      } else {
-        errorSnackBar(`${res.message}`);
-      }
-    });
+    }).then(() => successSnackBar('Your email was changed successfully!'));
   };
 
   return (

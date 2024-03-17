@@ -4,14 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import ButtonInput from '@components/Form/Inputs/ButtonInput';
 import { removeUser } from '@stores/user';
 import { errorSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 
 import TopBar from '../../components/TopBar/TopBar';
 
 export default function DangerZone() {
   let [password, setPassword] = useState('');
   let [active, setActive] = useState('');
-  let [errorBorder, setErrorBorder] = useState(false);
   const navigate = useNavigate();
 
   const deleteUser = () => {
@@ -21,13 +20,6 @@ export default function DangerZone() {
       body: {
         password,
       },
-    }).then((res) => {
-      if (res.status === 201) {
-        setErrorBorder(false);
-      } else {
-        setErrorBorder(true);
-        errorSnackBar(`${res.message}!`);
-      }
     });
   };
   return (
@@ -59,7 +51,6 @@ export default function DangerZone() {
               btnBG="bg-red-600"
               btnColor="text-white"
               actionButton={() => deleteUser()}
-              invalid={errorBorder}
               inputType="password"
             />
           </div>

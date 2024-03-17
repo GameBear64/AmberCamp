@@ -11,7 +11,7 @@ export default function Preferences() {
   //   useFetch({
   //     url: 'user/settings/preferences',
   //     method: 'GET',
-  //   }).then((res) => {
+  //   }).then((_res) => {
   //     if (res.status === 200) {
   //       console.log(res.message);
   //       setUserPreferences({
@@ -33,7 +33,7 @@ export default function Preferences() {
   //       accent: userPreferences.accent ?? 'string',
   //       language: userPreferences.language,
   //     },
-  //   }).then((res) => {
+  //   }).then((_res) => {
   //     if (res.status === 200) {
   //       console.log(res.message);
   //     } else {

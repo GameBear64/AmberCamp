@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 
 import { setUser } from '@stores/user';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 
 import Router from './routers/Router';
 

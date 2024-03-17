@@ -1,6 +1,5 @@
-import Icon from '../../Icon';
-import ConnectForm from '../ConnectForm';
-import Input from '../Inputs/Input';
+import Icon from '@components/Icon';
+import ConnectForm from '@form/ConnectForm';
 
 export default function MediaSelect({ name, rules = {}, styles, label, ...rest }) {
   return (
@@ -29,13 +28,13 @@ export default function MediaSelect({ name, rules = {}, styles, label, ...rest }
                 </div>
               </div>
             ) : (
-              <Input
-                styleInput="block w-full text-sm text-slate-500
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-full file:border-0
-                file:text-sm file:font-semibold file:cursor-pointer
-                file:bg-neutral-100 file:text-black-700
-                hover:file:bg-neutral-200 border-none mb-2 font-semibold"
+              <input
+                className="file:text-black-700 mb-2 block w-full
+                border-none text-sm font-semibold
+                text-slate-500 file:mr-4
+                file:cursor-pointer file:rounded-full file:border-0
+                file:bg-neutral-100 file:px-4
+                file:py-2 file:text-sm file:font-semibold hover:file:bg-neutral-200"
                 {...rest}
                 type="file"
                 onChange={(e) => {

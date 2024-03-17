@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import ButtonInput from '@components/Form/Inputs/ButtonInput';
 import resizeScreen from '@utils/resizeScreen';
 import socket from '@utils/socket';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 
 import { ChatLoader } from '../routers/loaders/ChatLoader';
 

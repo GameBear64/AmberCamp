@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 import { errorSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 
 export default function RouteGuardian() {
   const navigate = useNavigate();

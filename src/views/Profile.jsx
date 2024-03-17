@@ -10,7 +10,7 @@ import QuillSection from '@components/Profile/QuillSection';
 import TopBar from '@components/TopBar/TopBar';
 import { useStore } from '@nanostores/react';
 import { $user } from '@stores/user';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 
 import { ProfileMobileLoader } from '../routers/loaders/ProfileLoader';
 
@@ -23,15 +23,7 @@ export default function Profile() {
     useFetch({
       url: `user/${id || user.id}`,
       method: 'GET',
-    }).then((res) => {
-      if (res.status === 200) {
-        setUserInfo(res.message);
-      } else {
-        // For the devs to debug
-        // eslint-disable-next-line no-console
-        console.log(res.message);
-      }
-    });
+    }).then((response) => setUserInfo(response))
   };
 
   useEffect(() => {

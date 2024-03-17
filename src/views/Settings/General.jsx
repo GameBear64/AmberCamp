@@ -1,16 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Button from '@components/Form/Inputs/Button';
 import SettingsLayout from '@components/Layout/SettingsLayout';
-import Form from '@form';
-import Input from '@form-inputs/Input';
-import MediaSelect from '@form-inputs/MediaSelect';
-import SelectInput from '@form-inputs/SelectInput';
-import TagSelector from '@form-inputs/TagSelector';
-import TextareaField from '@form-inputs/Textarea';
+import { Form, Input, MediaSelect, Select, SubmitButton, TagSelector, Textarea } from '@form/Fields';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 import { cleanObject, readFile } from '@utils/utils';
 
 import TopBar from '../../components/TopBar/TopBar';
@@ -24,15 +18,11 @@ export default function General() {
     useFetch({
       url: 'user',
       method: 'GET',
-    }).then((res) => {
-      if (res.status === 200) {
-        setUserInfo(
-          cleanObject(res.message, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone'])
-        );
-      } else {
-        errorSnackBar(`${res.message}`);
-      }
-    });
+    }).then((response) => setUserInfo(cleanObject(
+        response, 
+        ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone']
+      ))
+    );
   };
 
   const updateUserInfo = async (data) => {
@@ -62,13 +52,7 @@ export default function General() {
       url: 'user/settings',
       method: 'PATCH',
       body: { ...data },
-    }).then((res) => {
-      if (res.status === 200) {
-        successSnackBar('Profile updated.');
-      } else {
-        errorSnackBar(`${res.message}!`);
-      }
-    });
+    }).then(() => successSnackBar('Profile updated.'));
   };
 
   useEffect(() => {
@@ -102,10 +86,10 @@ export default function General() {
               name="handle"
             />
 
-            <TextareaField rows="7" cols="30" label="Biography" name="biography" />
+            <Textarea rows="7" cols="30" label="Biography" name="biography" />
             <TagSelector width="w-full" type="text" btnText="+Add" name="tags" shouldClear label="Profile Tags" />
-            <SelectInput name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
-            <Button size="small" styles="lg:w-full" label="Save" />
+            <Select name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
+            <SubmitButton size="small" styles="lg:w-full" label="Save" />
           </SettingsLayout>
         </Form>
       </div>

@@ -1,11 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-import Button from '@components/Form/Inputs/Button';
-import Form from '@form';
-import InputField from '@form-inputs/Input';
+import { Form, Input, SubmitButton } from '@form/Fields';
 import { setUser } from '@stores/user';
-import { errorSnackBar, successSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import { successSnackBar } from '@utils/snackbars';
+import useFetch from '@utils/useFetch';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -17,15 +15,11 @@ export default function Login() {
       body: {
         ...data,
       },
-    }).then((res) => {
-      if (res.status === 200) {
-        localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.message.jwt);
-        setUser({ id: res.message.id });
-        successSnackBar("You've logged in successfully!");
-        navigate(`/chat`);
-      } else {
-        errorSnackBar(`${res.message}!`);
-      }
+    }).then((response) => {
+      localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, response.jwt);
+      setUser({ id: response.id });
+      successSnackBar("You've logged in successfully!");
+      navigate(`/chat`);
     });
   };
 
@@ -35,9 +29,9 @@ export default function Login() {
         <h1 className="pb-8 text-4xl font-medium">Amber Camp Login</h1>
         <div className="flex flex-col text-left lg:mx-5">
           <Form onSubmit={(data) => loginUser(data)}>
-            <InputField type="email" placeholder="email@ac.com" name="email" label="Email" styles="col-span-2" />
-            <InputField type="password" placeholder="Password" name="password" label="Password" styles="col-span-2 shadow-none" />
-            <Button styles="w-full uppercase" label="Login" />
+            <Input type="email" placeholder="email@ac.com" name="email" label="Email" styles="col-span-2" />
+            <Input type="password" placeholder="Password" name="password" label="Password" styles="col-span-2 shadow-none" />
+            <SubmitButton styles="w-full uppercase" label="Login" />
             <Link to={'/register'} className="float-right mt-2 font-medium text-blue-700 underline">
               No account? Make one!
             </Link>

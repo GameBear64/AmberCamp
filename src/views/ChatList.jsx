@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 
 import Layout from '@layout';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 
 import Icon from '../components/Icon';
 import SeparatedList from '../components/Layout/SeparatedList';

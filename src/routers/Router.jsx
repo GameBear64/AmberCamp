@@ -12,7 +12,7 @@ const DangerZone = lazy(() => import('../views/Settings/DangerZone'));
 const Preferences = lazy(() => import('../views/Settings/Preferences'));
 import { useStore } from '@nanostores/react';
 
-import authRoutes from '../routers/authRoutes';
+import authRoutes from '../routers/AuthRoutes';
 import Redirect from '../routers/utils/Redirect';
 import { $user } from '../stores/user';
 
@@ -27,10 +27,12 @@ import NotFound from './static/NotFound';
 import Guard from './utils/RouterGuard';
 import ScreenHandler from './utils/ScreenHandler';
 
+let router;
+
 export default function Router() {
   const user = useStore($user);
 
-  const router = createBrowserRouter([
+  router = createBrowserRouter([
     {
       path: '/',
       element: (
@@ -143,3 +145,5 @@ export default function Router() {
 
   return <RouterProvider router={router} />;
 }
+
+export { router }
