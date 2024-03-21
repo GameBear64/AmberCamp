@@ -3,14 +3,16 @@ import ReactMarkdown from 'react-markdown';
 import { useNavigate, useParams } from 'react-router-dom';
 import gfm from 'remark-gfm';
 
+import { useStore } from '@nanostores/react';
+
 import Icon from '@components/Icon';
+import TopBar from '@components/Layout/TopBar';
 import FriendshipButtons from '@components/Profile/FriendshipButtons';
 import NotesSection from '@components/Profile/NotesSection';
 import QuillSection from '@components/Profile/QuillSection';
-import TopBar from '@components/TopBar/TopBar';
-import { useStore } from '@nanostores/react';
-import { $user } from '@stores/user';
+
 import useFetch from '@utils/useFetch';
+import { $user } from '@stores/user';
 
 import { ProfileMobileLoader } from '../routers/loaders/ProfileLoader';
 
@@ -23,7 +25,7 @@ export default function Profile() {
     useFetch({
       url: `user/${id || user.id}`,
       method: 'GET',
-    }).then((response) => setUserInfo(response))
+    }).then((response) => setUserInfo(response));
   };
 
   useEffect(() => {

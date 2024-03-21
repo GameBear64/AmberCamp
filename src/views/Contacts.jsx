@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
+import Layout from '@layout';
 import ContactsList from '@components/Contacts/ContactsList';
 import Pending from '@components/Contacts/Pending';
-import Layout from '@layout';
+
 import { ContactType } from '@utils/enums/ContactEnums';
 import useFetch from '@utils/useFetch';
 

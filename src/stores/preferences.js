@@ -2,7 +2,11 @@ import { map } from 'nanostores';
 
 import useFetch from '@utils/useFetch';
 
-const defaultState = { theme: 'Light', accent: 'Orange', language: 'EN' };
+const defaultState = {
+  theme: localStorage.getItem('theme-theme') || 'Light',
+  accent: localStorage.getItem('theme-accent') || 'Orange',
+  language: 'EN',
+};
 export const $preferences = map(defaultState);
 
 export function setPreferences(preferencesDetails) {
@@ -20,7 +24,10 @@ export function setTheme(theme) {
     body: {
       theme: theme,
     },
-  }).then(() => $preferences.setKey('theme', theme));
+  }).then(() => {
+    $preferences.setKey('theme', theme);
+    localStorage.setItem('theme-theme', theme);
+  });
 }
 
 export function setAccent(accent) {
@@ -30,5 +37,8 @@ export function setAccent(accent) {
     body: {
       accent,
     },
-  }).then(() => $preferences.setKey('accent', accent));
+  }).then(() => {
+    $preferences.setKey('accent', accent);
+    localStorage.setItem('theme-accent', accent);
+  });
 }

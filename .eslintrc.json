@@ -17,16 +17,12 @@
               ["^react$", "^[a-z]"],
               // Packages starting with `@`
               ["^@"],
-              // Packages starting with `~`
-              ["^~"],
+              // My custom aliases
+              ["^@layout", "^@components"], ["^@form"], ["^@utils", "^@stores"],
               // Imports starting with `../`
               ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
               // Imports starting with `./`
-              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
-              // Style imports
-              ["^.+\\.s?css$"],
-              // Side effect imports
-              ["^\\u0000"]
+              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"]
             ]
           }
         ]

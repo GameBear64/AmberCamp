@@ -1,9 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Form, Input, SubmitButton } from '@form/Fields';
-import { setUser } from '@stores/user';
+
 import { successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
+import { setUser } from '@stores/user';
 
 export default function Login() {
   const navigate = useNavigate();

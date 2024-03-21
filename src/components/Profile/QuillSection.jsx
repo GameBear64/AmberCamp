@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 
 import Icon from '@components/Icon';
-import { getUserId } from '@stores/user';
+
 import { successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
 import { htmlDecode } from '@utils/utils';
+import { getUserId } from '@stores/user';
 
 export default function QuillSection({ userId, value }) {
   const [text, setText] = useState('');

@@ -8,10 +8,12 @@ export default function InputField({ name, label, rules = {}, styles, styleInput
         return (
           <div className={styles}>
             <div className="flex flex-col">
-              <label className="text-left font-semibold">{label}</label>
+              <label className="text-left font-semibold text-txtSecondary">{label}</label>
               <input
                 ref={ref}
-                className={`mt-1.5 text-txtPrimary ${ errors[name] && 'border-2 border-red-600' } h-10 rounded-l pl-1.5 text-[17px] ${styleInput}`}
+                className={`mt-1.5 bg-base-m text-txtPrimary ${
+                  errors[name] && 'border-2 border-red-600'
+                } h-10 rounded-l pl-1.5 text-[17px] ${styleInput}`}
                 {...registerRest}
                 {...rest}
               />

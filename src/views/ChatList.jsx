@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 
+import Layout from '@layout';
 import Icon from '@components/Icon';
 import SeparatedList from '@components/Layout/SeparatedList';
-import Layout from '@layout';
+
 import useFetch from '@utils/useFetch';
 
 const ChatType = Object.freeze({
@@ -50,8 +51,8 @@ export default function ChatList() {
             className="my-2 h-10 w-full rounded-lg border-2 border-gray-300 bg-white px-5 text-sm focus:outline-none"
             placeholder="Search"
           />
-          {currentList === ChatType.Direct && <SeparatedList list={messageList.direct} />}
-          {currentList === ChatType.Group && <SeparatedList list={messageList.group} />}
+          {currentList === ChatType.Direct && <SeparatedList list={messageList?.direct} />}
+          {currentList === ChatType.Group && <SeparatedList list={messageList?.group} />}
 
           <Link className="mt-10" to={`/chat`}>
             no chat

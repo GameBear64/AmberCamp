@@ -13,7 +13,7 @@ export default function TagSelector({ name, rules = {}, styles, label, ...rest }
         return (
           <>
             <div className={styles}>
-              <label className="text-left font-semibold">{label}</label>
+              <label className="text-left font-semibold text-txtSecondary">{label}</label>
               <ButtonInput
                 {...rest}
                 label="Tags"

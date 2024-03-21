@@ -2,11 +2,13 @@ import { useState } from 'react';
 
 import Icon from '@components/Icon';
 import Notes from '@components/Notes/Notes';
+
 import { ButtonField, Form } from '@form/Fields';
-import { getUserId } from '@stores/user';
+
 import { errorSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
 import { removeEmptyProperties } from '@utils/utils';
+import { getUserId } from '@stores/user';
 
 export default function NotesSection({ id, userInfo, setUserInfo }) {
   const [editNote, setEditNote] = useState('');

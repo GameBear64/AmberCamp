@@ -2,9 +2,10 @@ import { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { useStore } from '@nanostores/react';
+
+import useFetch from '@utils/useFetch';
 import { $preferences } from '@stores/preferences';
 import { setUser } from '@stores/user';
-import useFetch from '@utils/useFetch';
 
 import Router from './routers/Router';
 import { setPreferences } from './stores/preferences';

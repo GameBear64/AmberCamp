@@ -1,9 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Form, Input, SubmitButton } from '@form/Fields';
-import { setUser } from '@stores/user';
+
 import { successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
+import { setUser } from '@stores/user';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -40,13 +41,7 @@ export default function Register() {
             <div className="flex flex-col text-left font-semibold">
               <label className="text-grey-darkest ">Password</label>
               <div className="flex flex-row justify-between gap-4 lg:flex-col">
-                <Input
-                  bgColor="bg-neutral-black"
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  styles="col-span-2"
-                />
+                <Input bgColor="bg-neutral-black" type="password" placeholder="Password" name="password" styles="col-span-2" />
                 <Input
                   bgColor="bg-neutral-black"
                   type="password"

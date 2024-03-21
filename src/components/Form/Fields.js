@@ -5,11 +5,17 @@ import MediaSelect from './FormInputs/MediaSelect';
 import Select from './FormInputs/SelectInput';
 import TagSelector from './FormInputs/TagSelector';
 import Textarea from './FormInputs/Textarea';
-import Form from './Form'
-import SubmitButton from './SubmitButton'
+import Form from './Form';
+import SubmitButton from './SubmitButton';
 
-export { 
-  Form, SubmitButton, // Essential
-  Input, Textarea, Select, // Default
-  ButtonField, IconField, MediaSelect, TagSelector // Custom
+export {
+  Form,
+  SubmitButton,
+  Input,
+  Textarea,
+  Select,
+  ButtonField,
+  IconField,
+  MediaSelect,
+  TagSelector,
 };

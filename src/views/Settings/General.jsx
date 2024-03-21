@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import SettingsLayout from '@components/Layout/SettingsLayout';
+import TopBar from '@components/Layout/TopBar';
+
 import { Form, Input, MediaSelect, Select, SubmitButton, TagSelector, Textarea } from '@form/Fields';
+import { MAX_LENGTH, MIN_LENGTH, REQUIRED } from '@form/validations';
+
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
+import { timezones } from '@utils/timezone';
 import useFetch from '@utils/useFetch';
 import { cleanObject, readFile } from '@utils/utils';
-
-import TopBar from '../../components/TopBar/TopBar';
-import { timezones } from '../../utils/timezone';
 
 export default function General() {
   const [userInfo, setUserInfo] = useState({});
@@ -18,10 +20,8 @@ export default function General() {
     useFetch({
       url: 'user',
       method: 'GET',
-    }).then((response) => setUserInfo(cleanObject(
-        response, 
-        ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone']
-      ))
+    }).then((response) =>
+      setUserInfo(cleanObject(response, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone']))
     );
   };
 
@@ -71,21 +71,14 @@ export default function General() {
             <MediaSelect styles="" label="Profile Picture" name="picture" />
             <Input
               rules={{
-                required: 'This field is required.',
-                minLength: {
-                  value: 3,
-                  message: 'Username must be at least 3 characters!',
-                },
-                maxLength: {
-                  value: 30,
-                  message: "Username can't be longer than 3 characters!",
-                },
+                ...REQUIRED,
+                ...MIN_LENGTH(3),
+                ...MAX_LENGTH(30),
               }}
               width="w-80"
               label="Username"
               name="handle"
             />
-
             <Textarea rows="7" cols="30" label="Biography" name="biography" />
             <TagSelector width="w-full" type="text" btnText="+Add" name="tags" shouldClear label="Profile Tags" />
             <Select name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />

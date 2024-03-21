@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { getUserId } from '@stores/user';
 import { successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
+import { getUserId } from '@stores/user';
 
 export default function FriendshipButtons({ userInfo, setUserInfo }) {
   const { id } = useParams();
@@ -52,32 +52,32 @@ export default function FriendshipButtons({ userInfo, setUserInfo }) {
     return (
       <div className="float-left mb-4 flex w-full flex-wrap gap-2 font-semibold ">
         {userInfo.status == 'Strangers' && (
-          <button className="btn-blue" onClick={add}>
+          <button className="info-btn" onClick={add}>
             Add friend
           </button>
         )}
         {userInfo.status == 'PendingIn' && (
-          <button className="btn-green" onClick={add}>
+          <button className="accept-btn" onClick={add}>
             Accept Request
           </button>
         )}
         {userInfo.status == 'PendingOut' && (
-          <button className="btn-green" onClick={cancel}>
+          <button className="accept-btn" onClick={cancel}>
             Cancel Request
           </button>
         )}
         {userInfo.status == 'Friends' && (
-          <button className="btn-green" onClick={() => navigate(`/chat/${id}`)}>
+          <button className="accept-btn" onClick={() => navigate(`/chat/${id}`)}>
             Message
           </button>
         )}
         {userInfo.status == 'Blocked' && (
-          <button className="btn-red" onClick={unblock}>
+          <button className="reject-btn" onClick={unblock}>
             Unblock
           </button>
         )}
         {userInfo.status != 'Blocked' && (
-          <button className="btn-red" onClick={block}>
+          <button className="reject-btn" onClick={block}>
             Block
           </button>
         )}

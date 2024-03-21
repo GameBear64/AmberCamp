@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import TopBar from '@components/TopBar/TopBar';
+import Icon from '@components/Icon';
+import TopBar from '@components/Layout/TopBar';
+
 import { ButtonField, Form } from '@form/Fields';
-import { removeUser } from '@stores/user';
-import { errorSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
 
 import useFetch from '@utils/useFetch';
+import { removeUser } from '@stores/user';
 
 export default function DangerZone() {
   let [password, setPassword] = useState('');
@@ -34,10 +34,11 @@ export default function DangerZone() {
             removeUser();
             navigate('/login');
           }}
-          className="mb-4 flex flex-row rounded text-lg text-txtPrimary">
-          <Icon styles="mr-1.5 align-bottom text-[27px]" icon="move_item" />
+          className="btn my-4">
+          <Icon styles="mr-2 align-bottom text-white" icon="move_item" />
           Log out
         </button>
+
         <hr className="hidden lg:block" />
 
         {active ? (

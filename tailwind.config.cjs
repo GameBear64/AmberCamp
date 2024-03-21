@@ -19,6 +19,9 @@ module.exports = {
         'primary-dark': 'var(--primary-dark)',
       },
     },
+    fontFamily: {
+      code: 'Cascadia Code',
+    },
     screens: {
       //https://tailwindcss.com/docs/responsive-design
       '2xl': { max: '1535px' },

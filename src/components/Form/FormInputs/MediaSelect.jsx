@@ -1,4 +1,5 @@
 import Icon from '@components/Icon';
+
 import ConnectForm from '@form/ConnectForm';
 
 export default function MediaSelect({ name, rules = {}, styles, label, ...rest }) {
