@@ -82,28 +82,26 @@ module.exports.get = [
           messagesCount: {
             $size: '$messages',
           },
-        }
-      }
+        },
+      },
     ]);
 
-    const lastMessage = conversation.messages[conversation.messagesCount - 1]?._id || null
+    const lastMessage = conversation?.messages[conversation.messagesCount - 1]?._id || null;
 
     await ConversationModel.updateOne(
       { id: conversation?.id, 'participants.user': ObjectId(req.apiUserId) },
-      { $set: 
-        { 
-          "participants.$.hideFromHistory" : false,
-          "participants.$.lastMessageSeen" : lastMessage,
-        }
+      {
+        $set: {
+          'participants.$.hideFromHistory': false,
+          'participants.$.lastMessageSeen': lastMessage,
+        },
       },
       { timestamps: false }
     );
-    
 
     res.status(200).json(conversation || {});
   },
 ];
-
 
 // this is dumb but ill keep it for reference
 // module.exports.delete = [

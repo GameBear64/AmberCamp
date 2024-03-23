@@ -16,7 +16,6 @@ export default function Contacts() {
   useEffect(() => {
     useFetch({ url: 'user/friend/list' }).then((res) => setContactList(res));
   }, []);
-  console.log(contactList);
   return (
     <Layout right={<Outlet />}>
       <>

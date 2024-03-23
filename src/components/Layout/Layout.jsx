@@ -1,7 +1,8 @@
 import { useOutlet } from 'react-router-dom';
 
-import NavBar from '@components/NavBar/NavBar';
 import { useStore } from '@nanostores/react';
+
+import NavBar from '@components/NavBar/NavBar';
 
 import { $preferences } from '../../stores/preferences';
 export default function Layout({ children }) {

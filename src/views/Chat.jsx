@@ -25,8 +25,7 @@ export default function Chat() {
   const typingTimeout = () => setTyping(false);
   // ====================
 
-  const otherUser = useMemo(() => chatUsers.find(({ user }) => user._id !== getUserId())?.user, [chatUsers]);
-
+  const otherUser = useMemo(() => chatUsers?.find(({ user }) => user._id !== getUserId())?.user, [chatUsers]);
   useEffect(() => {
     socket.on('message/created', (msg) => {
       setChatLog((prev) => [...prev, msg]);
@@ -80,7 +79,7 @@ export default function Chat() {
 
   return (
     <MessagesContext.Provider value={{ chatLog, setChatLog, otherUser }}>
-      <div className="flex h-full flex-col justify-between pb-5">
+      <div className="flex h-full w-full flex-col justify-between pb-5">
         <ChatBar />
         <div className="flex h-full flex-col justify-between overflow-y-auto pb-8 pt-5">
           <ul className="relative flex w-full flex-col gap-2">

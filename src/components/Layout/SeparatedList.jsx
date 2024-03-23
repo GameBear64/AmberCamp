@@ -3,7 +3,7 @@ import UserCard from '@components/Cards/UserCard';
 import { getUserId } from '@stores/user';
 
 export default function SeparatedList({ list }) {
-  if (list?.length < 1) return <p> nobody here yet </p>;
+  if (list?.length < 1) return <p className="text-txtPrimary"> nobody here yet </p>;
 
   return list?.map((conversation) => {
     if (conversation.type === 'Direct') {

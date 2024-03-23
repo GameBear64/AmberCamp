@@ -25,7 +25,7 @@ mongoose
 const { checkAuth, socketAuth } = require('./middleware/auth');
 
 //============== Socket =============
-const fileRegex = /events\/(?<cmd>.*?)\.js/g;
+const fileRegex = /events(\/|\\)(?<cmd>.*?)\.js/g;
 const { Glob } = require('glob');
 const eventPaths = new Glob('./events/**/*.js', {});
 
@@ -33,7 +33,7 @@ io.use(socketAuth);
 
 io.on('connection', (socket) => {
   for (const file of eventPaths) {
-    let eventFile = file.replace(fileRegex, '$<cmd>');
+    const eventFile = file.replace(fileRegex, '$<cmd>').replaceAll('\\', '/');
 
     socket.on(eventFile, (...args) => {
       require(`./${file}`)({ io, socket }, ...args);
