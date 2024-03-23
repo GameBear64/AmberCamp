@@ -14,7 +14,6 @@ export default function DangerZone() {
   const navigate = useNavigate();
 
   const deleteUser = ({ password }) => {
-    console.log('p', password);
     
     // useFetch({
     //   url: 'user',
