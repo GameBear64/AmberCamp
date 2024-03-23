@@ -1,6 +1,6 @@
 import ConnectForm from '../ConnectForm';
 
-export default function SelectInput({ name, label, rules = {}, styleInput, options, styles, ...rest }) {
+export default function SelectInput({ name, label, rules = {}, options, styles, ...rest }) {
   return (
     <ConnectForm>
       {({ register, formState: { errors } }) => {
@@ -10,7 +10,7 @@ export default function SelectInput({ name, label, rules = {}, styleInput, optio
             <div className="flex flex-col">
               <label className="mr-2 font-semibold uppercase text-txtSecondary">{label}</label>
               <select
-                className={`${styleInput} text-md ml-1 w-24 rounded-lg bg-base-m p-1 text-txtPrimary`}
+                className="input"
                 ref={ref}
                 {...registerRest}
                 {...rest}>

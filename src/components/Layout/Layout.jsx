@@ -6,7 +6,7 @@ export default function Layout({ children }) {
   const outlet = useOutlet();
   
   return (
-    <div className="flex h-screen bg-base">
+    <div className="flex h-screen bg-base text-txtPrimary">
       <div className="flex-1">
         <div className="hidden h-full flex-col justify-between lg:flex">
           <div>{outlet || children}</div>

@@ -1,10 +1,10 @@
-import ButtonField from './FormInputs/ButtonInput';
-import IconField from './FormInputs/IconInput';
-import Input from './FormInputs/Input';
-import MediaSelect from './FormInputs/MediaSelect';
-import Select from './FormInputs/SelectInput';
-import TagSelector from './FormInputs/TagSelector';
-import Textarea from './FormInputs/Textarea';
+import ButtonField from './Inputs/ButtonInput';
+import IconField from './Inputs/IconInput';
+import Input from './Inputs/Input';
+import MediaSelect from './Inputs/MediaSelect';
+import Select from './Inputs/SelectInput';
+import TagSelector from './Inputs/TagSelector';
+import Textarea from './Inputs/Textarea';
 import Form from './Form';
 import SubmitButton from './SubmitButton';
 

@@ -1,7 +1,9 @@
-import { errorSnackBar } from '../../../utils/snackbars';
-import Icon from '../../Icon';
-import ConnectForm from '../ConnectForm';
-import ButtonInput from '../Inputs/ButtonInput';
+import Icon from '@components/Icon';
+
+import ConnectForm from '@form/ConnectForm';
+import ButtonInput from '@form/Reusable/ButtonInput';
+
+import { errorSnackBar } from '@utils/snackbars';
 
 export default function TagSelector({ name, rules = {}, styles, label, ...rest }) {
   return (

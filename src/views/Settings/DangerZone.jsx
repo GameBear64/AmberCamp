@@ -10,18 +10,17 @@ import useFetch from '@utils/useFetch';
 import { removeUser } from '@stores/user';
 
 export default function DangerZone() {
-  let [password, setPassword] = useState('');
   let [active, setActive] = useState('');
   const navigate = useNavigate();
 
-  const deleteUser = () => {
-    useFetch({
-      url: 'user',
-      method: 'DELETE',
-      body: {
-        password,
-      },
-    });
+  const deleteUser = ({ password }) => {
+    console.log('p', password);
+    
+    // useFetch({
+    //   url: 'user',
+    //   method: 'DELETE',
+    //   body: { password },
+    // });
   };
   return (
     <div className="p-10 lg:p-0">
@@ -34,7 +33,7 @@ export default function DangerZone() {
             removeUser();
             navigate('/login');
           }}
-          className="btn my-4">
+          className="btn my-4 block">
           <Icon styles="mr-2 align-bottom text-white" icon="move_item" />
           Log out
         </button>
@@ -42,23 +41,16 @@ export default function DangerZone() {
         <hr className="hidden lg:block" />
 
         {active ? (
-          <div className="mb-5 flex flex-col">
-            <h1 className="mt-2 text-lg">Delete Account</h1>
-            <label className="mb-1">Please, enter your password to proceed.</label>
+          <Form onSubmit={(data) => deleteUser(data)}>
             <ButtonField
-              textColor="text-white"
-              actionInput={(e) => setPassword(e.target.value)}
-              btnText="Delete"
-              btnBG="bg-primary-shade"
-              btnColor="text-white"
-              actionButton={() => deleteUser()}
-              inputType="password"
+              btnText="Delete Account"
+              name="password"
+              type="password"
             />
-          </div>
+            <label className="mb-1">Please, enter your password to proceed.</label>
+          </Form>
         ) : (
-          <button
-            onClick={() => setActive(!active)}
-            className="rounded bg-primary-shade px-2.5 py-1 text-lg text-white hover:bg-primary-dark lg:mt-4">
+          <button onClick={() => setActive(!active)} className="btn">
             Delete Account
           </button>
         )}

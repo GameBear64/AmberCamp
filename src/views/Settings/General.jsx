@@ -26,6 +26,8 @@ export default function General() {
   };
 
   const updateUserInfo = async (data) => {
+    if (Object.entries(data).length == 0) return;
+
     try {
       const picture = await readFile(data?.picture);
       data.picture = picture.key;
@@ -75,13 +77,12 @@ export default function General() {
                 ...MIN_LENGTH(3),
                 ...MAX_LENGTH(30),
               }}
-              width="w-80"
               label="Username"
               name="handle"
             />
             <Textarea rows="7" cols="30" label="Biography" name="biography" />
             <TagSelector width="w-full" type="text" btnText="+Add" name="tags" shouldClear label="Profile Tags" />
-            <Select name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
+            <Select name="timezone" label="Timezone" options={timezones} styles="mt-2 mx-auto" />
             <SubmitButton size="small" styles="lg:w-full" label="Save" />
           </SettingsLayout>
         </Form>

@@ -81,8 +81,12 @@
     @apply relative px-1.5 py-3 flex items-center space-x-4 justify-start text-icon rounded-lg;
   }
 
-  .input-primary {
-    @apply bg-neutral-200 rounded p-5 text-base w-full;
+  .input {
+    @apply bg-base-m text-txtPrimary h-10 rounded px-2 w-full;
+  }
+
+  .input-error {
+    @apply input border-2 border-red-600;
   }
 
   .accent-circle {

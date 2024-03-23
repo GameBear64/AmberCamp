@@ -22,6 +22,21 @@ module.exports = {
     fontFamily: {
       code: 'Cascadia Code',
     },
+    keyframes: ({ theme }) => ({
+      wiggle: {
+        '0%, 100%': { transform: 'rotate(-3deg)' },
+        '50%': { transform: 'rotate(3deg)' },
+      },
+      shadowPulse: {
+        '0%': { boxShadow: `0 0 0 0 ${theme('colors.primary')}`},
+        '70%': { boxShadow: '0 0 0 10px rgba(0, 0, 0, 0)'},
+        '100%': {boxShadow: '0 0 0 50px rgba(0, 0, 0, 0)'}
+      }
+    }),
+    animation: {
+      wiggle: 'wiggle 1s ease-in-out infinite',
+      shadowPulse: 'shadowPulse 2s ease-in-out infinite',
+    },
     screens: {
       //https://tailwindcss.com/docs/responsive-design
       '2xl': { max: '1535px' },

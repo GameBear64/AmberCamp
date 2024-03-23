@@ -102,7 +102,7 @@ export default function Profile() {
 
       <section className="grid grid-cols-[1fr_25em] grid-rows-1 text-txtPrimary lg:mx-2 lg:flex lg:flex-col">
         <QuillSection userId={id} value={userInfo.description} />
-        <section className="overflow-y-auto overflow-x-hidden border-l">
+        <section className="overflow-y-auto overflow-x-hidden border-l border-primary">
           <NotesSection id={id} userInfo={userInfo} setUserInfo={setUserInfo} />
         </section>
       </section>
