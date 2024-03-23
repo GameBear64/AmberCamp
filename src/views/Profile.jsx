@@ -10,6 +10,7 @@ import TopBar from '@components/Layout/TopBar';
 import FriendshipButtons from '@components/Profile/FriendshipButtons';
 import NotesSection from '@components/Profile/NotesSection';
 import QuillSection from '@components/Profile/QuillSection';
+import Tag from '@components/Profile/Tag';
 
 import useFetch from '@utils/useFetch';
 import { $user } from '@stores/user';
@@ -37,7 +38,7 @@ export default function Profile() {
   return (
     <>
       <div className="hidden lg:block">
-        <TopBar backBtnLable="Profile" backButton="arrow_back_ios_new" actionButton={() => navigate('/contacts')} />
+        <TopBar backBtnLabel="Profile" backButton="arrow_back_ios_new" actionButton={() => navigate('/contacts')} />
       </div>
       <div
         className="h-60 bg-neutral-700 bg-cover bg-center shadow-md lg:h-52"
@@ -46,7 +47,7 @@ export default function Profile() {
         }}
       />
       <div className="p-4">
-        <div className="relativ mt-[-6rem] flex w-full flex-row items-end">
+        <div className="relative mt-[-6rem] flex w-full flex-row items-end">
           <img
             className="relative h-36 w-36 rounded-full border-2 border-white shadow-md lg:h-40 lg:w-40 lg:rounded-[50%]"
             src={
@@ -73,13 +74,7 @@ export default function Profile() {
             </ReactMarkdown>
             {userInfo?.tags?.length > 0 && (
               <span className="flex flex-row gap-3 ">
-                {userInfo?.tags.map((tag, i) => (
-                  <p
-                    key={i}
-                    className="flex flex-row rounded-xl border border-base-m p-2.5 text-center font-semibold text-txtPrimary shadow-sm">
-                    {tag}
-                  </p>
-                ))}
+                {userInfo?.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
               </span>
             )}
             <div className="flex flex-wrap gap-2 text-gray-600 lg:flex-col">

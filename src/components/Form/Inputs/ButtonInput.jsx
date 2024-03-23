@@ -1,4 +1,5 @@
 import ConnectForm from '../ConnectForm';
+
 export default function InputField({
   name,
   rules = {},

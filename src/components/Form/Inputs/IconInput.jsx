@@ -1,6 +1,8 @@
+import Icon from '@components/Icon';
+
 import ConnectForm from '../ConnectForm';
 
-export default function IconInput({ name, rules = {}, styles, label, icon, width = 'w-60', ...rest }) {
+export default function IconInput({ name, rules = {}, styles, label, icon, ...rest }) {
   return (
     <ConnectForm>
       {({ register, formState: { errors } }) => {
@@ -9,12 +11,10 @@ export default function IconInput({ name, rules = {}, styles, label, icon, width
           <div className={styles}>
             <label className='text-txtSecondary'>{label}</label>
             <div className="mt-1.5">
-              <span className="material-symbols-rounded absolute px-1 pt-2 text-txtSecondary">{icon}</span>
+              <Icon icon={icon} styles="absolute p-2"/>
               <input
                 ref={ref}
-                className={`bg-base-m pl-2 ${errors[name] && 'border-2 border-red-600'} h-10 rounded-l text-txtPrimary ${
-                  icon && 'pl-8'
-                } text-lg shadow-inner ${width}`}
+                className={`${errors[name] ? 'input-error' : 'input'} ${icon && 'pl-10'}`}
                 {...registerRest}
                 {...rest}
               />

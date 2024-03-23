@@ -32,9 +32,7 @@ export default function ButtonInput({
           setState(e.target.value);
         }}
         value={state || ''}
-        className={`h-10 w-full rounded-l bg-base-m pl-1 text-txtPrimary focus:outline-none ${
-          invalid && 'border-2 border-red-600'
-        }`}
+        className={`${invalid ? 'input-error' : 'input'} rounded-r-none`}
       />
       <button
         onClick={() => {
@@ -42,7 +40,8 @@ export default function ButtonInput({
           if (shouldClear) setState('');
         }}
         type={type}
-        className={`font-semibold ${btnColor} block rounded-r shadow-inner ${btnBG} p-1 text-[16px] hover:shadow-inner`}>
+        className="btn min-w-max rounded-l-none"
+      >
         {btnText}
       </button>
     </div>

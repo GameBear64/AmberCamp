@@ -43,6 +43,22 @@
     @apply underline text-primary;
   }
 
+  .ql-toolbar.ql-snow, .ql-container, .ql-picker-options, .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {
+    @apply !border-base-s
+  }
+
+  .ql-formats .ql-snow, .ql-formats .ql-picker, .ql-formats .ql-stroke, .ql-formats .ql-fill {
+    @apply !text-txtPrimary !stroke-txtPrimary
+  }
+
+  .ql-snow.ql-toolbar button.ql-active .ql-stroke, .ql-snow.ql-toolbar .ql-picker-label.ql-active, .ql-snow.ql-toolbar .ql-picker-label:hover, .ql-snow.ql-toolbar .ql-picker-item:hover {
+    @apply !text-primary !stroke-primary
+  }
+
+  .ql-snow .ql-picker-options {
+    @apply bg-base-m
+  }
+
   pre {
     @apply bg-gray-800 p-2 font-code text-green-500 my-2 whitespace-break-spaces;
   }
@@ -82,7 +98,7 @@
   }
 
   .input {
-    @apply bg-base-m text-txtPrimary h-10 rounded px-2 w-full;
+    @apply bg-base-m text-txtPrimary h-10 rounded px-2 w-full border border-base-s focus:border-primary focus:outline-none;
   }
 
   .input-error {
