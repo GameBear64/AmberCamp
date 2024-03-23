@@ -15,11 +15,11 @@ export default function DangerZone() {
 
   const deleteUser = ({ password }) => {
     
-    // useFetch({
-    //   url: 'user',
-    //   method: 'DELETE',
-    //   body: { password },
-    // });
+    useFetch({
+       url: 'user',
+       method: 'DELETE',
+       body: { password },
+    });
   };
   return (
     <div className="p-10 lg:p-0">
