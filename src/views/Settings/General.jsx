@@ -1,20 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Button from '@components/Form/Inputs/Button';
 import SettingsLayout from '@components/Layout/SettingsLayout';
-import Form from '@form';
-import Input from '@form-inputs/Input';
-import MediaSelect from '@form-inputs/MediaSelect';
-import SelectInput from '@form-inputs/SelectInput';
-import TagSelector from '@form-inputs/TagSelector';
-import TextareaField from '@form-inputs/Textarea';
-import { errorSnackBar, successSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
-import { cleanObject, readFile } from '@utils/utils';
+import TopBar from '@components/Layout/TopBar';
 
-import TopBar from '../../components/TopBar/TopBar';
-import { timezones } from '../../utils/timezone';
+import { Form, Input, MediaSelect, Select, SubmitButton, TagSelector, Textarea } from '@form/Fields';
+import { MAX_LENGTH, MIN_LENGTH, REQUIRED } from '@form/validations';
+
+import { errorSnackBar, successSnackBar } from '@utils/snackbars';
+import { timezones } from '@utils/timezone';
+import useFetch from '@utils/useFetch';
+import { cleanObject, readFile } from '@utils/utils';
 
 export default function General() {
   const [userInfo, setUserInfo] = useState({});
@@ -24,18 +20,14 @@ export default function General() {
     useFetch({
       url: 'user',
       method: 'GET',
-    }).then((res) => {
-      if (res.status === 200) {
-        setUserInfo(
-          cleanObject(res.message, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone'])
-        );
-      } else {
-        errorSnackBar(`${res.message}`);
-      }
-    });
+    }).then((response) =>
+      setUserInfo(cleanObject(response, ['name', 'handle', 'email', 'biography', 'picture', 'background', 'tags', 'timezone']))
+    );
   };
 
   const updateUserInfo = async (data) => {
+    if (Object.entries(data).length == 0) return;
+
     try {
       const picture = await readFile(data?.picture);
       data.picture = picture.key;
@@ -62,13 +54,7 @@ export default function General() {
       url: 'user/settings',
       method: 'PATCH',
       body: { ...data },
-    }).then((res) => {
-      if (res.status === 200) {
-        successSnackBar('Profile updated.');
-      } else {
-        errorSnackBar(`${res.message}!`);
-      }
-    });
+    }).then(() => successSnackBar('Profile updated.'));
   };
 
   useEffect(() => {
@@ -87,25 +73,17 @@ export default function General() {
             <MediaSelect styles="" label="Profile Picture" name="picture" />
             <Input
               rules={{
-                required: 'This field is required.',
-                minLength: {
-                  value: 3,
-                  message: 'Username must be at least 3 characters!',
-                },
-                maxLength: {
-                  value: 30,
-                  message: "Username can't be longer than 3 characters!",
-                },
+                ...REQUIRED,
+                ...MIN_LENGTH(3),
+                ...MAX_LENGTH(30),
               }}
-              width="w-80"
               label="Username"
               name="handle"
             />
-
-            <TextareaField rows="7" cols="30" label="Biography" name="biography" />
+            <Textarea rows="7" cols="30" label="Biography" name="biography" />
             <TagSelector width="w-full" type="text" btnText="+Add" name="tags" shouldClear label="Profile Tags" />
-            <SelectInput name="timezone" label="Timezone" options={timezones} styleInput="mt-2" />
-            <Button size="small" styles="lg:w-full" label="Save" />
+            <Select name="timezone" label="Timezone" options={timezones} styles="mt-2 mx-auto" />
+            <SubmitButton size="small" styles="lg:w-full" label="Save" />
           </SettingsLayout>
         </Form>
       </div>

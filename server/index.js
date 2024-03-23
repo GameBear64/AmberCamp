@@ -32,10 +32,6 @@ io.use((socket, next) => {
 });
 
 io.on('connection', (socket) => {
-  // socket.onAny((eventName, ...args) => {
-  //   console.log('[ALL] ', eventName, args);
-  // });
-
   for (const file of eventPaths) {
     let eventFile = file.replace(fileRegex, '$<cmd>');
 

@@ -2,12 +2,13 @@ import { useState } from 'react';
 
 import Icon from '@components/Icon';
 import Notes from '@components/Notes/Notes';
-import Form from '@form';
-import ButtonInputField from '@form-inputs/ButtonInput';
-import { getUserId } from '@stores/user';
+
+import { ButtonField, Form } from '@form/Fields';
+
 import { errorSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 import { removeEmptyProperties } from '@utils/utils';
+import { getUserId } from '@stores/user';
 
 export default function NotesSection({ id, userInfo, setUserInfo }) {
   const [editNote, setEditNote] = useState('');
@@ -26,7 +27,7 @@ export default function NotesSection({ id, userInfo, setUserInfo }) {
       method: 'POST',
       body: removeEmptyProperties(updateObject),
     }).then(() => {
-      getUser(id).then((res) => setUserInfo(res.message));
+      getUser(id).then((response) => setUserInfo(response));
     });
   };
 
@@ -50,7 +51,7 @@ export default function NotesSection({ id, userInfo, setUserInfo }) {
           updateUser({ notes: [data.noteField, ...userInfo.notes] });
           setEditNote('');
         }}>
-        <ButtonInputField name="noteField" btnText="+Add" width="w-full" />
+        <ButtonField name="noteField" btnText="+Add" width="w-full" />
       </Form>
       {userInfo?.notes?.map((note, i) => (
         <Notes

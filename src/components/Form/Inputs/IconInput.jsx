@@ -1,20 +1,28 @@
-import Icon from '../../Icon';
+import Icon from '@components/Icon';
 
-export default function IconInput({ label, invalid, icon, action, width = 'w-60', innerRef, ...rest }) {
+import ConnectForm from '../ConnectForm';
+
+export default function IconInput({ name, rules = {}, styles, label, icon, ...rest }) {
   return (
-    <>
-      <label className="text-txtPrimary">{label}</label>
-      <div className="mt-1.5">
-        <Icon styles="absolute px-1 pt-2" icon={icon} />
-        <input
-          ref={innerRef}
-          onChange={action}
-          className={`bg-base-m pl-2 ${invalid && 'border-2 border-red-600'} h-10 rounded-l text-txtPrimary ${
-            icon && 'pl-8'
-          } text-lg shadow-inner ${width}`}
-          {...rest}
-        />
-      </div>
-    </>
+    <ConnectForm>
+      {({ register, formState: { errors } }) => {
+        const { ref, ...registerRest } = register(name, rules);
+        return (
+          <div className={styles}>
+            <label className='text-txtSecondary'>{label}</label>
+            <div className="mt-1.5">
+              <Icon icon={icon} styles="absolute p-2"/>
+              <input
+                ref={ref}
+                className={`${errors[name] ? 'input-error' : 'input'} ${icon && 'pl-10'}`}
+                {...registerRest}
+                {...rest}
+              />
+            </div>
+            {errors[name] && <p className="font-semibold text-red-600">{errors[name].message}</p>}
+          </div>
+        );
+      }}
+    </ConnectForm>
   );
 }

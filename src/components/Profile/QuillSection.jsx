@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 
 import Icon from '@components/Icon';
-import { getUserId } from '@stores/user';
+
 import { successSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 import { htmlDecode } from '@utils/utils';
+import { getUserId } from '@stores/user';
 
 export default function QuillSection({ userId, value }) {
   const [text, setText] = useState('');
@@ -16,11 +17,7 @@ export default function QuillSection({ userId, value }) {
       url: 'user/settings',
       method: 'PATCH',
       body: { description },
-    }).then((res) => {
-      if (res.status === 200) {
-        successSnackBar('Profile updated.');
-      }
-    });
+    }).then(() => successSnackBar('Profile updated.'));
   };
 
   useEffect(() => {
@@ -60,7 +57,7 @@ export default function QuillSection({ userId, value }) {
       {userId === getUserId() && (
         <Icon
           icon={disable ? 'edit' : 'save'}
-          styles="rounded absolute -top-3 right-2 text-right bg-base-m text-black p-1.5"
+          styles="btn absolute -top-3 right-2"
           onClick={() => {
             if (!disable) {
               updateDescription(text);

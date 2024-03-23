@@ -2,15 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  /* works only if theme is applied to the body */
-  background-color: var(--base);
-}
-
 * {
   scrollbar-width: thin;
   scrollbar-color: black;
+  margin: 0;
+  padding: 0;
 }
+
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
   width: 10px;
@@ -31,35 +29,94 @@ body {
   min-height: 40px;
 }
 
-@layer components {
-  .btn {
-    @apply ml-auto text-txtPrimary mr-0 flex max-h-max max-w-max items-center justify-center whitespace-nowrap rounded border border-neutral-500 bg-transparent px-2 py-1 font-bold text-neutral-500 hover:border-neutral-800 hover:shadow-lg focus:outline-none focus:ring;
+@layer base {
+  /* works only if theme is applied to the body */
+  body {
+    @apply bg-base
   }
-  .nav-btn {
-    @apply relative px-1.5 py-3 flex items-center space-x-4 justify-start text-icon rounded-lg;
+
+  .material-symbols-rounded {
+    font-variation-settings: 'FILL' 1
   }
+
   .react-markdown a {
     @apply underline text-primary;
   }
-  .input-primary {
-    @apply bg-neutral-200 rounded p-5 text-base w-full;
+
+  .ql-toolbar.ql-snow, .ql-container, .ql-picker-options, .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {
+    @apply !border-base-s
   }
-  .btn-red {
-    @apply flex bg-base justify-center text-txtPrimary flex-row border-[1.5px] text-red-600 border-red-600 py-1 px-3 rounded-lg font-semibold;
+
+  .ql-formats .ql-snow, .ql-formats .ql-picker, .ql-formats .ql-stroke, .ql-formats .ql-fill {
+    @apply !text-txtPrimary !stroke-txtPrimary
   }
-  .btn-green {
-    @apply flex bg-base justify-center text-txtPrimary flex-row border-[1.5px] text-green-600 border-green-600 py-1 px-3 rounded-lg font-semibold;
+
+  .ql-snow.ql-toolbar button.ql-active .ql-stroke, .ql-snow.ql-toolbar .ql-picker-label.ql-active, .ql-snow.ql-toolbar .ql-picker-label:hover, .ql-snow.ql-toolbar .ql-picker-item:hover {
+    @apply !text-primary !stroke-primary
   }
-  .btn-blue {
-    @apply flex bg-base justify-center text-txtPrimary flex-row border-[1.5px] text-blue-600 border-blue-600 py-1 px-3 rounded-lg font-semibold;
+
+  .ql-snow .ql-picker-options {
+    @apply bg-base-m
   }
+
+  pre {
+    @apply bg-gray-800 p-2 font-code text-green-500 my-2 whitespace-break-spaces;
+  }
+
+  hr {
+    @apply my-2 border-b border-primary;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply rounded-md border border-transparent bg-primary px-2 py-1 text-lg font-semibold text-white hover:bg-primary-shade focus:outline-none active:translate-y-0.5 transition-transform;
+  }
+
+  .reject-btn {
+    @apply btn bg-red-600 hover:bg-red-700;
+  }
+
+  .accept-btn {
+    @apply btn bg-green-600 hover:bg-green-700;
+  }
+
+  .info-btn {
+    @apply btn bg-cyan-600 hover:bg-cyan-700;
+  }
+
+  .favorite-btn {
+    @apply btn bg-pink-600 hover:bg-pink-700 ;
+  }
+
+  .disabled-btn {
+    @apply btn bg-neutral-600 hover:bg-neutral-700 ;
+  }
+
+  .nav-btn {
+    @apply relative px-1.5 py-3 flex items-center space-x-4 justify-start text-icon rounded-lg;
+  }
+
+  .input {
+    @apply bg-base-m text-txtPrimary h-10 rounded px-2 w-full border border-base-s focus:border-primary focus:outline-none;
+  }
+
+  .input-error {
+    @apply input border-2 border-red-600;
+  }
+
+  .accent-circle {
+    @apply flex h-10 w-10 items-center justify-center rounded-full;
+  }
+}
+
+@layer utilities {
   .shadow-primary {
     @apply shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)];
   }
-  .accent-button {
-    @apply flex h-10 w-10 items-center justify-center rounded-full shadow-md transition duration-700 ease-in-out;
-  }
 }
+
+
 .theme-orange {
   --color-primary-50: theme('colors.orange.50');
   --color-primary-100: theme('colors.orange.100');

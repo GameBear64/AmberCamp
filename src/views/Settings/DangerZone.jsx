@@ -1,34 +1,24 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import ButtonInput from '@components/Form/Inputs/ButtonInput';
-import { removeUser } from '@stores/user';
-import { errorSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
+import Icon from '@components/Icon';
+import TopBar from '@components/Layout/TopBar';
 
-import Icon from '../../components/Icon';
-import TopBar from '../../components/TopBar/TopBar';
+import { ButtonField, Form } from '@form/Fields';
+
+import useFetch from '@utils/useFetch';
+import { removeUser } from '@stores/user';
 
 export default function DangerZone() {
-  let [password, setPassword] = useState('');
   let [active, setActive] = useState('');
-  let [errorBorder, setErrorBorder] = useState(false);
   const navigate = useNavigate();
 
-  const deleteUser = () => {
+  const deleteUser = ({ password }) => {
+    
     useFetch({
-      url: 'user',
-      method: 'DELETE',
-      body: {
-        password,
-      },
-    }).then((res) => {
-      if (res.status === 201) {
-        setErrorBorder(false);
-      } else {
-        setErrorBorder(true);
-        errorSnackBar(`${res.message}!`);
-      }
+       url: 'user',
+       method: 'DELETE',
+       body: { password },
     });
   };
   return (
@@ -42,31 +32,24 @@ export default function DangerZone() {
             removeUser();
             navigate('/login');
           }}
-          className="mb-4 flex flex-row rounded text-lg text-txtPrimary">
-          <Icon styles="mr-1.5 align-bottom text-[27px]" icon="move_item" />
+          className="btn my-4 block">
+          <Icon styles="mr-2 align-bottom text-white" icon="move_item" />
           Log out
         </button>
+
         <hr className="hidden lg:block" />
 
         {active ? (
-          <div className="mb-5 flex flex-col">
-            <h1 className="mt-2 text-lg">Delete Account</h1>
-            <label className="mb-1">Please, enter your password to proceed.</label>
-            <ButtonInput
-              textColor="text-white"
-              actionInput={(e) => setPassword(e.target.value)}
-              btnText="Delete"
-              btnBG="bg-primary-shade"
-              btnColor="text-white"
-              actionButton={() => deleteUser()}
-              invalid={errorBorder}
-              inputType="password"
+          <Form onSubmit={(data) => deleteUser(data)}>
+            <ButtonField
+              btnText="Delete Account"
+              name="password"
+              type="password"
             />
-          </div>
+            <label className="mb-1">Please, enter your password to proceed.</label>
+          </Form>
         ) : (
-          <button
-            onClick={() => setActive(!active)}
-            className="rounded bg-primary-shade px-2.5 py-1 text-lg text-white hover:bg-primary-dark lg:mt-4">
+          <button onClick={() => setActive(!active)} className="btn">
             Delete Account
           </button>
         )}

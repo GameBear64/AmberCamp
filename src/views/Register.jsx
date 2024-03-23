@@ -1,11 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-import Button from '@components/Form/Inputs/Button';
-import Form from '@form';
-import InputField from '@form-inputs/Input';
+import { Form, Input, SubmitButton } from '@form/Fields';
+
+import { successSnackBar } from '@utils/snackbars';
+import useFetch from '@utils/useFetch';
 import { setUser } from '@stores/user';
-import { errorSnackBar, successSnackBar } from '@utils/snackbars';
-import { useFetch } from '@utils/useFetch';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -14,18 +13,12 @@ export default function Register() {
     useFetch({
       url: 'user/register',
       method: 'POST',
-      body: {
-        ...data,
-      },
-    }).then((res) => {
-      if (res.status === 201) {
-        localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.message.jwt);
-        setUser({ id: res.message.id });
-        successSnackBar(`Your registration was successful!`);
-        navigate('/chat');
-      } else {
-        errorSnackBar(`${res.message}!`);
-      }
+      body: { ...data },
+    }).then((response) => {
+      localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, response.jwt);
+      setUser({ id: response.id });
+      successSnackBar(`Your registration was successful!`);
+      navigate('/chat');
     });
   };
 
@@ -35,8 +28,8 @@ export default function Register() {
         <h1 className="pb-8 text-4xl font-medium">Amber Camp Register</h1>
         <div className="flex flex-col text-left lg:mx-5">
           <Form onSubmit={(data) => registerUser(data)}>
-            <InputField bgColor="bg-neutral-black" placeholder="@handle" name="handle" label="Handle" styles="col-span-2" />
-            <InputField
+            <Input bgColor="bg-neutral-black" placeholder="@handle" name="handle" label="Handle" styles="col-span-2" />
+            <Input
               bgColor="bg-neutral-black"
               type="email"
               placeholder="email@ac.com"
@@ -48,14 +41,8 @@ export default function Register() {
             <div className="flex flex-col text-left font-semibold">
               <label className="text-grey-darkest ">Password</label>
               <div className="flex flex-row justify-between gap-4 lg:flex-col">
-                <InputField
-                  bgColor="bg-neutral-black"
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  styles="col-span-2"
-                />
-                <InputField
+                <Input bgColor="bg-neutral-black" type="password" placeholder="Password" name="password" styles="col-span-2" />
+                <Input
                   bgColor="bg-neutral-black"
                   type="password"
                   placeholder="Confirm Password"
@@ -64,7 +51,7 @@ export default function Register() {
                 />
               </div>
             </div>
-            <Button styles="w-full uppercase bg-red-600" label="Register" />
+            <SubmitButton styles="w-full uppercase bg-red-600" label="Register" />
             <Link to={'/login'} className="float-right mt-2 font-medium text-blue-700 underline">
               Already have an account?
             </Link>
