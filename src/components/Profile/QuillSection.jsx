@@ -25,7 +25,7 @@ export default function QuillSection({ userId, value }) {
   }, [value]);
 
   return (
-    <div className="relative mt-5">
+    <div className="relative m-5">
       <div className="w-full">
         {disable ? (
           <div className="quill">

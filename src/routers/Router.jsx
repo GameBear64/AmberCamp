@@ -1,6 +1,10 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import { useStore } from '@nanostores/react';
+
+import { $user } from '@stores/user';
+
 const ChatList = lazy(() => import('../views/ChatList'));
 const Chat = lazy(() => import('../views/Chat'));
 const Contacts = lazy(() => import('../views/Contacts'));
@@ -10,11 +14,9 @@ const General = lazy(() => import('../views/Settings/General'));
 const Security = lazy(() => import('../views/Settings/Security'));
 const DangerZone = lazy(() => import('../views/Settings/DangerZone'));
 const Preferences = lazy(() => import('../views/Settings/Preferences'));
-import { useStore } from '@nanostores/react';
 
 import authRoutes from '../routers/AuthRoutes';
 import Redirect from '../routers/utils/Redirect';
-import { $user } from '../stores/user';
 
 import { ChatListLoader } from './loaders/ChatListLoader';
 import { ChatLoader } from './loaders/ChatLoader';
@@ -55,14 +57,6 @@ export default function Router() {
             </Suspense>
           ),
           children: [
-            {
-              path: '',
-              element: (
-                <Suspense fallback={<ChatLoader />}>
-                  <p>no chat</p>
-                </Suspense>
-              ),
-            },
             {
               path: ':id',
               element: (

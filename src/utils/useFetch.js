@@ -7,7 +7,9 @@ const baseURL =
     ? `${window.location.protocol}//${window.location.hostname}`
     : import.meta.env.VITE_SERVER_URL;
 
-export default function useFetch({ url, requireAuth = true, redirect = true, method, body }) {
+const doNotRedirectFrom = ['/login', '/register']
+
+export default function useFetch({ url, requireAuth = true, method, body }) {
   let options = {
     method,
     body: JSON.stringify(body),
@@ -23,8 +25,9 @@ export default function useFetch({ url, requireAuth = true, redirect = true, met
 
       if (res.status === 401) {
         localStorage.removeItem(import.meta.env.VITE_LOCAL_STORAGE_NAME);
-        if (redirect) {
-          router().navigate('/login');
+        
+        if (!doNotRedirectFrom.includes(router.state.location.pathname)) {          
+          router.navigate('/login');
           window.location.reload();
         }
       }

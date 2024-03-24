@@ -30,12 +30,12 @@ export default function TagSelector({ name, rules = {}, styles, label, ...rest }
                 }}
               />
             </div>
-            <div className="flex flex-wrap">
+            <div className="my-2 flex flex-wrap gap-2">
               {tags?.map((tag) => (
                 <Tag 
                   key={tag} 
                   onClick={() => setValue(name, tags.filter((el) => el !== tag), { shouldDirty: true, shouldTouch: true })}
-                  styles='m-2'
+                  styles='my-2'
                 >
                   {tag}
                 </Tag>

@@ -12,9 +12,7 @@ export default function Preferences() {
 
   return (
     <>
-      <div className="hidden lg:block">
-        <TopBar backBtnLabel="Preferences" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
-      </div>
+      <TopBar backBtnLabel="Preferences" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
       <div className="flex flex-col gap-6 p-10">
         <div>
           <h2 className="font-semibold text-txtSecondary">THEME</h2>
