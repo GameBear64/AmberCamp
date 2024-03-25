@@ -10,28 +10,9 @@ export function ChatLoader() {
     wMin: 100,
   };
   return (
-    <div className="m-10 flex flex-col gap-10">
-      <MessageSkeleton {...dimensions} />
-      <MessageSkeleton {...dimensions} left />
-      <MessageSkeleton {...dimensions} />
-      <MessageSkeleton {...dimensions} left />
-      <MessageSkeleton {...dimensions} />
-    </div>
-  );
-}
-
-export function ChatLoaderMobile() {
-  const dimensions = {
-    hMax: 200,
-    hMin: 100,
-    wMax: 400,
-    wMin: 50,
-  };
-
-  return (
     <>
-      <Skeleton height={60} />
-      <div className="mx-5 mt-10 flex flex-col gap-5">
+      <Skeleton height={60} containerClassName="lg:hidden"/>
+      <div className="m-5 flex flex-col gap-10">
         <MessageSkeleton {...dimensions} />
         <MessageSkeleton {...dimensions} left />
         <MessageSkeleton {...dimensions} />

@@ -26,7 +26,7 @@ export default function Register() {
     <div className="m-auto grid h-screen grid-cols-1 lg:grid-cols-2">
       <div className="m-auto flex w-full max-w-md flex-col justify-center justify-items-center text-center">
         <h1 className="pb-8 text-4xl font-medium">Amber Camp Register</h1>
-        <div className="flex flex-col text-left lg:mx-5">
+        <div className="mx-5 flex flex-col text-left">
           <Form onSubmit={(data) => registerUser(data)}>
             <Input placeholder="@handle" name="handle" label="Handle" styles="col-span-2" />
             <Input

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
+import { SkeletonTheme } from 'react-loading-skeleton';
 
 import { useStore } from '@nanostores/react';
 
@@ -31,7 +32,15 @@ function Main() {
     document.body.className = themes;
   }, [preferences.theme, preferences.accent]);
 
-  return <Router />;
+  return (
+    <SkeletonTheme
+      // compromise variant since we cant edit the colors with css 
+      baseColor={preferences.theme.toLocaleLowerCase() === 'light' ? "#ebebeb" : "#202020"}
+      highlightColor={preferences.theme.toLocaleLowerCase() === 'light' ? "#f5f5f5" : "#444"}
+    >
+      <Router />
+    </SkeletonTheme>
+  )
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<Main />);

@@ -15,7 +15,7 @@ import Tag from '@components/Profile/Tag';
 import useFetch from '@utils/useFetch';
 import { $user } from '@stores/user';
 
-import { ProfileMobileLoader } from '../routers/loaders/ProfileLoader';
+import { ProfileLoader } from '../routers/loaders/ProfileLoader';
 
 export default function Profile() {
   const [userInfo, setUserInfo] = useState({});
@@ -34,7 +34,7 @@ export default function Profile() {
   }, [id]);
 
   const navigate = useNavigate();
-  if (!userInfo?.handle) return <ProfileMobileLoader />;
+  if (!userInfo?.handle) return <ProfileLoader />;
   return (
     <>
       <TopBar backBtnLabel="Profile" backButton="arrow_back_ios_new" actionButton={() => navigate('/contacts')} />
