@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import ButtonInput from '@components/Form/Inputs/ButtonInput';
 
-import resizeScreen from '@utils/resizeScreen';
+import useScreenSize from '@utils/screenSize';
 import socket from '@utils/socket';
 import useFetch from '@utils/useFetch';
 
@@ -11,7 +11,7 @@ import Icon from '../components/Icon';
 import { ChatLoader } from '../routers/loaders/ChatLoader';
 
 export default function ChatList() {
-  const screenSize = resizeScreen();
+  const screenSize = useScreenSize();
   let { id } = useParams();
 
   const [chatLog, setChatLog] = useState([]);

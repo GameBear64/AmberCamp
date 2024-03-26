@@ -1,32 +1,16 @@
 import Skeleton from 'react-loading-skeleton';
 
-import Layout from '../../components/Layout/Layout';
-import { UsersListSkeleton } from '../../components/Skeleton/UsersListSkeleton';
-
-import { ChatLoader } from './ChatLoader';
+import Layout from '@layout';
+import { UsersListSkeleton } from '@components/Skeleton/UsersListSkeleton';
 
 export function ChatListLoader() {
   return (
-    <Layout
-      left={
-        <div className="h-full">
-          <div className="m-5">
-            <UsersListSkeleton count={10} width={150} />
-          </div>
-        </div>
-      }
-      right={<ChatLoader />}
-    />
-  );
-}
-
-export function ChatListMobileLoader() {
-  return (
-    <>
+    <Layout>
       <Skeleton height={60} />
+      <Skeleton height={20} />
       <div className="m-5">
-        <UsersListSkeleton count={5} width={300} />
+        <UsersListSkeleton count={5} />
       </div>
-    </>
+    </Layout>
   );
 }

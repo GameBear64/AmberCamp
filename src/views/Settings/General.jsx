@@ -63,12 +63,10 @@ export default function General() {
 
   return (
     <>
-      <div className="hidden lg:block">
-        <TopBar backBtnLabel="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
-      </div>
-      <div className="m-auto flex flex-col gap-1 p-10 text-txtPrimary lg:max-w-md lg:justify-center lg:px-10">
+      <TopBar backBtnLabel="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
+      <div className="m-auto flex max-w-md flex-col justify-center gap-1">
         <Form defaultValues={userInfo} onSubmit={(data) => updateUserInfo(data)} onlyDirty>
-          <SettingsLayout styles="w-3/6 m-auto lg:w-full">
+          <SettingsLayout styles="m-auto w-full">
             <MediaSelect styles="" label="Background Picture" name="background" />
             <MediaSelect styles="" label="Profile Picture" name="picture" />
             <Input
@@ -83,7 +81,7 @@ export default function General() {
             <Textarea rows="7" cols="30" label="Biography" name="biography" />
             <TagSelector width="w-full" type="text" btnText="+Add" name="tags" shouldClear label="Profile Tags" />
             <Select name="timezone" label="Timezone" options={timezones} styles="mt-2 mx-auto" />
-            <SubmitButton size="small" styles="lg:w-full" label="Save" />
+            <SubmitButton size="small" styles="w-full" label="Save" />
           </SettingsLayout>
         </Form>
       </div>

@@ -17,28 +17,27 @@ export default function Contacts() {
   }, []);
 
   return (
-    <Layout right={<Outlet />}>
-      <>
+    <Layout>
         <div className="my-2 flex w-full justify-evenly ">
           <button
-            className={`m-2 flex justify-center text-[16px] font-semibold text-txtPrimary ${
-              currentList === ContactType.Friends && 'border-b-[3px] border-primary'
+            className={`m-2 flex justify-center font-semibold text-txtPrimary ${
+              currentList === ContactType.Friends && 'border-b-2 border-primary'
             }`}
             onClick={() => setCurrentList(ContactType.Friends)}>
             Friends
           </button>
 
           <button
-            className={`m-2 flex justify-center text-[16px] font-semibold text-txtPrimary ${
-              currentList === ContactType.Pending && 'border-b-[3px] border-primary'
+            className={`m-2 flex justify-center font-semibold text-txtPrimary ${
+              currentList === ContactType.Pending && 'border-b-2 border-primary'
             }`}
             onClick={() => setCurrentList(ContactType.Pending)}>
             Pending
           </button>
 
           <button
-            className={`m-2 flex justify-center text-[16px] font-semibold text-txtPrimary ${
-              currentList === ContactType.Blocked && 'border-b-[3px] border-primary'
+            className={`m-2 flex justify-center font-semibold text-txtPrimary ${
+              currentList === ContactType.Blocked && 'border-b-2 border-primary'
             }`}
             onClick={() => setCurrentList(ContactType.Blocked)}>
             Blocked
@@ -49,7 +48,6 @@ export default function Contacts() {
           <Pending incoming={contactList?.pendingContacts} outgoing={contactList?.sentOut} type="incoming" />
         )}
         {currentList === ContactType.Blocked && <ContactsList list={contactList?.blocked} type="blocked" />}
-      </>
     </Layout>
   );
 }

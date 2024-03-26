@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { screens } from 'tailwindcss/defaultTheme';
 
-import resizeScreen from '@utils/resizeScreen';
+import useScreenSize from '@utils/screenSize';
 
 export default function ScreenHandler({ from, to, children }) {
   const navigate = useNavigate();
-  const screenSize = resizeScreen();
+  const screenSize = useScreenSize();
   const location = useLocation();
 
-  useEffect(() => {
-    if (screenSize > 1024 && location.pathname === from) {
+  useEffect(() => {    
+    if (screenSize >= parseInt(screens.lg) && location.pathname === from) {
       navigate(to);
     }
   }, [screenSize, location.pathname]);

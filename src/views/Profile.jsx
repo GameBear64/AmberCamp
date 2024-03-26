@@ -15,7 +15,7 @@ import Tag from '@components/Profile/Tag';
 import useFetch from '@utils/useFetch';
 import { $user } from '@stores/user';
 
-import { ProfileMobileLoader } from '../routers/loaders/ProfileLoader';
+import { ProfileLoader } from '../routers/loaders/ProfileLoader';
 
 export default function Profile() {
   const [userInfo, setUserInfo] = useState({});
@@ -34,14 +34,12 @@ export default function Profile() {
   }, [id]);
 
   const navigate = useNavigate();
-  if (!userInfo?.handle) return <ProfileMobileLoader />;
+  if (!userInfo?.handle) return <ProfileLoader />;
   return (
     <>
-      <div className="hidden lg:block">
-        <TopBar backBtnLabel="Profile" backButton="arrow_back_ios_new" actionButton={() => navigate('/contacts')} />
-      </div>
+      <TopBar backBtnLabel="Profile" backButton="arrow_back_ios_new" actionButton={() => navigate('/contacts')} />
       <div
-        className="h-60 bg-neutral-700 bg-cover bg-center shadow-md lg:h-52"
+        className="h-52 bg-neutral-700 bg-cover bg-center shadow-md lg:h-60"
         style={{
           backgroundImage: userInfo?.background ? `url('http://localhost:3030/recourse/${userInfo?.background}')` : '',
         }}
@@ -49,7 +47,7 @@ export default function Profile() {
       <div className="p-4">
         <div className="relative mt-[-6rem] flex w-full flex-row items-end">
           <img
-            className="relative h-36 w-36 rounded-full border-2 border-white shadow-md lg:h-40 lg:w-40 lg:rounded-[50%]"
+            className="relative h-40 w-40 rounded-[50%] border-2 border-white shadow-md lg:h-36 lg:w-36 lg:rounded-full"
             src={
               userInfo?.picture && userInfo?.picture !== 'string'
                 ? `http://localhost:3030/recourse/${userInfo?.picture}?size=0`
@@ -77,7 +75,7 @@ export default function Profile() {
                 {userInfo?.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
               </span>
             )}
-            <div className="flex flex-wrap gap-2 text-gray-600 lg:flex-col">
+            <div className="flex flex-col flex-wrap gap-2 text-gray-600 lg:flex-row">
               <div className="flex">
                 <Icon icon="calendar_month" />
                 <span className="ml-1 text-txtSecondary">
@@ -95,9 +93,9 @@ export default function Profile() {
         </div>
       </div>
 
-      <section className="grid grid-cols-[1fr_25em] grid-rows-1 text-txtPrimary lg:mx-2 lg:flex lg:flex-col">
+      <section className="flex flex-col text-txtPrimary lg:grid lg:grid-cols-[1fr_20em] lg:grid-rows-1">
         <QuillSection userId={id} value={userInfo.description} />
-        <section className="overflow-y-auto overflow-x-hidden border-l border-primary">
+        <section className="overflow-y-auto overflow-x-hidden border-t border-primary lg:border-l lg:border-t-0">
           <NotesSection id={id} userInfo={userInfo} setUserInfo={setUserInfo} />
         </section>
       </section>
