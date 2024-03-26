@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { screens } from 'tailwindcss/defaultTheme';
 
-import useScreenSize from '@utils/screenSize';
+import useScreenSize from '@utils/react/screenSize';
 
 export default function ScreenHandler({ from, to, children }) {
   const navigate = useNavigate();

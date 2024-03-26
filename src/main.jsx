@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 
-import ThemesProvider from '@utils/ThemesProvider'
+import ThemesProvider from '@utils/react/ThemesProvider'
 import useFetch from '@utils/useFetch';
 import { setUser } from '@stores/user';
 

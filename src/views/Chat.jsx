@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import ButtonInput from '@components/Form/Inputs/ButtonInput';
 
-import useScreenSize from '@utils/screenSize';
+import useScreenSize from '@utils/react/screenSize';
 import socket from '@utils/socket';
 import useFetch from '@utils/useFetch';
 

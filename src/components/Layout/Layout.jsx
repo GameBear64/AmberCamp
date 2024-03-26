@@ -3,7 +3,7 @@ import { screens } from 'tailwindcss/defaultTheme';
 
 import NavBar from '@components/Layout/NavBar';
 
-import useScreenSize from '@utils/screenSize';
+import useScreenSize from '@utils/react/screenSize';
 
 export default function Layout({ children, placeholder }) {
   

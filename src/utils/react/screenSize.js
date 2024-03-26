@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { debounce } from './utils';
+import { debounce } from '../utils';
 
 export default (settings) => {  
   const [windowSize, setWindowSize] = useState(window.innerWidth);
