@@ -3,8 +3,7 @@ import { useState } from 'react';
 import Icon from '@components/Icon';
 import Notes from '@components/Notes/Notes';
 
-import { ButtonField } from '@form/Fields';
-import Form from '@form/Form';
+import { ButtonField, Form } from '@form/Fields';
 
 import { getUserId } from '@stores/user';
 import { errorSnackBar } from '@utils/snackbars';
@@ -28,7 +27,7 @@ export default function NotesSection({ id, userInfo, setUserInfo }) {
       method: 'POST',
       body: removeEmptyProperties(updateObject),
     }).then(() => {
-      getUser(id).then((res) => setUserInfo(res.message));
+      getUser(id).then((response) => setUserInfo(response));
     });
   };
 

@@ -8,6 +8,7 @@ import Message from '@components/Chat/Message';
 import { getUserId } from '@stores/user';
 import socket from '@utils/socket';
 import useFetch from '@utils/useFetch';
+import useFetch from '@utils/useFetch';
 
 import { ChatLoader } from '../routers/loaders/ChatLoader';
 

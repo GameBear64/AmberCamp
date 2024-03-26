@@ -1,10 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
-import Button from '@components/Form/Inputs/Button';
 import TopBar from '@components/Layout/TopBar';
 
-import { IconField } from '@form/Fields';
-import Form from '@form/Form';
+import { Form, IconField, SubmitButton } from '@form/Fields';
 
 import { successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
@@ -17,8 +15,8 @@ export default function Security() {
       url: `user/settings/resetPassword`,
       method: 'POST',
       body: fields,
-    }).then((res) => {
-      localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.jwt);
+    }).then((response) => {
+      localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, response.jwt);
       successSnackBar('Your password was changed successfully!');
     });
   };
@@ -43,7 +41,7 @@ export default function Security() {
             <div className="mb-2">
               <IconField name="email" type="email" width="w-72 lg:w-full" label="Change Email" icon="mail" />
             </div>
-            <Button size="small" styles="lg:w-full" label="Change Email" />
+            <SubmitButton size="small" styles="lg:w-full" label="Change Email" />
           </Form>
         </div>
         <hr />
@@ -60,7 +58,7 @@ export default function Security() {
               icon="sync_lock"
             />
           </div>
-          <Button size="small" styles="lg:w-full" label="Change Password" />
+          <SubmitButton size="small" styles="lg:w-full" label="Change Password" />
         </Form>
       </div>
     </>

@@ -1,8 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-import { Input } from '@form/Fields';
-import Form from '@form/Form';
-import Button from '@form/Inputs/Button';
+import { Form, Input, SubmitButton } from '@form/Fields';
 
 import { setUser } from '@stores/user';
 import { successSnackBar } from '@utils/snackbars';
@@ -15,10 +13,10 @@ export default function Register() {
     useFetch({
       url: 'user/register',
       method: 'POST',
-      body: data,
-    }).then((res) => {
-      localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.jwt);
-      setUser({ id: res.id });
+      body: { ...data },
+    }).then((response) => {
+      localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, response.jwt);
+      setUser({ id: response.id });
       successSnackBar(`Your registration was successful!`);
       navigate('/chat');
     });
@@ -53,7 +51,7 @@ export default function Register() {
                 />
               </div>
             </div>
-            <Button styles="w-full uppercase bg-red-600" label="Register" />
+            <SubmitButton styles="w-full uppercase bg-red-600" label="Register" />
             <Link to={'/login'} className="float-right mt-2 font-medium text-blue-700 underline">
               Already have an account?
             </Link>

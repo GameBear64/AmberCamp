@@ -1,9 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-import Button from '@components/Form/Inputs/Button';
-
-import { Input } from '@form/Fields';
-import Form from '@form/Form';
+import { Form, Input, SubmitButton } from '@form/Fields';
 
 import { setUser } from '@stores/user';
 import { successSnackBar } from '@utils/snackbars';
@@ -16,12 +13,10 @@ export default function Login() {
     useFetch({
       url: 'user/login',
       method: 'POST',
-      body: {
-        ...data,
-      },
-    }).then((res) => {
-      setUser({ id: res.id });
-      localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, res.jwt);
+      body: { ...data },
+    }).then((response) => {
+      localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, response.jwt);
+      setUser({ id: response.id });
       successSnackBar("You've logged in successfully!");
       navigate(`/chat`);
     });
@@ -49,7 +44,7 @@ export default function Login() {
               label="Password"
               styles="col-span-2 shadow-none"
             />
-            <Button styles="w-full uppercase bg-red-600" label="Login" />
+            <SubmitButton styles="w-full uppercase bg-red-600" label="Login" />
             <Link to={'/register'} className="float-right mt-2 font-medium text-blue-700 underline">
               No account? Make one!
             </Link>

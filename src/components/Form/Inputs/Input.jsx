@@ -1,14 +1,25 @@
-export default function Input({ innerRef, label, bgColor = 'bg-base-m', invalid = false, styleInput, ...rest }) {
+import ConnectForm from '../ConnectForm';
+
+export default function InputField({ name, label, rules = {}, styles, ...rest }) {
   return (
-    <div className="flex flex-col">
-      <label className="text-left font-semibold">{label}</label>
-      <input
-        ref={innerRef}
-        className={`mt-1.5 ${bgColor} text-txtPrimary ${
-          invalid && 'border-2 border-red-600'
-        } h-10 rounded-l pl-1.5 text-[17px] ${styleInput}`}
-        {...rest}
-      />
-    </div>
+    <ConnectForm>
+      {({ register, formState: { errors } }) => {
+        const { ref, ...registerRest } = register(name, rules);
+        return (
+          <div className={styles}>
+            <div className="flex flex-col ">
+              <label className="text-left font-semibold text-txtSecondary">{label}</label>
+              <input
+                ref={ref}
+                className={errors[name] ? 'input-error' : 'input'}
+                {...registerRest}
+                {...rest}
+              />
+            </div>
+            {errors[name] && <p className="font-semibold text-red-600">{errors[name].message}</p>}
+          </div>
+        );
+      }}
+    </ConnectForm>
   );
 }

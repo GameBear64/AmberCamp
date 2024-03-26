@@ -1,50 +1,34 @@
-import { useEffect, useState } from 'react';
+import ConnectForm from '../ConnectForm';
 
-export default function ButtonInput({
+export default function InputField({
+  name,
+  rules = {},
+  styles,
+  width = 'w-1/2',
   btnText,
-  btnBG = 'bg-base-s',
-  btnColor,
-  innerRef,
-  actionInput = () => {},
-  actionButton = () => {},
-  shouldClear,
-  value,
-  type = 'button',
-  width = 'w-60',
-  invalid,
-  inputType = 'text',
   ...rest
 }) {
-  const [state, setState] = useState('');
-
-  useEffect(() => {
-    setState(value);
-  }, [value]);
-
   return (
-    <div className={`mb-6 mt-2 flex flex-row text-center text-txtPrimary ${width}`}>
-      <input
-        type={inputType}
-        {...rest}
-        ref={innerRef}
-        onChange={(e) => {
-          actionInput(e);
-          setState(e.target.value);
-        }}
-        value={state || ''}
-        className={`h-10 w-full rounded-l bg-base-m pl-1 text-txtPrimary focus:outline-none ${
-          invalid && 'border-2 border-red-600'
-        }`}
-      />
-      <button
-        onClick={() => {
-          actionButton(state);
-          if (shouldClear) setState('');
-        }}
-        type={type}
-        className={`font-semibold ${btnColor} block rounded-r shadow-inner ${btnBG} p-1 text-[16px] hover:shadow-inner`}>
-        {btnText}
-      </button>
-    </div>
+    <ConnectForm>
+      {({ register, formState: { errors } }) => {
+        return (
+          <div className={styles}>
+            <div className={`flex flex-row ${width}`}>
+              <input
+                {...rest}
+                {...register(name, rules)}
+                className={`${errors[name] ? 'input-error' : 'input'} rounded-r-none`}
+              />
+              <button
+                type="submit"
+                className="btn min-w-max rounded-l-none">
+                {btnText}
+              </button>
+            </div>
+            {errors[name] && <p className="font-semibold text-red-600">{errors[name].message}</p>}
+          </div>
+        );
+      }}
+    </ConnectForm>
   );
 }
