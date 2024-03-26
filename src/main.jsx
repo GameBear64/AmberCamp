@@ -1,11 +1,7 @@
-import { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { SkeletonTheme } from 'react-loading-skeleton';
 
-import { useStore } from '@nanostores/react';
-
+import ThemesProvider from '@utils/ThemesProvider'
 import useFetch from '@utils/useFetch';
-import { $preferences } from '@stores/preferences';
 import { setUser } from '@stores/user';
 
 import Router from './routers/Router';
@@ -24,23 +20,9 @@ useFetch({ url: 'user' }).then((data) => {
   });
 });
 
-function Main() {
-  const preferences = useStore($preferences);
 
-  useEffect(() => {
-    const themes = `theme-${preferences.theme.toLocaleLowerCase()} theme-${preferences.accent?.toLocaleLowerCase()}`;
-    document.body.className = themes;
-  }, [preferences.theme, preferences.accent]);
-
-  return (
-    <SkeletonTheme
-      // compromise variant since we cant edit the colors with css 
-      baseColor={preferences.theme.toLocaleLowerCase() === 'light' ? "#ebebeb" : "#202020"}
-      highlightColor={preferences.theme.toLocaleLowerCase() === 'light' ? "#f5f5f5" : "#444"}
-    >
-      <Router />
-    </SkeletonTheme>
-  )
-}
-
-ReactDOM.createRoot(document.getElementById('root')).render(<Main />);
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <ThemesProvider>
+    <Router />
+  </ThemesProvider>
+);
