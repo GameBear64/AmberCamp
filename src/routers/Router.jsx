@@ -9,6 +9,7 @@ const ChatList = lazy(() => import('../views/ChatList'));
 const Chat = lazy(() => import('../views/Chat'));
 const Contacts = lazy(() => import('../views/Contacts'));
 const Profile = lazy(() => import('../views/Profile'));
+const CampFire = lazy(() => import('../views/CampFire'));
 const Settings = lazy(() => import('../views/Settings/Settings'));
 const General = lazy(() => import('../views/Settings/General'));
 const Security = lazy(() => import('../views/Settings/Security'));
@@ -62,6 +63,24 @@ export default function Router() {
               element: (
                 <Suspense fallback={<ChatLoader />}>
                   <Chat />
+                </Suspense>
+              ),
+            },
+          ],
+        },
+        {
+          path: '/campfire',
+          element: (
+            <Suspense fallback={<ChatListLoader />}>
+              <CampFire />
+            </Suspense>
+          ),
+          children: [
+            {
+              path: ':id',
+              element: (
+                <Suspense fallback={<ChatLoader />}>
+                  <ChatLoader />
                 </Suspense>
               ),
             },

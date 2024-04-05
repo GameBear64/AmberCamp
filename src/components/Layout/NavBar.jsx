@@ -16,7 +16,7 @@ export default function NavBar() {
         <Link to="/chat" className="material-symbols-rounded nav-btn">
           forum
         </Link>
-        <Link className="material-symbols-rounded nav-btn ">quiz</Link>
+        <Link to="/campfire" className="material-symbols-rounded nav-btn">quiz</Link>
         <Link to="/settings" className="material-symbols-rounded nav-btn">
           settings
         </Link>

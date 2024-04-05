@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
 
 import Layout from '@layout';
 import ContactsList from '@components/Contacts/ContactsList';
@@ -18,36 +17,36 @@ export default function Contacts() {
 
   return (
     <Layout>
-        <div className="my-2 flex w-full justify-evenly ">
-          <button
-            className={`m-2 flex justify-center font-semibold text-txtPrimary ${
-              currentList === ContactType.Friends && 'border-b-2 border-primary'
-            }`}
-            onClick={() => setCurrentList(ContactType.Friends)}>
-            Friends
-          </button>
+      <div className="my-2 flex w-full justify-evenly ">
+        <button
+          className={`m-2 flex justify-center font-semibold text-txtPrimary ${
+            currentList === ContactType.Friends && 'border-b-2 border-primary'
+          }`}
+          onClick={() => setCurrentList(ContactType.Friends)}>
+          Friends
+        </button>
 
-          <button
-            className={`m-2 flex justify-center font-semibold text-txtPrimary ${
-              currentList === ContactType.Pending && 'border-b-2 border-primary'
-            }`}
-            onClick={() => setCurrentList(ContactType.Pending)}>
-            Pending
-          </button>
+        <button
+          className={`m-2 flex justify-center font-semibold text-txtPrimary ${
+            currentList === ContactType.Pending && 'border-b-2 border-primary'
+          }`}
+          onClick={() => setCurrentList(ContactType.Pending)}>
+          Pending
+        </button>
 
-          <button
-            className={`m-2 flex justify-center font-semibold text-txtPrimary ${
-              currentList === ContactType.Blocked && 'border-b-2 border-primary'
-            }`}
-            onClick={() => setCurrentList(ContactType.Blocked)}>
-            Blocked
-          </button>
-        </div>
-        {currentList === ContactType.Friends && <ContactsList list={contactList?.contacts} type="friends" />}
-        {currentList === ContactType.Pending && (
-          <Pending incoming={contactList?.pendingContacts} outgoing={contactList?.sentOut} type="incoming" />
-        )}
-        {currentList === ContactType.Blocked && <ContactsList list={contactList?.blocked} type="blocked" />}
+        <button
+          className={`m-2 flex justify-center font-semibold text-txtPrimary ${
+            currentList === ContactType.Blocked && 'border-b-2 border-primary'
+          }`}
+          onClick={() => setCurrentList(ContactType.Blocked)}>
+          Blocked
+        </button>
+      </div>
+      {currentList === ContactType.Friends && <ContactsList list={contactList?.contacts} type="friends" />}
+      {currentList === ContactType.Pending && (
+        <Pending incoming={contactList?.pendingContacts} outgoing={contactList?.sentOut} type="incoming" />
+      )}
+      {currentList === ContactType.Blocked && <ContactsList list={contactList?.blocked} type="blocked" />}
     </Layout>
   );
 }
