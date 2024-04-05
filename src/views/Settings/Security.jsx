@@ -30,7 +30,7 @@ export default function Security() {
   };
 
   return (
-    <>
+    <div>
       <div className="hidden lg:block">
         <TopBar backBtnLabel="Security" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
       </div>
@@ -61,6 +61,6 @@ export default function Security() {
           <SubmitButton size="small" styles="lg:w-full" label="Change Password" />
         </Form>
       </div>
-    </>
+    </div>
   );
 }

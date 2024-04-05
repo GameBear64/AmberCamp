@@ -1,14 +1,20 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import Layout from '@layout';
+import { useStore } from '@nanostores/react';
+
+import { $user } from '@stores/user';
 
 import Icon from '../../components/Icon';
 import TopBar from '../../components/Layout/TopBar';
-import { SettingsLinks } from '../../utils/enums/SettingsEnums';
-import { SettingsLinkIcons } from '../../utils/enums/SettingsEnums';
+import { SettingsLinkIcons } from '../../utils/enums/settings';
+
+import { SettingsLinks } from './../../utils/enums/settings';
 
 export default function Settings() {
   let { pathname } = useLocation();
+  const user = useStore($user);
+  const navigate = useNavigate();
 
   return (
     <Layout>
@@ -25,7 +31,7 @@ export default function Settings() {
         </div>
       </div>
       <div className="hidden lg:block">
-        <TopBar backBtnLabel="Settings" backButton="arrow_back_ios_new" />
+        <TopBar backBtnLabel="Settings" backButton="arrow_back_ios_new" actionButton={() => navigate(`/contacts/${user.id}`)} />
         <div className="mx-9 mt-4 text-txtPrimary">
           {Object.entries(SettingsLinks).map((link) => (
             <Link key={link[0]} to={`${link[0]}`} className="my-1 flex flex-row justify-between rounded p-2 text-lg">

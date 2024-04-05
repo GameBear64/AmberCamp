@@ -13,20 +13,20 @@ export default function MessageOptions({ id, setEditMode }) {
   const editMessage = () => {
     setEditMode((prev) => !prev);
   };
-  
-  const copyText = () => {    
-    const msg = chatLog?.find(m => m._id == id)
-    navigator.clipboard.writeText(msg.body)
-    successSnackBar('Message copied!')
-  }
+
+  const copyText = () => {
+    const msg = chatLog?.find((m) => m._id == id);
+    navigator.clipboard.writeText(msg.body);
+    successSnackBar('Message copied!');
+  };
 
   const deleteMessage = () => {
     socket.emit('message/delete', id);
   };
 
   const addReaction = (emoji, color) => {
-    socket.emit('message/react', {messageId: id, emoji, color });
-  }
+    socket.emit('message/react', { messageId: id, emoji, color });
+  };
 
   return (
     <div>
@@ -36,34 +36,42 @@ export default function MessageOptions({ id, setEditMode }) {
           options={[
             { icon: 'add', color: 'bg-slate-100' },
             { icon: 'favorite', iconColor: 'text-red-700', color: 'bg-slate-100', action: () => addReaction('favorite', 'pink') },
-            { icon: 'thumb_up', color: 'bg-slate-100', iconColor: 'text-yellow-600', action: () => addReaction('thumb_up', 'lime') },
+            {
+              icon: 'thumb_up',
+              color: 'bg-slate-100',
+              iconColor: 'text-yellow-600',
+              action: () => addReaction('thumb_up', 'lime'),
+            },
             { icon: 'thumb_down', color: 'bg-slate-100', action: () => addReaction('thumb_down', 'red') },
-          ]} 
+          ]}
         />
         <Dropdown
           options={[
             {
               text: 'Edit Message',
               icon: 'edit',
-              color: 'bg-slate-100',
+              styles: 'text-txtPrimary',
+              color: 'bg-base-s',
               action: editMessage,
             },
             {
               text: 'Copy Text',
               icon: 'content_copy',
-              color: 'bg-slate-100',
-              action: copyText
+              color: 'bg-base-s',
+              styles: 'text-txtPrimary',
+              action: copyText,
             },
             {
               text: 'Mark Unread',
               icon: 'mark_email_unread',
-              color: 'bg-slate-100',
+              styles: 'text-txtPrimary',
+              color: 'bg-base-s',
             },
             {
               text: 'Delete Message',
               icon: 'cancel',
-              color: 'bg-red-100',
-              styles: 'text-red-500',
+              color: 'bg-red-500',
+              styles: 'text-txtPrimary',
               action: deleteMessage,
             },
           ]}

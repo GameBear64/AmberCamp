@@ -1,6 +1,6 @@
 import Options from './Options';
 
-export default function Dropdown({ options, stylesDropdown = false, stylesOptions, ...rest }) {
+export default function Dropdown({ options, stylesOptions }) {
   return (
     <div className="dropdown absolute z-10 bg-base text-base shadow-md">
       <ul>

@@ -21,10 +21,9 @@ export default function Profile() {
   const [userInfo, setUserInfo] = useState({});
   const { id } = useParams();
   const user = useStore($user);
-
   const getUser = () => {
     useFetch({
-      url: `user/${id || user.id}`,
+      url: `user/${user.id || id}`,
       method: 'GET',
     }).then((response) => setUserInfo(response));
   };
@@ -36,7 +35,7 @@ export default function Profile() {
   const navigate = useNavigate();
   if (!userInfo?.handle) return <ProfileMobileLoader />;
   return (
-    <>
+    <div>
       <div className="hidden lg:block">
         <TopBar backBtnLabel="Profile" backButton="arrow_back_ios_new" actionButton={() => navigate('/contacts')} />
       </div>
@@ -103,6 +102,6 @@ export default function Profile() {
           <NotesSection id={id} userInfo={userInfo} setUserInfo={setUserInfo} />
         </section>
       </section>
-    </>
+    </div>
   );
 }

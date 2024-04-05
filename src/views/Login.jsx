@@ -1,13 +1,17 @@
 import { Link, useNavigate } from 'react-router-dom';
 
+import { useStore } from '@nanostores/react';
+
 import { Form, Input, SubmitButton } from '@form/Fields';
 
+import { $chat } from '@stores/chat';
 import { setUser } from '@stores/user';
 import { successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
 
 export default function Login() {
   const navigate = useNavigate();
+  const { id } = useStore($chat);
 
   const loginUser = (data) => {
     useFetch({
@@ -18,7 +22,7 @@ export default function Login() {
       localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, response.jwt);
       setUser({ id: response.id });
       successSnackBar("You've logged in successfully!");
-      navigate(`/chat`);
+      navigate(`/chat/${id}`);
     });
   };
 

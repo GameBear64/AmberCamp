@@ -9,15 +9,21 @@ import MessageOptions from './MessageOptions';
 
 export default function Message({ message }) {
   const [showMenu, setShowMenu] = useState(false);
+  const [options, setOptions] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
   const editMessage = (data) => {
     setEditMode(false);
     socket.emit('message/edit', { id: message._id, body: data.message });
   };
-  console.log(message);
   return (
-    <li className="group mr-1 flex w-full flex-row px-8 py-2 hover:bg-base-m">
+    <li
+      onMouseEnter={() => setOptions(true)}
+      onMouseLeave={() => {
+        setOptions(false);
+        setShowMenu(false);
+      }}
+      className="group mr-1 flex w-full flex-row px-8 py-2 hover:bg-base-m">
       <img
         className="h-11 w-11 rounded-full"
         src={`http://localhost:3030/recourse/${message.author.picture}?size=50`}
@@ -43,14 +49,16 @@ export default function Message({ message }) {
           </div>
         </div>
         <div className="flex h-full items-center">
-          <Icon
-            onClick={() => setShowMenu(!showMenu)}
-            styles="text-xl hidden group-hover:block shadow-sm rounded bg-base px-2 flex font-semibold"
-            icon="more_horiz"
-          />
+          {options && (
+            <Icon
+              clickable={true}
+              onClick={() => setShowMenu(!showMenu)}
+              styles="text-xl shadow-sm rounded bg-base px-2 flex font-semibold"
+              icon="more_horiz"
+            />
+          )}
         </div>
-        {/*TODO: ${last && 'top-0'} lets not use props for this, reduce variables*/}
-        <div onMouseLeave={() => setShowMenu(false)} className={`absolute bottom-1 right-0 top-0 z-20`}>
+        <div onMouseLeave={() => setShowMenu(false)}>
           {showMenu && <MessageOptions id={message._id} setEditMode={setEditMode} />}
         </div>
       </div>

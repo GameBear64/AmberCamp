@@ -25,7 +25,7 @@ export default function UserCard({ contact, status = false }) {
         {status && (
           <Icon
             icon={Status[status]}
-            styles={`text-gray-700 ${status === 'blocked' ? 'bg-red-200 text-red-700' : 'bg-base-s'} ${
+            styles={`${status === 'blocked' ? 'bg-red-200 text-red-700' : 'bg-base-s'} ${
               status === 'pending' && 'font-extrabold'
             } justify-center items-center rounded-full text-[17px] px-2.5 text-center flex`}
             onClick={() => status === 'friends' && navigate(`/chat/${contact?._id}`)}

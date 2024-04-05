@@ -8,31 +8,13 @@ import SeparatedList from '@components/Layout/SeparatedList';
 import { ChatType } from '@utils/enums/chat';
 import useFetch from '@utils/useFetch';
 
+import Icon from '../components/Icon';
+
 export default function ChatList() {
   const [messageList, setMessageList] = useState({
     direct: [],
     group: [],
   });
-  // const [data, setData] = useState(list);
-  // useEffect(() => {
-  //   setData(list);
-  // }, [list]);
-  const users = (e) => {
-    messageList.direct?.map((el) => {
-      const participants = el.participants;
-      const filteredUsers = participants?.filter((t) => t.user.handle.includes(e));
-      return filteredUsers;
-    });
-  };
-  // const onSearch = (e) => setData(list?.filter((el) => el.handle.includes(e.target.value)));
-  const onSearch = (e) =>
-    setMessageList((messages) => {
-      return {
-        group: messages.group,
-        direct: users(e.value),
-      };
-    });
-  // console.log(messageList);
 
   const [currentList, setCurrentList] = useState(ChatType.Direct);
 
@@ -44,10 +26,20 @@ export default function ChatList() {
 
   useEffect(() => {
     if (messageList.group.length < 1) return;
-
     const isGroupOpened = messageList.group.find((chat) => chat?._id == id);
     if (isGroupOpened) setCurrentList(ChatType.Group);
   }, [id, messageList]);
+
+  const onSearch = (e) => {
+    setMessageList((messages) => {
+      return {
+        group: messages.group,
+        direct: messages.direct.filter((el) => {
+          return el.participants[1].user.name.includes(e.target.value);
+        }),
+      };
+    });
+  };
 
   return (
     <Layout>
@@ -68,17 +60,16 @@ export default function ChatList() {
             Groups
           </button>
         </div>
-        <input
-          onChange={onSearch}
-          className="my-4 h-10 w-full rounded-lg bg-base-m px-5 text-sm text-txtPrimary focus:outline-none lg:max-w-md"
-          placeholder="Search"
-        />
+        <div className="flex flex-row items-center gap-2">
+          <input
+            onChange={onSearch}
+            className="my-4 h-10 w-full rounded-lg bg-base-m px-5 text-sm text-txtPrimary focus:outline-none lg:max-w-md"
+            placeholder="Search"
+          />
+          <Icon styles="btn" icon="emoji_people" />
+        </div>
         {currentList === ChatType.Direct && <SeparatedList list={messageList.direct} />}
         {currentList === ChatType.Group && <SeparatedList list={messageList.group} />}
-
-        <a href="http://localhost:3030/api-docs/#/" target="_blank" rel="noreferrer" className="mt-10">
-          API Documentation
-        </a>
       </div>
     </Layout>
   );

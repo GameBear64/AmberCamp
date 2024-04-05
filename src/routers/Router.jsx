@@ -12,7 +12,7 @@ const General = lazy(() => import('../views/Settings/General'));
 const Security = lazy(() => import('../views/Settings/Security'));
 const DangerZone = lazy(() => import('../views/Settings/DangerZone'));
 const Preferences = lazy(() => import('../views/Settings/Preferences'));
-
+import { $chat } from '@stores/chat';
 import { $user } from '@stores/user';
 
 import authRoutes from '../routers/AuthRoutes';
@@ -33,6 +33,7 @@ let router;
 
 export default function Router() {
   const user = useStore($user);
+  const chat = useStore($chat);
 
   router = createBrowserRouter([
     {
@@ -53,7 +54,9 @@ export default function Router() {
           path: '/chat',
           element: (
             <Suspense fallback={<ChatListLoader />}>
-              <ChatList />
+              <ScreenHandler from="/chat" to={`/chat/${chat.id}`}>
+                <ChatList />
+              </ScreenHandler>
             </Suspense>
           ),
           children: [

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import Icon from '../Icon';
-export default function Options({ option, style }) {
+export default function Options({ option }) {
   const [active, setActive] = useState(false);
   return (
     <li
@@ -12,9 +12,9 @@ export default function Options({ option, style }) {
         setActive(false);
       }}
       onClick={option?.action}
-      className={`${active ? option?.color : 'bg-base'} cursor-pointer p-2 text-txtPrimary`}>
+      className={`${active ? option?.color : 'bg-base'} flex cursor-pointer flex-row justify-between gap-2 p-2 text-txtPrimary`}>
       {option?.text}
-      {option?.icon && <Icon styles={`text-xl ${option?.iconColor ? option.iconColor : 'text-slate-700'}`} icon={option?.icon} />}
+      {option?.icon && <Icon styles={`text-xl ${option?.iconColor}`} icon={option?.icon} />}
     </li>
   );
 }

@@ -9,8 +9,8 @@ export default function Layout({ children }) {
     <div className="flex h-screen bg-base text-txtPrimary">
       <div className="flex-1">
         <div className="hidden h-full flex-col justify-between lg:flex">
-          <div>{outlet || children}</div>
-          <NavBar />
+          {outlet || children}
+          {!outlet && <NavBar />}
         </div>
         <div className="grid h-full grid-flow-row grid-cols-[17em_1fr] grid-rows-1 bg-base lg:hidden lg:grid-cols-none">
           <div className="overflow-x-auto">{children}</div>

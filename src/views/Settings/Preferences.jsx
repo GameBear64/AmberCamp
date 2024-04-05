@@ -11,7 +11,7 @@ export default function Preferences() {
   const accent = useStore($preferences).accent;
 
   return (
-    <>
+    <div>
       <div className="hidden lg:block">
         <TopBar backBtnLabel="Preferences" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
       </div>
@@ -19,7 +19,7 @@ export default function Preferences() {
         <div>
           <h2 className="font-semibold text-txtSecondary">THEME</h2>
           <div className="mt-2 flex flex-row gap-4">
-            <button onClick={() => setTheme('Light')} className="accent-circle bg-yellow-300 text-black">
+            <button onClick={() => setTheme('Light')} className="accent-circle bg-yellow-500 text-white">
               <span className="material-symbols-rounded cursor-pointer text-2xl">light_mode</span>
             </button>
             <button onClick={() => setTheme('Dark')} className="accent-circle bg-gray-700 text-white">
@@ -54,6 +54,6 @@ export default function Preferences() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -7,8 +7,8 @@ import TopBar from '@components/Layout/TopBar';
 import { Form, Input, MediaSelect, Select, SubmitButton, TagSelector, Textarea } from '@form/Fields';
 import { MAX_LENGTH, MIN_LENGTH, REQUIRED } from '@form/validations';
 
+import { timezones } from '@utils/enums/timezone';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
-import { timezones } from '@utils/timezone';
 import useFetch from '@utils/useFetch';
 import { cleanObject, readFile } from '@utils/utils';
 
@@ -62,7 +62,7 @@ export default function General() {
   }, []);
 
   return (
-    <>
+    <div>
       <div className="hidden lg:block">
         <TopBar backBtnLabel="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
       </div>
@@ -87,6 +87,6 @@ export default function General() {
           </SettingsLayout>
         </Form>
       </div>
-    </>
+    </div>
   );
 }

@@ -8,9 +8,9 @@ import Message from '@components/Chat/Message';
 import { getUserId } from '@stores/user';
 import socket from '@utils/socket';
 import useFetch from '@utils/useFetch';
-import useFetch from '@utils/useFetch';
 
 import { ChatLoader } from '../routers/loaders/ChatLoader';
+import { setChat } from '../stores/chat';
 
 export const MessagesContext = createContext({});
 
@@ -55,7 +55,6 @@ export default function Chat() {
         setTypeTimeout(setTimeout(typingTimeout, 5000));
       }
     });
-
     return () => {
       socket.off('message/created');
       socket.off('message/deleted');
@@ -70,6 +69,7 @@ export default function Chat() {
       setChatLog(data?.messages || []);
       setChatUsers(data.participants);
     });
+    setChat(id);
   }, [id]);
 
   const sendMessage = (data) => {
@@ -77,10 +77,9 @@ export default function Chat() {
   };
 
   if (id == 2) return <ChatLoader />;
-
   return (
     <MessagesContext.Provider value={{ chatLog, setChatLog, otherUser }}>
-      <div className="flex h-full w-full flex-col justify-between pb-5">
+      <div className="flex h-full w-full flex-1 flex-col justify-between pb-5">
         <ChatBar />
         <div className="flex h-full flex-col justify-between overflow-y-auto pb-8 pt-5">
           <ul className="relative flex w-full flex-col gap-2">
