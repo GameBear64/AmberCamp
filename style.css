@@ -32,7 +32,7 @@
 @layer base {
   /* works only if theme is applied to the body */
   body {
-    @apply bg-base
+    @apply bg-base text-txtPrimary
   }
 
   .material-symbols-rounded {
@@ -89,7 +89,7 @@
     @apply btn bg-pink-600 hover:bg-pink-700 ;
   }
 
-  .disabled-btn {
+  .plain-btn {
     @apply btn bg-neutral-600 hover:bg-neutral-700 ;
   }
 

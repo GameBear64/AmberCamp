@@ -7,14 +7,16 @@ export default function InputField({ name, label, rules = {}, styles, ...rest })
         const { ref, ...registerRest } = register(name, rules);
         return (
           <div className={styles}>
-            <div className="flex flex-col">
-              <label className="text-left font-semibold text-txtSecondary">{label}</label>
+            <div className="flex items-center gap-2">
               <input
+                id={label?.toLowerCase().replace(/ /g, '-')}
                 ref={ref}
-                className={errors[name] ? 'input-error' : 'input'}
+                type="checkbox"
+                className={errors[name] ? 'input-error' : 'input h-5 w-5 accent-primary'}
                 {...registerRest}
                 {...rest}
               />
+              <label htmlFor={label?.toLowerCase().replace(/ /g, '-')} className="text-sm font-semibold text-txtSecondary">{label}</label>
             </div>
             {errors[name] && <p className="font-semibold text-red-600">{errors[name].message}</p>}
           </div>

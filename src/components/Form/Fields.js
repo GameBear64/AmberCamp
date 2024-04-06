@@ -1,4 +1,5 @@
 import ButtonField from './Inputs/ButtonInput';
+import CheckBox from './Inputs/CheckBox';
 import IconField from './Inputs/IconInput';
 import Input from './Inputs/Input';
 import MediaSelect from './Inputs/MediaSelect';
@@ -13,6 +14,7 @@ export {
   SubmitButton,
   Input,
   Textarea,
+  CheckBox,
   Select,
   ButtonField,
   IconField,

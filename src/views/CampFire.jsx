@@ -34,8 +34,8 @@ export default function CampFire() {
             Asked
           </button>
         </div>
-        {currentList === ListType.Answered && <AskingSection questions={[]} />}
-        {currentList === ListType.Asked && <AnsweringSection answers={[]} />}
+        {currentList === ListType.Answered && <AnsweringSection questions={[]} />}
+        {currentList === ListType.Asked && <AskingSection answers={[]} />}
       </div>
     </Layout>
   )
