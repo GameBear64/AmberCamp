@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@layout": ["src/components/Layout/Layout"],
+      "@components": ["src/components/*"],
+      "@form": ["src/components/Form/*"],
+      "@routers": ["src/routers/*"],
+      "@utils": ["src/utils/*"],
+      "@stores": ["src/stores/*"],
+    }
+  }
+}

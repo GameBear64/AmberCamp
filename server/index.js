@@ -21,19 +21,19 @@ mongoose
   .connect(`mongodb://127.0.0.1:${process.env.MONGO_PORT}/${process.env.MONGO_DB_NAME}`)
   .then(() => console.log(`Connected to ${process.env.MONGO_DB_NAME} in MongoDB`));
 
-//============== Socket =============
-const fileRegex = /events\/(?<cmd>\w+)\.js/g;
-const { Glob } = require('glob');
-const eventPaths = new Glob('./events/*.js', {});
+// ===== Auth =====
+const { checkAuth, socketAuth } = require('./middleware/auth');
 
-io.use((socket, next) => {
-  socket.authUser = socket.handshake.auth.jwt;
-  next();
-});
+//============== Socket =============
+const fileRegex = /events(\/|\\)(?<cmd>.*?)\.js/g;
+const { Glob } = require('glob');
+const eventPaths = new Glob('./events/**/*.js', {});
+
+io.use(socketAuth);
 
 io.on('connection', (socket) => {
   for (const file of eventPaths) {
-    let eventFile = file.replace(fileRegex, '$<cmd>');
+    const eventFile = file.replace(fileRegex, '$<cmd>').replaceAll('\\', '/');
 
     socket.on(eventFile, (...args) => {
       require(`./${file}`)({ io, socket }, ...args);
@@ -46,7 +46,6 @@ const { router } = require('express-file-routing');
 require('express-async-errors');
 
 const cors = require('cors');
-const { checkAuth } = require('./middleware/auth');
 const { trimBodyFields } = require('./middleware/global');
 
 app.use(cors());

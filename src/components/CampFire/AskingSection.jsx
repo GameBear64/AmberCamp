@@ -4,11 +4,14 @@ import Modal from '@components/Modal'
 
 import { CheckBox, Form, Input, Textarea } from '@form/Fields';
 
+import useFetch from '@utils';
+
 export default function AskingSection() {
   const [askModalShown, setAskModalShown] = useState(false)
 
   const askTheQuestion = (data) => {
     console.log(data);
+
   }
 
   return (
@@ -30,6 +33,7 @@ export default function AskingSection() {
           <button type="submit" form="ask-form" className='btn'>Ask!</button>
         </Fragment>
       </Modal> }
+      <input className="input" placeholder="Search"/>
     </div>
   )
 }
