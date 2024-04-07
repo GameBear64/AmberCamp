@@ -18,9 +18,9 @@
               // Packages starting with `@`
               ["^@"],
               // My custom aliases
-              ["^@components"],
+              ["^@layout", "^@components"],
               ["^@form"],
-              ["^@stores", "^@utils"],
+              ["^@routers", "^@utils", "^@stores"],
               // Imports starting with `../`
               ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
               // Imports starting with `./`

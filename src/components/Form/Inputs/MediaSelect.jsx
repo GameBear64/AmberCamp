@@ -32,10 +32,10 @@ export default function MediaSelect({ name, rules = {}, styles, label, ...rest }
               <input
                 className="file:text-black-700 mb-2 block w-full
                 border-none text-sm font-semibold
-                text-slate-500 file:mr-4
+                text-txtSecondary file:mr-4
                 file:cursor-pointer file:rounded-full file:border-0
-                file:bg-neutral-100 file:px-4
-                file:py-2 file:text-sm file:font-semibold hover:file:bg-neutral-200"
+                file:bg-base-xs file:px-4
+                file:py-2 file:text-sm file:font-semibold hover:file:bg-base-xxs"
                 {...rest}
                 type="file"
                 onChange={(e) => {

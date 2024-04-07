@@ -18,7 +18,7 @@ export default function Settings() {
 
   return (
     <Layout>
-      <div className="mx-8 my-10 block lg:hidden">
+      <div className="mx-8 my-10 hidden lg:block">
         <h1 className="text-2xl font-semibold text-txtPrimary">Settings</h1>
         <div className="mt-2">
           {Object.entries(SettingsLinks).map((link) => (
@@ -30,6 +30,8 @@ export default function Settings() {
           ))}
         </div>
       </div>
+      <div className="block lg:hidden">
+        <TopBar backBtnLabel="Settings" backButton="arrow_back_ios_new" />
       <div className="hidden lg:block">
         <TopBar backBtnLabel="Settings" backButton="arrow_back_ios_new" actionButton={() => navigate(`/contacts/${user.id}`)} />
         <div className="mx-9 mt-4 text-txtPrimary">

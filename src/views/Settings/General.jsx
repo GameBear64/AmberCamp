@@ -8,6 +8,7 @@ import { Form, Input, MediaSelect, Select, SubmitButton, TagSelector, Textarea }
 import { MAX_LENGTH, MIN_LENGTH, REQUIRED } from '@form/validations';
 
 import { timezones } from '@utils/enums/timezone';
+import { timezones } from '@utils/enums/timezone';
 import { errorSnackBar, successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
 import { cleanObject, readFile } from '@utils/utils';
@@ -68,7 +69,7 @@ export default function General() {
       </div>
       <div className="m-auto flex flex-col gap-1 p-10 text-txtPrimary lg:max-w-md lg:justify-center lg:px-10">
         <Form defaultValues={userInfo} onSubmit={(data) => updateUserInfo(data)} onlyDirty>
-          <SettingsLayout styles="w-3/6 m-auto lg:w-full">
+          <SettingsLayout styles="m-auto w-full">
             <MediaSelect styles="" label="Background Picture" name="background" />
             <MediaSelect styles="" label="Profile Picture" name="picture" />
             <Input
@@ -83,7 +84,7 @@ export default function General() {
             <Textarea rows="7" cols="30" label="Biography" name="biography" />
             <TagSelector width="w-full" type="text" btnText="+Add" name="tags" shouldClear label="Profile Tags" />
             <Select name="timezone" label="Timezone" options={timezones} styles="mt-2 mx-auto" />
-            <SubmitButton size="small" styles="lg:w-full" label="Save" />
+            <SubmitButton size="small" styles="w-full" label="Save" />
           </SettingsLayout>
         </Form>
       </div>

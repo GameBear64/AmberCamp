@@ -39,26 +39,20 @@ export default function Security() {
         <div className="mb-2 flex max-w-md flex-col">
           <Form onSubmit={(e) => changeEmail(e)}>
             <div className="mb-2">
-              <IconField name="email" type="email" width="w-72 lg:w-full" label="Change Email" icon="mail" />
+              <IconField name="email" type="email" label="Change Email" icon="mail" />
             </div>
-            <SubmitButton size="small" styles="lg:w-full" label="Change Email" />
+            <SubmitButton size="small" styles="w-full" label="Change Email" />
           </Form>
         </div>
         <hr />
         <h3 className="my-3 text-xl text-txtPrimary">Change Password</h3>
         <Form onSubmit={(e) => changePassword(e)}>
           <div className="mb-2 flex flex-col gap-3">
-            <IconField name="password" type="password" width="w-72 lg:w-full" label="Current Password" />
-            <IconField name="newPassword" type="password" width="w-72 lg:w-full" label="New Password" icon="lock" />
-            <IconField
-              name="confirmPassword"
-              type="password"
-              width="w-72 lg:w-full"
-              label="Repeat New Password"
-              icon="sync_lock"
-            />
+            <IconField name="password" type="password" label="Current Password" />
+            <IconField name="newPassword" type="password" label="New Password" icon="lock" />
+            <IconField name="confirmPassword" type="password" label="Repeat New Password" icon="sync_lock" />
           </div>
-          <SubmitButton size="small" styles="lg:w-full" label="Change Password" />
+          <SubmitButton size="small" styles="w-full" label="Change Password" />
         </Form>
       </div>
     </div>

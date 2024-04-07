@@ -3,6 +3,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { useStore } from '@nanostores/react';
 
+import { $user } from '@stores/user';
+
 const ChatList = lazy(() => import('../views/ChatList'));
 const Chat = lazy(() => import('../views/Chat'));
 const Contacts = lazy(() => import('../views/Contacts'));
@@ -60,14 +62,6 @@ export default function Router() {
             </Suspense>
           ),
           children: [
-            {
-              path: '',
-              element: (
-                <Suspense fallback={<ChatLoader />}>
-                  <p>no chat</p>
-                </Suspense>
-              ),
-            },
             {
               path: ':id',
               element: (

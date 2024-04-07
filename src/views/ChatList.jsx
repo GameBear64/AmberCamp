@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import Layout from '@layout';
-
 import SeparatedList from '@components/Layout/SeparatedList';
 
-import { ChatType } from '@utils/enums/chat';
+import ChatPlaceholder from '@routers/placeholders/Chat';
 import useFetch from '@utils/useFetch';
 
 import Icon from '../components/Icon';

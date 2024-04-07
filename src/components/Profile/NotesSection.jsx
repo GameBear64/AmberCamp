@@ -32,7 +32,7 @@ export default function NotesSection({ id, userInfo, setUserInfo }) {
   };
 
   return (
-    <div className="m-10">
+    <div className="m-5">
       <h1 className="text-2xl font-semibold">
         Notes
         <Icon

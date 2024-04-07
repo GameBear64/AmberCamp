@@ -18,6 +18,7 @@ export default function Login() {
       url: 'user/login',
       method: 'POST',
       body: { ...data },
+      
     }).then((response) => {
       localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, response.jwt);
       setUser({ id: response.id });
@@ -27,10 +28,10 @@ export default function Login() {
   };
 
   return (
-    <div className="m-auto grid h-screen grid-cols-2 lg:grid-cols-1">
+    <div className="m-auto grid h-screen grid-cols-1 lg:grid-cols-2">
       <div className="m-auto flex w-full max-w-md flex-col justify-center text-center">
         <h1 className="pb-8 text-4xl font-medium">Amber Camp Login</h1>
-        <div className="flex flex-col text-left lg:mx-5">
+        <div className="mx-5 flex flex-col text-left">
           <Form onSubmit={(data) => loginUser(data)}>
             <Input
               type="email"
@@ -38,10 +39,8 @@ export default function Login() {
               name="email"
               label="Email"
               styles="col-span-2"
-              bgColor="bg-neutral-black"
             />
             <Input
-              bgColor="bg-neutral-black"
               type="password"
               placeholder="Password"
               name="password"
@@ -55,7 +54,7 @@ export default function Login() {
           </Form>
         </div>
       </div>
-      <div className="flex h-screen flex-col items-center justify-center bg-neutral-200 text-center lg:hidden ">
+      <div className="hidden h-screen flex-col items-center justify-center bg-neutral-200 text-center lg:flex ">
         <img className="object-contain" src="../bam.png" />
         <h2 className="pb-8 text-4xl font-medium">Amber Camp</h2>
       </div>

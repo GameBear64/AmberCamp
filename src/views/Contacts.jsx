@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import Layout from '@layout';
-
 import ContactsList from '@components/Contacts/ContactsList';
 import Pending from '@components/Contacts/Pending';
 

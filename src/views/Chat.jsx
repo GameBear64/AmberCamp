@@ -5,9 +5,9 @@ import ChatArea from '@components/Chat/ChatArea';
 import ChatBar from '@components/Chat/ChatBar';
 import Message from '@components/Chat/Message';
 
-import { getUserId } from '@stores/user';
 import socket from '@utils/socket';
 import useFetch from '@utils/useFetch';
+import { getUserId } from '@stores/user';
 
 import { ChatLoader } from '../routers/loaders/ChatLoader';
 import { setChat } from '../stores/chat';

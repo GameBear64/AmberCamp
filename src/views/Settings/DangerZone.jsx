@@ -21,11 +21,9 @@ export default function DangerZone() {
     });
   };
   return (
-    <div className="p-10 lg:p-0">
-      <div className="hidden lg:block">
-        <TopBar backBtnLabel="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
-      </div>
-      <div className="lg:px-10 lg:py-8">
+    <>
+      <TopBar backBtnLabel="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
+      <div className="p-10">
         <button
           onClick={() => {
             removeUser();
@@ -36,7 +34,7 @@ export default function DangerZone() {
           Log out
         </button>
 
-        <hr className="hidden lg:block" />
+        <hr className="block lg:hidden" />
 
         {active ? (
           <Form onSubmit={(data) => deleteUser(data)}>
@@ -49,6 +47,6 @@ export default function DangerZone() {
           </button>
         )}
       </div>
-    </div>
+    </>
   );
 }
