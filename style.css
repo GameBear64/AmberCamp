@@ -107,7 +107,7 @@
   }
 
   .input {
-    @apply bg-base-m text-txtPrimary h-10 px-2 w-full border border-base-s focus:border-primary focus:outline-none;
+    @apply rounded bg-base-m text-txtPrimary h-10 px-2 w-full border border-base-s focus:border-primary focus:outline-none;
   }
 
   .input-error {

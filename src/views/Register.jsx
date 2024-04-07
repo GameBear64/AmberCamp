@@ -2,9 +2,9 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { Form, Input, SubmitButton } from '@form/Fields';
 
-import { setUser } from '@stores/user';
 import { successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
+import { setUser } from '@stores/user';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -29,13 +29,7 @@ export default function Register() {
         <div className="mx-5 flex flex-col text-left">
           <Form onSubmit={(data) => registerUser(data)}>
             <Input placeholder="@handle" name="handle" label="Handle" styles="col-span-2" />
-            <Input
-              type="email"
-              placeholder="email@ac.com"
-              name="email"
-              label="Email"
-              styles="col-span-2"
-            />
+            <Input type="email" placeholder="email@ac.com" name="email" label="Email" styles="col-span-2" />
             <Input type="password" placeholder="Password" label="Password" name="password" styles="col-span-2" />
             <Input
               type="password"

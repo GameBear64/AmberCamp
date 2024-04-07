@@ -21,9 +21,10 @@ export default function Profile() {
   const [userInfo, setUserInfo] = useState({});
   const { id } = useParams();
   const user = useStore($user);
+
   const getUser = () => {
     useFetch({
-      url: `user/${user.id || id}`,
+      url: `user/${id || user.id}`,
       method: 'GET',
     }).then((response) => setUserInfo(response));
   };
@@ -36,8 +37,8 @@ export default function Profile() {
   if (!userInfo?.handle) return <ProfileLoader />;
   return (
     <div>
-      <div className="hidden lg:block">
-        <TopBar backBtnLabel="Profile" backButton="arrow_back_ios_new" actionButton={() => navigate('/contacts')} />
+      <div className="block lg:hidden">
+        <TopBar backBtnLabel="Profile" backButton="arrow_back_ios_new" actionButton={() => navigate(`/chat`)} />
       </div>
       <div
         className="h-52 bg-neutral-700 bg-cover bg-center shadow-md lg:h-60"
@@ -56,7 +57,7 @@ export default function Profile() {
             }
             alt=""
           />
-          <div className="mb-2">
+          <div className="mb-2 ">
             <h2 className="flex items-center text-xl font-bold leading-6 text-txtPrimary">
               {userInfo?.name || userInfo?.handle}
             </h2>
@@ -64,7 +65,7 @@ export default function Profile() {
           </div>
         </div>
         <div className="ml-3 mt-3 w-full justify-center space-y-1">
-          <div className="flex">
+          <div className="flex lg:float-right lg:mx-5">
             <FriendshipButtons userInfo={userInfo} setUserInfo={setUserInfo} />
           </div>
           <div className="flex flex-col gap-4">

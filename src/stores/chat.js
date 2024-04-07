@@ -1,10 +1,10 @@
-import { map } from 'nanostores';
+import { persistentMap } from '@nanostores/persistent';
 
 const defaultState = {
   id: null,
 };
 
-export const $chat = map(defaultState);
+export const $chat = persistentMap('chat', defaultState);
 
 export function setChat(chatId) {
   $chat.setKey('id', chatId);

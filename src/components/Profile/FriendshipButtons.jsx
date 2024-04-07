@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { getUserId } from '@stores/user';
 import { successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
+import { getUserId } from '@stores/user';
 
 export default function FriendshipButtons({ userInfo, setUserInfo }) {
   const { id } = useParams();
@@ -50,7 +50,7 @@ export default function FriendshipButtons({ userInfo, setUserInfo }) {
 
   if (id !== getUserId()) {
     return (
-      <div className="float-left mb-4 flex w-full flex-wrap gap-2 font-semibold ">
+      <div className="float-left mb-4 flex w-full flex-wrap gap-2 font-semibold lg:gap-3 ">
         {userInfo.status == 'Strangers' && (
           <button className="info-btn" onClick={add}>
             Add friend

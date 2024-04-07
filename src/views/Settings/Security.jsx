@@ -31,7 +31,7 @@ export default function Security() {
 
   return (
     <div>
-      <div className="hidden lg:block">
+      <div className="block lg:hidden">
         <TopBar backBtnLabel="Security" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
       </div>
       <div className="m-auto flex flex-col gap-1 p-10 lg:max-w-md lg:justify-center lg:px-10">

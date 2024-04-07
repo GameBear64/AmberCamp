@@ -13,7 +13,7 @@ export default function ChatBar() {
     <div className="sticky top-0 z-20 flex flex-row justify-between bg-base px-8 py-3 shadow-sm">
       <div className="flex flex-row items-center gap-2">
         <Icon
-          styles="mr-2 pt-1 hidden lg:block align-bottom text-xl"
+          styles="mr-2 pt-1 block lg:hidden align-bottom text-xl"
           onClick={() => navigate('/chat')}
           icon="arrow_back_ios_new"
         />

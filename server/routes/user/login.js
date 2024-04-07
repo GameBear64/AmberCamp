@@ -76,6 +76,9 @@ module.exports.post = [
     return res.status(200).json({
       id: userAttempting._id,
       jwt: createJWTCookie(userAttempting),
+      theme: userAttempting.theme,
+      accent: userAttempting.accent,
+      language: userAttempting.language,
     });
   },
 ];

@@ -29,20 +29,30 @@ export default function MessageOptions({ id, setEditMode }) {
   };
 
   return (
-    <div>
+    <div className="flex">
       <div className="flex flex-row gap-1.5">
         <Dropdown
           stylesDropdown="flex"
           options={[
             { icon: 'add', color: 'bg-slate-100' },
-            { icon: 'favorite', iconColor: 'text-red-700', color: 'bg-slate-100', action: () => addReaction('favorite', 'pink') },
+            {
+              icon: 'favorite',
+              iconColor: 'text-rose-700',
+              color: 'bg-rose-100',
+              action: () => addReaction('favorite', 'pink'),
+            },
             {
               icon: 'thumb_up',
-              color: 'bg-slate-100',
-              iconColor: 'text-yellow-600',
+              color: 'bg-blue-100',
+              iconColor: 'text-blue-700',
               action: () => addReaction('thumb_up', 'lime'),
             },
-            { icon: 'thumb_down', color: 'bg-slate-100', action: () => addReaction('thumb_down', 'red') },
+            {
+              icon: 'thumb_down',
+              color: 'bg-red-100',
+              iconColor: 'text-red-700',
+              action: () => addReaction('thumb_down', 'red'),
+            },
           ]}
         />
         <Dropdown

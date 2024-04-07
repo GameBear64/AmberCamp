@@ -1,7 +1,8 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import Layout from '@layout';
 import { useStore } from '@nanostores/react';
+
+import Layout from '@layout';
 
 import { $user } from '@stores/user';
 
@@ -30,9 +31,10 @@ export default function Settings() {
           ))}
         </div>
       </div>
-      <div className="block lg:hidden">
-        <TopBar backBtnLabel="Settings" backButton="arrow_back_ios_new" />
       <div className="hidden lg:block">
+        <TopBar backBtnLabel="Settings" backButton="arrow_back_ios_new" />
+      </div>
+      <div className="block lg:hidden">
         <TopBar backBtnLabel="Settings" backButton="arrow_back_ios_new" actionButton={() => navigate(`/contacts/${user.id}`)} />
         <div className="mx-9 mt-4 text-txtPrimary">
           {Object.entries(SettingsLinks).map((link) => (

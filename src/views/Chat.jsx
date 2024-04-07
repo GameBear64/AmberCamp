@@ -1,4 +1,4 @@
-import { createContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import ChatArea from '@components/Chat/ChatArea';
@@ -22,7 +22,7 @@ export default function Chat() {
   // === TYPING STUFF ===
   const [typing, setTyping] = useState(false);
   const [typeTimeout, setTypeTimeout] = useState();
-
+  const messages = useRef(null);
   const typingTimeout = () => setTyping(false);
   // ====================
 
@@ -72,6 +72,10 @@ export default function Chat() {
     setChat(id);
   }, [id]);
 
+  useLayoutEffect(() => {
+    messages.current.scrollTop = messages.current.scrollHeight;
+  }, [chatLog]);
+
   const sendMessage = (data) => {
     socket.emit('message/create', { userId: id, message: data.message });
   };
@@ -81,13 +85,11 @@ export default function Chat() {
     <MessagesContext.Provider value={{ chatLog, setChatLog, otherUser }}>
       <div className="flex h-full w-full flex-1 flex-col justify-between pb-5">
         <ChatBar />
-        <div className="flex h-full flex-col justify-between overflow-y-auto pb-8 pt-5">
-          <ul className="relative flex w-full flex-col gap-2">
-            {chatLog?.map((message) => (
-              <Message key={message._id} message={message} />
-            ))}
-          </ul>
-        </div>
+        <ul ref={messages} className="relative flex h-full w-full flex-col gap-2 overflow-y-auto overflow-x-hidden pb-8 pt-5">
+          {chatLog?.map((message, i) => (
+            <Message last={i === chatLog.length - 1 || i === chatLog.length - 2} key={message._id} message={message} />
+          ))}
+        </ul>
         <ChatArea submitHandler={sendMessage} />
         {typing && <span>{otherUser.handle} is typing...</span>}
       </div>

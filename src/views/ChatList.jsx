@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Layout from '@layout';
 import SeparatedList from '@components/Layout/SeparatedList';
@@ -9,12 +9,14 @@ import useFetch from '@utils/useFetch';
 
 import Icon from '../components/Icon';
 
+import { ChatType } from './../utils/enums/chat';
+
 export default function ChatList() {
   const [messageList, setMessageList] = useState({
     direct: [],
     group: [],
   });
-
+  const navigate = useNavigate();
   const [currentList, setCurrentList] = useState(ChatType.Direct);
 
   const { id } = useParams();
@@ -41,7 +43,7 @@ export default function ChatList() {
   };
 
   return (
-    <Layout>
+    <Layout placeholder={<ChatPlaceholder />}>
       <div className="mx-2 flex flex-col">
         <div className="mb-2 flex w-full justify-evenly ">
           <button
@@ -65,7 +67,7 @@ export default function ChatList() {
             className="my-4 h-10 w-full rounded-lg bg-base-m px-5 text-sm text-txtPrimary focus:outline-none lg:max-w-md"
             placeholder="Search"
           />
-          <Icon styles="btn" icon="emoji_people" />
+          <Icon styles="btn" onClick={() => navigate('/contacts')} icon="emoji_people" />
         </div>
         {currentList === ChatType.Direct && <SeparatedList list={messageList.direct} />}
         {currentList === ChatType.Group && <SeparatedList list={messageList.group} />}
