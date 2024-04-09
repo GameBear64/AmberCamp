@@ -13,6 +13,7 @@ import QuillSection from '@components/Profile/QuillSection';
 import Tag from '@components/Profile/Tag';
 
 import useFetch from '@utils/useFetch';
+import { formatDate } from '@utils/utils';
 import { $user } from '@stores/user';
 
 import { ProfileLoader } from '../routers/loaders/ProfileLoader';
@@ -82,11 +83,7 @@ export default function Profile() {
             <div className="flex flex-col flex-wrap gap-2 text-gray-600 lg:flex-row">
               <div className="flex">
                 <Icon icon="calendar_month" />
-                <span className="ml-1 text-txtSecondary">
-                  {new Date(userInfo?.createdAt).toLocaleString('en-GB', {
-                    dateStyle: 'short',
-                  })}
-                </span>
+                <span className="ml-1 text-txtSecondary">{formatDate(userInfo?.createdAt)}</span>
               </div>
               <div className="flex text-txtSecondary">
                 <Icon icon="schedule" />

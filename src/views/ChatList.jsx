@@ -5,11 +5,10 @@ import Layout from '@layout';
 import SeparatedList from '@components/Layout/SeparatedList';
 
 import ChatPlaceholder from '@routers/placeholders/Chat';
+import { ChatType } from '@utils/enums/chat';
 import useFetch from '@utils/useFetch';
 
 import Icon from '../components/Icon';
-
-import { ChatType } from './../utils/enums/chat';
 
 export default function ChatList() {
   const [messageList, setMessageList] = useState({
@@ -47,14 +46,14 @@ export default function ChatList() {
       <div className="mx-2 flex flex-col">
         <div className="mb-2 flex w-full justify-evenly ">
           <button
-            className={`m-2 flex justify-center text-[16px] font-semibold text-txtPrimary ${
+            className={`m-2 flex justify-center font-semibold text-base text-txtPrimary ${
               currentList === ChatType.Direct && 'border-b-[3px] border-primary'
             }`}
             onClick={() => setCurrentList(ChatType.Direct)}>
             Messages
           </button>
           <button
-            className={`m-2 flex justify-center text-[16px] font-semibold text-txtPrimary ${
+            className={`m-2 flex justify-center font-semibold text-base text-txtPrimary ${
               currentList === ChatType.Group && 'border-b-[3px] border-primary'
             }`}
             onClick={() => setCurrentList(ChatType.Group)}>

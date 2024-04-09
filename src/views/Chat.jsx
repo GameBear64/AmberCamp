@@ -87,7 +87,7 @@ export default function Chat() {
         <ChatBar />
         <ul ref={messages} className="relative flex h-full w-full flex-col gap-2 overflow-y-auto overflow-x-hidden pb-8 pt-5">
           {chatLog?.map((message, i) => (
-            <Message last={i === chatLog.length - 1 || i === chatLog.length - 2} key={message._id} message={message} />
+            <Message last={i > 3 && (i === chatLog.length - 1 || i === chatLog.length - 2)} key={message._id} message={message} />
           ))}
         </ul>
         <ChatArea submitHandler={sendMessage} />

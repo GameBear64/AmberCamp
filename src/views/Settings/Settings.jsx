@@ -3,14 +3,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useStore } from '@nanostores/react';
 
 import Layout from '@layout';
+import Icon from '@components/Icon';
+import TopBar from '@components/Layout/TopBar';
 
+import { SettingsLinkIcons } from '@utils/enums/settings';
+import { SettingsLinks } from '@utils/enums/settings';
 import { $user } from '@stores/user';
-
-import Icon from '../../components/Icon';
-import TopBar from '../../components/Layout/TopBar';
-import { SettingsLinkIcons } from '../../utils/enums/settings';
-
-import { SettingsLinks } from './../../utils/enums/settings';
 
 export default function Settings() {
   let { pathname } = useLocation();

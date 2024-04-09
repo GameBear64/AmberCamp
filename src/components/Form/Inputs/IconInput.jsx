@@ -2,7 +2,7 @@ import Icon from '@components/Icon';
 
 import ConnectForm from '../ConnectForm';
 
-export default function IconInput({ name, rules = {}, styles, label, icon, width, ...rest }) {
+export default function IconInput({ name, rules = {}, styles, label, icon, ...rest }) {
   return (
     <ConnectForm>
       {({ register, formState: { errors } }) => {
@@ -10,7 +10,7 @@ export default function IconInput({ name, rules = {}, styles, label, icon, width
         return (
           <div className={styles}>
             <label className="text-txtSecondary">{label}</label>
-            <div className={`${width} flex items-center`}>
+            <div className={`flex w-full items-center`}>
               <Icon icon={icon} styles="absolute p-2" />
               <input
                 ref={ref}

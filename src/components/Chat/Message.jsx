@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
+import { Reactions } from '@utils/enums/chat';
 import socket from '@utils/socket';
+import { formatDate } from '@utils/utils';
 
-import { Reactions } from '../../utils/enums/chat';
 import Icon from '../Icon';
 
 import ChatArea from './ChatArea';
@@ -34,7 +35,7 @@ export default function Message({ message, last }) {
         <div className="flex w-full flex-col">
           <div className="flex flex-row gap-2">
             <p className="text-sm font-bold leading-snug text-txtPrimary">{message.author.handle}</p>
-            <p className="text-sm font-normal leading-snug text-txtSecondary">{message?.createdAt.split('T')[0]}</p>
+            <p className="text-sm font-normal leading-snug text-txtSecondary">{formatDate(message?.createdAt)}</p>
           </div>
           {!editMode && <p className="text-md w-full max-w-[65em] break-all leading-snug text-txtSecondary">{message?.body}</p>}
           {editMode && <ChatArea submitHandler={editMessage} defaultValue={message?.body} />}
