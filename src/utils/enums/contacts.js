@@ -6,6 +6,8 @@ export const ContactType = Object.freeze({
   Outgoing: 'outgoing',
 });
 
+export const ContactsOptions = Object.freeze(['Friends', 'Pending', 'Blocked']);
+
 export const Status = Object.freeze({
   friends: 'chat_bubble',
   blocked: 'person_remove',

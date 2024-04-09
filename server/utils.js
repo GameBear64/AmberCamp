@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const ObjectId = require('mongoose').Types.ObjectId;
 const codes = require('referral-codes');
-const { FriendshipStatus } = require('./enums');
+const { FriendshipStatus } = require('./helpers/enums');
 
 /**
  * Creates a JWT cookie based on a user's information. (_id)

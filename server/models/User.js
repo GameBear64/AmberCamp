@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { RelationshipModel } = require('./Relationship');
-const { Theme, TimeZone, Accent } = require('../enums.js');
+const { Theme, TimeZone, Accent } = require('../helpers/enums.js');
 
 const userSchema = new mongoose.Schema(
   {

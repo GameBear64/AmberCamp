@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 
-import ThemesProvider from '@utils/react/ThemesProvider'
+import ThemesProvider from '@utils/react/ThemesProvider';
 import useFetch from '@utils/useFetch';
 import { setUser } from '@stores/user';
 
@@ -11,7 +11,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-quill/dist/quill.snow.css';
 
 // set user store
-useFetch({ url: 'user' }).then((data) => {
+useFetch({ url: 'user', redirect: false }).then((data) => {
   setUser({ id: data._id });
   setPreferences({
     theme: data.theme,
@@ -19,7 +19,6 @@ useFetch({ url: 'user' }).then((data) => {
     language: data.language,
   });
 });
-
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ThemesProvider>

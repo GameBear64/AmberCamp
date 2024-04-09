@@ -1,13 +1,13 @@
-import { map } from 'nanostores';
+import { persistentMap } from '@nanostores/persistent';
 
 import useFetch from '@utils/useFetch';
 
 const defaultState = {
-  theme: localStorage.getItem('theme-theme') || 'Light',
-  accent: localStorage.getItem('theme-accent') || 'Orange',
+  theme: 'Light',
+  accent: 'Orange',
   language: 'EN',
 };
-export const $preferences = map(defaultState);
+export const $preferences = persistentMap('theme-', defaultState);
 
 export function setPreferences(preferencesDetails) {
   $preferences.set(preferencesDetails);
@@ -26,7 +26,6 @@ export function setTheme(theme) {
     },
   }).then(() => {
     $preferences.setKey('theme', theme);
-    localStorage.setItem('theme-theme', theme);
   });
 }
 
@@ -39,6 +38,10 @@ export function setAccent(accent) {
     },
   }).then(() => {
     $preferences.setKey('accent', accent);
-    localStorage.setItem('theme-accent', accent);
   });
+}
+
+export function clearPreferences() {
+  $preferences.setKey('accent', '');
+  $preferences.setKey('theme', '');
 }

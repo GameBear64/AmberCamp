@@ -27,7 +27,7 @@ export default function Notes({ text, onDelete, onEdit }) {
   return (
     <div
       onMouseLeave={() => setShowOptions(false)}
-      className="relative mb-3 w-full flex-row justify-between rounded border-l-8 border-primary bg-base-m p-1">
+      className="relative my-3 w-full flex-row justify-between rounded border-l-8 border-primary bg-base-m p-1">
       <div className="float-right mx-2 rounded">
         <Icon icon="more_horiz" onClick={() => setShowOptions(!showOptions)} styles="text-3xl" />
         {showOptions && <Dropdown options={options} />}

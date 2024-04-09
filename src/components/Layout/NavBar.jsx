@@ -2,10 +2,13 @@ import { Link } from 'react-router-dom';
 
 import { useStore } from '@nanostores/react';
 
+import { $chat } from '@stores/chat';
+
 import { $user } from '../../stores/user';
 
 export default function NavBar() {
   const user = useStore($user);
+  const { id } = useStore($chat);
 
   return (
     <div className="sticky bottom-0 flex w-full justify-center bg-base">
@@ -13,7 +16,7 @@ export default function NavBar() {
         <Link to={`/contacts/${user.id}`} className="material-symbols-rounded nav-btn">
           account_circle
         </Link>
-        <Link to="/chat" className="material-symbols-rounded nav-btn">
+        <Link to={`/chat/${id}`} className="material-symbols-rounded nav-btn">
           forum
         </Link>
         <Link to="/campfire" className="material-symbols-rounded nav-btn">quiz</Link>

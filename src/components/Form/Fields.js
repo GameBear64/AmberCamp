@@ -9,15 +9,4 @@ import Textarea from './Inputs/Textarea';
 import Form from './Form';
 import SubmitButton from './SubmitButton';
 
-export {
-  Form,
-  SubmitButton,
-  Input,
-  Textarea,
-  CheckBox,
-  Select,
-  ButtonField,
-  IconField,
-  MediaSelect,
-  TagSelector,
-};
+export { Form, SubmitButton, Input, Textarea, CheckBox, Select, ButtonField, IconField, MediaSelect, TagSelector };

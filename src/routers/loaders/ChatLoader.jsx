@@ -1,6 +1,6 @@
 import Skeleton from 'react-loading-skeleton';
 
-import { MessageSkeleton } from '../../components/Skeleton/MessageSkeleton';
+import { MessageSkeleton } from '@components/Skeleton/MessageSkeleton';
 
 export function ChatLoader() {
   const dimensions = {

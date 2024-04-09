@@ -21,27 +21,30 @@ const messageSchema = new mongoose.Schema(
       default: [],
     },
     reactions: {
-      type: [String],
+      type: [{
+        emoji: String,
+        color: String,
+      }],
       default: [],
     },
   },
   { timestamps: true }
 );
 
-messageSchema.pre('deleteOne', async function (next) {
-  const doc = await this.model.findOne(this.getQuery());
-  await MediaModel.deleteMany({ _id: { $in: doc } });
-
+messageSchema.pre('deleteOne', { document: true }, async function (next) {
+  const target = this._id
+  await MediaModel.deleteMany({ _id: { $in: target } });
   next();
 });
 
-messageSchema.pre('deleteMany', async function (next) {
-  const doc = await this.model.find(this.getQuery());
-  const targets = doc.map((doc) => doc.media).reduce((acc, medias) => acc.concat(medias));
+// no bulk delete yet
+// messageSchema.pre('deleteMany', async function (next) {
+//   const doc = await this.model.find(this.getQuery());
+//   const targets = doc.map((doc) => doc.media).reduce((acc, medias) => acc.concat(medias));
 
-  await MediaModel.deleteMany({ _id: { $in: targets } });
+//   await MediaModel.deleteMany({ _id: { $in: targets } });
 
-  next();
-});
+//   next();
+// });
 
 exports.MessageModel = mongoose.model('Message', messageSchema);

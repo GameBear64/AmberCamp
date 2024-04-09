@@ -30,9 +30,11 @@ export default function Security() {
   };
 
   return (
-    <>
-      <TopBar backBtnLabel="Security" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
-      <div className="m-auto flex max-w-md flex-col justify-center gap-1 p-10">
+    <div>
+      <div className="block lg:hidden">
+        <TopBar backBtnLabel="Security" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
+      </div>
+      <div className="m-auto flex flex-col gap-1 p-10 lg:max-w-md lg:justify-center lg:px-10">
         <h3 className="mb-3 text-xl text-txtPrimary">Change Email</h3>
         <div className="mb-2 flex max-w-md flex-col">
           <Form onSubmit={(e) => changeEmail(e)}>
@@ -48,16 +50,11 @@ export default function Security() {
           <div className="mb-2 flex flex-col gap-3">
             <IconField name="password" type="password" label="Current Password" />
             <IconField name="newPassword" type="password" label="New Password" icon="lock" />
-            <IconField
-              name="confirmPassword"
-              type="password"
-              label="Repeat New Password"
-              icon="sync_lock"
-            />
+            <IconField name="confirmPassword" type="password" label="Repeat New Password" icon="sync_lock" />
           </div>
           <SubmitButton size="small" styles="w-full" label="Change Password" />
         </Form>
       </div>
-    </>
+    </div>
   );
 }

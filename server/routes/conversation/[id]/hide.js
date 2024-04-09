@@ -26,7 +26,6 @@
 const joi = require('joi');
 const ObjectId = require('mongoose').Types.ObjectId;
 
-// const { ParticipantModel } = require('../../../models/Participant');
 const { ConversationModel } = require('../../../models/Conversation');
 const { joiValidate, InformationTypes } = require('../../../middleware/validation');
 const { isObjectID } = require('../../../utils');
@@ -34,16 +33,16 @@ const { isObjectID } = require('../../../utils');
 module.exports.get = [
   joiValidate({ id: joi.custom(isObjectID) }, InformationTypes.PARAMS),
   async (req, res) => {
-    // const groupMember = await ParticipantModel.findOne({ user: req.apiUserId, conversation: req.params.id });
-    // const [conversation] = await ConversationModel.aggregate([
-    //   {
-    //     $match: {
-    //       users: { $all: [ObjectId(req.apiUserId)] },
-    //     },
-    //   },
-    // ]);
-    // if (groupMember.groupOwner) return res.status(403).json('Cannot hide groups that you own.');
-    // await groupMember.updateOne({ hideFromHistory: true });
+
+    const result = await ConversationModel.updateOne(
+      { id: req.params.id, 'participants.user': ObjectId(req.apiUserId) },
+      { $set: { "participants.$.hideFromHistory" : true } },
+      { timestamps: false }
+    );
+
+    // if acknowledged
     return res.status(200).json();
+    // else
+    // return res.status(404).json('No conversation found.');
   },
 ];
