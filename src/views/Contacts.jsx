@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
 
 import Layout from '@layout';
 import ContactsList from '@components/Contacts/ContactsList';
@@ -18,7 +17,7 @@ export default function Contacts() {
   }, []);
 
   return (
-    <Layout right={<Outlet />}>
+    <Layout>
       <div>
         <div className="my-2 flex w-full justify-evenly ">
           {ContactsOptions.map((option) => {

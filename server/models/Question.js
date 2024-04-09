@@ -3,11 +3,11 @@ const { QuestionCategory } = require('../enums.js');
 
 const questionSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     },
-    body: {
+    question: {
       type: String,
       required: true,
     },
@@ -16,32 +16,15 @@ const questionSchema = new mongoose.Schema(
       enum: Object.values(QuestionCategory),
       default: QuestionCategory.General,
     },
-    answers: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Conversation',
-      },
-    ],
-    // users: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User',
-    //   },
-    // ],
-    // theme: String, // TODO
-    // messages: {
-    //   type: [
-    //     {
-    //       type: mongoose.Schema.Types.ObjectId,
-    //       ref: 'Message',
-    //     },
-    //   ],
-    //   default: [],
-    //   select: false,
-    // },
+    anonymous: {
+      type: Boolean,
+      default: true
+    },
+    answers: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Conversation',
+    }],
   },
-  // Update this on every message push to generate user last message
-  // if participant.updatedAt < conversation.updatedAt then there are new messages
   { timestamps: true, toJSON: { virtuals: true } }
 );
 

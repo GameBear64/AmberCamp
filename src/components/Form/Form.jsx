@@ -10,6 +10,7 @@ export default function Form({
   submitOnEnter = false,
   onlyDirty = false,
   validationMode = 'onChange',
+  ...rest
 }) {
   const methods = useForm({ defaultValues, mode: validationMode });
   const {
@@ -33,7 +34,9 @@ export default function Form({
           onSubmit(onlyDirty ? cleanObject(e, Object.keys(dirtyFields)) : e);
           if (submitOnEnter) reset();
         })}
-        onKeyDown={(e) => checkKeyDown(e)}>
+        onKeyDown={(e) => checkKeyDown(e)}
+        {...rest}
+      >
         {children}
       </form>
     </FormProvider>
