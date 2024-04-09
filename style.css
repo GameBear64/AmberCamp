@@ -32,7 +32,7 @@
 @layer base {
   /* works only if theme is applied to the body */
   body {
-    @apply bg-base
+    @apply bg-base text-txtPrimary
   }
 
   .material-symbols-rounded {
