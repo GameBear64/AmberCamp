@@ -4,7 +4,8 @@ import Modal from '@components/Modal'
 
 import { CheckBox, Form, Input, Textarea } from '@form/Fields';
 
-import useFetch from '@utils';
+import { successSnackBar } from '@utils/snackbars';
+import useFetch from '@utils/useFetch';
 
 export default function AskingSection() {
   const [askModalShown, setAskModalShown] = useState(false)
@@ -12,6 +13,11 @@ export default function AskingSection() {
   const askTheQuestion = (data) => {
     console.log(data);
 
+    useFetch({url: 'campfire/new', method: 'POST', body: {question: data.question, anonymous: data.anonymous, category: 'General'}})
+    .then(() => {
+      successSnackBar('Question asked')
+      setAskModalShown(false)
+    });
   }
 
   return (
@@ -23,7 +29,7 @@ export default function AskingSection() {
         title="New question..." 
         easyClose
       > 
-        <Form id="ask-form" onSubmit={(data) => askTheQuestion(data)}>
+        <Form id="ask-form" onSubmit={(data) => askTheQuestion(data)} defaultValues={{anonymous: true}}>
           <Input placeholder="What if..." name="title" label="Title" />
           <Textarea rows="4" label="Question" name="question" placeholder="So I was wondering..." styles='my-2' />
           <CheckBox label="Anonymous question?" name="anonymous" styles='my-4'/>
