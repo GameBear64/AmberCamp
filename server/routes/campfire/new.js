@@ -1,7 +1,7 @@
 const joi = require('joi');
 
 const { joiValidate } = require('../../middleware/validation');
-const { QuestionCategory } = require('../../enums.js');
+const { QuestionCategory } = require('../../helpers/enums.js');
 const { QuestionModel } = require('../../models/Question.js');
 
 module.exports.post = [

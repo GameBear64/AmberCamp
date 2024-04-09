@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { QuestionCategory } = require('../enums.js');
+const { QuestionCategory } = require('../helpers/enums.js');
 
 const questionSchema = new mongoose.Schema(
   {
@@ -18,12 +18,14 @@ const questionSchema = new mongoose.Schema(
     },
     anonymous: {
       type: Boolean,
-      default: true
+      default: true,
     },
-    answers: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Conversation',
-    }],
+    answers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Conversation',
+      },
+    ],
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );
