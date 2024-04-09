@@ -50,7 +50,7 @@ export default function FriendshipButtons({ userInfo, setUserInfo }) {
 
   if (id !== getUserId()) {
     return (
-      <div className="float-left mb-4 flex w-full flex-wrap gap-2 font-semibold ">
+      <div className="float-left mb-4 flex w-full flex-wrap gap-2 font-semibold lg:gap-3 ">
         {userInfo.status == 'Strangers' && (
           <button className="info-btn" onClick={add}>
             Add friend

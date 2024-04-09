@@ -13,6 +13,7 @@ import QuillSection from '@components/Profile/QuillSection';
 import Tag from '@components/Profile/Tag';
 
 import useFetch from '@utils/useFetch';
+import { formatDate } from '@utils/utils';
 import { $user } from '@stores/user';
 
 import { ProfileLoader } from '../routers/loaders/ProfileLoader';
@@ -36,8 +37,10 @@ export default function Profile() {
   const navigate = useNavigate();
   if (!userInfo?.handle) return <ProfileLoader />;
   return (
-    <>
-      <TopBar backBtnLabel="Profile" backButton="arrow_back_ios_new" actionButton={() => navigate('/contacts')} />
+    <div>
+      <div className="block lg:hidden">
+        <TopBar backBtnLabel="Profile" backButton="arrow_back_ios_new" actionButton={() => navigate(`/chat`)} />
+      </div>
       <div
         className="h-52 bg-neutral-700 bg-cover bg-center shadow-md lg:h-60"
         style={{
@@ -55,7 +58,7 @@ export default function Profile() {
             }
             alt=""
           />
-          <div className="mb-2">
+          <div className="mb-2 ">
             <h2 className="flex items-center text-xl font-bold leading-6 text-txtPrimary">
               {userInfo?.name || userInfo?.handle}
             </h2>
@@ -63,7 +66,7 @@ export default function Profile() {
           </div>
         </div>
         <div className="ml-3 mt-3 w-full justify-center space-y-1">
-          <div className="flex">
+          <div className="flex lg:float-right lg:mx-5">
             <FriendshipButtons userInfo={userInfo} setUserInfo={setUserInfo} />
           </div>
           <div className="flex flex-col gap-4">
@@ -72,17 +75,15 @@ export default function Profile() {
             </ReactMarkdown>
             {userInfo?.tags?.length > 0 && (
               <span className="flex flex-row gap-3 ">
-                {userInfo?.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
+                {userInfo?.tags.map((tag) => (
+                  <Tag key={tag}>{tag}</Tag>
+                ))}
               </span>
             )}
             <div className="flex flex-col flex-wrap gap-2 text-gray-600 lg:flex-row">
               <div className="flex">
                 <Icon icon="calendar_month" />
-                <span className="ml-1 text-txtSecondary">
-                  {new Date(userInfo?.createdAt).toLocaleString('en-GB', {
-                    dateStyle: 'short',
-                  })}
-                </span>
+                <span className="ml-1 text-txtSecondary">{formatDate(userInfo?.createdAt)}</span>
               </div>
               <div className="flex text-txtSecondary">
                 <Icon icon="schedule" />
@@ -99,6 +100,6 @@ export default function Profile() {
           <NotesSection id={id} userInfo={userInfo} setUserInfo={setUserInfo} />
         </section>
       </section>
-    </>
+    </div>
   );
 }

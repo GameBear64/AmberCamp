@@ -1,3 +1,5 @@
+import { clearAll } from '@utils/utils';
+
 import { router } from '../routers/Router';
 
 import { errorSnackBar } from './snackbars';
@@ -7,7 +9,7 @@ const baseURL =
     ? `${window.location.protocol}//${window.location.hostname}`
     : import.meta.env.VITE_SERVER_URL;
 
-const doNotRedirectFrom = ['/login', '/register']
+const doNotRedirectFrom = ['/login', '/register'];
 
 export default function useFetch({ url, requireAuth = true, method, body }) {
   let options = {
@@ -25,8 +27,9 @@ export default function useFetch({ url, requireAuth = true, method, body }) {
 
       if (res.status === 401) {
         localStorage.removeItem(import.meta.env.VITE_LOCAL_STORAGE_NAME);
-        
-        if (!doNotRedirectFrom.includes(router.state.location.pathname)) {          
+        clearAll();
+
+        if (!doNotRedirectFrom.includes(router.state.location.pathname)) {
           router.navigate('/login');
           window.location.reload();
         }

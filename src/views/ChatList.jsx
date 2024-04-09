@@ -1,68 +1,75 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Layout from '@layout';
-import Icon from '@components/Icon';
 import SeparatedList from '@components/Layout/SeparatedList';
 
-import ChatPlaceholder from '@routers/placeholders/Chat'
+import ChatPlaceholder from '@routers/placeholders/Chat';
+import { ChatType } from '@utils/enums/chat';
 import useFetch from '@utils/useFetch';
 
-const ChatType = Object.freeze({
-  Direct: 'Direct',
-  Group: 'Group',
-});
+import Icon from '../components/Icon';
 
 export default function ChatList() {
-  const [messageList, setMessageList] = useState({});
+  const [messageList, setMessageList] = useState({
+    direct: [],
+    group: [],
+  });
+  const navigate = useNavigate();
   const [currentList, setCurrentList] = useState(ChatType.Direct);
 
-  let { id } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
-    useFetch({ url: 'conversation/list' }).then(({ message }) => setMessageList(message));
+    useFetch({ url: 'conversation/list' }).then((data) => setMessageList(data));
   }, []);
 
   useEffect(() => {
-    const isGroupOpened = messageList?.group?.find((chat) => chat._id == id);
+    if (messageList.group.length < 1) return;
+    const isGroupOpened = messageList.group.find((chat) => chat?._id == id);
     if (isGroupOpened) setCurrentList(ChatType.Group);
   }, [id, messageList]);
 
+  const onSearch = (e) => {
+    setMessageList((messages) => {
+      return {
+        group: messages.group,
+        direct: messages.direct.filter((el) => {
+          return el.participants[1].user.name.includes(e.target.value);
+        }),
+      };
+    });
+  };
+
   return (
-    <Layout placeholder={<ChatPlaceholder/>}>
+    <Layout placeholder={<ChatPlaceholder />}>
       <div className="mx-2 flex flex-col">
         <div className="mb-2 flex w-full justify-evenly ">
           <button
-            className={`m-2 flex justify-center font-semibold ${
-              currentList === ChatType.Direct && 'border-b-2 border-primary'
+            className={`m-2 flex justify-center font-semibold text-base text-txtPrimary ${
+              currentList === ChatType.Direct && 'border-b-[3px] border-primary'
             }`}
             onClick={() => setCurrentList(ChatType.Direct)}>
             Messages
           </button>
           <button
-            className={`m-2 flex justify-center font-semibold ${
-              currentList === ChatType.Group && 'border-b-2 border-primary'
+            className={`m-2 flex justify-center font-semibold text-base text-txtPrimary ${
+              currentList === ChatType.Group && 'border-b-[3px] border-primary'
             }`}
             onClick={() => setCurrentList(ChatType.Group)}>
             Groups
           </button>
         </div>
-        <input className="input" placeholder="Search"/>
-        {currentList === ChatType.Direct && <SeparatedList list={messageList?.direct} />}
-        {currentList === ChatType.Group && <SeparatedList list={messageList?.group} />}
-
-        <Link className="mt-10" to={`/chat`}>
-          no chat
-        </Link>
-        <Link to={`/chat/1`}>
-          go to <Icon icon="chat_bubble" />
-        </Link>
-        <Link to={`/chat/2`}>
-          go to <Icon icon="chat_bubble" />
-        </Link>
-        <a href="http://localhost:3030/api-docs/#/" target="_blank" rel="noreferrer" className="mt-10">
-          API Documentation
-        </a>
+        <div className="flex flex-row items-center gap-2">
+          <input
+            onChange={onSearch}
+            className="my-4 h-10 w-full rounded-lg bg-base-m px-5 text-sm text-txtPrimary focus:outline-none lg:max-w-md"
+            placeholder="Search"
+          />
+          <Icon styles="btn" onClick={() => navigate('/contacts')} icon="emoji_people" />
+        </div>
+        {currentList === ChatType.Direct && <SeparatedList list={messageList.direct} />}
+        {currentList === ChatType.Group && <SeparatedList list={messageList.group} />}
       </div>
     </Layout>
   );

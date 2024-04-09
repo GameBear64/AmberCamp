@@ -62,9 +62,11 @@ export default function General() {
   }, []);
 
   return (
-    <>
-      <TopBar backBtnLabel="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
-      <div className="m-auto flex max-w-md flex-col justify-center gap-1">
+    <div>
+      <div className="block lg:hidden">
+        <TopBar backBtnLabel="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
+      </div>
+      <div className="m-auto flex flex-col gap-1 p-10 text-txtPrimary lg:max-w-md lg:justify-center lg:px-10">
         <Form defaultValues={userInfo} onSubmit={(data) => updateUserInfo(data)} onlyDirty>
           <SettingsLayout styles="m-auto w-full">
             <MediaSelect styles="" label="Background Picture" name="background" />
@@ -85,6 +87,6 @@ export default function General() {
           </SettingsLayout>
         </Form>
       </div>
-    </>
+    </div>
   );
 }

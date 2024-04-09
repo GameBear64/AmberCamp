@@ -38,7 +38,7 @@ const joi = require('joi');
 
 const { joiValidate, allowNoBodyChanges, InformationTypes } = require('../../middleware/validation');
 const { isObjectID } = require('../../utils');
-const { ConversationType } = require('../../enums.js');
+const { ConversationType } = require('../../helpers/enums.js');
 
 const { ConversationModel } = require('../../models/Conversation');
 // const { ParticipantModel } = require('../../models/Participant');

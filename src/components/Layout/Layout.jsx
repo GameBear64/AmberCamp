@@ -6,17 +6,16 @@ import NavBar from '@components/Layout/NavBar';
 import useScreenSize from '@utils/react/screenSize';
 
 export default function Layout({ children, placeholder }) {
-  
-  const screenSize = useScreenSize({timeout: 100});
+  const screenSize = useScreenSize({ timeout: 100 });
   const outlet = useOutlet();
-  
+
   return (
     <div className="flex h-screen bg-base text-txtPrimary">
       <div className="flex-1">
         {screenSize <= parseInt(screens.lg) && (
           <div className="flex h-full flex-col justify-between ">
-            <div>{outlet || children}</div>
-            <NavBar />
+            {outlet || children}
+            {!outlet && <NavBar />}
           </div>
         )}
         {screenSize > parseInt(screens.lg) && (

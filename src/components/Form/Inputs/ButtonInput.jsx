@@ -1,13 +1,6 @@
 import ConnectForm from '../ConnectForm';
 
-export default function InputField({
-  name,
-  rules = {},
-  styles,
-  width = 'w-1/2',
-  btnText,
-  ...rest
-}) {
+export default function InputField({ name, rules = {}, styles, width = 'w-1/2', btnText, btnColor = '', ...rest }) {
   return (
     <ConnectForm>
       {({ register, formState: { errors } }) => {
@@ -17,11 +10,9 @@ export default function InputField({
               <input
                 {...rest}
                 {...register(name, rules)}
-                className={`${errors[name] ? 'input-error' : 'input'} rounded-r-none`}
+                className={`${errors[name] ? 'input-error' : 'input'} rounded rounded-r-none`}
               />
-              <button
-                type="submit"
-                className="btn min-w-max rounded-l-none">
+              <button type="submit" className={`btn min-w-max ${btnColor} rounded-l-none`}>
                 {btnText}
               </button>
             </div>

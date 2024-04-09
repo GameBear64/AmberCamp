@@ -32,31 +32,40 @@
 @layer base {
   /* works only if theme is applied to the body */
   body {
-    @apply bg-base
+    @apply bg-base text-txtPrimary;
   }
 
   .material-symbols-rounded {
-    font-variation-settings: 'FILL' 1
+    font-variation-settings: 'FILL' 1;
   }
 
   .react-markdown a {
     @apply underline text-primary;
   }
 
-  .ql-toolbar.ql-snow, .ql-container, .ql-picker-options, .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {
-    @apply !border-base-s
+  .ql-toolbar.ql-snow,
+  .ql-container,
+  .ql-picker-options,
+  .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {
+    @apply !border-base-s;
   }
 
-  .ql-formats .ql-snow, .ql-formats .ql-picker, .ql-formats .ql-stroke, .ql-formats .ql-fill {
-    @apply !text-txtPrimary !stroke-txtPrimary
+  .ql-formats .ql-snow,
+  .ql-formats .ql-picker,
+  .ql-formats .ql-stroke,
+  .ql-formats .ql-fill {
+    @apply !text-txtPrimary !stroke-txtPrimary;
   }
 
-  .ql-snow.ql-toolbar button.ql-active .ql-stroke, .ql-snow.ql-toolbar .ql-picker-label.ql-active, .ql-snow.ql-toolbar .ql-picker-label:hover, .ql-snow.ql-toolbar .ql-picker-item:hover {
-    @apply !text-primary !stroke-primary
+  .ql-snow.ql-toolbar button.ql-active .ql-stroke,
+  .ql-snow.ql-toolbar .ql-picker-label.ql-active,
+  .ql-snow.ql-toolbar .ql-picker-label:hover,
+  .ql-snow.ql-toolbar .ql-picker-item:hover {
+    @apply !text-primary !stroke-primary;
   }
 
   .ql-snow .ql-picker-options {
-    @apply bg-base-m
+    @apply bg-base-m;
   }
 
   pre {
@@ -86,11 +95,11 @@
   }
 
   .favorite-btn {
-    @apply btn bg-pink-600 hover:bg-pink-700 ;
+    @apply btn bg-pink-600 hover:bg-pink-700;
   }
 
   .disabled-btn {
-    @apply btn bg-neutral-600 hover:bg-neutral-700 ;
+    @apply btn bg-neutral-600 hover:bg-neutral-700;
   }
 
   .nav-btn {
@@ -98,7 +107,7 @@
   }
 
   .input {
-    @apply bg-base-m text-txtPrimary h-10 rounded px-2 w-full border border-base-s focus:border-primary focus:outline-none;
+    @apply rounded bg-base-m text-txtPrimary h-10 px-2 w-full border border-base-s focus:border-primary focus:outline-none;
   }
 
   .input-error {
@@ -115,7 +124,6 @@
     @apply shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)];
   }
 }
-
 
 .theme-orange {
   --color-primary-50: theme('colors.orange.50');

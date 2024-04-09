@@ -1,5 +1,8 @@
-import { useUpload } from './useUpload';
+import { setChat } from '@stores/chat';
+import { clearPreferences } from '@stores/preferences';
+import { removeUser } from '@stores/user';
 
+import { useUpload } from './useUpload';
 /**
  * @param {string} str - The input string to be chunked.
  * @param {number} size - The size of each chunk.
@@ -73,3 +76,13 @@ export function debounce(func, timeout = 500) {
     }, timeout);
   };
 }
+export const clearAll = () => {
+  removeUser();
+  setChat('');
+  clearPreferences();
+};
+
+export const formatDate = (date) =>
+  new Date(date).toLocaleString('en-GB', {
+    dateStyle: 'short',
+  });
