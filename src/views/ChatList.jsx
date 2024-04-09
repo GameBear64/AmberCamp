@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Layout from '@layout';
-import SeparatedList from '@components/Layout/SeparatedList';
+import SeparatedList from '@components/Contacts/SeparatedList';
 
 import ChatPlaceholder from '@routers/placeholders/Chat';
 import { ChatType } from '@utils/enums/chat';
