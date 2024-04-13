@@ -26,7 +26,7 @@
 const joi = require('joi');
 const ObjectId = require('mongoose').Types.ObjectId;
 
-const { participantsToUsers, DirectOrGroup } = require('../../../helpers/aggregations');
+const { participantsToUsers, DirectOrGroup, populateMessages } = require('../../../helpers/aggregations');
 const { joiValidate, InformationTypes } = require('../../../middleware/validation');
 const { isObjectID } = require('../../../utils');
 
@@ -51,28 +51,7 @@ module.exports.get = [
           },
         },
       },
-      {
-        $lookup: {
-          from: 'messages',
-          localField: 'messages',
-          foreignField: '_id',
-          pipeline: [
-            {
-              $lookup: {
-                from: 'users',
-                localField: 'author',
-                foreignField: '_id',
-                pipeline: [{ $project: { _id: 1, picture: 1, handle: 1, name: 1 } }],
-                as: 'author',
-              },
-            },
-            {
-              $unwind: '$author',
-            },
-          ],
-          as: 'messages',
-        },
-      },
+      ...populateMessages,
       {
         $project: {
           messages: 1,
