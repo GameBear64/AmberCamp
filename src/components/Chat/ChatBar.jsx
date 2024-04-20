@@ -17,7 +17,7 @@ export default function ChatBar() {
           onClick={() => navigate('/chat')}
           icon="arrow_back_ios_new"
         />
-        <img className="h-10 w-10 rounded-full" src={`http://localhost:3030/recourse/${otherUser?.picture}?size=50`} alt="" />
+        <img className="size-10 rounded-full" src={`http://localhost:3030/recourse/${otherUser?.picture}?size=50`} alt="" />
         <h1 className="text-sm font-bold leading-snug text-txtPrimary">@{otherUser?.handle}</h1>
       </div>
       <Icon styles="flex items-center text-2xl" icon="settings" />

@@ -35,9 +35,27 @@ io.on('connection', (socket) => {
   for (const file of eventPaths) {
     const eventFile = file.replace(fileRegex, '$<cmd>').replaceAll('\\', '/');
 
-    socket.on(eventFile, (...args) => {
-      require(`./${file}`)({ io, socket }, ...args);
-    });
+    const exported = require(`./${file}`);
+
+    if (typeof exported === 'function') {
+      socket.on(eventFile, (...args) => {
+        exported({ io, socket }, ...args);
+      });
+
+      continue;
+    }
+
+    if (Array.isArray(exported)) {
+      socket.on(eventFile, (...args) => {
+        const next = (queueNumber) => () => {
+          exported[queueNumber]({ io, socket }, ...args, next(queueNumber + 1));
+        };
+
+        next(0)();
+      });
+    } else {
+      throw new Error(`Invalid export in file ${file}. It must be either a function or an array of middleware functions.`);
+    }
   }
 });
 

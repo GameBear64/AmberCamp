@@ -4,7 +4,6 @@ const { MessageModel } = require('../../models/Message');
 const { UserModel } = require('../../models/User');
 
 module.exports = async ({ io, socket }, data) => {
-  console.log('a');
   if (data.userId === socket.apiUserId) return socket.emit('error', 'Go get some friends...');
 
   const conversation = await ConversationModel.findOne({
@@ -21,7 +20,6 @@ module.exports = async ({ io, socket }, data) => {
     const participantIDs = conversation.participants.map(({ user }) => user.toString());
     newMessage = await MessageModel.populate(newMessage, { path: 'author', select: 'handle picture' });
 
-    console.log(participantIDs);
     return io.to(participantIDs).emit('message/created', newMessage);
   }
 
