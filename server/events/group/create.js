@@ -2,14 +2,14 @@
 // const { ConversationModel } = require('../../models/Conversation');
 // const { MessageModel } = require('../../models/Message');
 // const { UserModel } = require('../../models/User');
+const joi = require('joi');
 const { socketValidate } = require('../../middleware/validation');
 const { isObjectID } = require('../../utils');
-const joi = require('joi');
 
 module.exports = [
   socketValidate({
     title: joi.string().required(),
-    participants: joi.array().items(joi.custom(isObjectID)),
+    participants: joi.array().min(3).max(50).items(joi.custom(isObjectID)).required(),
     picture: joi.string().optional(),
     color: joi.string().when('picture', { is: joi.exist(), then: joi.optional(), otherwise: joi.required() }),
     icon: joi.string().when('picture', { is: joi.exist(), then: joi.optional(), otherwise: joi.required() }),
