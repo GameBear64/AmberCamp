@@ -44,6 +44,7 @@ module.exports = [
       newMessage = await MessageModel.populate(newMessage, { path: 'author', select: 'handle picture' });
 
       return io.to([data.userId, socket.apiUserId]).emit('message/created', newMessage);
+      // maybe group created?
     } else {
       return socket.emit('error', 'Conversation or user does not exist.');
     }

@@ -42,8 +42,13 @@ export default function ChatList() {
   };
 
   const testCreate = () => {
-    socket.emit('group/create', {title: 'new group', participants: ['64eeff959d98879f70171f68'], color: 'dfgs', icon: 'dfghjk'});
-  }
+    socket.emit('group/create', {
+      title: 'new group',
+      participants: ['64eeff959d98879f70171f68', '64eeff959d98879f70171f68', '64eeff959d98879f70171f68'],
+      color: 'dfgs',
+      icon: 'dfghjk',
+    });
+  };
 
   return (
     <Layout placeholder={<ChatPlaceholder />}>
@@ -72,7 +77,9 @@ export default function ChatList() {
           />
           <Icon styles="btn" onClick={() => navigate('/contacts')} icon="emoji_people" />
         </div>
-        <button className='btn my-4' onClick={testCreate}>click</button>
+        <button className="btn my-4" onClick={testCreate}>
+          click
+        </button>
         {currentList === ChatType.Direct && <SeparatedList list={messageList.direct} />}
         {currentList === ChatType.Group && <SeparatedList list={messageList.group} />}
       </div>
