@@ -6,7 +6,6 @@ import Icon from '../Icon';
 
 export default function UserCard({ contact, status = false }) {
   const navigate = useNavigate();
-
   return (
     <div key={contact?._id} className="flex cursor-pointer items-center rounded-b border-t p-3 hover:bg-base-m">
       <img
