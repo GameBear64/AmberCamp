@@ -14,7 +14,7 @@ export default function Preferences() {
 
   return (
     <div>
-      <div className="block lg:hidden">
+      <div className="block md:hidden">
         <TopBar backBtnLabel="Preferences" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
       </div>
       <div className="flex flex-col gap-6 p-10">

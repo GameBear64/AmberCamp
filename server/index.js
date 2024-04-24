@@ -53,8 +53,6 @@ io.on('connection', (socket) => {
 
         next(0)();
       });
-    } else {
-      throw new Error(`Invalid export in file ${file}. It must be either a function or an array of middleware functions.`);
     }
   }
 });

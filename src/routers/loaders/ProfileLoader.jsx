@@ -17,7 +17,7 @@ export function ProfileLoader() {
     <>
       <section className="h-60 bg-base-s">
         <section className="relative mx-4 flex flex-row pt-36">
-          <div className="relative mx-2.5 inline-block h-48 w-48 overflow-hidden rounded-full border-4 border-solid border-base-m shadow-md">
+          <div className="relative mx-2.5 inline-block size-48 overflow-hidden rounded-full border-4 border-solid border-base-m shadow-md">
             <Skeleton className="-translate-y-3" width={190} height={200} />
           </div>
           <div className="mt-28">
@@ -26,11 +26,11 @@ export function ProfileLoader() {
           </div>
         </section>
       </section>
-      <section className="mx-12 mt-20 flex flex-col justify-between gap-6 lg:flex-row">
+      <section className="mx-12 mt-20 flex flex-col justify-between gap-6 md:flex-row">
         <div className="mt-10 flex w-full">
           <Skeleton count={4} containerClassName="flex-1" height={30} />
         </div>
-        <div className="flex w-full flex-col gap-5 lg:w-1/3">
+        <div className="flex w-full flex-col gap-5 md:w-1/3">
           <Skeleton width={100} height={20} />
           <Skeleton count={3} containerClassName="flex-1" height={20} />
           <Skeleton className="mt-5" width={100} height={20} />

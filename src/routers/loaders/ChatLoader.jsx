@@ -11,7 +11,7 @@ export function ChatLoader() {
   };
   return (
     <>
-      <Skeleton height={60} containerClassName="lg:hidden"/>
+      <Skeleton height={60} containerClassName="md:hidden" />
       <div className="m-5 flex flex-col gap-10">
         <MessageSkeleton {...dimensions} />
         <MessageSkeleton {...dimensions} left />
