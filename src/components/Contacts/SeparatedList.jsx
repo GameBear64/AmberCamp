@@ -3,8 +3,9 @@ import { useEffect } from 'react';
 
 import Modal from '@components/Modal';
 
-import { Form, Input } from '@form/Fields';
+import { Form, Input, MultiSelect } from '@form/Fields';
 
+import socket from '@utils/socket';
 import useFetch from '@utils/useFetch';
 import { getUserId } from '@stores/user';
 
@@ -13,6 +14,15 @@ import UserCard from './../Cards/UserCard';
 export default function SeparatedList({ list }) {
   const [showModal, setShowModal] = useState(false);
   const [friends, setFriends] = useState([]);
+  const [selectedFriends, setSelectedFriends] = useState([]);
+  const testCreate = () => {
+    // socket.emit('group/create', {
+    //   title: 'new group',
+    //   participants: ['64eeff959d98879f70171f68'],
+    //   color: 'dfgs',
+    //   icon: 'dfghjk',
+    // });
+  };
   useEffect(() => {
     useFetch({ url: 'user/friend/list' }).then((res) => setFriends(res.contacts));
   }, []);
@@ -21,17 +31,28 @@ export default function SeparatedList({ list }) {
   if (showModal) {
     return (
       <Modal closeFunction={() => setShowModal(false)} title="New group" easyClose>
-        <Form id="ask-form" onSubmit={(data) => {}} defaultValues={{}}>
+        <Form
+          id="ask-form"
+          onSubmit={(data) => {
+            console.log(data);
+          }}>
           <div>
             <div>
               <Input placeholder="" name="name" label="Name of the group" />
               <div className="mt-5 flex flex-col">
-                <label className="text-left font-semibold text-txtSecondary">Add friends to your group</label>
-                <input onChange={() => {}} className="input" placeholder="Search" />
-                <ul className="mt-2 flex w-full flex-col gap-1.5">
+                {/* <label className="text-left font-semibold text-txtSecondary">Add friends to your group</label> */}
+                <MultiSelect name="participants" label="Participants" options={friends} styles="mt-2 mx-auto" />
+
+                {/* <Input onChange={() => {}} className="input" name="participants" placeholder="Search" />
+                <ul className="mt-2 flex w-full flex-col">
                   {friends.map((friend) => {
                     return (
-                      <div key={friend._id} className="flex cursor-pointer items-center rounded bg-base-x p-2 hover:bg-base-m">
+                      <div
+                        key={friend._id}
+                        onClick={() => setSelectedFriends((prev) => [...prev, friend._id])}
+                        className={`flex cursor-pointer items-center p-2 hover:bg-base-m ${
+                          selectedFriends.find((el) => el === friend._id) ? 'bg-base-m ' : 'bg-base-x'
+                        }`}>
                         <img
                           className="h-11 w-11 rounded-full"
                           src={
@@ -40,26 +61,23 @@ export default function SeparatedList({ list }) {
                               : '../profilePic.jpeg'
                           }
                         />
-                        <div className="flex w-full flex-row justify-between">
-                          <div className="ml-2 flex flex-col">
-                            <p className="text-sm font-bold leading-snug text-txtPrimary">{friend?.name || friend?.handle}</p>
-                            <p className="text-xs leading-snug text-txtSecondary">@{friend?.handle}</p>
-                          </div>
+                        <div className="ml-2 flex w-full flex-col justify-between">
+                          <p className="text-sm font-bold leading-snug text-txtPrimary">{friend?.name || friend?.handle}</p>
+                          <p className="text-xs leading-snug text-txtSecondary">@{friend?.handle}</p>
                         </div>
                       </div>
                     );
                   })}
-                </ul>
+                </ul> */}
               </div>
             </div>
-            <div></div>
           </div>
         </Form>
         <Fragment key="buttons">
           <button className="plain-btn" onClick={() => {}}>
             Close
           </button>
-          <button type="submit" form="ask-form" className="btn">
+          <button onClick={testCreate} type="submit" form="ask-form" className="btn">
             Create
           </button>
         </Fragment>

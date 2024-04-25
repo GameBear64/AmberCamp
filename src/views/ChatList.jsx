@@ -7,7 +7,6 @@ import Icon from '@components/Icon';
 
 import ChatPlaceholder from '@routers/placeholders/Chat';
 import { ChatType } from '@utils/enums/chat';
-import socket from '@utils/socket';
 import useFetch from '@utils/useFetch';
 
 export default function ChatList() {
@@ -41,23 +40,19 @@ export default function ChatList() {
     });
   };
 
-  const testCreate = () => {
-    socket.emit('group/create', {title: 'new group', participants: ['64eeff959d98879f70171f68'], color: 'dfgs', icon: 'dfghjk'});
-  }
-
   return (
     <Layout placeholder={<ChatPlaceholder />}>
       <div className="mx-2 flex flex-col">
         <div className="mb-2 flex w-full justify-evenly ">
           <button
-            className={`m-2 flex justify-center text-base font-semibold text-txtPrimary ${
+            className={`m-2 flex justify-center font-semibold text-base text-txtPrimary ${
               currentList === ChatType.Direct && 'border-b-[3px] border-primary'
             }`}
             onClick={() => setCurrentList(ChatType.Direct)}>
             Messages
           </button>
           <button
-            className={`m-2 flex justify-center text-base font-semibold text-txtPrimary ${
+            className={`m-2 flex justify-center font-semibold text-base text-txtPrimary ${
               currentList === ChatType.Group && 'border-b-[3px] border-primary'
             }`}
             onClick={() => setCurrentList(ChatType.Group)}>
@@ -72,7 +67,6 @@ export default function ChatList() {
           />
           <Icon styles="btn" onClick={() => navigate('/contacts')} icon="emoji_people" />
         </div>
-        <button className='btn my-4' onClick={testCreate}>click</button>
         {currentList === ChatType.Direct && <SeparatedList list={messageList.direct} />}
         {currentList === ChatType.Group && <SeparatedList list={messageList.group} />}
       </div>
