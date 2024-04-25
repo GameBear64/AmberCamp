@@ -23,7 +23,7 @@ export default function DangerZone() {
   };
   return (
     <div>
-      <div className="block lg:hidden">
+      <div className="block md:hidden">
         <TopBar backBtnLabel="Danger Zone" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
       </div>
       <div className="p-10">
@@ -37,7 +37,7 @@ export default function DangerZone() {
           Log out
         </button>
 
-        <hr className="block lg:hidden" />
+        <hr className="block md:hidden" />
 
         {active ? (
           <Form onSubmit={(data) => deleteUser(data)}>

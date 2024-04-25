@@ -12,13 +12,13 @@ export default function Layout({ children, placeholder }) {
   return (
     <div className="flex h-screen bg-base text-txtPrimary">
       <div className="flex-1">
-        {screenSize <= parseInt(screens.lg) && (
+        {screenSize <= parseInt(screens.md) && (
           <div className="flex h-full flex-col justify-between ">
             {outlet || children}
             {!outlet && <NavBar />}
           </div>
         )}
-        {screenSize > parseInt(screens.lg) && (
+        {screenSize > parseInt(screens.md) && (
           <div className="grid h-full grid-flow-row grid-cols-[17em_1fr] grid-rows-1 bg-base">
             <div className="overflow-x-auto">{children}</div>
             <div className="row-span-2 h-full overflow-x-auto bg-base-x">{outlet || placeholder}</div>

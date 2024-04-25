@@ -62,7 +62,7 @@ export default function ChatList() {
         <div className="flex flex-row items-center gap-2">
           <input
             onChange={onSearch}
-            className="my-4 h-10 w-full rounded-lg bg-base-m px-5 text-sm text-txtPrimary focus:outline-none lg:max-w-md"
+            className="my-4 h-10 w-full rounded-lg bg-base-m px-5 text-sm text-txtPrimary focus:outline-none md:max-w-md"
             placeholder="Search"
           />
           <Icon styles="btn" onClick={() => navigate('/contacts')} icon="emoji_people" />

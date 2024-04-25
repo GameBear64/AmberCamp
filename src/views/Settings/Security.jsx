@@ -31,10 +31,10 @@ export default function Security() {
 
   return (
     <div>
-      <div className="block lg:hidden">
+      <div className="block md:hidden">
         <TopBar backBtnLabel="Security" backButton="arrow_back_ios_new" actionButton={() => navigate('/settings')} />
       </div>
-      <div className="m-auto flex flex-col gap-1 p-10 lg:max-w-md lg:justify-center lg:px-10">
+      <div className="m-auto flex flex-col gap-1 p-10 md:max-w-md md:justify-center md:px-10">
         <h3 className="mb-3 text-xl text-txtPrimary">Change Email</h3>
         <div className="mb-2 flex max-w-md flex-col">
           <Form onSubmit={(e) => changeEmail(e)}>
