@@ -46,6 +46,9 @@ module.exports.get = [
           participants: 1,
           type: 1,
           updatedAt: 1,
+          messagesCount: {
+            $size: '$messages',
+          },
           messages: {
             $slice: ['$messages', 0, 20],
           },
@@ -58,9 +61,7 @@ module.exports.get = [
           participants: 1,
           type: 1,
           updatedAt: 1,
-          messagesCount: {
-            $size: '$messages',
-          },
+          messagesCount: 1,
         },
       },
     ]);
@@ -81,18 +82,3 @@ module.exports.get = [
     res.status(200).json(conversation || {});
   },
 ];
-
-// this is dumb but ill keep it for reference
-// module.exports.delete = [
-//   joiValidate({ id: joi.custom(isObjectID) }, InformationTypes.PARAMS),
-//   async (req, res) => {
-//     const conversation = await ConversationModel.findOne({ 'participants.user': { $in: [ObjectId(req.apiUserId)] } });
-
-//     if (conversation.type == ConversationType.Group) {
-//       const isOwner = conversation.participants.find((user) => user.groupOwner);
-//       if (!isOwner) return res.status(403).json('Only the group owner can delete the group.');
-//     }
-//     await ConversationModel.deleteOne({ _id: conversation._id });
-//     res.status(200).json();
-//   },
-// ];

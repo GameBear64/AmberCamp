@@ -25,9 +25,9 @@ export default function Message({ message, last }) {
         setOptions(false);
         setShowMenu(false);
       }}
-      className="group mr-1 flex w-full flex-row px-8 py-2 hover:bg-base-m">
+      className="group mr-1 flex w-full flex-row p-2 hover:bg-base-m md:px-8">
       <img
-        className="h-11 w-11 rounded-full"
+        className="size-11 rounded-full"
         src={`http://localhost:3030/recourse/${message.author.picture}?size=50`}
         alt="profile_picture"
       />
@@ -55,7 +55,7 @@ export default function Message({ message, last }) {
           <div
             className={`absolute right-0 ${last ? 'bottom-0' : 'top-0'} float-right items-center`}
             onMouseLeave={() => setShowMenu(false)}>
-            {showMenu && <MessageOptions id={message._id} setEditMode={setEditMode} />}
+            {showMenu && <MessageOptions id={message._id} setEditMode={setEditMode} setShowMenu={setShowMenu} />}
           </div>
           <Icon
             clickable={true}

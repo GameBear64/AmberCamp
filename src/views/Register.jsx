@@ -28,15 +28,15 @@ export default function Register() {
         <h1 className="pb-8 text-4xl font-medium">Amber Camp Register</h1>
         <div className="mx-5 flex flex-col text-left">
           <Form onSubmit={(data) => registerUser(data)}>
-            <Input placeholder="@handle" name="handle" label="Handle" styles="col-span-2" />
-            <Input type="email" placeholder="email@ac.com" name="email" label="Email" styles="col-span-2" />
-            <Input type="password" placeholder="Password" label="Password" name="password" styles="col-span-2" />
+            <Input placeholder="@handle" name="handle" label="Handle" styles="col-span-2 my-2" />
+            <Input type="email" placeholder="email@ac.com" name="email" label="Email" styles="col-span-2 my-2" />
+            <Input type="password" placeholder="Password" label="Password" name="password" styles="col-span-2 my-2" />
             <Input
               type="password"
               label="Confirm Password"
               placeholder="Confirm Password"
               name="confirmPassword"
-              styles="col-span-2"
+              styles="col-span-2 my-2"
             />
             <SubmitButton styles="w-full uppercase bg-red-600" label="Register" />
             <Link to={'/login'} className="float-right mt-2 font-medium text-blue-700 underline">

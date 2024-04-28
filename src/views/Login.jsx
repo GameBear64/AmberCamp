@@ -38,8 +38,8 @@ export default function Login() {
         <h1 className="pb-8 text-4xl font-medium">Amber Camp Login</h1>
         <div className="mx-5 flex flex-col text-left">
           <Form onSubmit={(data) => loginUser(data)}>
-            <Input type="email" placeholder="email@ac.com" name="email" label="Email" styles="col-span-2" />
-            <Input type="password" placeholder="Password" name="password" label="Password" styles="col-span-2 shadow-none" />
+            <Input type="email" placeholder="email@ac.com" name="email" label="Email" styles="col-span-2 my-2" />
+            <Input type="password" placeholder="Password" name="password" label="Password" styles="col-span-2 shadow-none my-2" />
             <SubmitButton styles="w-full uppercase bg-red-600" label="Login" />
             <Link to={'/register'} className="float-right mt-2 font-medium text-blue-700 underline">
               No account? Make one!

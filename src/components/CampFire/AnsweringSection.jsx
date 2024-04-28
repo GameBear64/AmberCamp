@@ -5,8 +5,9 @@ import Icon from '@components/Icon';
 import RoundButton from '@components/RoundButton';
 
 import { Topics } from '@utils/enums/topics';
+import useFetch from '@utils/useFetch';
 
-export default function AnsweringSection() {
+export default function AnsweringSection({ answered, set }) {
   //TODO: remake for an array of topics, maybe an array and .push or .splice it
   const [topic, setTopic] = useState(Topics.all);
 
@@ -15,6 +16,14 @@ export default function AnsweringSection() {
   };
   const newQuestion = () => {
     console.log('new question request with topic', topic);
+
+    useFetch({
+      // url: `campfire/get?category=${topic}`,
+      url: `campfire/get?category=General`,
+      method: 'GET',
+    }).then((res) => {
+      set((prev) => prev.answered.push(res));
+    });
   };
   return (
     <div className="flex flex-col">
