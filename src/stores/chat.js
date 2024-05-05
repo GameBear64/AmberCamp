@@ -1,7 +1,7 @@
 import { persistentMap } from '@nanostores/persistent';
 
 const defaultState = {
-  id: null,
+  id: '',
 };
 
 export const $chat = persistentMap('chat', defaultState);

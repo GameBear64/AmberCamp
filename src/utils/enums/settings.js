@@ -11,3 +11,12 @@ export const SettingsLinkIcons = Object.freeze({
   [SettingsLinks.preferences]: 'palette',
   [SettingsLinks.general]: 'person',
 });
+
+export const AccentColors = Object.freeze({
+  Pink: 'bg-pink-600',
+  Violet: 'bg-violet-600',
+  Blue: 'bg-blue-600',
+  Green: 'bg-green-600',
+  Red: 'bg-red-600',
+  Orange: 'bg-orange-600',
+});
