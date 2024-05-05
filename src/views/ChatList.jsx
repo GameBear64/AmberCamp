@@ -45,14 +45,14 @@ export default function ChatList() {
       <div className="mx-2 flex flex-col">
         <div className="mb-2 flex w-full justify-evenly ">
           <button
-            className={`m-2 flex justify-center font-semibold text-base text-txtPrimary ${
+            className={`m-2 flex justify-center text-base font-semibold text-txtPrimary ${
               currentList === ChatType.Direct && 'border-b-[3px] border-primary'
             }`}
             onClick={() => setCurrentList(ChatType.Direct)}>
             Messages
           </button>
           <button
-            className={`m-2 flex justify-center font-semibold text-base text-txtPrimary ${
+            className={`m-2 flex justify-center text-base font-semibold text-txtPrimary ${
               currentList === ChatType.Group && 'border-b-[3px] border-primary'
             }`}
             onClick={() => setCurrentList(ChatType.Group)}>

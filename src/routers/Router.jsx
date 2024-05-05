@@ -27,7 +27,6 @@ import { SettingsPageLoader } from './loaders/SettingsLoader';
 import ErrorPage from './static/ErrorPage';
 import Loader from './static/Loader';
 import NotFound from './static/NotFound';
-import Guard from './utils/RouterGuard';
 import ScreenHandler from './utils/ScreenHandler';
 
 let router;
@@ -35,18 +34,9 @@ let router;
 export default function Router() {
   const user = useStore($user);
 
-  router = createBrowserRouter([
-    {
-      path: '/',
-      element: (
-        <Suspense fallback={<Loader />}>
-          <Guard />
-        </Suspense>
-      ),
-      errorElement: <ErrorPage />,
-      children: [
+  router = createBrowserRouter( [
         {
-          path: '',
+          path: '/',
           element: <Redirect to="/chat" />,
           errorElement: <ErrorPage />,
         },
@@ -150,8 +140,6 @@ export default function Router() {
             },
           ],
         },
-      ],
-    },
     ...authRoutes,
     { path: '*', element: <NotFound /> },
   ]);

@@ -10,7 +10,7 @@ export default function UserCard({ contact, status = false }) {
     <div key={contact?._id} className="flex cursor-pointer items-center rounded-b border-t p-3 hover:bg-base-m">
       <img
         onClick={() => navigate(`/contacts/${contact?._id}`)}
-        className="h-11 w-11 rounded-full"
+        className="size-11 rounded-full"
         src={
           contact?.picture && contact?.picture !== 'string'
             ? `http://localhost:3030/recourse/${contact?.picture}?size=50`

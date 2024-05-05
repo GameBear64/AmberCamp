@@ -37,7 +37,7 @@ export default function DangerZone() {
           Log out
         </button>
 
-        <hr className="block md:hidden" />
+        {/* <hr className="block lg:hidden" /> */}
 
         {active ? (
           <Form onSubmit={(data) => deleteUser(data)}>
