@@ -1,6 +1,6 @@
 import { createContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import ChatArea from '@components/Chat/ChatArea';
 import ChatBar from '@components/Chat/ChatBar';
@@ -17,6 +17,7 @@ export const MessagesContext = createContext({});
 
 export default function Chat() {
   const { id } = useParams();
+  const location = useLocation();
   const [chatState, setChatState] = useState([]);
   const [chatPage, setChatPage] = useState(0);
 
@@ -88,14 +89,14 @@ export default function Chat() {
   }, [chatState?.messages?.length]);
 
   const sendMessage = (data) => {
-    socket.emit('message/create', { userId: id, message: data.message });
+    socket.emit('message/create', { targetId: id, message: data.message });
   };
 
   if (id == 2) return <ChatLoader />;
   return (
     <MessagesContext.Provider value={{ chatState, setChatState, otherUser }}>
       <div className="flex size-full flex-1 flex-col justify-between pb-5">
-        <ChatBar />
+        {!location.pathname.includes('campfire') && <ChatBar />}
         <div ref={messages} className="relative flex size-full flex-col gap-2 overflow-y-auto overflow-x-hidden pb-8 pt-5">
           {chatState?.messages && (
             <InfiniteScroll

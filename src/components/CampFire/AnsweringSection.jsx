@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
-import Icon from '@components/Icon';
+import QuestionBubble from '@components/CampFire/QuestionBubble';
 import RoundButton from '@components/RoundButton';
 
 import { Topics } from '@utils/enums/topics';
@@ -22,9 +21,17 @@ export default function AnsweringSection({ answered, set }) {
       url: `campfire/get?category=General`,
       method: 'GET',
     }).then((res) => {
-      set((prev) => prev.answered.push(res));
+      set((prev) => {
+        console.log(prev, res);
+        return { answered: [...prev.answered, res], asked: prev.asked };
+      });
     });
   };
+
+  const debug = () => {
+    console.log(answered);
+  };
+
   return (
     <div className="flex flex-col">
       <div className="flex justify-center gap-2">
@@ -56,13 +63,13 @@ export default function AnsweringSection({ answered, set }) {
       <button className="btn my-5" onClick={newQuestion}>
         Answer questions
       </button>
+      <button className="btn my-5" onClick={debug}>
+        Debug
+      </button>
       <input className="input" placeholder="Search" />
-      <Link className="mt-10" to={`/campfire`}>
-        no chat
-      </Link>
-      <Link to={`/campfire/2`}>
-        go to <Icon icon="chat_bubble" />
-      </Link>
+      {answered?.map((answer) => (
+        <QuestionBubble key={answer._id} id={answer._id} text={answer.question} type="answer" />
+      ))}
     </div>
   );
 }

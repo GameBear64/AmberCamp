@@ -1,5 +1,6 @@
 import { Fragment, useState } from 'react';
 
+import QuestionBubble from '@components/CampFire/QuestionBubble';
 import Modal from '@components/Modal';
 
 import { CheckBox, Form, Input, Textarea } from '@form/Fields';
@@ -47,6 +48,9 @@ export default function AskingSection({ asked, set }) {
         </Modal>
       )}
       <input className="input" placeholder="Search" />
+      {asked?.map((question) => (
+        <QuestionBubble key={question._id} id={question._id} text={question.question} type="question" />
+      ))}
     </div>
   );
 }
