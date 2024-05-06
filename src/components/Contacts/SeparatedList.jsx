@@ -26,28 +26,12 @@ export default function SeparatedList({ list }) {
   const [addedFriends, setAddedFrienda] = useState([]);
   const [chosenColor, setChosenColor] = useState(colors[Math.round(Math.random() * colors.length)]);
   const [title, setTitle] = useState('');
-  const [userInfo, setUserInfo] = useState({});
   const user = useStore($user);
   const [show, setShow] = useState(false);
-  const getUser = () => {
-    useFetch({
-      url: `user/${user.id}`,
-      method: 'GET',
-    }).then((response) =>
-      setUserInfo({
-        _id: response._id,
-        handle: response.handle,
-        biography: response.biography,
-        background: response.background,
-        picture: response.picture,
-      })
-    );
-  };
+
   useEffect(() => {
     useFetch({ url: 'user/friend/list' }).then((res) => setFriends(res.contacts));
-    getUser();
   }, []);
-  console.log(userInfo);
   const createGroup = (data) => {
     socket.emit('group/create', data);
   };
@@ -206,9 +190,15 @@ export default function SeparatedList({ list }) {
               </button>
               <button
                 onClick={() => {
+                  console.log({
+                    title: title?.name,
+                    participants: [...addedFriends.map((el) => el._id)],
+                    color: chosenColor,
+                    icon: chosenIcon,
+                  });
                   createGroup({
                     title: title?.name,
-                    participants: [...addedFriends, userInfo],
+                    participants: [...addedFriends.map((el) => el._id), user.id],
                     color: chosenColor,
                     icon: chosenIcon,
                   });
