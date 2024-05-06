@@ -3,6 +3,7 @@ const { ConversationModel } = require('../../models/Conversation');
 const joi = require('joi');
 const { socketValidate } = require('../../middleware/validation');
 const { isObjectID } = require('../../utils');
+const { ConversationType } = require('../../helpers/enums.js');
 
 module.exports = [
   socketValidate({
@@ -15,6 +16,7 @@ module.exports = [
   async ({ io, socket }, data) => {
     const group = await ConversationModel.create({
       ...data,
+      type: ConversationType.Group,
       participants: [
         ...data.participants.map((user) => ({ user: ObjectId(user) })),
         { user: ObjectId(socket.apiUserId), groupOwner: true },
