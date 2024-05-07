@@ -1,28 +1,3 @@
-/**
- * @openapi
- * /conversation/{id}:
- *   get:
- *     summary: Get conversation details.
- *     description: |
- *       This endpoint retrieves details about a conversation based on the provided conversation ID.
- *     tags:
- *       - conversation
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The ID of the conversation to retrieve details from.
- *     security:
- *       - ApiKeyAuth: []
- *     responses:
- *       200:
- *         description: Conversation details successfully retrieved.
- *       418:
- *         description: Cannot talk to yourself.
- */
-
 const joi = require('joi');
 const ObjectId = require('mongoose').Types.ObjectId;
 

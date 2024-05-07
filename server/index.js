@@ -71,10 +71,6 @@ app.use(checkAuth);
 
 app.use('/', router());
 
-//=============== Docs ===============
-const { swagger } = require('./docs/swagger.js');
-swagger(app);
-
 //========= Error Handlers ==========
 app.use((_req, res) => res.status(404).json('Route not found, try another method?'));
 
