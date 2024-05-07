@@ -39,6 +39,8 @@ export default function CreateGroup({ friends, setFriends, setShowModal }) {
     });
     setShowModal(false);
   };
+
+  // const onSearch = (e) => setContacts(friends?.filter((el) => el.handle.includes(e.target.value)));
   return (
     <Modal easyClose title="New group" closeFunction={() => setShowModal(false)}>
       <Form id="ask-form" onSubmit={(title) => setTitle(title)}>
@@ -81,7 +83,7 @@ export default function CreateGroup({ friends, setFriends, setShowModal }) {
               <div className="flex size-full max-h-[80vh] w-full flex-row gap-4 overflow-y-auto">
                 <div className="w-full overflow-y-auto">
                   <label className="text-left font-semibold text-txtSecondary">Add friends to your group</label>
-                  <input onChange={() => {}} value={() => {}} className="input mb-1" placeholder="Search" />
+                  <input onChange={() => {}} className="input mb-1" placeholder="Search" />
                   <ul className="mt-2 flex w-full flex-col gap-1.5">
                     {friends.map((friend) => (
                       <ParticipantsCard
