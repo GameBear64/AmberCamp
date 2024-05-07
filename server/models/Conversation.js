@@ -5,10 +5,8 @@ const { MessageModel } = require('./Message.js');
 const conversationSchema = new mongoose.Schema(
   {
     name: String,
-    icon: {
-      type: String,
-      ref: 'Media',
-    },
+    icon: String,
+    color: String,
     type: {
       type: String,
       enum: Object.values(ConversationType),
