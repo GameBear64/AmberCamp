@@ -69,7 +69,7 @@ export default function ChatList() {
         </div>
         {console.log(messageList)}
         {currentList === ChatType.Direct && <SeparatedList list={messageList.direct} />}
-        {currentList === ChatType.Group && <SeparatedList list={messageList.group} />}
+        {currentList === ChatType.Group && <SeparatedList type="Group" list={messageList.group} />}
       </div>
     </Layout>
   );
