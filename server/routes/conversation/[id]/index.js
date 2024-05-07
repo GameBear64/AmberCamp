@@ -20,6 +20,9 @@ module.exports.get = [
         $project: {
           participants: 1,
           type: 1,
+          name: 1,
+          color: 1,
+          icon: 1,
           updatedAt: 1,
           messagesCount: {
             $size: '$messages',
@@ -35,6 +38,9 @@ module.exports.get = [
           messages: 1,
           participants: 1,
           type: 1,
+          name: 1,
+          color: 1,
+          icon: 1,
           updatedAt: 1,
           messagesCount: 1,
         },

@@ -8,7 +8,7 @@ const { ConversationType } = require('../../helpers/enums.js');
 module.exports = [
   socketValidate({
     name: joi.string().required(),
-    participants: joi.array().min(3).max(50).items(joi.custom(isObjectID)).required(),
+    participants: joi.array().min(2).max(50).items(joi.custom(isObjectID)).required(),
     picture: joi.custom(isObjectID).optional(),
     color: joi.string().when('picture', { is: joi.exist(), then: joi.optional(), otherwise: joi.required() }),
     icon: joi.string().when('picture', { is: joi.exist(), then: joi.optional(), otherwise: joi.required() }),

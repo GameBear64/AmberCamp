@@ -1,33 +1,21 @@
 import { useState } from 'react';
 
-import { useStore } from '@nanostores/react';
-
 import Modal from '@components/Modal';
 
-import { ColorPicker, Form, Input } from '@form/Fields';
+import { ColorPicker, Form, IconPicker, Input } from '@form/Fields';
 import { REQUIRED } from '@form/validations';
 
 import { colors, groupIcons } from '@utils/enums/chat';
-import { $user } from '@stores/user';
 
 import socket from '../../utils/socket';
 import ParticipantsCard from '../Cards/ParticipantsCard';
 import Icon from '../Icon';
-import RoundButton from '../RoundButton';
 
-export default function CreateGroup({ friends, setFriends, setShowModal }) {
-  const [show, setShow] = useState(false);
+export default function CreateGroup({ friends, setShowModal }) {
   const [showParticipants, setShowParticipants] = useState(false);
-  const [chosenColor, setChosenColor] = useState('bg-blue-500');
+  const [chosenColor, setChosenColor] = useState(colors[Math.round(Math.random() * colors.length)]);
   const [chosenIcon, setChosenIcon] = useState(groupIcons[Math.round(Math.random() * groupIcons.length)]);
   const [addedFriends, setAddedFriends] = useState([]);
-  const user = useStore($user);
-
-  const cancel = () => {
-    setShowModal(false);
-    setShowParticipants(false);
-    setAddedFriends([]);
-  };
 
   const handleSaveGroup = (data) => {
     socket.emit('group/create', data);
@@ -39,9 +27,12 @@ export default function CreateGroup({ friends, setFriends, setShowModal }) {
     <Modal easyClose title="New group" closeFunction={() => setShowModal(false)}>
       <Form
         id="ask-form"
-        defaultValues={{ color: chosenColor, icon: chosenIcon, participants: [...addedFriends.map((el) => el._id), user.id] }}
+        defaultValues={{ color: chosenColor, icon: chosenIcon, participants: addedFriends.map((el) => el._id) }}
         onSubmit={handleSaveGroup}
-        onChange={(d) => setChosenColor(d.color)}>
+        onChange={(d) => {
+          setChosenColor(d.color);
+          setChosenIcon(d.icon);
+        }}>
         <div className="relative flex flex-col gap-2">
           <Input name="name" label="Name of the group" rules={{ ...REQUIRED }} />
           <p className="py-3 text-left font-semibold text-txtSecondary">Appearance</p>
@@ -49,23 +40,7 @@ export default function CreateGroup({ friends, setFriends, setShowModal }) {
             <Icon icon={chosenIcon} styles={`accent-circle size-40 text-8xl text-base-x ${chosenColor}`} />
             <div className="relative flex flex-col gap-2">
               <ColorPicker name="color" colors={colors} />
-              <div>
-                <button type="button" onClick={() => setShow(!show)} className="btn w-full">
-                  Pick an icon
-                </button>
-                {show && (
-                  <div className="absolute my-2 flex flex-wrap gap-2 overflow-y-clip rounded bg-base-m shadow-md">
-                    {groupIcons.map((icon) => (
-                      <RoundButton
-                        key={icon}
-                        icon={icon}
-                        onClick={() => setChosenIcon(icon)}
-                        colors={`rounded ${icon === chosenIcon && 'bg-primary text-base-x'}`}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
+              <IconPicker name="icon" icons={groupIcons} />
             </div>
           </div>
           {showParticipants && (
@@ -82,7 +57,6 @@ export default function CreateGroup({ friends, setFriends, setShowModal }) {
                         icon="person_add"
                         onClick={() => {
                           setAddedFriends([friend, ...addedFriends]);
-                          setFriends(friends.filter((el) => el !== friend));
                         }}
                       />
                     ))}
@@ -96,7 +70,6 @@ export default function CreateGroup({ friends, setFriends, setShowModal }) {
                       key={friend._id}
                       icon="how_to_reg"
                       onClick={() => {
-                        setFriends([friend, ...friends]);
                         setAddedFriends(addedFriends.filter((el) => el !== friend));
                       }}
                     />
@@ -104,10 +77,10 @@ export default function CreateGroup({ friends, setFriends, setShowModal }) {
                 </div>
               </div>
               <div className="flex flex-row justify-end gap-4">
-                <button className="plain-btn" onClick={cancel}>
-                  Cancel
+                <button type="button" className="plain-btn" onClick={() => setShowParticipants(false)}>
+                  Go Back
                 </button>
-                <button onClick={() => setShowParticipants(false)} type="submit" className="btn">
+                <button type="button" onClick={() => setShowParticipants(false)} className="btn">
                   Save
                 </button>
               </div>

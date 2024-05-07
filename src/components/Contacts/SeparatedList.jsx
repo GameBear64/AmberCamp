@@ -21,15 +21,7 @@ export default function SeparatedList({ list, type = 'Direct' }) {
       const otherUser = conversation.participants.find(({ user }) => user._id !== getUserId());
       return <UserCard contact={otherUser?.user} status="friends" key={conversation._id} />;
     } else {
-      return (
-        <GroupCard
-          key={conversation._id}
-          participants={conversation.participants.length}
-          title={conversation.name}
-          color={conversation.color}
-          icon={conversation.icon}
-        />
-      );
+      return <GroupCard key={conversation._id} group={conversation} />;
     }
   });
 
@@ -40,7 +32,7 @@ export default function SeparatedList({ list, type = 'Direct' }) {
           Create a new group
         </button>
       )}
-      {showModal && <CreateGroup friends={friends} setShowModal={setShowModal} setFriends={setFriends} />}
+      {showModal && <CreateGroup friends={friends} setShowModal={setShowModal} />}
       {conversations}
     </>
   );

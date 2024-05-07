@@ -2,6 +2,7 @@ import ButtonField from './Inputs/ButtonInput';
 import CheckBox from './Inputs/CheckBox';
 import ColorPicker from './Inputs/ColorPicker';
 import IconField from './Inputs/IconInput';
+import IconPicker from './Inputs/IconPicker';
 import Input from './Inputs/Input';
 import MediaSelect from './Inputs/MediaSelect';
 import MultiSelect from './Inputs/MultiSelect';
@@ -12,16 +13,17 @@ import Form from './Form';
 import SubmitButton from './SubmitButton';
 
 export {
-  Form,
-  SubmitButton,
-  Input,
-  Textarea,
+  ButtonField,
   CheckBox,
   ColorPicker,
-  Select,
-  MultiSelect,
-  ButtonField,
   IconField,
+  IconPicker,
+  Input,
   MediaSelect,
+  MultiSelect,
+  Select,
   TagSelector,
+  Textarea,
+  Form,
+  SubmitButton,
 };

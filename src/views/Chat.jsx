@@ -1,6 +1,6 @@
 import { createContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import ChatArea from '@components/Chat/ChatArea';
 import ChatBar from '@components/Chat/ChatBar';
@@ -17,21 +17,17 @@ export const MessagesContext = createContext({});
 
 export default function Chat() {
   const { id } = useParams();
-  const location = useLocation();
   const [chatState, setChatState] = useState([]);
   const [chatPage, setChatPage] = useState(0);
 
   // === TYPING STUFF ===
   const [typing, setTyping] = useState(false);
   const [typeTimeout, setTypeTimeout] = useState();
+
   const messages = useRef(null);
   const typingTimeout = () => setTyping(false);
   // ====================
 
-  const otherUser = useMemo(
-    () => chatState.participants?.find(({ user }) => user._id !== getUserId())?.user,
-    [chatState.participants]
-  );
   useEffect(() => {
     socket.on('message/created', (msg) => {
       setChatState((prev) => ({ ...prev, messages: [...prev.messages, msg] }));
@@ -59,11 +55,11 @@ export default function Chat() {
     });
 
     socket.on('message/typing', (from) => {
-      if (from == otherUser?._id) {
+      if (from._id != getUserId()) {
         if (typing) {
           clearTimeout(typeTimeout);
         } else {
-          setTyping(true);
+          setTyping(from);
         }
         setTypeTimeout(setTimeout(typingTimeout, 5000));
       }
@@ -94,9 +90,9 @@ export default function Chat() {
 
   if (id == 2) return <ChatLoader />;
   return (
-    <MessagesContext.Provider value={{ chatState, setChatState, otherUser }}>
+    <MessagesContext.Provider value={{ chatState, setChatState }}>
       <div className="flex size-full flex-1 flex-col justify-between pb-5">
-        {!location.pathname.includes('campfire') && <ChatBar />}
+        {location.pathname.includes('chat') && <ChatBar />}
         <div ref={messages} className="relative flex size-full flex-col gap-2 overflow-y-auto overflow-x-hidden pb-8 pt-5">
           {chatState?.messages && (
             <InfiniteScroll
@@ -119,7 +115,7 @@ export default function Chat() {
           )}
         </div>
         <ChatArea submitHandler={sendMessage} />
-        {typing && <span>{otherUser.handle} is typing...</span>}
+        {typing && <span className="absolute bottom-0 mx-5 text-sm">{typing?.handle} is typing...</span>}
       </div>
     </MessagesContext.Provider>
   );

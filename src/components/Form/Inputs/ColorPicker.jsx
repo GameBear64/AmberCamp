@@ -2,10 +2,10 @@ import RoundButton from '@components/RoundButton';
 
 import ConnectForm from '@form/ConnectForm';
 
-export default function MediaSelect({ name, rules = {}, styles, label, colors, ...rest }) {
+export default function ColorPicker({ name, rules = {}, styles, label, colors }) {
   return (
     <ConnectForm>
-      {({ register, watch, setValue, formState: { dirtyFields } }) => {
+      {({ register, watch, setValue }) => {
         register(name, rules);
         const chosenColor = watch(name, '');
 

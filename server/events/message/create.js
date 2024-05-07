@@ -9,14 +9,19 @@ const { isObjectID } = require('../../utils');
 
 module.exports = [
   socketValidate({
-    userId: joi.custom(isObjectID).required(),
+    targetId: joi.custom(isObjectID).required(),
     message: joi.string().required(),
   }),
   async ({ io, socket }, data) => {
-    if (data.userId === socket.apiUserId) return socket.emit('error', 'Go get some friends...');
+    if (data.targetId === socket.apiUserId) return socket.emit('error', 'Go get some friends...');
 
     const conversation = await ConversationModel.findOne({
-      'participants.user': { $all: [ObjectId(socket.apiUserId), ObjectId(data.userId)] },
+      $or: [
+        { _id: ObjectId(data.targetId) },
+        {
+          'participants.user': { $all: [ObjectId(socket.apiUserId), ObjectId(data.targetId)] },
+        },
+      ],
     });
 
     if (conversation) {
@@ -33,18 +38,17 @@ module.exports = [
     }
 
     // check if ID is of a person
-    const targetUser = await UserModel.findOne({ _id: data.userId });
+    const targetUser = await UserModel.findOne({ _id: data.targetId });
     if (targetUser) {
       let newMessage = await MessageModel.create({ author: socket.apiUserId, body: data.message });
       await ConversationModel.create({
-        participants: [{ user: ObjectId(socket.apiUserId) }, { user: ObjectId(data.userId) }],
+        participants: [{ user: ObjectId(socket.apiUserId) }, { user: ObjectId(data.targetId) }],
         messages: [newMessage.id],
       });
 
       newMessage = await MessageModel.populate(newMessage, { path: 'author', select: 'handle picture' });
 
-      return io.to([data.userId, socket.apiUserId]).emit('message/created', newMessage);
-      // maybe group created?
+      return io.to([data.targetId, socket.apiUserId]).emit('message/created', newMessage);
     } else {
       return socket.emit('error', 'Conversation or user does not exist.');
     }

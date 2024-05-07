@@ -67,7 +67,6 @@ export default function ChatList() {
           />
           <Icon styles="btn" onClick={() => navigate('/contacts')} icon="emoji_people" />
         </div>
-        {console.log(messageList)}
         {currentList === ChatType.Direct && <SeparatedList list={messageList.direct} />}
         {currentList === ChatType.Group && <SeparatedList type="Group" list={messageList.group} />}
       </div>
