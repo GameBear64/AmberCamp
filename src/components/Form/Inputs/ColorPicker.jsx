@@ -1,0 +1,29 @@
+import RoundButton from '@components/RoundButton';
+
+import ConnectForm from '@form/ConnectForm';
+
+export default function MediaSelect({ name, rules = {}, styles, label, colors, ...rest }) {
+  return (
+    <ConnectForm>
+      {({ register, watch, setValue, formState: { dirtyFields } }) => {
+        register(name, rules);
+        const chosenColor = watch(name, '');
+
+        return (
+          <div className={`flex flex-col items-center justify-center ${styles}`}>
+            <label className="self-start text-xl font-semibold">{label}</label>
+            <div className="container m-auto grid grid-cols-5 gap-2">
+              {colors.map((color) => (
+                <RoundButton
+                  key={color}
+                  onClick={() => setValue(name, color)}
+                  colors={`${color} rounded ${chosenColor === color && 'border-txtPrimary border-4'}`}
+                />
+              ))}
+            </div>
+          </div>
+        );
+      }}
+    </ConnectForm>
+  );
+}

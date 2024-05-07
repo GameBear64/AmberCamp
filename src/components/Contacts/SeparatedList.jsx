@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 
+import GroupCard from '@components/Cards/GroupCard';
+import UserCard from '@components/Cards/UserCard';
+import CreateGroup from '@components/Contacts/CreateGroup';
+
 import useFetch from '@utils/useFetch';
 import { getUserId } from '@stores/user';
-
-import CreateGroup from '../CreateGroup';
-
-import GroupCard from './../Cards/GroupCard';
-import UserCard from './../Cards/UserCard';
 
 export default function SeparatedList({ list, type = 'Direct' }) {
   const [showModal, setShowModal] = useState(false);

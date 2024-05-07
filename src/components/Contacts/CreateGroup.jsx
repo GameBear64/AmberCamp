@@ -4,21 +4,21 @@ import { useStore } from '@nanostores/react';
 
 import Modal from '@components/Modal';
 
-import { Form, Input } from '@form/Fields';
+import { ColorPicker, Form, Input } from '@form/Fields';
+import { REQUIRED } from '@form/validations';
 
 import { colors, groupIcons } from '@utils/enums/chat';
 import { $user } from '@stores/user';
 
-import ParticipantsCard from '../components/Cards/ParticipantsCard';
-import Icon from '../components/Icon';
-import RoundButton from '../components/RoundButton';
-import socket from '../utils/socket';
+import socket from '../../utils/socket';
+import ParticipantsCard from '../Cards/ParticipantsCard';
+import Icon from '../Icon';
+import RoundButton from '../RoundButton';
 
 export default function CreateGroup({ friends, setFriends, setShowModal }) {
   const [show, setShow] = useState(false);
-  const [title, setTitle] = useState('');
-  const [showParticipans, setShowParticipants] = useState(false);
-  const [chosenColor, setChosenColor] = useState(colors[Math.round(Math.random() * colors.length)]);
+  const [showParticipants, setShowParticipants] = useState(false);
+  const [chosenColor, setChosenColor] = useState('bg-blue-500');
   const [chosenIcon, setChosenIcon] = useState(groupIcons[Math.round(Math.random() * groupIcons.length)]);
   const [addedFriends, setAddedFriends] = useState([]);
   const user = useStore($user);
@@ -28,43 +28,33 @@ export default function CreateGroup({ friends, setFriends, setShowModal }) {
     setShowParticipants(false);
     setAddedFriends([]);
   };
-  const createGroup = (data) => socket.emit('group/create', data);
 
-  const handleSaveGroup = () => {
-    createGroup({
-      name: title?.name,
-      participants: [...addedFriends.map((el) => el._id), user.id],
-      color: chosenColor,
-      icon: chosenIcon,
-    });
+  const handleSaveGroup = (data) => {
+    socket.emit('group/create', data);
     setShowModal(false);
   };
 
   // const onSearch = (e) => setContacts(friends?.filter((el) => el.handle.includes(e.target.value)));
   return (
     <Modal easyClose title="New group" closeFunction={() => setShowModal(false)}>
-      <Form id="ask-form" onSubmit={(title) => setTitle(title)}>
+      <Form
+        id="ask-form"
+        defaultValues={{ color: chosenColor, icon: chosenIcon, participants: [...addedFriends.map((el) => el._id), user.id] }}
+        onSubmit={handleSaveGroup}
+        onChange={(d) => setChosenColor(d.color)}>
         <div className="relative flex flex-col gap-2">
-          <Input name="name" label="Name of the group" />
-          <p className="mt-4 py-3 text-left font-semibold text-txtSecondary">Appearance</p>
+          <Input name="name" label="Name of the group" rules={{ ...REQUIRED }} />
+          <p className="py-3 text-left font-semibold text-txtSecondary">Appearance</p>
           <div className="flex flex-row justify-between">
-            <Icon icon={chosenIcon} styles={`accent-circle size-40 ${chosenColor} text-8xl text-base-x`} />
+            <Icon icon={chosenIcon} styles={`accent-circle size-40 text-8xl text-base-x ${chosenColor}`} />
             <div className="relative flex flex-col gap-2">
-              <div className="container m-auto grid grid-cols-5 gap-2">
-                {colors.map((color) => (
-                  <RoundButton
-                    key={color}
-                    onClick={() => setChosenColor(color)}
-                    colors={`${color} rounded ${chosenColor === color && 'border-txtPrimary border-4'}`}
-                  />
-                ))}
-              </div>
+              <ColorPicker name="color" colors={colors} />
               <div>
-                <button onClick={() => setShow(!show)} className="btn w-full">
+                <button type="button" onClick={() => setShow(!show)} className="btn w-full">
                   Pick an icon
                 </button>
                 {show && (
-                  <div className="absolute mt-2 flex flex-wrap gap-2 overflow-y-clip rounded bg-base-m shadow-md">
+                  <div className="absolute my-2 flex flex-wrap gap-2 overflow-y-clip rounded bg-base-m shadow-md">
                     {groupIcons.map((icon) => (
                       <RoundButton
                         key={icon}
@@ -78,7 +68,7 @@ export default function CreateGroup({ friends, setFriends, setShowModal }) {
               </div>
             </div>
           </div>
-          {showParticipans && (
+          {showParticipants && (
             <div className="absolute flex size-full flex-col gap-2 bg-base">
               <div className="flex size-full max-h-[80vh] w-full flex-row gap-4 overflow-y-auto">
                 <div className="w-full overflow-y-auto">
@@ -124,16 +114,16 @@ export default function CreateGroup({ friends, setFriends, setShowModal }) {
             </div>
           )}
           <div className="flex flex-col">
-            <p>{addedFriends.length + 1} patricipants</p>
-            <button onClick={() => setShowParticipants(true)} className="btn flex self-start">
+            <p>{addedFriends.length + 1} participants</p>
+            <button type="button" onClick={() => setShowParticipants(true)} className="btn flex self-start">
               Edit participants
             </button>
           </div>
           <div className="flex flex-row justify-end gap-4" key="buttons">
-            <button className="plain-btn" onClick={() => setShowModal(false)}>
+            <button type="button" className="plain-btn" onClick={() => setShowModal(false)}>
               Cancel
             </button>
-            <button onClick={handleSaveGroup} type="submit" form="ask-form" className="btn">
+            <button type="submit" form="ask-form" className="btn">
               Create
             </button>
           </div>
