@@ -56,7 +56,7 @@ export default function CreateGroup({ friends, setShowModal }) {
                   <label className="text-left font-semibold text-txtSecondary">Add friends to your group</label>
                   <input onChange={onSearch} className="input mb-1" placeholder="Search" />
                   <ul className="mt-2 flex w-full flex-col gap-1.5">
-                    {showedFriends.map((friend) => (
+                    {showedFriends?.map((friend) => (
                       <ParticipantsCard
                         key={friend._id}
                         friend={friend}
@@ -71,7 +71,7 @@ export default function CreateGroup({ friends, setShowModal }) {
                 </div>
                 <div className="mt-2 flex w-full flex-col gap-1.5 overflow-y-auto">
                   <label className="text-left font-semibold text-txtSecondary">Added friends</label>
-                  {addedFriends.map((friend) => (
+                  {addedFriends?.map((friend) => (
                     <ParticipantsCard
                       friend={friend}
                       key={friend._id}
