@@ -2,7 +2,7 @@ import Icon from '../../components/Icon';
 
 export default function ParticipantsCard({ friend, onClick, icon }) {
   return (
-    <div key={friend._id} onClick={onClick} className="flex cursor-pointer items-center rounded bg-base-x p-2 hover:bg-base-m">
+    <div key={friend?._id} onClick={onClick} className="flex cursor-pointer items-center rounded bg-base-x p-2 hover:bg-base-m">
       <img
         className="size-11 rounded-full"
         src={

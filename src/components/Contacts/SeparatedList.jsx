@@ -20,9 +20,8 @@ export default function SeparatedList({ list, type = 'Direct' }) {
     if (conversation.type === 'Direct') {
       const otherUser = conversation.participants.find(({ user }) => user._id !== getUserId());
       return <UserCard contact={otherUser?.user} status="friends" key={conversation._id} />;
-    } else {
-      return <GroupCard key={conversation._id} group={conversation} />;
     }
+    return <GroupCard key={conversation._id} group={conversation} />;
   });
 
   return (

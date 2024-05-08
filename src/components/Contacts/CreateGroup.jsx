@@ -13,6 +13,7 @@ import Icon from '../Icon';
 
 export default function CreateGroup({ friends, setShowModal }) {
   const [showParticipants, setShowParticipants] = useState(false);
+  const [showedFriends, setShowedFriends] = useState(friends);
   const [chosenColor, setChosenColor] = useState(colors[Math.round(Math.random() * colors.length)]);
   const [chosenIcon, setChosenIcon] = useState(groupIcons[Math.round(Math.random() * groupIcons.length)]);
   const [addedFriends, setAddedFriends] = useState([]);
@@ -22,7 +23,12 @@ export default function CreateGroup({ friends, setShowModal }) {
     setShowModal(false);
   };
 
-  // const onSearch = (e) => setContacts(friends?.filter((el) => el.handle.includes(e.target.value)));
+  const onSearch = (e) =>
+    setShowedFriends(
+      friends?.filter((el) => {
+        return el.handle.includes(e.target.value) && !addedFriends.some((friend) => friend.handle === el.handle);
+      })
+    );
   return (
     <Modal easyClose title="New group" closeFunction={() => setShowModal(false)}>
       <Form
@@ -48,15 +54,16 @@ export default function CreateGroup({ friends, setShowModal }) {
               <div className="flex size-full max-h-[80vh] w-full flex-row gap-4 overflow-y-auto">
                 <div className="w-full overflow-y-auto">
                   <label className="text-left font-semibold text-txtSecondary">Add friends to your group</label>
-                  <input onChange={() => {}} className="input mb-1" placeholder="Search" />
+                  <input onChange={onSearch} className="input mb-1" placeholder="Search" />
                   <ul className="mt-2 flex w-full flex-col gap-1.5">
-                    {friends.map((friend) => (
+                    {showedFriends.map((friend) => (
                       <ParticipantsCard
                         key={friend._id}
                         friend={friend}
                         icon="person_add"
                         onClick={() => {
                           setAddedFriends([friend, ...addedFriends]);
+                          setShowedFriends(showedFriends.filter((el) => el.handle !== friend.handle));
                         }}
                       />
                     ))}
@@ -71,13 +78,21 @@ export default function CreateGroup({ friends, setShowModal }) {
                       icon="how_to_reg"
                       onClick={() => {
                         setAddedFriends(addedFriends.filter((el) => el !== friend));
+                        setShowedFriends([...showedFriends, friend]);
                       }}
                     />
                   ))}
                 </div>
               </div>
               <div className="flex flex-row justify-end gap-4">
-                <button type="button" className="plain-btn" onClick={() => setShowParticipants(false)}>
+                <button
+                  type="button"
+                  className="plain-btn"
+                  onClick={() => {
+                    setShowedFriends(friends);
+                    setAddedFriends([]);
+                    setShowParticipants(false);
+                  }}>
                   Go Back
                 </button>
                 <button type="button" onClick={() => setShowParticipants(false)} className="btn">
