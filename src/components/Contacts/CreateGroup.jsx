@@ -25,8 +25,8 @@ export default function CreateGroup({ friends, setShowModal }) {
 
   const onSearch = (e) =>
     setShowedFriends(
-      friends?.filter((el) => {
-        return el.handle.includes(e.target.value) && !addedFriends.some((friend) => friend.handle === el.handle);
+      friends?.filter((fr) => {
+        return fr.handle.includes(e.target.value) && !addedFriends.some((friend) => friend.handle === fr.handle);
       })
     );
   return (

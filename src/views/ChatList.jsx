@@ -16,6 +16,7 @@ export default function ChatList() {
   });
   const navigate = useNavigate();
   const [currentList, setCurrentList] = useState(ChatType.Direct);
+  const [filteredMessages, setFileteredMessages] = useState(messageList);
 
   const { id } = useParams();
 
@@ -27,17 +28,24 @@ export default function ChatList() {
     if (messageList.group.length < 1) return;
     const isGroupOpened = messageList.group.find((chat) => chat?._id == id);
     if (isGroupOpened) setCurrentList(ChatType.Group);
+    setFileteredMessages(messageList);
   }, [id, messageList]);
 
   const onSearch = (e) => {
-    setMessageList((messages) => {
-      return {
-        group: messages.group,
-        direct: messages.direct.filter((el) => {
-          return el.participants[1].user.name.includes(e.target.value);
-        }),
-      };
-    });
+    if (currentList === ChatType.Direct) {
+      setFileteredMessages((messages) => {
+        if (currentList === ChatType.Direct) {
+          return {
+            group: messages.group,
+            direct: messageList.direct.filter((el) => el?.participants[1]?.user?.handle?.includes(e.target.value)),
+          };
+        }
+        return {
+          group: messageList.group.filter((el) => el.name.includes(e.target.value)),
+          direct: messages.direct,
+        };
+      });
+    }
   };
 
   return (
@@ -67,8 +75,10 @@ export default function ChatList() {
           />
           <Icon styles="btn" onClick={() => navigate('/contacts')} icon="emoji_people" />
         </div>
-        {currentList === ChatType.Direct && <SeparatedList list={messageList.direct} />}
-        {currentList === ChatType.Group && <SeparatedList type="Group" list={messageList.group} />}
+        {currentList === ChatType.Direct && <SeparatedList setMessageList={setMessageList} list={filteredMessages.direct} />}
+        {currentList === ChatType.Group && (
+          <SeparatedList setMessageList={setMessageList} type="Group" list={filteredMessages.group} />
+        )}
       </div>
     </Layout>
   );

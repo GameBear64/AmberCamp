@@ -5,15 +5,23 @@ import GroupCard from '@components/Cards/GroupCard';
 import UserCard from '@components/Cards/UserCard';
 import CreateGroup from '@components/Contacts/CreateGroup';
 
+import socket from '@utils/socket';
 import useFetch from '@utils/useFetch';
 import { getUserId } from '@stores/user';
 
-export default function SeparatedList({ list, type = 'Direct' }) {
+export default function SeparatedList({ list, type = 'Direct', setMessageList }) {
   const [showModal, setShowModal] = useState(false);
   const [friends, setFriends] = useState([]);
 
   useEffect(() => {
     useFetch({ url: 'user/friend/list' }).then((res) => setFriends(res.contacts));
+
+    socket.on('group/created', (group) => {
+      setMessageList((prev) => ({ ...prev, group: [...prev.group, group] }));
+    });
+    return () => {
+      socket.off('group/created');
+    };
   }, []);
 
   const conversations = list?.map((conversation) => {

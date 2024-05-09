@@ -1,4 +1,4 @@
-import { createContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { createContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams } from 'react-router-dom';
 

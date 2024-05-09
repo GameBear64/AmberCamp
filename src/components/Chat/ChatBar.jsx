@@ -37,7 +37,6 @@ export default function ChatBar() {
           </>
         )}
       </div>
-      <Icon styles="flex items-center text-2xl" icon="settings" />
     </div>
   );
 }
