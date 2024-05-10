@@ -45,7 +45,6 @@ export default function Chat() {
     });
 
     socket.on('message/reacted', (msg) => {
-      // TODO: known bug, there is no deference between users reacting
       setChatState((prev) => ({
         ...prev,
         messages: [
@@ -65,7 +64,7 @@ export default function Chat() {
       }
     });
     return () => {
-      socket.off('message/created');
+      socket.off('messa      {console.log(chatState)}ge/created');
       socket.off('message/deleted');
       socket.off('message/edited');
       socket.off('message/reacted');

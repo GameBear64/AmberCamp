@@ -43,7 +43,7 @@ export default function CreateGroup({ friends, setShowModal }) {
           <Input name="name" label="Name of the group" rules={{ ...REQUIRED }} />
           <p className="py-3 text-left font-semibold text-txtSecondary">Appearance</p>
           <div className="flex flex-row justify-between">
-            <Icon icon={chosenIcon} styles={`accent-circle size-40 text-8xl text-base-x ${chosenColor}`} />
+            <Icon icon={chosenIcon} styles={`accent-circle md:size-40 size-20 md:text-8xl text-5xl text-base-x ${chosenColor}`} />
             <div className="relative flex flex-col gap-2">
               <ColorPicker name="color" colors={colors} />
               <IconPicker name="icon" icons={groupIcons} />

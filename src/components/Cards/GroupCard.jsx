@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
 import Icon from '../Icon';
-
 export default function GroupCard({ group }) {
   const navigate = useNavigate();
 
@@ -16,7 +15,6 @@ export default function GroupCard({ group }) {
           <p className="text-sm font-bold leading-snug text-txtPrimary">{group.name}</p>
           <p className="text-xs leading-snug text-txtSecondary">{group.participants.length} participants</p>
         </div>
-
         <Icon
           onClick={() => navigate(`/chat/${group._id}`)}
           icon={'chat_bubble'}
