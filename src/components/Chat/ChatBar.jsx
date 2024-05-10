@@ -5,13 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '@nanostores/react';
 
 import Icon from '@components/Icon';
+import Modal from '@components/Modal';
+import RoundButton from '@components/RoundButton';
 
+import { ChatType } from '@utils/enums/chat';
+import socket from '@utils/socket';
 import { getUserId } from '@stores/user';
 import { $user } from '@stores/user';
 
-import Modal from '../../components/Modal';
-import RoundButton from '../../components/RoundButton';
-import socket from '../../utils/socket';
 import { MessagesContext } from '../../views/Chat';
 
 export default function ChatBar() {
@@ -31,10 +32,8 @@ export default function ChatBar() {
     (participant) => participant.user._id === user.id && participant.groupOwner === true
   );
 
-  const leaveGroup = () => {};
-
   const deleteGroup = () => {
-    socket.emit('group/delete', { groupId: chatState._id, color: chatState.color, icon: chatState.icon, name: chatState.name });
+    socket.emit('group/delete', { groupId: chatState._id });
   };
 
   useEffect(() => {
@@ -48,13 +47,13 @@ export default function ChatBar() {
   return (
     <div className="sticky top-0 flex w-full flex-row items-center gap-2 bg-base px-8 py-3 shadow-sm">
       <Icon styles="mr-2 pt-1 block md:hidden align-bottom text-xl" onClick={() => navigate('/chat')} icon="arrow_back_ios_new" />
-      {chatState.participants?.length == 2 && (
+      {chatState.type == ChatType.Direct && (
         <>
           <img className="size-10 rounded-full" src={`http://localhost:3030/recourse/${otherUser?.picture}?size=50`} alt="" />
           <h1 className="text-sm font-bold leading-snug text-txtPrimary">@{otherUser?.handle}</h1>
         </>
       )}
-      {chatState.participants?.length > 2 && (
+      {chatState.type == ChatType.Group && (
         <div className="flex w-full flex-row justify-between">
           <div className="flex flex-row items-center">
             <Icon icon={chatState.icon} styles={`accent-circle size-10 text-base-x ${chatState.color}`} />
@@ -75,7 +74,7 @@ export default function ChatBar() {
               <button className="plain-btn" onClick={() => setLeaveGroupModal(false)}>
                 Cancel
               </button>
-              <button className="reject-btn" onClick={leaveGroup}>
+              <button className="reject-btn" onClick={deleteGroup}>
                 Leave
               </button>
             </div>

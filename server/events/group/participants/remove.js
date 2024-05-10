@@ -17,7 +17,6 @@ module.exports = [
     if (owner.user.toString() != socket.apiUserId) return socket.emit('error', 'Only the owner can do this.');
 
     await group.updateOne(
-      { _id: ObjectId(data.groupId) },
       { $pull: { participants: data.participants.map((p) => ({ _id: ObjectId(p.id) })) } },
       { timestamps: false }
     );
