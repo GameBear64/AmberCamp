@@ -31,6 +31,8 @@ export default function ChatBar() {
     (participant) => participant.user._id === user.id && participant.groupOwner === true
   );
 
+  const leaveGroup = () => {};
+
   const deleteGroup = () => {
     socket.emit('group/delete', { groupId: chatState._id, color: chatState.color, icon: chatState.icon, name: chatState.name });
   };
@@ -73,7 +75,9 @@ export default function ChatBar() {
               <button className="plain-btn" onClick={() => setLeaveGroupModal(false)}>
                 Cancel
               </button>
-              <button className="reject-btn">Leave</button>
+              <button className="reject-btn" onClick={leaveGroup}>
+                Leave
+              </button>
             </div>
           </div>
         </Modal>
