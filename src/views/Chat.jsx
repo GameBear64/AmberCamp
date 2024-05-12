@@ -64,7 +64,7 @@ export default function Chat() {
       }
     });
     return () => {
-      socket.off('messa      {console.log(chatState)}ge/created');
+      socket.off('message/created');
       socket.off('message/deleted');
       socket.off('message/edited');
       socket.off('message/reacted');
@@ -92,7 +92,9 @@ export default function Chat() {
     <MessagesContext.Provider value={{ chatState, setChatState }}>
       <div className="flex size-full flex-1 flex-col justify-between pb-5">
         {location.pathname.includes('chat') && <ChatBar />}
-        <div ref={messages} className="relative flex size-full flex-col gap-2 overflow-y-auto overflow-x-hidden pb-8 pt-5">
+        <div
+          ref={messages}
+          className="infinite-scroll-container relative flex size-full flex-col gap-2 overflow-y-auto overflow-x-hidden pb-8 pt-5">
           {chatState?.messages && (
             <InfiniteScroll
               dataLength={chatState?.messages?.length}
@@ -100,7 +102,8 @@ export default function Chat() {
                 console.log('more');
               }}
               inverse={true}
-              style={{ overflow: 'hidden' }}
+              style={{ overflow: 'hidden', height: '100%' }}
+              height={'full'}
               hasMore={chatState?.messages?.length < chatState.messagesCount}
               loader={<ChatLoader />}>
               {chatState.messages?.map((message, i) => (

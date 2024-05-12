@@ -14,12 +14,13 @@ import { getUserId } from '@stores/user';
 import { $user } from '@stores/user';
 
 import { MessagesContext } from '../../views/Chat';
+import { GroupListContext } from '../../views/ChatList';
 
 export default function ChatBar() {
   const { chatState } = useContext(MessagesContext);
+  const { setMessageList } = useContext(GroupListContext);
   const navigate = useNavigate();
   const user = useStore($user);
-
   const [leaveGroupModal, setLeaveGroupModal] = useState(false);
   const [deleteGroupModal, setDeleteGroupModal] = useState(false);
 
@@ -37,8 +38,11 @@ export default function ChatBar() {
   };
 
   useEffect(() => {
-    socket.on('group/deleted', () => {
+    socket.on('group/deleted', (groupId) => {
       setDeleteGroupModal(false);
+      setMessageList((prev) => {
+        return { direct: prev.direct, group: prev?.group.filter((group) => group._id !== groupId) };
+      });
       navigate('/chat');
     });
     return () => socket.off('group/deleted');
@@ -66,6 +70,7 @@ export default function ChatBar() {
           )}
         </div>
       )}
+
       {leaveGroupModal && (
         <Modal easyClose title="Leave group" closeFunction={() => setLeaveGroupModal(false)}>
           <div className="flex flex-col gap-2">
