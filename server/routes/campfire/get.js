@@ -17,7 +17,7 @@ module.exports.get = [
 
     if (!question) return res.status(404).json('No more questions');
 
-    // await question.updateOne({ $push: { seen: req.apiUserId } });
+    await question.updateOne({ $push: { seen: req.apiUserId } });
 
     return res.status(200).json(question);
   },

@@ -1,9 +1,10 @@
-const ObjectId = require('mongoose').Types.ObjectId;
-const { ConversationModel } = require('../../models/Conversation');
 const joi = require('joi');
+const ObjectId = require('mongoose').Types.ObjectId;
+
+const { ConversationModel } = require('../../models/Conversation');
 const { socketValidate } = require('../../middleware/validation');
-const { isObjectID } = require('../../utils');
 const { ConversationType } = require('../../helpers/enums.js');
+const { isObjectID } = require('../../utils');
 
 module.exports = [
   socketValidate({
