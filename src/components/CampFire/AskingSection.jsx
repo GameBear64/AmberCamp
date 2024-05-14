@@ -10,10 +10,12 @@ import useFetch from '@utils/useFetch';
 
 export default function AskingSection({ asked, set }) {
   const [askModalShown, setAskModalShown] = useState(false);
+  const [filteredData, setFilteredData] = useState(asked);
 
   console.log(asked);
 
   const askTheQuestion = (data) => {
+    console.log(data);
     useFetch({
       url: 'campfire/new',
       method: 'POST',
@@ -25,6 +27,9 @@ export default function AskingSection({ asked, set }) {
     });
   };
 
+  const onSearch = (e) => {
+    setFilteredData(asked.filter((data) => data.question.includes(e.target.value)));
+  };
   return (
     <div className="flex flex-col">
       <button className="btn my-5" onClick={() => setAskModalShown(true)}>
@@ -46,8 +51,8 @@ export default function AskingSection({ asked, set }) {
           </Fragment>
         </Modal>
       )}
-      <input className="input" placeholder="Search" />
-      {asked?.map((question) => (
+      <input onChange={onSearch} className="input" placeholder="Search" />
+      {filteredData?.map((question) => (
         <QuestionBubble key={question._id} id={question._id} text={question.question} type="question" />
       ))}
     </div>

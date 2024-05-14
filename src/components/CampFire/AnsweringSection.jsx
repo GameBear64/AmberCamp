@@ -9,6 +9,7 @@ import useFetch from '@utils/useFetch';
 export default function AnsweringSection({ answered, set }) {
   //TODO: remake for an array of topics, maybe an array and .push or .splice it
   const [topic, setTopic] = useState(Topics.all);
+  const [filteredData, setFilteredData] = useState(answered);
 
   const selectTopic = (newTopic) => {
     setTopic((prev) => (prev == newTopic ? Topics.all : newTopic));
@@ -31,7 +32,9 @@ export default function AnsweringSection({ answered, set }) {
   const debug = () => {
     console.log(answered);
   };
-
+  const onSearch = (e) => {
+    setFilteredData(answered.filter((data) => data.question.includes(e.target.value)));
+  };
   return (
     <div className="flex flex-col">
       <div className="flex justify-center gap-2">
@@ -66,8 +69,9 @@ export default function AnsweringSection({ answered, set }) {
       <button className="btn my-5" onClick={debug}>
         Debug
       </button>
-      <input className="input" placeholder="Search" />
-      {answered?.map((answer) => (
+      <input onChange={onSearch} className="input" placeholder="Search" />
+      {/* {console.log(answered)} */}
+      {filteredData?.map((answer) => (
         <QuestionBubble key={answer._id} id={answer._id} text={answer.question} type="answer" />
       ))}
     </div>

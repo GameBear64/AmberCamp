@@ -15,7 +15,6 @@ const ListType = Object.freeze({
 
 export default function CampFire() {
   const [currentList, setCurrentList] = useState(ListType.Answered);
-
   const [allQuestions, setAllQuestions] = useState({ answered: [], asked: [] });
 
   useEffect(() => {
@@ -44,6 +43,7 @@ export default function CampFire() {
             Asked
           </button>
         </div>
+
         {currentList === ListType.Answered && <AnsweringSection answered={allQuestions.answered} set={setAllQuestions} />}
         {currentList === ListType.Asked && <AskingSection asked={allQuestions.asked} set={setAllQuestions} />}
       </div>
