@@ -9,7 +9,6 @@ const { UserModel } = require('../../models/User');
 const { ConversationType } = require('../../helpers/enums.js');
 const { socketValidate } = require('../../middleware/validation');
 const { isObjectID } = require('../../utils');
-const { LogTimings } = require('concurrently');
 
 module.exports = [
   socketValidate({
@@ -29,7 +28,7 @@ module.exports = [
           'participants.user': { $all: [ObjectId(socket.apiUserId), ObjectId(data.targetId)] },
         },
         {
-          _id: { $in: question.answers },
+          _id: { $in: question?.answers || [] },
           'participants.user': { $all: [ObjectId(socket.apiUserId), ObjectId(question?.author)] },
         },
       ],

@@ -74,16 +74,10 @@ export default function Chat() {
   }, []);
 
   useEffect(() => {
-    if (location.pathname.includes('campfire')) {
-      useFetch({ url: `campfire/${id}` }).then((data) => {
-        setChatState(data);
-      });
-    } else {
-      useFetch({ url: `conversation/${id}` }).then((data) => {
-        setChatState(data);
-      });
-      setChat(id);
-    }
+    useFetch({ url: `conversation/${id}` }).then((data) => {
+      setChatState(data);
+    });
+    setChat(id);
   }, [id]);
 
   useLayoutEffect(() => {

@@ -5,7 +5,10 @@ const { participantsToUsers, DirectOrGroup, populateMessages } = require('../../
 const { joiValidate, InformationTypes } = require('../../../middleware/validation');
 const { isObjectID } = require('../../../utils');
 
+const { ConversationType } = require('../../../helpers/enums');
+
 const { ConversationModel } = require('../../../models/Conversation');
+const { QuestionModel } = require('../../../models/Question');
 
 module.exports.get = [
   joiValidate({ page: joi.number().min(1) }, InformationTypes.QUERY),
@@ -13,8 +16,31 @@ module.exports.get = [
   async (req, res) => {
     if (req.params.id === req.apiUserId) return res.status(418).json('You want to talk to yourself? Think.');
 
+    // check if its a question
+    const question = await QuestionModel.findOne({ _id: ObjectId(req.params.id) });
+
     const [conversation] = await ConversationModel.aggregate([
-      ...DirectOrGroup(req),
+      {
+        $match: {
+          $or: [
+            {
+              type: ConversationType.Direct,
+              'participants.user': {
+                $all: [ObjectId(req.params.id), ObjectId(req.apiUserId)],
+              },
+            },
+            {
+              _id: ObjectId(req.params.id),
+              type: ConversationType.Group,
+              'participants.user': { $all: [ObjectId(req.apiUserId)] },
+            },
+            {
+              _id: { $in: question?.answers || [] },
+              'participants.user': { $all: [ObjectId(req.apiUserId), ObjectId(question?.author)] },
+            },
+          ],
+        },
+      },
       ...participantsToUsers,
       {
         $project: {
