@@ -10,6 +10,7 @@ const Chat = lazy(() => import('../views/Chat'));
 const Contacts = lazy(() => import('../views/Contacts'));
 const Profile = lazy(() => import('../views/Profile'));
 const CampFire = lazy(() => import('../views/CampFire'));
+const AnswerList = lazy(() => import('../views/AnswerList'));
 const Settings = lazy(() => import('../views/Settings/Settings'));
 const General = lazy(() => import('../views/Settings/General'));
 const Security = lazy(() => import('../views/Settings/Security'));
@@ -27,7 +28,6 @@ import { SettingsPageLoader } from './loaders/SettingsLoader';
 import ErrorPage from './static/ErrorPage';
 import Loader from './static/Loader';
 import NotFound from './static/NotFound';
-import Guard from './utils/RouterGuard';
 import ScreenHandler from './utils/ScreenHandler';
 
 let router;
@@ -38,117 +38,114 @@ export default function Router() {
   router = createBrowserRouter([
     {
       path: '/',
+      element: <Redirect to="/chat" />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: '/chat',
       element: (
-        <Suspense fallback={<Loader />}>
-          <Guard />
+        <Suspense fallback={<ChatListLoader />}>
+          <ChatList />
         </Suspense>
       ),
-      errorElement: <ErrorPage />,
       children: [
         {
-          path: '',
-          element: <Redirect to="/chat" />,
-          errorElement: <ErrorPage />,
-        },
-        {
-          path: '/chat',
+          path: ':id',
           element: (
-            <Suspense fallback={<ChatListLoader />}>
-              <ChatList />
+            <Suspense fallback={<ChatLoader />}>
+              <Chat />
             </Suspense>
           ),
-          children: [
-            {
-              path: ':id',
-              element: (
-                <Suspense fallback={<ChatLoader />}>
-                  <Chat />
-                </Suspense>
-              ),
-            },
-          ],
         },
+      ],
+    },
+    {
+      path: '/campfire',
+      element: (
+        <Suspense fallback={<ChatListLoader />}>
+          <CampFire />
+        </Suspense>
+      ),
+      children: [
         {
-          path: '/campfire',
+          path: 'answers/:id',
           element: (
-            <Suspense fallback={<ChatListLoader />}>
-              <CampFire />
+            <Suspense fallback={<ChatLoader />}>
+              <AnswerList />
             </Suspense>
           ),
-          children: [
-            {
-              path: ':id',
-              element: (
-                <Suspense fallback={<ChatLoader />}>
-                  <ChatLoader />
-                </Suspense>
-              ),
-            },
-          ],
         },
         {
-          path: '/contacts',
+          path: ':id',
           element: (
-            <Suspense fallback={<ChatListLoader />}>
-              <ScreenHandler from="/contacts" to={`/contacts/${user.id}`}>
-                <Contacts />
-              </ScreenHandler>
+            <Suspense fallback={<ChatLoader />}>
+              <Chat />
             </Suspense>
           ),
-          children: [
-            {
-              path: ':id',
-              element: (
-                <Suspense fallback={<ProfileLoader />}>
-                  <Profile />
-                </Suspense>
-              ),
-            },
-          ],
+        },
+      ],
+    },
+    {
+      path: '/contacts',
+      element: (
+        <Suspense fallback={<ChatListLoader />}>
+          <ScreenHandler from="/contacts" to={`/contacts/${user.id}`}>
+            <Contacts />
+          </ScreenHandler>
+        </Suspense>
+      ),
+      children: [
+        {
+          path: ':id',
+          element: (
+            <Suspense fallback={<ProfileLoader />}>
+              <Profile />
+            </Suspense>
+          ),
+        },
+      ],
+    },
+    {
+      path: '/settings',
+      element: (
+        <Suspense fallback={<SettingsLoader />}>
+          <ScreenHandler from="/settings" to="general">
+            <Settings />
+          </ScreenHandler>
+        </Suspense>
+      ),
+      children: [
+        {
+          path: 'general',
+          element: (
+            <Suspense fallback={<SettingsPageLoader />}>
+              <General />
+            </Suspense>
+          ),
         },
         {
-          path: '/settings',
+          path: 'dangerzone',
           element: (
-            <Suspense fallback={<SettingsLoader />}>
-              <ScreenHandler from="/settings" to="general">
-                <Settings />
-              </ScreenHandler>
+            <Suspense fallback={<SettingsPageLoader />}>
+              <DangerZone />
             </Suspense>
           ),
-          children: [
-            {
-              path: 'general',
-              element: (
-                <Suspense fallback={<SettingsPageLoader />}>
-                  <General />
-                </Suspense>
-              ),
-            },
-            {
-              path: 'dangerzone',
-              element: (
-                <Suspense fallback={<SettingsPageLoader />}>
-                  <DangerZone />
-                </Suspense>
-              ),
-            },
-            {
-              path: 'preferences',
-              element: (
-                <Suspense fallback={<Loader />}>
-                  <Preferences />
-                </Suspense>
-              ),
-            },
-            {
-              path: 'security',
-              element: (
-                <Suspense fallback={<SettingsPageLoader />}>
-                  <Security />
-                </Suspense>
-              ),
-            },
-          ],
+        },
+        {
+          path: 'preferences',
+          element: (
+            <Suspense fallback={<Loader />}>
+              <Preferences />
+            </Suspense>
+          ),
+        },
+        {
+          path: 'security',
+          element: (
+            <Suspense fallback={<SettingsPageLoader />}>
+              <Security />
+            </Suspense>
+          ),
         },
       ],
     },

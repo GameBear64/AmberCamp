@@ -1,18 +1,3 @@
-/**
- * @openapi
- * /user/friend/list:
- *   post:
- *     summary: Show user's friend list
- *     description: Get the user's contacts, pending requests and blocked list
- *     tags:
- *       - friends
- *     security:
- *       - ApiKeyAuth: []
- *     responses:
- *       '200':
- *         description: Returns an object of 4 lists
- */
-
 const { UserModel } = require('../../../models/User');
 
 module.exports.get = async (req, res) => {

@@ -4,8 +4,9 @@ import Layout from '@layout';
 import AnsweringSection from '@components/CampFire/AnsweringSection';
 import AskingSection from '@components/CampFire/AskingSection';
 
-import AnswerPlaceholder from '@routers/placeholders/Answer'
-import AskedPlaceholder from '@routers/placeholders/Asked'
+import AnswerPlaceholder from '@routers/placeholders/Answer';
+import AskedPlaceholder from '@routers/placeholders/Asked';
+import useFetch from '@utils/useFetch';
 
 const ListType = Object.freeze({
   Asked: 'Asked',
@@ -15,8 +16,19 @@ const ListType = Object.freeze({
 export default function CampFire() {
   const [currentList, setCurrentList] = useState(ListType.Answered);
 
+  const [allQuestions, setAllQuestions] = useState({ answered: [], asked: [] });
+
+  useEffect(() => {
+    useFetch({
+      url: 'campfire/questions',
+      method: 'GET',
+    }).then((res) => {
+      setAllQuestions(res);
+    });
+  }, []);
+
   return (
-    <Layout placeholder={currentList === ListType.Answered ? <AnswerPlaceholder/> : <AskedPlaceholder/>}>
+    <Layout placeholder={currentList === ListType.Answered ? <AnswerPlaceholder /> : <AskedPlaceholder />}>
       <div className="mx-2 flex flex-col">
         <div className="mb-2 flex w-full justify-evenly ">
           <button
@@ -27,16 +39,14 @@ export default function CampFire() {
             Answered
           </button>
           <button
-            className={`m-2 flex justify-center font-semibold ${
-              currentList === ListType.Asked && 'border-b-2 border-primary'
-            }`}
+            className={`m-2 flex justify-center font-semibold ${currentList === ListType.Asked && 'border-b-2 border-primary'}`}
             onClick={() => setCurrentList(ListType.Asked)}>
             Asked
           </button>
         </div>
-        {currentList === ListType.Answered && <AnsweringSection questions={[]} />}
-        {currentList === ListType.Asked && <AskingSection answers={[]} />}
+        {currentList === ListType.Answered && <AnsweringSection answered={allQuestions.answered} set={setAllQuestions} />}
+        {currentList === ListType.Asked && <AskingSection asked={allQuestions.asked} set={setAllQuestions} />}
       </div>
     </Layout>
-  )
+  );
 }

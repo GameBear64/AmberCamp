@@ -32,9 +32,11 @@
 @layer base {
   /* works only if theme is applied to the body */
   body {
-    @apply bg-base text-txtPrimary
+    @apply bg-base;
   }
-
+  .infinite-scroll-container > div:first-child {
+    @apply h-full;
+  }
   .material-symbols-rounded {
     font-variation-settings: 'FILL' 1;
   }
@@ -79,7 +81,7 @@
 
 @layer components {
   .btn {
-    @apply rounded-md border border-transparent bg-primary px-2 py-1 text-lg font-semibold text-white hover:bg-primary-shade focus:outline-none active:translate-y-0.5 transition-transform;
+    @apply rounded-md border border-transparent bg-primary md:px-2 md:py-1 p-1 md:text-lg font-semibold text-white hover:bg-primary-shade focus:outline-none active:translate-y-0.5 transition-transform;
   }
 
   .reject-btn {
@@ -99,7 +101,7 @@
   }
 
   .disabled-btn {
-    @apply btn bg-neutral-600 hover:bg-neutral-700 ;
+    @apply btn bg-neutral-600 hover:bg-neutral-700;
   }
 
   .nav-btn {
@@ -109,7 +111,9 @@
   .input {
     @apply rounded bg-base-m text-txtPrimary h-10 px-2 w-full border border-base-s focus:border-primary focus:outline-none;
   }
-
+  .soft-input {
+    @apply my-4 h-10 w-full rounded-lg bg-base-m px-5 text-sm text-txtPrimary focus:outline-none md:max-w-md;
+  }
   .input-error {
     @apply input border-2 border-red-600;
   }

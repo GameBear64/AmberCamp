@@ -1,33 +1,3 @@
-/**
- * @openapi
- * /conversation/{id}/history:
- *   get:
- *     summary: Get paginated messages for a conversation.
- *     description: |
- *       This endpoint retrieves paginated messages for a conversation based on the provided page number.
- *     tags:
- *       - conversation
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The ID of the conversation to retrieve messages from.
- *       - in: query
- *         name: page
- *         required: false
- *         schema:
- *           type: integer
- *           minimum: 1
- *         description: The page number for pagination (default is 1).
- *     security:
- *       - ApiKeyAuth: []
- *     responses:
- *       200:
- *         description: Paginated messages for the conversation.
- */
-
 const joi = require('joi');
 
 const { DirectOrGroup } = require('../../../helpers/aggregations');

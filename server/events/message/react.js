@@ -1,31 +1,45 @@
+const joi = require('joi');
+const ObjectId = require('mongoose').Types.ObjectId;
 const { MessageModel } = require('../../models/Message');
 const { ConversationModel } = require('../../models/Conversation');
-const ObjectId = require('mongoose').Types.ObjectId;
-const allEmojis = require('../../helpers/emojis.json')
+const allEmojis = require('../../helpers/emojis.json');
 
-module.exports = async ({ io, socket }, data) => {
-  if (!allEmojis.includes(data.emoji)) return socket.emit('error', 'Invalid reaction');
+const { socketValidate } = require('../../middleware/validation');
+const { isObjectID } = require('../../utils');
 
-  let targetMessage = await MessageModel.findOne({ _id: data.messageId });
-  if (!targetMessage) return socket.emit('error', 'Message Not Found');
+module.exports = [
+  socketValidate({
+    messageId: joi.custom(isObjectID).required(),
+    color: joi.string().required(),
+    emoji: joi
+      .string()
+      .valid(...allEmojis)
+      .required(),
+  }),
+  async ({ io, socket }, data) => {
+    if (!allEmojis.includes(data.emoji)) return socket.emit('error', 'Invalid reaction');
 
-  const conversation = await ConversationModel.findOne({ messages: { $in: [ObjectId(data.messageId)] } });
-  const participantIDs = conversation.participants.map(({ user }) => user.toString());
+    let targetMessage = await MessageModel.findOne({ _id: data.messageId });
+    if (!targetMessage) return socket.emit('error', 'Message Not Found');
 
-  if (targetMessage.reactions.some(r => r.color == data.color && r.emoji == data.emoji)) {
-    await targetMessage.updateOne(
-      { $pull: { reactions: { emoji: data.emoji, color: data.color } } },
-      { timestamps: false }
-    );
-  } else {
-    await targetMessage.updateOne(
-      { $push: { reactions: { emoji: data.emoji, color: data.color } } },
-      { timestamps: false }
-    );
-  }
+    const conversation = await ConversationModel.findOne({ messages: { $in: [ObjectId(data.messageId)] } });
+    const participantIDs = conversation.participants.map(({ user }) => user.toString());
 
-  // get fresh data
-  targetMessage = await MessageModel.findOne({ _id: data.messageId });
+    const foundReaction = targetMessage.reactions.find(
+      (r) => r.color == data.color && r.emoji == data.emoji && r.author == socket.apiUserId
+    )?._id;
+    if (foundReaction) {
+      await targetMessage.updateOne({ $pull: { reactions: { _id: foundReaction } } }, { timestamps: false });
+    } else {
+      await targetMessage.updateOne(
+        { $push: { reactions: { emoji: data.emoji, color: data.color, author: socket.apiUserId } } },
+        { timestamps: false }
+      );
+    }
 
-  return io.to(participantIDs).emit('message/reacted', {id: targetMessage._id, reactions: targetMessage.reactions});
-};
+    // get fresh data
+    targetMessage = await MessageModel.findOne({ _id: data.messageId }).populate('reactions.author', 'name handle');
+
+    return io.to(participantIDs).emit('message/reacted', { id: targetMessage._id, reactions: targetMessage.reactions });
+  },
+];

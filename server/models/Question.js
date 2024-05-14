@@ -26,6 +26,18 @@ const questionSchema = new mongoose.Schema(
         ref: 'Conversation',
       },
     ],
+    seen: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    rejected: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );

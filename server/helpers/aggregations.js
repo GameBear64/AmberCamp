@@ -38,7 +38,7 @@ exports.participantsToUsers = [
   {
     $unset: 'populatedParticipants',
   },
-]
+];
 
 exports.DirectOrGroup = (req) => [
   {
@@ -61,4 +61,59 @@ exports.DirectOrGroup = (req) => [
       ],
     },
   },
-]
+];
+
+exports.populateMessages = [
+  {
+    $lookup: {
+      from: 'messages',
+      localField: 'messages',
+      foreignField: '_id',
+      pipeline: [
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'author',
+            foreignField: '_id',
+            pipeline: [{ $project: { _id: 1, picture: 1, handle: 1, name: 1 } }],
+            as: 'author',
+          },
+        },
+        {
+          $unwind: '$author',
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'reactions.author',
+            foreignField: '_id',
+            pipeline: [{ $project: { _id: 1, handle: 1, name: 1 } }],
+            as: 'reactionAuthors',
+          },
+        },
+        {
+          $set: {
+            reactions: {
+              $map: {
+                input: '$reactions',
+                as: 'reaction',
+                in: {
+                  $mergeObjects: [
+                    '$$reaction',
+                    {
+                      author: {
+                        $arrayElemAt: ['$reactionAuthors', { $indexOfArray: ['$reactionAuthors._id', '$$reaction.author'] }],
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+        { $unset: 'reactionAuthors' },
+      ],
+      as: 'messages',
+    },
+  },
+];

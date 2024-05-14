@@ -1,31 +1,3 @@
-/**
- * @openapi
- * /enums:
- *   get:
- *     summary: Get enum values.
- *     description: |
- *       This endpoint allows you to retrieve enum values. You can specify the 'select' query parameter to get values for a specific enum.
- *     parameters:
- *       - in: query
- *         name: array
- *         schema:
- *           type: boolean
- *       - in: query
- *         name: select
- *         schema:
- *           type: string
- *         description: The name of the specific enum to retrieve values for.
- *     responses:
- *       200:
- *         description: Enum values retrieved successfully.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *             example:
- *               ["value1", "value2", "value3"]
- */
-
 const joi = require('joi');
 
 const { joiValidate, InformationTypes } = require('../../middleware/validation');

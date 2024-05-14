@@ -1,32 +1,7 @@
-/**
- * @openapi
- * /conversation/{id}:
- *   get:
- *     summary: Get conversation details.
- *     description: |
- *       This endpoint retrieves details about a conversation based on the provided conversation ID.
- *     tags:
- *       - conversation
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The ID of the conversation to retrieve details from.
- *     security:
- *       - ApiKeyAuth: []
- *     responses:
- *       200:
- *         description: Conversation details successfully retrieved.
- *       418:
- *         description: Cannot talk to yourself.
- */
-
 const joi = require('joi');
 const ObjectId = require('mongoose').Types.ObjectId;
 
-const { participantsToUsers, DirectOrGroup } = require('../../../helpers/aggregations');
+const { participantsToUsers, DirectOrGroup, populateMessages } = require('../../../helpers/aggregations');
 const { joiValidate, InformationTypes } = require('../../../middleware/validation');
 const { isObjectID } = require('../../../utils');
 
@@ -45,43 +20,29 @@ module.exports.get = [
         $project: {
           participants: 1,
           type: 1,
+          name: 1,
+          color: 1,
+          icon: 1,
           updatedAt: 1,
+          messagesCount: {
+            $size: '$messages',
+          },
           messages: {
             $slice: ['$messages', 0, 20],
           },
         },
       },
-      {
-        $lookup: {
-          from: 'messages',
-          localField: 'messages',
-          foreignField: '_id',
-          pipeline: [
-            {
-              $lookup: {
-                from: 'users',
-                localField: 'author',
-                foreignField: '_id',
-                pipeline: [{ $project: { _id: 1, picture: 1, handle: 1, name: 1 } }],
-                as: 'author',
-              },
-            },
-            {
-              $unwind: '$author',
-            },
-          ],
-          as: 'messages',
-        },
-      },
+      ...populateMessages,
       {
         $project: {
           messages: 1,
           participants: 1,
           type: 1,
+          name: 1,
+          color: 1,
+          icon: 1,
           updatedAt: 1,
-          messagesCount: {
-            $size: '$messages',
-          },
+          messagesCount: 1,
         },
       },
     ]);
@@ -102,18 +63,3 @@ module.exports.get = [
     res.status(200).json(conversation || {});
   },
 ];
-
-// this is dumb but ill keep it for reference
-// module.exports.delete = [
-//   joiValidate({ id: joi.custom(isObjectID) }, InformationTypes.PARAMS),
-//   async (req, res) => {
-//     const conversation = await ConversationModel.findOne({ 'participants.user': { $in: [ObjectId(req.apiUserId)] } });
-
-//     if (conversation.type == ConversationType.Group) {
-//       const isOwner = conversation.participants.find((user) => user.groupOwner);
-//       if (!isOwner) return res.status(403).json('Only the group owner can delete the group.');
-//     }
-//     await ConversationModel.deleteOne({ _id: conversation._id });
-//     res.status(200).json();
-//   },
-// ];

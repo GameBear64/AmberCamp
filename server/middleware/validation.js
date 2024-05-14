@@ -13,8 +13,17 @@ exports.InformationTypes = Object.freeze({
 
 // prettier-ignore
 exports.joiValidate = (schema, realm = 'body') => (req, res, next) => {
-  let validation = joi.object(schema).validate(req[realm]);
+  const validation = joi.object(schema).validate(req[realm]);
   if (validation.error) return res.status(400).json(validation.error.details[0].message);
 
   next();
 };
+
+exports.socketValidate =
+  (schema) =>
+  ({ socket }, data, next) => {
+    const validation = joi.object(schema).validate(data);
+    if (validation.error) return socket.emit('error', validation.error.details[0].message);
+
+    next();
+  };

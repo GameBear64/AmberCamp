@@ -7,7 +7,7 @@ import socket from '@utils/socket';
 
 import { MessagesContext } from '../../views/Chat';
 
-export default function MessageOptions({ id, setEditMode }) {
+export default function MessageOptions({ id, setEditMode, setShowMenu }) {
   const { chatLog } = useContext(MessagesContext);
 
   const editMessage = () => {
@@ -18,6 +18,7 @@ export default function MessageOptions({ id, setEditMode }) {
     const msg = chatLog?.find((m) => m._id == id);
     navigator.clipboard.writeText(msg.body);
     successSnackBar('Message copied!');
+    setShowMenu(false);
   };
 
   const deleteMessage = () => {
@@ -26,6 +27,7 @@ export default function MessageOptions({ id, setEditMode }) {
 
   const addReaction = (emoji, color) => {
     socket.emit('message/react', { messageId: id, emoji, color });
+    setShowMenu(false);
   };
 
   return (

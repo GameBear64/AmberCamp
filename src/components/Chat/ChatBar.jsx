@@ -1,26 +1,106 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useStore } from '@nanostores/react';
+
 import Icon from '@components/Icon';
+import Modal from '@components/Modal';
+import RoundButton from '@components/RoundButton';
+
+import { ChatType } from '@utils/enums/chat';
+import socket from '@utils/socket';
+import { getUserId } from '@stores/user';
+import { $user } from '@stores/user';
 
 import { MessagesContext } from '../../views/Chat';
+import { GroupListContext } from '../../views/ChatList';
 
 export default function ChatBar() {
+  const { chatState } = useContext(MessagesContext);
+  const { setMessageList } = useContext(GroupListContext);
   const navigate = useNavigate();
-  const { otherUser } = useContext(MessagesContext);
+  const user = useStore($user);
+  const [leaveGroupModal, setLeaveGroupModal] = useState(false);
+  const [deleteGroupModal, setDeleteGroupModal] = useState(false);
+
+  const otherUser = useMemo(
+    () => chatState.participants?.find(({ user }) => user._id !== getUserId())?.user,
+    [chatState?.participants]
+  );
+
+  const isOwner = chatState.participants?.find(
+    (participant) => participant.user._id === user.id && participant.groupOwner === true
+  );
+
+  const deleteGroup = () => {
+    socket.emit('group/delete', { groupId: chatState._id });
+  };
+
+  useEffect(() => {
+    socket.on('group/deleted', (groupId) => {
+      setDeleteGroupModal(false);
+      setMessageList((prev) => {
+        return { direct: prev.direct, group: prev?.group.filter((group) => group._id !== groupId) };
+      });
+      navigate('/chat');
+    });
+    return () => socket.off('group/deleted');
+  }, []);
 
   return (
-    <div className="sticky top-0 z-20 flex flex-row justify-between bg-base px-8 py-3 shadow-sm">
-      <div className="flex flex-row items-center gap-2">
-        <Icon
-          styles="mr-2 pt-1 block lg:hidden align-bottom text-xl"
-          onClick={() => navigate('/chat')}
-          icon="arrow_back_ios_new"
-        />
-        <img className="h-10 w-10 rounded-full" src={`http://localhost:3030/recourse/${otherUser?.picture}?size=50`} alt="" />
-        <h1 className="text-sm font-bold leading-snug text-txtPrimary">@{otherUser?.handle}</h1>
-      </div>
-      <Icon styles="flex items-center text-2xl" icon="settings" />
+    <div className="sticky top-0 flex w-full flex-row items-center gap-2 bg-base px-8 py-3 shadow-sm">
+      <Icon styles="mr-2 pt-1 block md:hidden align-bottom text-xl" onClick={() => navigate('/chat')} icon="arrow_back_ios_new" />
+      {chatState.type == ChatType.Direct && (
+        <>
+          <img className="size-10 rounded-full" src={`http://localhost:3030/recourse/${otherUser?.picture}?size=50`} alt="" />
+          <h1 className="text-sm font-bold leading-snug text-txtPrimary">@{otherUser?.handle}</h1>
+        </>
+      )}
+      {chatState.type == ChatType.Group && (
+        <div className="flex w-full flex-row justify-between">
+          <div className="flex flex-row items-center">
+            <Icon icon={chatState.icon} styles={`accent-circle size-10 text-base-x ${chatState.color}`} />
+            <h1 className="mx-2 font-bold leading-snug text-txtPrimary">{chatState.name}</h1>
+          </div>
+          {isOwner ? (
+            <RoundButton onClick={() => setDeleteGroupModal(true)} icon={'delete'} colors="bg-red-500" />
+          ) : (
+            <RoundButton onClick={() => setLeaveGroupModal(true)} icon={'logout'} colors="bg-base-s" />
+          )}
+        </div>
+      )}
+
+      {leaveGroupModal && (
+        <Modal easyClose title="Leave group" closeFunction={() => setLeaveGroupModal(false)}>
+          <div className="flex flex-col gap-2">
+            <p>Are you sure you want to leave this group?</p>
+            <div className="flex flex-row justify-end gap-4" key="buttons">
+              <button className="plain-btn" onClick={() => setLeaveGroupModal(false)}>
+                Cancel
+              </button>
+              <button className="reject-btn" onClick={deleteGroup}>
+                Leave
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
+      {deleteGroupModal && (
+        <Modal easyClose title="Delete group" closeFunction={() => setDeleteGroupModal(false)}>
+          <div className="flex flex-col gap-2">
+            <p>Are you sure you want to delete this group?</p>
+            <div className="flex flex-row justify-end gap-4" key="buttons">
+              <button className="plain-btn" onClick={() => setDeleteGroupModal(false)}>
+                Cancel
+              </button>
+              <button className="reject-btn" onClick={deleteGroup}>
+                Delete
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }

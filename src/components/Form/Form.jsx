@@ -7,6 +7,7 @@ export default function Form({
   defaultValues,
   children,
   onSubmit,
+  onChange,
   submitOnEnter = false,
   onlyDirty = false,
   validationMode = 'onChange',
@@ -16,8 +17,15 @@ export default function Form({
   const {
     handleSubmit,
     reset,
+    watch,
     formState: { dirtyFields },
   } = methods;
+
+  const allFields = watch();
+
+  useEffect(() => {
+    if (onChange) onChange(allFields);
+  }, [allFields]);
 
   useEffect(() => {
     reset(defaultValues);
@@ -35,8 +43,7 @@ export default function Form({
           if (submitOnEnter) reset();
         })}
         onKeyDown={(e) => checkKeyDown(e)}
-        {...rest}
-      >
+        {...rest}>
         {children}
       </form>
     </FormProvider>

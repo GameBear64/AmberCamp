@@ -35,9 +35,25 @@ io.on('connection', (socket) => {
   for (const file of eventPaths) {
     const eventFile = file.replace(fileRegex, '$<cmd>').replaceAll('\\', '/');
 
-    socket.on(eventFile, (...args) => {
-      require(`./${file}`)({ io, socket }, ...args);
-    });
+    const exported = require(`./${file}`);
+
+    if (typeof exported === 'function') {
+      socket.on(eventFile, (...args) => {
+        exported({ io, socket }, ...args);
+      });
+
+      continue;
+    }
+
+    if (Array.isArray(exported)) {
+      socket.on(eventFile, (...args) => {
+        const next = (queueNumber) => () => {
+          exported[queueNumber]({ io, socket }, ...args, next(queueNumber + 1));
+        };
+
+        next(0)();
+      });
+    }
   }
 });
 
@@ -54,10 +70,6 @@ app.use(trimBodyFields);
 app.use(checkAuth);
 
 app.use('/', router());
-
-//=============== Docs ===============
-const { swagger } = require('./docs/swagger.js');
-swagger(app);
 
 //========= Error Handlers ==========
 app.use((_req, res) => res.status(404).json('Route not found, try another method?'));

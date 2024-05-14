@@ -21,10 +21,16 @@ const messageSchema = new mongoose.Schema(
       default: [],
     },
     reactions: {
-      type: [{
-        emoji: String,
-        color: String,
-      }],
+      type: [
+        {
+          author: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+          },
+          emoji: String,
+          color: String,
+        },
+      ],
       default: [],
     },
   },
@@ -32,7 +38,7 @@ const messageSchema = new mongoose.Schema(
 );
 
 messageSchema.pre('deleteOne', { document: true }, async function (next) {
-  const target = this._id
+  const target = this._id;
   await MediaModel.deleteMany({ _id: { $in: target } });
   next();
 });

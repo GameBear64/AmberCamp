@@ -24,17 +24,21 @@ module.exports = {
           '50%': { transform: 'rotate(3deg)' },
         },
         shadowPulse: {
-          '0%': { boxShadow: `0 0 0 0 ${theme('colors.primary')}`},
-          '70%': { boxShadow: '0 0 0 10px rgba(0, 0, 0, 0)'},
-          '100%': {boxShadow: '0 0 0 50px rgba(0, 0, 0, 0)'}
-        }
+          '0%': { boxShadow: `0 0 0 0 ${theme('colors.primary')}` },
+          '70%': { boxShadow: '0 0 0 10px rgba(0, 0, 0, 0)' },
+          '100%': { boxShadow: '0 0 0 50px rgba(0, 0, 0, 0)' },
+        },
       }),
       animation: {
         wiggle: 'wiggle 1s ease-in-out infinite',
-        shadowPulse: 'shadowPulse 2s ease-in-out infinite'
+        shadowPulse: 'shadowPulse 2s ease-in-out infinite',
       },
       fontFamily: {
         code: 'Cascadia Code',
+      },
+      fontSize: {
+        // because we override base with a color
+        md: ['1rem', '1.5rem'],
       },
       screens: {
         xs: '430px',
