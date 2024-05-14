@@ -30,7 +30,7 @@ export default function Chat() {
 
   useEffect(() => {
     socket.on('message/created', (msg) => {
-      setChatState((prev) => ({ ...prev, messages: [...prev.messages, msg] }));
+      setChatState((prev) => ({ ...prev, messages: [...(prev?.messages || []), msg] }));
     });
 
     socket.on('message/deleted', (msgId) => {
@@ -73,10 +73,16 @@ export default function Chat() {
   }, []);
 
   useEffect(() => {
-    useFetch({ url: `conversation/${id}` }).then((data) => {
-      setChatState(data);
-    });
-    setChat(id);
+    if (location.pathname.includes('campfire')) {
+      useFetch({ url: `campfire/${id}` }).then((data) => {
+        setChatState(data);
+      });
+    } else {
+      useFetch({ url: `conversation/${id}` }).then((data) => {
+        setChatState(data);
+      });
+      setChat(id);
+    }
   }, [id]);
 
   useLayoutEffect(() => {
@@ -92,6 +98,7 @@ export default function Chat() {
     <MessagesContext.Provider value={{ chatState, setChatState }}>
       <div className="flex size-full flex-1 flex-col justify-between pb-5">
         {location.pathname.includes('chat') && <ChatBar />}
+        {location.pathname.includes('campfire') && <p> hi </p>}
         <div
           ref={messages}
           className="infinite-scroll-container relative flex size-full flex-col gap-2 overflow-y-auto overflow-x-hidden pb-8 pt-5">
