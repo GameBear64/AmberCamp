@@ -31,7 +31,6 @@ module.exports.get = [
             },
             {
               _id: ObjectId(req.params.id),
-              type: ConversationType.Group,
               'participants.user': { $all: [ObjectId(req.apiUserId)] },
             },
             {

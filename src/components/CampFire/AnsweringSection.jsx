@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import QuestionBubble from '@components/CampFire/QuestionBubble';
 import RoundButton from '@components/RoundButton';
@@ -11,6 +11,10 @@ export default function AnsweringSection({ answered, set }) {
   const [topic, setTopic] = useState(Topics.all);
   const [filteredData, setFilteredData] = useState(answered);
 
+  useEffect(() => {
+    setFilteredData(answered);
+  }, [answered]);
+
   const selectTopic = (newTopic) => {
     setTopic((prev) => (prev == newTopic ? Topics.all : newTopic));
   };
@@ -19,7 +23,7 @@ export default function AnsweringSection({ answered, set }) {
 
     useFetch({
       // url: `campfire/get?category=${topic}`,
-      url: `campfire/get?category=General`,
+      url: `campfire/get`,
       method: 'GET',
     }).then((res) => {
       set((prev) => {
@@ -29,9 +33,6 @@ export default function AnsweringSection({ answered, set }) {
     });
   };
 
-  const debug = () => {
-    console.log(answered);
-  };
   const onSearch = (e) => {
     setFilteredData(answered.filter((data) => data.question.includes(e.target.value)));
   };
@@ -65,9 +66,6 @@ export default function AnsweringSection({ answered, set }) {
       </div>
       <button className="btn my-5" onClick={newQuestion}>
         Answer questions
-      </button>
-      <button className="btn my-5" onClick={debug}>
-        Debug
       </button>
       <input onChange={onSearch} className="input" placeholder="Search" />
       {/* {console.log(answered)} */}

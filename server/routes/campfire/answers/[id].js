@@ -1,38 +1,24 @@
-// Get: get the question details + message history (depending on who you are)
-// Post: Answer a question (create a new conversation with type question and give the user a point)
-// Delete: delete an asked question with ?id=
+const ObjectId = require('mongoose').Types.ObjectId;
+
+const { QuestionModel } = require('../../../models/Question.js');
+
+const { participantsToUsers, populateMessages } = require('../../../helpers/aggregations');
 
 module.exports.get = async (req, res) => {
-  return res.status(200).json([
+  const [question] = await QuestionModel.aggregate([
     {
-      _id: '661688503a046ca113e53981',
-      messages: [
-        {
-          _id: '75c37cf289e9c625699c27cd',
-          author: '65c37cf289e9c625699c27cd',
-          body: 'I love "To Kill a Mockingbird" because...',
-        },
-      ],
+      $match: { _id: ObjectId(req.params.id) },
     },
     {
-      _id: '661688503a046ca113e53971',
-      messages: [
-        {
-          _id: '75c37cf289e9c625699c27cd',
-          author: '65c37cf289e9c625699c27cd',
-          body: 'I only read manga!',
-        },
-      ],
-    },
-    {
-      _id: '661688503a046ca113e53961',
-      messages: [
-        {
-          _id: '75c37cf289e9c625699c27cd',
-          author: '65c37cf289e9c625699c27cd',
-          body: 'Can you guess? :]',
-        },
-      ],
+      $lookup: {
+        from: 'conversations',
+        localField: 'answers',
+        foreignField: '_id',
+        pipeline: [...participantsToUsers, ...populateMessages],
+        as: 'answers',
+      },
     },
   ]);
+
+  return res.status(200).json(question?.answers || []);
 };

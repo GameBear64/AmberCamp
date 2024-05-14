@@ -17,11 +17,7 @@ export default function CampFireBar({ data }) {
           <RoundButton icon="contact_support" colors={`bg-cyan-500 size-10 text-base`} />
           <p className="mx-2 leading-snug text-txtPrimary">{data?.question}</p>
         </div>
-        {data?.anonymous ? (
-          <Tag children="anonymous" />
-        ) : (
-          <RoundButton icon="person" colors="text-primary-dark bg-primary-light" />
-        )}
+        {data?.anonymous ? <Tag> anonymous </Tag> : <RoundButton icon="person" colors="text-primary-dark bg-primary-light" />}
       </div>
     </div>
   );
