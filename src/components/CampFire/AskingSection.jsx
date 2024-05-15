@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react';
+import { useContext } from 'react';
 
 import QuestionBubble from '@components/CampFire/QuestionBubble';
 import Modal from '@components/Modal';
@@ -8,11 +9,15 @@ import { CheckBox, Form, Input, Textarea } from '@form/Fields';
 import { successSnackBar } from '@utils/snackbars';
 import useFetch from '@utils/useFetch';
 
+import { MessagesContext } from '../../views/Chat';
+
 export default function AskingSection({ asked, set }) {
   const [askModalShown, setAskModalShown] = useState(false);
   const [filteredData, setFilteredData] = useState(asked);
+  const { chatState } = useContext(MessagesContext);
 
   console.log(asked);
+  console.log(chatState);
 
   const askTheQuestion = (data) => {
     console.log(data);
