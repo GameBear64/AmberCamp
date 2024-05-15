@@ -12,6 +12,7 @@ export default function AnswerList() {
   useEffect(() => {
     useFetch({ url: `campfire/answers/${id}` }).then((data) => {
       // setChatState(data);
+      console.log(data);
       setAnswerList(data);
     });
   }, [id]);

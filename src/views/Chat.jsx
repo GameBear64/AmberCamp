@@ -1,6 +1,6 @@
 import { createContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import ChatArea from '@components/Chat/ChatArea';
 import ChatBar from '@components/Chat/ChatBar';
@@ -20,6 +20,7 @@ export default function Chat() {
   const { id } = useParams();
   const [chatState, setChatState] = useState([]);
   const [chatPage, setChatPage] = useState(0);
+  const location = useLocation();
 
   // === TYPING STUFF ===
   const [typing, setTyping] = useState(false);
@@ -93,8 +94,8 @@ export default function Chat() {
     <MessagesContext.Provider value={{ chatState, setChatState }}>
       <div className="flex size-full flex-1 flex-col justify-between pb-5">
         {location.pathname.includes('chat') && <ChatBar />}
-        {/* {console.log(chatState)} */}
-        {location.pathname.includes('campfire') && <CampFireBar data={chatState[0]} />}
+        {console.log(chatState)}
+        {location.pathname.includes('campfire') && <CampFireBar data={chatState} />}
         <div
           ref={messages}
           className="infinite-scroll-container relative flex size-full flex-col gap-2 overflow-y-auto overflow-x-hidden pb-8 pt-5">

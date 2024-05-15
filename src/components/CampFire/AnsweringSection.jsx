@@ -70,7 +70,6 @@ export default function AnsweringSection({ answered, set }) {
         Debug
       </button>
       <input onChange={onSearch} className="input" placeholder="Search" />
-      {/* {console.log(answered)} */}
       {filteredData?.map((answer) => (
         <QuestionBubble key={answer._id} id={answer._id} text={answer.question} type="answer" />
       ))}

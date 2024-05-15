@@ -1,13 +1,14 @@
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Icon from '@components/Icon';
 import RoundButton from '@components/RoundButton';
 
 import Tag from '../../components/Profile/Tag';
-
+import { QuestionContext } from '../../views/CampFire';
 export default function CampFireBar({ data }) {
   const navigate = useNavigate();
-  console.log(data);
+  const { questionTitle } = useContext(QuestionContext);
 
   return (
     <div className="sticky top-0 flex w-full flex-row items-center gap-2 bg-base px-8 py-3 shadow-sm">
@@ -15,7 +16,7 @@ export default function CampFireBar({ data }) {
       <div className="flex w-full flex-row justify-between">
         <div className="flex flex-row items-center">
           <RoundButton icon="contact_support" colors={`bg-cyan-500 size-10 text-base`} />
-          <p className="mx-2 leading-snug text-txtPrimary">{data?.question}</p>
+          <p className="mx-2 leading-snug text-txtPrimary">{questionTitle}</p>
         </div>
         {data?.anonymous ? (
           <Tag children="anonymous" />
