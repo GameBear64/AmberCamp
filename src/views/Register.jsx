@@ -3,7 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Form, Input, SubmitButton } from '@form/Fields';
 
 import { successSnackBar } from '@utils/snackbars';
+import socket from '@utils/socket';
 import useFetch from '@utils/useFetch';
+import { setPreferences } from '@stores/preferences';
 import { setUser } from '@stores/user';
 
 export default function Register() {
@@ -17,8 +19,15 @@ export default function Register() {
     }).then((response) => {
       localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, response.jwt);
       setUser({ id: response.id });
+      setPreferences({
+        theme: response.theme,
+        accent: response.accent,
+        language: response.language,
+      });
       successSnackBar(`Your registration was successful!`);
       navigate('/chat');
+      socket.auth.jwt = response.jwt;
+      socket.connect();
     });
   };
 

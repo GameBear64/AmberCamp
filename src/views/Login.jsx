@@ -5,6 +5,7 @@ import { useStore } from '@nanostores/react';
 import { Form, Input, SubmitButton } from '@form/Fields';
 
 import { successSnackBar } from '@utils/snackbars';
+import socket from '@utils/socket';
 import useFetch from '@utils/useFetch';
 import { $chat } from '@stores/chat';
 import { setPreferences } from '@stores/preferences';
@@ -29,6 +30,8 @@ export default function Login() {
       });
       successSnackBar("You've logged in successfully!");
       navigate(`/chat/${id}`);
+      socket.auth.jwt = response.jwt;
+      socket.connect();
     });
   };
 

@@ -20,6 +20,9 @@ module.exports.post = [
     return res.status(201).json({
       id: user._id,
       jwt: createJWTCookie(user),
+      theme: user.theme,
+      accent: user.accent,
+      language: user.language,
     });
   },
 ];

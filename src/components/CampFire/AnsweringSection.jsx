@@ -19,15 +19,12 @@ export default function AnsweringSection({ answered, set }) {
     setTopic((prev) => (prev == newTopic ? Topics.all : newTopic));
   };
   const newQuestion = () => {
-    console.log('new question request with topic', topic);
-
     useFetch({
       // url: `campfire/get?category=${topic}`,
       url: `campfire/get`,
       method: 'GET',
     }).then((res) => {
       set((prev) => {
-        console.log(prev, res);
         return { answered: [...prev.answered, res], asked: prev.asked };
       });
     });

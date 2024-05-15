@@ -64,7 +64,6 @@ conversationSchema.pre('deleteOne', async function (next) {
 });
 
 // conversationSchema.pre('save', async function (next) {
-//   console.log('this', this);
 
 //   for await (const [i, participant] of this.participants.entries()) {
 //     // await ParticipantModel.create({

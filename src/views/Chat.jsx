@@ -94,8 +94,7 @@ export default function Chat() {
     <MessagesContext.Provider value={{ chatState, setChatState }}>
       <div className="flex size-full flex-1 flex-col justify-between pb-5">
         {location.pathname.includes('chat') && <ChatBar />}
-        {console.log(chatState)}
-        {location.pathname.includes('campfire') && <CampFireBar data={chatState} />}
+        {location.pathname.includes('campfire') && <CampFireBar />}
         <div
           ref={messages}
           className="infinite-scroll-container relative flex size-full flex-col gap-2 overflow-y-auto overflow-x-hidden pb-8 pt-5">

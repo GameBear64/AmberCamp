@@ -34,8 +34,6 @@ export default function General() {
     } catch (e) {
       if (e !== 'No file provided') {
         errorSnackBar('Error uploading image');
-        // eslint-disable-next-line no-console
-        console.log(e);
       }
     }
 
@@ -45,8 +43,6 @@ export default function General() {
     } catch (e) {
       if (e !== 'No file provided') {
         errorSnackBar('Error uploading image');
-        // eslint-disable-next-line no-console
-        console.log(e);
       }
     }
 

@@ -10,17 +10,14 @@ import AnswerPlaceholder from '@routers/placeholders/Answer';
 import AskedPlaceholder from '@routers/placeholders/Asked';
 import useFetch from '@utils/useFetch';
 
-import { MessagesContext } from '../views/Chat';
 const ListType = Object.freeze({
   Asked: 'Asked',
   Answered: 'Answered',
 });
 export const QuestionContext = createContext('');
 export default function CampFire() {
-  const [questionTitle, setQuestionTitle] = useState('');
   const [currentList, setCurrentList] = useState(ListType.Answered);
   const [allQuestions, setAllQuestions] = useState({ answered: [], asked: [] });
-  const { chatState } = useContext(MessagesContext);
 
   useEffect(() => {
     useFetch({
@@ -30,10 +27,9 @@ export default function CampFire() {
       setAllQuestions(res);
     });
   }, []);
-  console.log(chatState);
 
   return (
-    <QuestionContext.Provider value={{ questionTitle, setQuestionTitle }}>
+    <QuestionContext.Provider value={{ allQuestions }}>
       <Layout placeholder={currentList === ListType.Answered ? <AnswerPlaceholder /> : <AskedPlaceholder />}>
         <div className="mx-2 flex flex-col">
           <div className="mb-2 flex w-full justify-evenly ">
