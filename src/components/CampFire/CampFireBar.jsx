@@ -6,6 +6,7 @@ import Icon from '@components/Icon';
 import RoundButton from '@components/RoundButton';
 
 import Tag from '../../components/Profile/Tag';
+import { topicsStyle } from '../../utils/enums/topics';
 import { QuestionContext } from '../../views/CampFire';
 export default function CampFireBar() {
   const { id } = useParams();
@@ -24,7 +25,12 @@ export default function CampFireBar() {
       <Icon styles="mr-2 pt-1 block md:hidden align-bottom text-xl" onClick={() => navigate('/chat')} icon="arrow_back_ios_new" />
       <div className="flex w-full flex-row justify-between">
         <div className="flex flex-row items-center">
-          <RoundButton icon="contact_support" colors={`bg-cyan-500 size-10 text-base`} />
+          {topicsStyle.map(
+            (topic) =>
+              topic.category === details?.category && (
+                <RoundButton key={topic.category} icon={topic.icon} colors={`${topic.style} text-base`} />
+              )
+          )}
           <p className="mx-2 leading-snug text-txtPrimary">{details?.question}</p>
         </div>
         {details?.anonymous ? (

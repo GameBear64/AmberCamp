@@ -29,8 +29,8 @@ exports.ConversationType = Object.freeze({
 
 exports.QuestionCategory = Object.freeze({
   General: 'General',
-  SportsFood: 'SportsFood',
-  Gaming: 'Gaming',
+  Life: 'Life',
+  Literature: 'Literature',
   Adult: 'Adult',
 });
 
@@ -61,4 +61,3 @@ exports.TimeZone = Object.freeze({
   'GMT+11': 'GMT+11',
   'GMT+12': 'GMT+12',
 });
-

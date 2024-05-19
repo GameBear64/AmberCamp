@@ -13,13 +13,12 @@ export default function AnswerList() {
       setAnswerList(data);
     });
   }, [id]);
-
   return (
     <div className="mx-auto h-full w-1/2">
-      {answerList.length > 1 ? (
+      {answerList.length > 0 ? (
         <div className="my-5">
           {answerList.map((answer) => (
-            <QuestionBubble key={answer._id} text={answer.messages[0].body} id={answer._id} />
+            <QuestionBubble key={answer._id} text={answer.messages[0].body} id={answer._id} category={answer.category} />
           ))}
         </div>
       ) : (
