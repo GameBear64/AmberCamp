@@ -5,6 +5,7 @@ import socket from '@utils/socket';
 import { formatDate } from '@utils/utils';
 
 import Icon from '../Icon';
+import RoundButton from '../RoundButton';
 
 import ChatArea from './ChatArea';
 import MessageOptions from './MessageOptions';
@@ -26,11 +27,15 @@ export default function Message({ message, last }) {
         setShowMenu(false);
       }}
       className="group relative mr-1 flex w-full flex-row p-2 hover:bg-base-m md:px-8">
-      <img
-        className="size-11 rounded-full"
-        src={`http://localhost:3030/recourse/${message.author.picture}?size=50`}
-        alt="profile_picture"
-      />
+      {message.author?.picture ? (
+        <img
+          className="size-11 rounded-full"
+          src={`http://localhost:3030/recourse/${message.author.picture}?size=50`}
+          alt="profile_picture"
+        />
+      ) : (
+        <RoundButton icon="person" colors="bg-primary text-base" />
+      )}
       <div className="ml-2 flex w-full flex-row justify-between gap-2">
         <div className="flex w-full flex-col">
           <div className="flex flex-row gap-2">

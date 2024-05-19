@@ -19,7 +19,10 @@ module.exports = [
     if (data.targetId === socket.apiUserId) return socket.emit('error', 'Go get some friends...');
 
     // Is a camp fire question?
-    const question = await QuestionModel.findOne({ _id: ObjectId(data.targetId) });
+    // check if its a question
+    const question = await QuestionModel.findOne({
+      $or: [{ _id: ObjectId(data.targetId) }, { answers: { $in: ObjectId(data.targetId) } }],
+    });
 
     const conversation = await ConversationModel.findOne({
       $or: [
@@ -44,7 +47,16 @@ module.exports = [
       const participantIDs = conversation.participants.map(({ user }) => user.toString());
       newMessage = await MessageModel.populate(newMessage, { path: 'author', select: 'handle picture' });
 
-      return io.to(participantIDs).emit('message/created', newMessage);
+      // =========
+      if (question?.anonymous) {
+        io.to(socket.apiUserId).emit('message/created', newMessage);
+        newMessage.author = { handle: 'Anonymous' };
+        const otherUser = participantIDs.find((id) => id != socket.apiUserId);
+        io.to(otherUser).emit('message/created', newMessage);
+        return;
+      } else {
+        return io.to(participantIDs).emit('message/created', newMessage);
+      }
     }
 
     // Is camp question but no conversation found
@@ -60,7 +72,15 @@ module.exports = [
 
       newMessage = await MessageModel.populate(newMessage, { path: 'author', select: 'handle picture' });
 
-      return io.to([data.targetId, socket.apiUserId]).emit('message/created', newMessage);
+      // =========
+      if (question.anonymous) {
+        io.to(socket.apiUserId).emit('message/created', newMessage);
+        newMessage.author = { handle: 'Anonymous' };
+        io.to(question.author).emit('message/created', newMessage);
+        return;
+      } else {
+        return io.to([question.author, socket.apiUserId]).emit('message/created', newMessage);
+      }
     }
 
     // check if ID is of a person

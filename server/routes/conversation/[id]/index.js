@@ -17,7 +17,9 @@ module.exports.get = [
     if (req.params.id === req.apiUserId) return res.status(418).json('You want to talk to yourself? Think.');
 
     // check if its a question
-    const question = await QuestionModel.findOne({ _id: ObjectId(req.params.id) });
+    const question = await QuestionModel.findOne({
+      $or: [{ _id: ObjectId(req.params.id) }, { answers: { $in: ObjectId(req.params.id) } }],
+    });
 
     const [conversation] = await ConversationModel.aggregate([
       {
@@ -30,6 +32,7 @@ module.exports.get = [
               },
             },
             {
+              type: ConversationType.Group,
               _id: ObjectId(req.params.id),
               'participants.user': { $all: [ObjectId(req.apiUserId)] },
             },
@@ -72,6 +75,7 @@ module.exports.get = [
       },
     ]);
 
+    // last seen message + hide from history
     const lastMessage = conversation?.messages[conversation.messagesCount - 1]?._id || null;
 
     await ConversationModel.updateOne(
@@ -84,6 +88,23 @@ module.exports.get = [
       },
       { timestamps: false }
     );
+
+    // Handling anon questions
+    if (conversation?.type == ConversationType.Question && question.anonymous) {
+      conversation.participants = conversation.participants.map((participant) => {
+        if (participant.user._id != req.apiUserId) {
+          participant = 'anonymous';
+        }
+        return participant;
+      });
+
+      conversation.messages = conversation.messages.map((msg) => {
+        if (msg.author._id != req.apiUserId) {
+          msg.author = { handle: 'Anonymous' };
+        }
+        return msg;
+      });
+    }
 
     res.status(200).json(conversation || {});
   },

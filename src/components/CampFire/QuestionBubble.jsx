@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { topicsStyle } from '../../utils/enums/topics';
 import RoundButton from '../RoundButton';
+
 export default function QuestionBubble({ text, type = 'answer', id, category }) {
   const navigate = useNavigate();
 

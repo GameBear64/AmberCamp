@@ -4,7 +4,7 @@ const { QuestionModel } = require('../../models/Question');
 const { participantsToUsers } = require('../../helpers/aggregations');
 
 module.exports.get = async (req, res) => {
-  const asked = await QuestionModel.aggregate([
+  let asked = await QuestionModel.aggregate([
     {
       $match: { author: ObjectId(req.apiUserId) },
     },
@@ -13,8 +13,14 @@ module.exports.get = async (req, res) => {
         from: 'conversations',
         localField: 'answers',
         foreignField: '_id',
-        pipeline: [...participantsToUsers],
         as: 'answers',
+      },
+    },
+    {
+      $project: {
+        seen: 0,
+        rejected: 0,
+        'answers.participants': 0,
       },
     },
   ]);
@@ -28,13 +34,18 @@ module.exports.get = async (req, res) => {
         from: 'conversations',
         localField: 'answers',
         foreignField: '_id',
-        pipeline: [...participantsToUsers],
+        // pipeline: [...participantsToUsers],
         as: 'answers',
       },
     },
+    {
+      $project: {
+        seen: 0,
+        rejected: 0,
+        'answers.participants': 0,
+      },
+    },
   ]);
-
-  // not trully anonymous
 
   return res.status(200).json({ asked, answered });
 };
