@@ -53,9 +53,9 @@ exports.chunkBuffer = function* (buf, maxBytes) {
 exports.slugifyString = (text) =>
   text
     ?.toLowerCase()
+    ?.trim()
     ?.replace(/[^\w ]+/g, '')
     ?.replace(/ +/g, '-')
-    ?.trim()
     ?.replace(/[^\x00-\x7F]/g, '')
     ?.substring(0, 200);
 

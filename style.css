@@ -34,6 +34,7 @@
   body {
     @apply bg-base;
   }
+  
   .infinite-scroll-container > div:first-child {
     @apply h-full;
   }
